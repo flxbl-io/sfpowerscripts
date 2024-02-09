@@ -370,7 +370,9 @@ export default class TriggerApexTests {
                         (this.coverageOptions.isPackageCoverageToBeValidated ||
                             this.coverageOptions.isIndividualClassCoverageToBeValidated)
                     ) {
-                        if (!testToBeTriggered.includes(test.apexClass.fullName)) {
+                        let apexClassParts = test.apexClass.fullName.split(".");
+                        let apexClassNameWithoutPotentialNamespace = apexClassParts[apexClassParts.length - 1];
+                        if (!testToBeTriggered.includes(apexClassNameWithoutPotentialNamespace)) {
                             testClassesThatDonotContributedCoverage.push(test.apexClass.fullName);
                             if (!testToBeTriggered.includes(test.apexClass.fullName))
                                 testToBeTriggered.push(test.apexClass.fullName);
@@ -453,7 +455,7 @@ export default class TriggerApexTests {
                 if (isCoverageToBeFetched) {
                     const mergedCodecoverage: CodeCoverageResult[] = modifiedTestResult.codecoverage;
                     for (const codeCoverageObject of secondTestResult.codecoverage){
-                    
+
                         const index = mergedCodecoverage.findIndex((codeCoverage) => codeCoverage.name === codeCoverageObject.name);
                         if (index !== -1) {
                             mergedCodecoverage[index] = codeCoverageObject;
