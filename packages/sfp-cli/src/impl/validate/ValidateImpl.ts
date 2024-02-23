@@ -628,6 +628,7 @@ export default class ValidateImpl implements PostDeployHook, PreDeployHook {
 				if (displayOrgInfo) {
 					OrgInfoDisplayer.printScratchOrgInfo(scratchOrg);
 					OrgInfoDisplayer.writeScratchOrgInfoToMarkDown(scratchOrg);
+                    OrgInfoDisplayer.writeScratchOrgInfoToJson(scratchOrg);
 				}
 
 				this.getCurrentRemainingNumberOfOrgsInPoolAndReport(scratchOrg.tag);

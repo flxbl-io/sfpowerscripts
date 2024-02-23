@@ -101,6 +101,22 @@ export default class OrgInfoDisplayer {
 
   }
 
+    public static writeScratchOrgInfoToJson(scratchOrg: ScratchOrg): void {
+        const pathToMarkDownFile = `org-info.json`;
+        const fileOutputHandler = FileOutputHandler.getInstance();
+
+        let orgInfo = {
+          "Org Id": scratchOrg.orgId,
+          "Login URL": scratchOrg.loginURL,
+          "Username": scratchOrg.username,
+          "Password": scratchOrg.password,
+          "Expiry": scratchOrg.expiryDate,
+          "Auth URL": scratchOrg.sfdxAuthUrl
+        };
+
+        fileOutputHandler.writeOutput(pathToMarkDownFile, JSON.stringify(orgInfo, null, 2));
+    }
+
   public static printOrgInfo(org: SFPOrg): void {
     let groupSection = new GroupConsoleLogs(`Display Org Info`).begin();
 
