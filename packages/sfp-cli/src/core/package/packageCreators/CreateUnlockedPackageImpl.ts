@@ -163,7 +163,7 @@ export default class CreateUnlockedPackageImpl extends CreatePackage {
             throw new Error(
                 `The build for ${this.sfpPackage.packageName} was not completed in the wait time ${this.packageCreationParams.waitTime} provided.${EOL}
          You might want to increase the wait time or better check the dependencies or convert to different package type ${EOL}
-         Read more about it here https://docs.flxblio.io/development-practices/types-of-packaging/unlocked-packages#build-options-with-unlocked-packages`
+         Read more about it here https://docs.flxbl.io/development-practices/types-of-packaging/unlocked-packages#build-options-with-unlocked-packages`
             );
         }
 

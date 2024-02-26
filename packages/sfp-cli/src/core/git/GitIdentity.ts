@@ -26,7 +26,7 @@ export default class GitIdentity {
         if (process.env.SFPOWERSCRIPTS_GIT_EMAIL) {
             email = process.env.SFPOWERSCRIPTS_GIT_EMAIL;
         } else {
-            email = 'sfp@flxblio.io';
+            email = 'sfp@flxbl.io';
         }
 
         await this.git.addConfig('user.email', email);

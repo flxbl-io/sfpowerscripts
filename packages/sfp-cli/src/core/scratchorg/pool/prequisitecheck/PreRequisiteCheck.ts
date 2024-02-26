@@ -57,7 +57,7 @@ export default class PreRequisiteCheck {
 
         if (!PreRequisiteCheck.isPrerequisiteMet) {
               throw new Error( `Required Prerequisite values in ScratchOrgInfo is missing in the DevHub` +
-                               `For more information Please refer https://sfp.flxblio.io/getting-started/prerequisites \n`);
+                               `For more information Please refer https://sfp.flxbl.io/getting-started/prerequisites \n`);
         }
     }
 }
