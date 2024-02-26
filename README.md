@@ -45,7 +45,7 @@ used by using the [docker image](https://github.com/flxblio/sfp/pkgs/container/s
 
 #### CI/CD Reference Implementation
 
-Getting started guides for popular CI/CD platforms along with reference pipelines are available [here](https://docs.flxblio.io/implementing-your-ci-cd/github)
+Getting started guides for popular CI/CD platforms along with reference pipelines are available [here](https://docs.flxbl.io/implementing-your-ci-cd/github)
 
 #### Installing sfp locally
 
@@ -86,7 +86,7 @@ To debug and test plugin
 
 #### Maintainers
 
-List of Maintainers are available in the [link](https://docs.flxblio.io/about-us)
+List of Maintainers are available in the [link](https://docs.flxbl.io/about-us)
 
 
 #### Where do I reach for queries?
