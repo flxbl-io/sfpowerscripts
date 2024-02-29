@@ -70,7 +70,7 @@ jobs:
          repo: ${{ inputs.repo }}
          image: ${{ inputs.image }}
          existing-tag: ${{ env.PKG_VERSION }}-${{ github.run_id }}
-         new-tag: release-${{ env.RELEASE_VERSION }}
+         new-tag: release-${{ vars.RELEASE_VERSION }}
          registry: ghcr.io
          username:  ${{ env.DOCKER_USERNAME }}
          token: ${{ env.DOCKER_TOKEN }}

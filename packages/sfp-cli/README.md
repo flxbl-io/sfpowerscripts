@@ -13,7 +13,7 @@
 
 [![Join slack](https://i.imgur.com/FZZmA3g.png)](https://launchpass.com/flxblio)
 
-A build system for package based development in Salesforce, delivered as a node cli that can be implemented in any CI/CD system of choice.Read more about the cli and details here - https://docs.flxblio.io
+A build system for package based development in Salesforce, delivered as a node cli that can be implemented in any CI/CD system of choice.Read more about the cli and details here - https://docs.flxbl.io
 
 #### Features
 
@@ -26,7 +26,7 @@ A build system for package based development in Salesforce, delivered as a node 
 - Integrate with any CI/CD system of choice
 - All commands are enabled with statsD, for collecting metrics about your pipeline.
 
-There are lot more features to explore. Read more at https://docs.flxblio.io
+There are lot more features to explore. Read more at https://docs.flxbl.io
 
 The project is delivered as a <b>CLI</b> that can be deployed in any CI/CD system, The module is available in [NPM](https://www.npmjs.com/package/@flxblio/sfp) or can be
 used by using the [docker image](https://github.com/flxbl-io/sfp/pkgs/container/sfp)
@@ -45,7 +45,7 @@ used by using the [docker image](https://github.com/flxbl-io/sfp/pkgs/container/
 
 #### CI/CD Reference Implementation
 
-Getting started guides for popular CI/CD platforms along with reference pipelines are available [here](https://docs.flxblio.io/implementing-your-ci-cd/github)
+Getting started guides for popular CI/CD platforms along with reference pipelines are available [here](https://docs.flxbl.io/implementing-your-ci-cd/github)
 
 #### Installing sfp locally
 
@@ -86,7 +86,7 @@ To debug and test plugin
 
 #### Maintainers
 
-List of Maintainers are available in the [link](https://docs.flxblio.io/about-us)
+List of Maintainers are available in the [link](https://docs.flxbl.io/about-us)
 
 
 #### Where do I reach for queries?

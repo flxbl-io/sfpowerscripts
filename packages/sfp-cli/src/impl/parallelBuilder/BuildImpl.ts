@@ -420,7 +420,7 @@ export default class BuildImpl {
 		function printIncludeOnlyPackages() {
 			SFPLogger.log(
 				COLOR_KEY_MESSAGE(
-					`Build will include the below packages as per inclusive filter`,
+					`Build will include the below packages release configs (domain(s))(domain)`,
 				),
 				LoggerLevel.TRACE,
 			);

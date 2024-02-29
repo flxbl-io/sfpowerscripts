@@ -24,8 +24,8 @@ import getFormattedTime from './core/utils/GetFormattedTime';
 import SfpPackage from './core/package/SfpPackage';
 import ReleaseConfigLoader from './impl/release/ReleaseConfigLoader';
 import { Flags } from '@oclif/core';
-import { loglevel, orgApiVersionFlagSfdxStyle, targetdevhubusername } from './flags/sfdxflags';
-
+import { arrayFlagSfdxStyle, loglevel, orgApiVersionFlagSfdxStyle, targetdevhubusername } from './flags/sfdxflags';
+import { ReleaseConfigAggregator } from './impl/release/ReleaseConfigAggregator';
 
 // Initialize Messages with the current plugin directory
 Messages.importMessagesDirectory(__dirname);
@@ -38,21 +38,19 @@ export default abstract class BuildBase extends SfpCommand {
     protected static requiresUsername = false;
     protected static requiresDevhubUsername = false;
     protected static requiresProject = true;
+    protected releaseConfigMap: { [key: string]: string[] } = {}; 
 
     public static flags = {
         loglevel,
-        'apiversion': orgApiVersionFlagSfdxStyle,
-        'devhubalias': targetdevhubusername,
+        apiversion: orgApiVersionFlagSfdxStyle,
+        devhubalias: targetdevhubusername,
         diffcheck: Flags.boolean({
             description: messages.getMessage('diffCheckFlagDescription'),
             default: false,
         }),
-        gittag: Flags.boolean({
-            description: messages.getMessage('gitTagFlagDescription'),
-            hidden: true,
-            deprecated: {
-                message:'--gittag is deprecated, Please utilize git tags on publish stage',
-            },
+        buildOnly: arrayFlagSfdxStyle({
+            char: 'p',
+            description: messages.getMessage('buildOnlyFlagDescription'),
         }),
         repourl: Flags.string({
             char: 'r',
@@ -81,18 +79,20 @@ export default abstract class BuildBase extends SfpCommand {
         }),
         branch: Flags.string({
             description: messages.getMessage('branchFlagDescription'),
+            default: 'main',
             required: true,
         }),
         tag: Flags.string({
             description: messages.getMessage('tagFlagDescription'),
         }),
-        releaseconfig: Flags.string({
+        releaseconfig: arrayFlagSfdxStyle({
+            aliases: ['domain'],
             description: messages.getMessage('releaseConfigFileFlagDescription'),
-        })
+        }),
     };
 
     public async execute() {
-        const {flags} = await this.parse();
+        const { flags } = await this.parse();
         let buildExecResult: {
             generatedPackages: SfpPackage[];
             failedPackages: string[];
@@ -105,38 +105,49 @@ export default abstract class BuildBase extends SfpCommand {
             stage: this.getStage(),
             branch: flags.branch,
         };
-        
+
         try {
             const artifactDirectory: string = flags.artifactdir;
             const diffcheck: boolean = flags.diffcheck;
             const branch: string = flags.branch;
+            const buildOnlyPackages: string[] = flags.buildOnly;
+
             // Read Manifest
             let projectConfig = ProjectConfig.getSFDXProjectConfig(process.cwd());
 
             SFPLogger.log(COLOR_HEADER(`command: ${COLOR_KEY_MESSAGE(this.getStage())}`));
             SFPLogger.log(COLOR_HEADER(`Build Packages Only Changed: ${flags.diffcheck}`));
-            if(projectConfig?.plugins?.sfp?.scratchOrgDefFilePaths?.enableMultiDefinitionFiles){
+            if (projectConfig?.plugins?.sfp?.scratchOrgDefFilePaths?.enableMultiDefinitionFiles) {
                 SFPLogger.log(COLOR_HEADER(`Multiple Config Files Mode: enabled`));
-            }else{
+            } else {
                 SFPLogger.log(COLOR_HEADER(`Config File Path: ${flags.configfilepath}`));
             }
+            if(flags.releaseconfig?.length>0)
+            {
+                SFPLogger.log(COLOR_HEADER(`Release Config Files: ${flags.releaseconfig}`));
+            }
             SFPLogger.log(COLOR_HEADER(`Artifact Directory: ${flags.artifactdir}`));
-            SFPLogger.printHeaderLine('',COLOR_HEADER,LoggerLevel.INFO);
+            SFPLogger.printHeaderLine('', COLOR_HEADER, LoggerLevel.INFO);
             let executionStartTime = Date.now();
-
 
             if (!(flags.tag == null || flags.tag == undefined)) {
                 tags['tag'] = flags.tag;
             }
-
-
 
             SFPStatsSender.logCount('build.scheduled', tags);
 
             let buildProps = this.getBuildProps();
 
             //Filter Build Props by ReleaseConfig
-            buildProps = this.includeOnlyPackagesAsPerReleaseConfig(flags.releaseconfig, buildProps, new ConsoleLogger());
+            if (buildOnlyPackages?.length > 0) {
+                buildProps = this.includeOnlyPackagesAsProvided(buildOnlyPackages, buildProps, new ConsoleLogger());
+            } else {
+                buildProps = this.includeOnlyPackagesAsPerReleaseConfig(
+                    flags.releaseconfig,
+                    buildProps,
+                    new ConsoleLogger()
+                );
+            }
             buildExecResult = await this.getBuildImplementer(buildProps).exec();
 
             if (
@@ -146,7 +157,7 @@ export default abstract class BuildBase extends SfpCommand {
             ) {
                 SFPLogger.log(`${EOL}${EOL}`);
                 SFPLogger.log(COLOR_INFO('No packages found to be built.. Exiting.. '));
-                SFPLogger.printHeaderLine('',COLOR_HEADER,LoggerLevel.INFO);
+                SFPLogger.printHeaderLine('', COLOR_HEADER, LoggerLevel.INFO);
                 return;
             }
 
@@ -176,7 +187,7 @@ export default abstract class BuildBase extends SfpCommand {
             process.exitCode = 1;
         } finally {
             if (buildExecResult?.generatedPackages?.length > 0 || buildExecResult?.failedPackages?.length > 0) {
-                SFPLogger.printHeaderLine('',COLOR_HEADER,LoggerLevel.INFO);
+                SFPLogger.printHeaderLine('', COLOR_HEADER, LoggerLevel.INFO);
                 SFPLogger.log(
                     COLOR_SUCCESS(
                         `${buildExecResult.generatedPackages.length} packages created in ${COLOR_TIME(
@@ -191,7 +202,7 @@ export default abstract class BuildBase extends SfpCommand {
                 if (artifactCreationErrors.length > 0)
                     SFPLogger.log(COLOR_ERROR(`Failed To Create Artifacts`, artifactCreationErrors));
 
-                SFPLogger.printHeaderLine('',COLOR_HEADER,LoggerLevel.INFO);
+                SFPLogger.printHeaderLine('', COLOR_HEADER, LoggerLevel.INFO);
 
                 const buildResult: BuildResult = {
                     packages: [],
@@ -200,50 +211,92 @@ export default abstract class BuildBase extends SfpCommand {
                         elapsed_time: null,
                         succeeded: null,
                         failed: null,
+                        sucessfullReleaseConfigs: [],
+                        failedReleaseConfigs:[]
                     },
                 };
 
                 for (let generatedPackage of buildExecResult.generatedPackages) {
-                    buildResult['packages'].push({
-                        name: generatedPackage['packageName'],
-                        version: generatedPackage['package_version_number'],
-                        elapsed_time: generatedPackage['creation_details']?.creation_time,
+                    buildResult.packages.push({
+                        name: generatedPackage.packageName,
+                        version: generatedPackage.package_version_number,
+                        elapsed_time: generatedPackage.creation_details?.creation_time,
+                        versionId: generatedPackage.package_version_id,
                         status: 'succeeded',
                     });
+                    
                 }
 
                 for (let failedPackage of buildExecResult.failedPackages) {
-                    buildResult['packages'].push({
+                    buildResult.packages.push({
                         name: failedPackage,
                         version: null,
                         elapsed_time: null,
                         status: 'failed',
                     });
                 }
+               
+                //try to understad which release configs was successfull
+                buildResult.summary.sucessfullReleaseConfigs=[];
+                for (const releaseConfig in this.releaseConfigMap) {
+                    let packages = this.releaseConfigMap[releaseConfig];
+                    let failedPackages = packages.filter((x) => buildExecResult.failedPackages.includes(x));
+                    if (failedPackages.length === 0) {
+                        buildResult.summary.sucessfullReleaseConfigs.push(releaseConfig);
+                    }
+                    else {
+                        buildResult.summary.failedReleaseConfigs.push(releaseConfig);
+                    }
+                }
 
-                buildResult['summary'].scheduled_packages =
+
+                buildResult.summary.scheduled_packages =
                     buildExecResult.generatedPackages.length + buildExecResult.failedPackages.length;
-                buildResult['summary'].elapsed_time = totalElapsedTime;
-                buildResult['summary'].succeeded = buildExecResult.generatedPackages.length;
-                buildResult['summary'].failed = buildExecResult.failedPackages.length;
+                buildResult.summary.elapsed_time = totalElapsedTime;
+                buildResult.summary.succeeded = buildExecResult.generatedPackages.length;
+                buildResult.summary.failed = buildExecResult.failedPackages.length;
 
                 fs.writeFileSync(`buildResult.json`, JSON.stringify(buildResult, null, 4));
             }
         }
     }
 
-    private includeOnlyPackagesAsPerReleaseConfig(releaseConfigFilePath:string,buildProps: BuildProps,logger?:Logger): BuildProps {
-        if (releaseConfigFilePath) {
-        let releaseConfigLoader:ReleaseConfigLoader = new ReleaseConfigLoader(logger, releaseConfigFilePath);
-         buildProps.includeOnlyPackages = releaseConfigLoader.getPackagesAsPerReleaseConfig();
-         printIncludeOnlyPackages(buildProps.includeOnlyPackages);
+    private includeOnlyPackagesAsProvided(
+        buildOnlyPackages: string[],
+        buildProps: BuildProps,
+        logger?: Logger
+    ): BuildProps {
+        buildProps.includeOnlyPackages = buildOnlyPackages;
+        printIncludeOnlyPackages(buildProps.includeOnlyPackages);
+        return buildProps;
+        function printIncludeOnlyPackages(includeOnlyPackages: string[]) {
+            SFPLogger.log(
+                COLOR_KEY_MESSAGE(`Build will include the below packages release configs (domain(s))(domain)`),
+                LoggerLevel.INFO
+            );
+            SFPLogger.log(COLOR_KEY_VALUE(`${includeOnlyPackages.toString()}`), LoggerLevel.INFO);
+        }
+    }
+
+    private includeOnlyPackagesAsPerReleaseConfig(
+        releaseConfigFilePaths: string[],
+        buildProps: BuildProps,
+        logger?: Logger
+    ): BuildProps {
+       
+
+        if (releaseConfigFilePaths?.length > 0) {
+            buildProps.includeOnlyPackages = [];
+            let releaseConfigAggregatedLoader = new ReleaseConfigAggregator(logger);
+			releaseConfigAggregatedLoader.addReleaseConfigs(releaseConfigFilePaths); 
+			buildProps.includeOnlyPackages = releaseConfigAggregatedLoader.getAllPackages();
+            printIncludeOnlyPackages(buildProps.includeOnlyPackages);
         }
         return buildProps;
 
-
         function printIncludeOnlyPackages(includeOnlyPackages: string[]) {
             SFPLogger.log(
-                COLOR_KEY_MESSAGE(`Build will include the below packages as per inclusive filter`),
+                COLOR_KEY_MESSAGE(`Build will include the below packages release configs (domain(s))(domain)`),
                 LoggerLevel.INFO
             );
             SFPLogger.log(COLOR_KEY_VALUE(`${includeOnlyPackages.toString()}`), LoggerLevel.INFO);
@@ -254,7 +307,7 @@ export default abstract class BuildBase extends SfpCommand {
 
     abstract getStage(): Stage;
 
-    abstract getBuildImplementer(buildProps:BuildProps): BuildImpl;
+    abstract getBuildImplementer(buildProps: BuildProps): BuildImpl;
 }
 
 interface BuildResult {
@@ -262,6 +315,7 @@ interface BuildResult {
         name: string;
         version: string;
         elapsed_time: number;
+        versionId?:string
         status: string;
     }[];
     summary: {
@@ -269,5 +323,7 @@ interface BuildResult {
         elapsed_time: number;
         succeeded: number;
         failed: number;
+        sucessfullReleaseConfigs: string[];
+        failedReleaseConfigs:string[]
     };
 }

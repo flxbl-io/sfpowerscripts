@@ -42,8 +42,9 @@ export default class Validate extends SfpCommand {
             description: messages.getMessage('installDepsFlagDescription'),
             default: false,
         }),
-        releaseconfig: Flags.string({
-            description: messages.getMessage('configFileFlagDescription'),
+        releaseconfig: arrayFlagSfdxStyle({
+            aliases: ['domain'],
+            description: messages.getMessage('releaseConfigFileFlagDescription'),
         }),
         coveragepercent: Flags.integer({
             description: messages.getMessage('coveragePercentFlagDescription'),
@@ -69,14 +70,6 @@ export default class Validate extends SfpCommand {
         basebranch: Flags.string({
             description: messages.getMessage('baseBranchFlagDescription'),
         }),
-        enableimpactanalysis: Flags.boolean({
-            description: messages.getMessage('enableImpactAnalysisFlagDescription'),
-            dependsOn: ['basebranch'],
-        }),
-        enabledependencyvalidation: Flags.boolean({
-            description: messages.getMessage('enableDependencyValidation'),
-            dependsOn: ['basebranch'],
-        }),
         tag: Flags.string({
             description: messages.getMessage('tagFlagDescription'),
         }),
@@ -90,6 +83,9 @@ export default class Validate extends SfpCommand {
         }),
         disableartifactupdate: Flags.boolean({
             description: messages.getMessage('disableArtifactUpdateFlagDescription'),
+            deprecated: {
+                message: "This flag is deprecated, Artifacts used for validation are never recorded in the org "
+            },
             default: false,
         }),
         logsgroupsymbol,
@@ -123,12 +119,13 @@ export default class Validate extends SfpCommand {
                 )}`
             )
         );
+        if(this.flags.releaseconfig) {
+            SFPLogger.log(COLOR_HEADER(`Domains: ${this.flags.releaseconfig}`));
+        }
         if (this.flags.mode != ValidationMode.FAST_FEEDBACK) {
             SFPLogger.log(COLOR_HEADER(`Coverage Percentage: ${this.flags.coveragepercent}`));
         }
-        SFPLogger.log(
-            COLOR_HEADER(`Dependency Validation: ${this.flags.enabledependencyvalidation ? 'true' : 'false'}`)
-        );
+       
        
 
         SFPLogger.printHeaderLine('',COLOR_HEADER,LoggerLevel.INFO);
@@ -152,7 +149,7 @@ export default class Validate extends SfpCommand {
                 keys: this.flags.keys,
                 baseBranch: this.flags.basebranch,
                 diffcheck: !this.flags.disablediffcheck,
-                disableArtifactCommit: this.flags.disableartifactupdate,
+                disableArtifactCommit: true,
                 orgInfo: this.flags.orginfo,
                 disableSourcePackageOverride : this.flags.disablesourcepkgoverride,
                 disableParallelTestExecution: this.flags.disableparalleltesting,
@@ -202,19 +199,21 @@ export default class Validate extends SfpCommand {
             }
         }
 
-        function setReleaseConfigForReleaseBasedModes(releaseconfigPath:string,validateProps: ValidateProps) {
+        function setReleaseConfigForReleaseBasedModes(releaseConfigPaths: string[], validateProps: ValidateProps) {
             if (validateProps.validationMode == ValidationMode.FASTFEEDBACK_LIMITED_BY_RELEASE_CONFIG ||
                 validateProps.validationMode == ValidationMode.THOROUGH_LIMITED_BY_RELEASE_CONFIG) {
-                if (releaseconfigPath && fs.existsSync(releaseconfigPath)) {
-                    validateProps.releaseConfigPath = releaseconfigPath;
+                if (!releaseConfigPaths || releaseConfigPaths.length === 0) {
+                    throw new Error(`Release config paths are required when using validation by release config`);
                 }
-
-                else {
-                    if (!releaseconfigPath)
-                        throw new Error(`Release config is required when using validation by release config`);
-                    else if (!fs.existsSync(releaseconfigPath))
-                        throw new Error(`Release config at ${releaseconfigPath} doesnt exist, Please check the path`);
+        
+                const validPaths = releaseConfigPaths.filter(path => fs.existsSync(path));
+        
+                if (validPaths.length === 0) {
+                    throw new Error(`None of the provided release config paths exist, please check the paths: ${releaseConfigPaths.join(', ')}`);
                 }
+        
+                // Assuming validateProps can handle an array of paths; adjust as per your implementation
+                validateProps.releaseConfigPaths = validPaths;
             }
         }
     }
