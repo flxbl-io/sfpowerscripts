@@ -20,12 +20,13 @@ Messages.importMessagesDirectory(__dirname);
 
 // Load the specific messages for this file. Messages from @salesforce/command, @salesforce/core,
 // or any library that is using the messages framework can also be loaded this way.
-const messages = Messages.loadMessages('@flxblio/sfp', 'deploy');
+const messages = Messages.loadMessages('@flxblio/sfp', 'install');
 
-export default class Deploy extends SfpCommand {
+export default class Install extends SfpCommand {
     public static description = messages.getMessage('commandDescription');
+    static aliases = ['orchestrator:deploy','deploy']
 
-    public static examples = [`$ sfp deploy -u <username>`];
+    public static examples = [`$ sfp install -u <username>`];
 
     protected static requiresUsername = false;
     protected static requiresDevhubUsername = false;
@@ -80,8 +81,8 @@ export default class Deploy extends SfpCommand {
     public async execute() {
         let executionStartTime = Date.now();
 
-        SFPLogger.log(COLOR_HEADER(`command: ${COLOR_KEY_MESSAGE(`deploy`)}`));
-        SFPLogger.log(COLOR_HEADER(`Skip Packages If Already Installed: ${this.flags.skipifalreadyinstalled}`));
+        SFPLogger.log(COLOR_HEADER(`command: ${COLOR_KEY_MESSAGE(`install`)}`));
+        SFPLogger.log(COLOR_HEADER(`Skip artifacts if already installed: ${this.flags.skipifalreadyinstalled}`));
         SFPLogger.log(COLOR_HEADER(`Artifact Directory: ${this.flags.artifactdir}`));
         SFPLogger.log(COLOR_HEADER(`Target Environment: ${this.flags.targetorg}`));
         if(this.flags.releaseconfig) SFPLogger.log(COLOR_HEADER(`Filter according to: ${this.flags.releaseconfig}`));
@@ -131,7 +132,7 @@ export default class Deploy extends SfpCommand {
             SFPLogger.printHeaderLine('',COLOR_HEADER,LoggerLevel.INFO);
             SFPLogger.log(
                 COLOR_SUCCESS(
-                    `${deploymentResult.deployed.length} packages deployed in ${COLOR_TIME(
+                    `${deploymentResult.deployed.length} artifacts installed in ${COLOR_TIME(
                         getFormattedTime(totalElapsedTime)
                     )} with {${deploymentResult.failed.length}} errors`
                 )
@@ -140,7 +141,7 @@ export default class Deploy extends SfpCommand {
             if (deploymentResult.failed.length > 0) {
                 SFPLogger.log(
                     COLOR_ERROR(
-                        `\nPackages Failed to Deploy`,
+                        `\nArtifacts failed to install:`,
                         deploymentResult.failed.map((packageInfo) => packageInfo.sfpPackage.packageName)
                     )
                 );
@@ -149,19 +150,28 @@ export default class Deploy extends SfpCommand {
 
           
             SFPStatsSender.logCount('deploy.scheduled', tags);
+            SFPStatsSender.logCount('install.scheduled', tags);
 
             SFPStatsSender.logGauge('deploy.packages.scheduled', deploymentResult.scheduled, tags);
+            SFPStatsSender.logGauge('install.packages.scheduled', deploymentResult.scheduled, tags);
 
             SFPStatsSender.logGauge('deploy.duration', totalElapsedTime, tags);
+            SFPStatsSender.logGauge('install.duration', totalElapsedTime, tags);
 
             SFPStatsSender.logGauge('deploy.succeeded.packages', deploymentResult.deployed.length, tags);
+            SFPStatsSender.logGauge('install.succeeded.packages', deploymentResult.deployed.length, tags);
+
 
             SFPStatsSender.logGauge('deploy.failed.packages', deploymentResult.failed.length, tags);
+            SFPStatsSender.logGauge('install.failed.packages', deploymentResult.failed.length, tags);
+
 
             if (deploymentResult.failed.length > 0) {
                 SFPStatsSender.logCount('deploy.failed', tags);
+                SFPStatsSender.logCount('install.failed', tags);
             } else {
                 SFPStatsSender.logCount('deploy.succeeded', tags);
+                SFPStatsSender.logCount('install.succeeded', tags);
             }
         }
     }

@@ -1,7 +1,7 @@
 {
     "name": "@flxblio/sfp",
-    "description": "Flxbl Toolkit",
-    "version": "36.0.7",
+    "description": "sfp is a CLI tool to help you manage your Salesforce projects in an artifact centric model",
+    "version": "36.0.9",
     "license": "MIT",
     "author": "flxblio",
     "release": "February 24",
@@ -37,6 +37,7 @@
         "chalk": "^4.1.2",
         "cli-table": "0.3.11",
         "datadog-metrics": "^0.9.3",
+        "dedent": "^1.5.1",
         "dotenv": "16.3.1",
         "fast-xml-parser": "4.2.7",
         "fs-extra": "^11.1.1",
@@ -106,33 +107,40 @@
         "topicSeparator": " ",
         "topics": {
             "releasedefinition": {
-                "description": "Commands around release definition"
+                "description": "Commands around managing release defintion"
             },
             "pool": {
-                "description": "Manage the pooled orgs created by the sfp orchestrator in prepare stage"
+                "description": "Build and manage scratch org or sandbox pools"
             },
             "changelog": {
                 "description": "Track your artifacts & user stories as they progress through different environments, with release changelogs"
             },
-            "impact": {
-                "description": "Figures out the impact of a change to various components of your project",
+            "artifacts": {
+                "description": "Manage artifacts for a project",
                 "external": true
             },
-            "analyze": {
-                "description": "Analyze your projects using static analysis tools such as PMD",
+            "impact": {
+                "description": "Utilities to help you understand the impact of various components in sfp",
                 "external": true
+            },
+            "metrics": {
+                "description": "Report metrics to sfp supported metric providers",
+                "external": false
             },
             "apextests": {
-                "description": "Trigger Apex Tests and validate apex tests in a package"
+                "description": "Manage apex tests in a package or a org"
             },
             "repo": {
-                "description": "Commands to help with maintaing repository"
+                "description": "Manage your project repository"
             },
             "flow": {
-                "description": "Commands to help with management of flows"
+                "description": "Manage flows in your org"
+            },
+            "profile": {
+                "description": "Commands to manage profiles in your project or org"
             },
             "dependency": {
-                "description": "Commands to help with dependency management of a project",
+                "description": "Manage the dependencies of a project",
                 "subtopics": {
                     "expand": {
                         "description": "Expand the dependency list in sfdx-project.json file for each package, fix the gap of dependencies from its dependent packages"

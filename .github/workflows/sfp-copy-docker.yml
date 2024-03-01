@@ -18,7 +18,7 @@ on:
     image-as:
       type: string
       required: false
-      default: sfpowerscripts
+      default: sfp
    secrets:
      username:
         required: true

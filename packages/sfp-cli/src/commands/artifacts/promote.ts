@@ -1,12 +1,12 @@
-import SfpCommand from '../SfpCommand';
+import SfpCommand from '../../SfpCommand';
 import { Messages } from '@salesforce/core';
-import PromoteUnlockedPackageImpl from '../core/package/promote/PromoteUnlockedPackageImpl'
-import ArtifactFetcher from '../core/artifacts/ArtifactFetcher';
+import PromoteUnlockedPackageImpl from '../../core/package/promote/PromoteUnlockedPackageImpl'
+import ArtifactFetcher from '../../core/artifacts/ArtifactFetcher';
 import { ConsoleLogger } from '@flxblio/sfp-logger';
-import SfpPackageBuilder from '../core/package/SfpPackageBuilder';
-import { PackageType } from '../core/package/SfpPackage';
+import SfpPackageBuilder from '../../core/package/SfpPackageBuilder';
+import { PackageType } from '../../core/package/SfpPackage';
 import { Flags, ux } from '@oclif/core';
-import { loglevel, targetdevhubusername } from '../flags/sfdxflags';
+import { loglevel, targetdevhubusername } from '../../flags/sfdxflags';
 import { LoggerLevel } from '@flxblio/sfp-logger';
 import { COLOR_HEADER } from '@flxblio/sfp-logger';
 import SFPLogger from '@flxblio/sfp-logger';
@@ -16,6 +16,8 @@ const messages = Messages.loadMessages('@flxblio/sfp', 'promote');
 
 export default class Promote extends SfpCommand {
     public static description = messages.getMessage('commandDescription');
+    static aliases = ['orchestrator:promote']
+    
 
     public static examples = [`$ sfp promote -d path/to/artifacts -v <org>`];
 

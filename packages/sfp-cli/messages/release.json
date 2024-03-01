@@ -1,5 +1,5 @@
 {
-    "commandDescription": "Deploy a release definition to a target org",
+    "commandDescription": "Release a set of artifact(s) as defined by a release definition into a target org",
     "releaseDefinitionFlagDescription": "Path to release definiton yaml, Multiple paths can be seperated by commas",
     "targetOrgFlagDescription": "Alias/User Name of the target environment",
     "scriptPathFlagDescription": "(Optional: no-NPM) Path to script that authenticates and downloads artifacts from the registry",

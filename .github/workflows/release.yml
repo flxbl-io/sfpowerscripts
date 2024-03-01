@@ -43,7 +43,7 @@ jobs:
  # On successfull creation of packages,(or even if lerna skips), create docker image
   build-docker:
     name: 'build docker image'
-    uses: ./.github/workflows/sfpowerscripts-build-docker.yml
+    uses: ./.github/workflows/sfp-build-docker.yml
     with:
       job-environment: 'build-docker'
       suffix-tag: ${{ github.run_id }}
@@ -56,7 +56,7 @@ jobs:
   
   build-docker-lite:
     name: 'build sfp lite docker image'
-    uses: ./.github/workflows/sfpowerscripts-build-docker.yml
+    uses: ./.github/workflows/sfp-build-docker.yml
     with:
       job-environment: 'build-docker'
       suffix-tag: ${{ github.run_id }}
@@ -70,24 +70,24 @@ jobs:
 
  #Promotion Stages
 
-# Sfpowercripts
 
-  sfpowerscripts-alpha:
-    name: 'sfpowerscripts alpha'
+
+  sfp-alpha:
+    name: 'sfp alpha'
     uses: ./.github/workflows/promotePackage.yml
     with:
       version: 'alpha'
       pathToPackageJson: 'packages/sfp-cli/package.json'
-      environment: sfpowerscripts-alpha
+      environment: sfp-alpha
     secrets:
       npm-token: ${{ secrets.NPM_TOKEN }}
     needs: [ build ]
   
   alpha-docker:
     name: 'promote docker to alpha'
-    uses: ./.github/workflows/sfpowerscripts-promote-docker.yml
+    uses: ./.github/workflows/sfp-promote-docker.yml
     with:
-      job-environment: 'sfpowerscripts-alpha-docker'
+      job-environment: 'sfp-alpha-docker'
       repo: 'flxbl-io'
       new-tag: alpha   
       image: 'sfp-rc'  
@@ -98,9 +98,9 @@ jobs:
 
   alpha-docker-lite:
     name: 'promote docker lite to alpha'
-    uses: ./.github/workflows/sfpowerscripts-promote-docker.yml
+    uses: ./.github/workflows/sfp-promote-docker.yml
     with:
-      job-environment: 'sfpowerscripts-alpha-docker'
+      job-environment: 'sfp-alpha-docker'
       repo: 'flxbl-io'
       new-tag: alpha   
       image: 'sfp-lite-rc'  
@@ -110,22 +110,22 @@ jobs:
     needs: [ build-docker-lite ]
 
 
-  sfpowerscripts-beta:
-    name: 'sfpowerscripts beta'
+  sfp-beta:
+    name: 'sfp beta'
     uses: ./.github/workflows/promotePackage.yml
     with:
       version: 'beta'
       pathToPackageJson: 'packages/sfp-cli/package.json'
-      environment: sfpowerscripts-beta
+      environment: sfp-beta
     secrets:
       npm-token: ${{ secrets.NPM_TOKEN }}
     needs: [ build ]
   
   beta-docker:
     name: 'promote docker to beta'
-    uses: ./.github/workflows/sfpowerscripts-promote-docker.yml
+    uses: ./.github/workflows/sfp-promote-docker.yml
     with:
-      job-environment: 'sfpowerscripts-beta-docker'
+      job-environment: 'sfp-beta-docker'
       repo: 'flxbl-io'
       new-tag: beta   
       image: 'sfp-lite-rc' 
@@ -136,9 +136,9 @@ jobs:
 
   beta-docker-lite:
     name: 'promote docker light to beta'
-    uses: ./.github/workflows/sfpowerscripts-promote-docker.yml
+    uses: ./.github/workflows/sfp-promote-docker.yml
     with:
-      job-environment: 'sfpowerscripts-beta-docker'
+      job-environment: 'sfp-beta-docker'
       repo: 'flxbl-io'
       new-tag: beta   
       image: 'sfp-rc'  
@@ -150,22 +150,22 @@ jobs:
  
 
 
-  sfpowerscripts-prod:
-    name: 'sfpowerscripts prod'
+  sfp-prod:
+    name: 'sfp prod'
     uses: ./.github/workflows/promotePackage.yml
     with:
       version: 'latest'
       pathToPackageJson: 'packages/sfp-cli/package.json'
-      environment: sfpowerscripts-prod
+      environment: sfp-prod
     secrets:
       npm-token: ${{ secrets.NPM_TOKEN }}
     needs: [ build ]
   
   prod-docker:
     name: 'copy rc docker to prod'
-    uses: ./.github/workflows/sfpowerscripts-copy-docker.yml
+    uses: ./.github/workflows/sfp-copy-docker.yml
     with:
-      job-environment: 'sfpowerscripts-prod-docker'
+      job-environment: 'sfp-prod-docker'
     secrets:
       username: ${{ secrets.DOCKER_USERNAME }}
       token: ${{ secrets.GITHUB_TOKEN }}
@@ -175,9 +175,9 @@ jobs:
 
   prod-docker-lite:
     name: 'copy rc lite docker to prod'
-    uses: ./.github/workflows/sfpowerscripts-copy-docker.yml
+    uses: ./.github/workflows/sfp-copy-docker.yml
     with:
-      job-environment: 'sfpowerscripts-prod-docker'
+      job-environment: 'sfp-prod-docker'
       image: sfp-lite-rc
       image-as: sfp-lite
     secrets:

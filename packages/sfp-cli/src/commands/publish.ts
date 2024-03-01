@@ -29,8 +29,9 @@ import { Flags } from '@oclif/core';
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('@flxblio/sfp', 'publish');
 
-export default class Promote extends SfpCommand {
+export default class Publish extends SfpCommand {
     public static description = messages.getMessage('commandDescription');
+    static aliases = ['orchestrator:publish']
 
     public static examples = [
         `$ sfp publish --npm`,

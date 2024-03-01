@@ -48,6 +48,7 @@ export interface BuildProps {
 	configFilePath?: string;
 	projectDirectory?: string;
 	devhubAlias?: string;
+	baselineOrgAlias?:string;
 	repourl?: string;
 	waitTime: number;
 	isQuickBuild: boolean;
@@ -773,6 +774,7 @@ export default class BuildImpl {
 			},
 			{
 				devHub: this.props.devhubAlias,
+				baselineOrg: this.props.baselineOrgAlias,
 				installationkeybypass: true,
 				installationkey: undefined,
 				waitTime: this.props.waitTime.toString(),

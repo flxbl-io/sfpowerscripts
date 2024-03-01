@@ -190,7 +190,7 @@ export default abstract class BuildBase extends SfpCommand {
                 SFPLogger.printHeaderLine('', COLOR_HEADER, LoggerLevel.INFO);
                 SFPLogger.log(
                     COLOR_SUCCESS(
-                        `${buildExecResult.generatedPackages.length} packages created in ${COLOR_TIME(
+                        `${buildExecResult.generatedPackages.length} artifacts created in ${COLOR_TIME(
                             getFormattedTime(totalElapsedTime)
                         )} minutes with ${COLOR_ERROR(buildExecResult.failedPackages.length)} errors`
                     )
@@ -271,7 +271,7 @@ export default abstract class BuildBase extends SfpCommand {
         return buildProps;
         function printIncludeOnlyPackages(includeOnlyPackages: string[]) {
             SFPLogger.log(
-                COLOR_KEY_MESSAGE(`Build will include the below packages release configs (domain(s))(domain)`),
+                COLOR_KEY_MESSAGE(`Build will include the below packages as per the given release configs domain(s)`),
                 LoggerLevel.INFO
             );
             SFPLogger.log(COLOR_KEY_VALUE(`${includeOnlyPackages.toString()}`), LoggerLevel.INFO);
@@ -296,7 +296,7 @@ export default abstract class BuildBase extends SfpCommand {
 
         function printIncludeOnlyPackages(includeOnlyPackages: string[]) {
             SFPLogger.log(
-                COLOR_KEY_MESSAGE(`Build will include the below packages release configs (domain(s))(domain)`),
+                COLOR_KEY_MESSAGE(`Build will include the below packages as per the given release configs(domain(s))`),
                 LoggerLevel.INFO
             );
             SFPLogger.log(COLOR_KEY_VALUE(`${includeOnlyPackages.toString()}`), LoggerLevel.INFO);

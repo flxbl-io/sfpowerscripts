@@ -29,6 +29,7 @@ const messages = Messages.loadMessages('@flxblio/sfp', 'release');
 
 export default class Release extends SfpCommand {
     public static description = messages.getMessage('commandDescription');
+    static aliases = ['orchestrator:release']
 
     public static examples = [
         `sfp release -p path/to/releasedefinition.yml -u myorg --npm --scope myscope --generatechangelog`,

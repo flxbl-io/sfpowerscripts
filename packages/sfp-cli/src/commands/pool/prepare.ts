@@ -1,13 +1,13 @@
 import { Messages } from '@salesforce/core';
-import SfpCommand from '../SfpCommand';
-import PrepareImpl from '../impl/prepare/PrepareImpl';
-import SFPStatsSender from '../core/stats/SFPStatsSender';
-import { Stage } from '../impl/Stage';
+import SfpCommand from '../../SfpCommand';
+import PrepareImpl from '../../impl/prepare/PrepareImpl';
+import SFPStatsSender from '../../core/stats/SFPStatsSender';
+import { Stage } from '../../impl/Stage';
 import * as fs from 'fs-extra';
-import ScratchOrgInfoFetcher from '../core/scratchorg/pool/services/fetchers/ScratchOrgInfoFetcher';
+import ScratchOrgInfoFetcher from '../../core/scratchorg/pool/services/fetchers/ScratchOrgInfoFetcher';
 import Ajv from 'ajv';
 import path = require('path');
-import { PoolErrorCodes } from '../core/scratchorg/pool/PoolError';
+import { PoolErrorCodes } from '../../core/scratchorg/pool/PoolError';
 import SFPLogger, {
     LoggerLevel,
     COLOR_ERROR,
@@ -16,17 +16,20 @@ import SFPLogger, {
     COLOR_TIME,
     COLOR_KEY_MESSAGE,
 } from '@flxblio/sfp-logger';
-import getFormattedTime from '../core/utils/GetFormattedTime';
-import { PoolConfig } from '../core/scratchorg/pool/PoolConfig';
+import getFormattedTime from '../../core/utils/GetFormattedTime';
+import { PoolConfig } from '../../core/scratchorg/pool/PoolConfig';
 import { COLOR_WARNING } from '@flxblio/sfp-logger';
-import SFPOrg from '../core/org/SFPOrg';
+import SFPOrg from '../../core/org/SFPOrg';
 import { Flags } from '@oclif/core';
-import { loglevel, logsgroupsymbol, targetdevhubusername } from '../flags/sfdxflags';
+import { loglevel, logsgroupsymbol, targetdevhubusername } from '../../flags/sfdxflags';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('@flxblio/sfp', 'prepare');
 
 export default class Prepare extends SfpCommand {
+
+    static aliases = ['orchestrator:prepare','prepare']
+    
     protected static requiresDevhubUsername = true;
     protected static requiresProject = true;
 
@@ -200,7 +203,7 @@ export default class Prepare extends SfpCommand {
     public validatePoolConfig(poolConfig: any) {
         let ajv = new Ajv({ allErrors: true });
         let schema = fs.readJSONSync(
-            path.join(__dirname, '..', '..', 'resources', 'schemas', 'pooldefinition.schema.json'),
+            path.join(__dirname, '..','..', '..', 'resources', 'schemas', 'pooldefinition.schema.json'),
             { encoding: 'UTF-8' }
         );
         let validator = ajv.compile(schema);

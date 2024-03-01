@@ -78,7 +78,7 @@ export default class ReleaseImpl {
         );
 
         //Clear up the deployment output
-        SFPLogger.log(`Clearing deployment output`, LoggerLevel.TRACE, this.logger);
+        SFPLogger.log(`Clearing installation output`, LoggerLevel.TRACE, this.logger);
         FileOutputHandler.getInstance().deleteOutputFile(`deployment-breakdown.md`);
         FileOutputHandler.getInstance().deleteOutputFile(`release-changelog.md`);
       

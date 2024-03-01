@@ -14,6 +14,7 @@ Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('@flxblio/sfp', 'validate');
 
 export default class Validate extends SfpCommand {
+    static aliases = ['orchestrator:validate']
     protected static requiresProject = true;
 
     public static description = messages.getMessage('commandDescription');

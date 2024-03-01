@@ -178,6 +178,9 @@
                     "skipDeployOnOrgs": {
                         "$ref": "#/definitions/packageDirectory.skipDeployOnOrgs"
                     },
+                    "skipInstallOnOrgs": {
+                        "$ref": "#/definitions/packageDirectory.skipInstallOnOrgs"
+                    },
                     "skipTesting": {
                         "$ref": "#/definitions/packageDirectory.skipTesting"
                     },
@@ -526,6 +529,14 @@
             "type": "array",
             "title": "Skip Deployment of the Package",
             "description": "Skip deployment on a particular org or org(s). Take an array of aliases as the input",
+            "items": {
+                "type": "string"
+            }
+        },
+        "packageDirectory.skipInstallOnOrgs": {
+            "type": "array",
+            "title": "Skip installation of an artifact",
+            "description": "Skip installation of an artifact on a particular org or org(s). Take an array of aliases as the input",
             "items": {
                 "type": "string"
             }

@@ -12,6 +12,7 @@ const messages = Messages.loadMessages('@flxblio/sfp', 'quickbuild');
 
 export default class QuickBuild extends BuildBase {
     public static description = messages.getMessage('commandDescription');
+    static aliases = ['orchestrator:quickbuild']
 
     getStage() {
         return Stage.QUICKBUILD;

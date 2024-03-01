@@ -31,6 +31,7 @@ import { Duration } from '@salesforce/kit';
 import ClearCodeCoverage from './ClearCodeCoverage';
 import _ from 'lodash';
 const retry = require('async-retry');
+import dedent from 'dedent';
 
 export default class TriggerApexTests {
     private conn: Connection;
@@ -102,6 +103,16 @@ export default class TriggerApexTests {
                     suites
                 )) as TestResult;
             } catch (error) {
+                if(error.message.includes(`Cannot read properties of undefined (reading 'Status')`))
+                {
+                    return {
+                        result: false,
+                        id: null,
+                        message: dedent `Unable to obtain status of test run, Did you cancel the test run?
+                                         This error happens when the test run is cancelled and the status is not available.
+                                         Please retry`,
+                    };
+                }
                 return {
                     result: false,
                     id: null,
@@ -149,7 +160,10 @@ export default class TriggerApexTests {
                 return {
                     result: false,
                     id: testResult.summary.testRunId,
-                    message: 'Unable to fetch test execution results, Please retry',
+                    message: dedent `Unable to fetch test execution results,
+                              Please check the results in the org by using the URL below
+                              https://${this.conn.instanceUrl}/lightning/setup/ApexTestHistory/home
+                              Please try the test execution again`,
                 };
             }
 
@@ -761,7 +775,7 @@ export class ProgressReporter implements Progress<ApexTestProgressValue> {
                 }
             }
         } catch (error) {
-            //Ignore any results during reporting
+            console.log(`Bummer`)
         }
     }
 }

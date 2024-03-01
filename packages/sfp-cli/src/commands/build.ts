@@ -12,6 +12,7 @@ const messages = Messages.loadMessages('@flxblio/sfp', 'build');
 
 export default class Build extends BuildBase {
     public static description = messages.getMessage('commandDescription');
+    static aliases = ['orchestrator:build']
 
     getStage() {
         return Stage.BUILD;

@@ -419,7 +419,8 @@ export default class ValidateImpl implements PostDeployHook, PreDeployHook {
 			isBuildAllAsSourcePackages: !this.props.disableSourcePackageOverride,
 			currentStage: Stage.VALIDATE,
 			baseBranch: this.props.baseBranch,
-			devhubAlias: this.props.hubOrg?.getUsername()
+			devhubAlias: this.props.hubOrg?.getUsername(),
+			baselineOrgAlias: this.props.targetOrg
 		};
 
 		//Build DiffOptions
@@ -577,7 +578,7 @@ export default class ValidateImpl implements PostDeployHook, PreDeployHook {
 			SFPLogger.printHeaderLine('',COLOR_HEADER,LoggerLevel.INFO);
 			SFPLogger.log(
 				COLOR_SUCCESS(
-					`${generatedPackages.length} packages created in ${COLOR_TIME(
+					`${generatedPackages.length} artifacts created in ${COLOR_TIME(
 						getFormattedTime(totalElapsedTime),
 					)} with {${COLOR_ERROR(failedPackages.length)}} errors`,
 				),

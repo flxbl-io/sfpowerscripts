@@ -1,5 +1,5 @@
 {
-    "commandDescription": "Build artifacts of your packages in the current project",
+    "commandDescription": "Build artifact(s) of your packages in the current project",
     "devhubAliasFlagDescription": "Provide the alias of the devhub previously authenticated, default value is HubOrg if using the Authenticate Devhub task",
     "diffCheckFlagDescription": "Only build the packages which have changed by analyzing previous tags",
     "repoUrlFlagDescription": "Custom source repository URL to use in artifact metadata, overrides origin URL defined in git config",

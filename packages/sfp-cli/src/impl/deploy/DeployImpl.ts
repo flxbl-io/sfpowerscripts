@@ -91,7 +91,7 @@ export default class DeployImpl {
 
             let artifacts = ArtifactFetcher.fetchArtifacts(this.props.artifactDir, null, this.props.logger);
 
-            if (artifacts.length === 0) throw new Error(`No artifacts to deploy found in ${this.props.artifactDir}`);
+            if (artifacts.length === 0) throw new Error(`No artifacts to install found in ${this.props.artifactDir}`);
 
             //Convert artifacts to SfpPackages
             let sfpPackages = await this.generateSfpPackageFromArtifacts(artifacts);
@@ -109,12 +109,12 @@ export default class DeployImpl {
                 sfdxProjectConfig = ProjectConfig.getSFDXProjectConfig(null);
             }
 
-            SFPLogger.log('Packages' + sfpPackages.length, LoggerLevel.TRACE, this.props.logger);
+            SFPLogger.log('Artifacts' + sfpPackages.length, LoggerLevel.TRACE, this.props.logger);
 
             packagesToPackageInfo = await this.getPackagesToPackageInfo(sfpPackages);
 
             SFPLogger.log(
-                'Packages' + JSON.stringify(packagesToPackageInfo),
+                'Artifacts' + JSON.stringify(packagesToPackageInfo),
                 LoggerLevel.TRACE,
                 this.props.logger
             );
@@ -200,7 +200,7 @@ export default class DeployImpl {
                                 await this.promotePackagesBeforeInstallation(packageInfo.sourceDirectory, sfpPackage);
                             } catch (error) {
                                 //skip packages already promoted
-                                SFPLogger.log(`Package already promoted .. skipping`,LoggerLevel.WARN);
+                                SFPLogger.log(`Artifact already promoted .. skipping`,LoggerLevel.WARN);
                             }
 
                             this.displayRetryHeader(isToBeRetried, attemptCount);
@@ -235,7 +235,7 @@ export default class DeployImpl {
 
 
                                 FileOutputHandler.getInstance().writeOutput(`deployment-error.md`,`### 💣 Deployment Failed  💣`);
-                                FileOutputHandler.getInstance().appendOutput(`deployment-error.md`,`Package Installation failed for  **${queue[i].packageName}**`);
+                                FileOutputHandler.getInstance().appendOutput(`deployment-error.md`,`Artifact Installation failed for  **${queue[i].packageName}**`);
                                 FileOutputHandler.getInstance().appendOutput(`deployment-error.md`,`Reasons:`);
                                 FileOutputHandler.getInstance().appendOutput(`deployment-error.md`,`${error}`);
 
@@ -356,7 +356,7 @@ export default class DeployImpl {
         if (this.props.promotePackagesBeforeDeploymentToOrg === this.props.targetUsername) {
             if (sfpPackage.packageType === PackageType.Unlocked) {
                 console.log(
-                    COLOR_KEY_MESSAGE(`Attempting to promote package ${sfpPackage.packageName} before installation`)
+                    COLOR_KEY_MESSAGE(`Attempting to promote artifact ${sfpPackage.packageName} before installation`)
                 );
                 if(!this.props.isDryRun)
                 {
@@ -388,7 +388,7 @@ export default class DeployImpl {
         } else alwaysDeployMessage = undefined;
 
         //Display header
-        SFPLogger.printHeaderLine('Installing Package',COLOR_HEADER,LoggerLevel.INFO,this.props.logger);
+        SFPLogger.printHeaderLine(`Installing artifact:${pkg}`,COLOR_HEADER,LoggerLevel.INFO,this.props.logger);
         SFPLogger.log(COLOR_HEADER(`Name: ${COLOR_KEY_MESSAGE(pkg)}`), LoggerLevel.INFO, this.props.logger);
         SFPLogger.log(`Type: ${COLOR_KEY_MESSAGE(sfpPackage.packageType)}`, LoggerLevel.INFO, this.props.logger);
         SFPLogger.log(
@@ -456,10 +456,10 @@ export default class DeployImpl {
         isBaselinOrgModeActivated: boolean,
         props:DeployProps
     ) {
-        let groupSection = new GroupConsoleLogs(`Full Deployment Breakdown`, this.props.logger).begin();
+        let groupSection = new GroupConsoleLogs(`Full Installation Breakdown`, this.props.logger).begin();
         let maxTable = new Table({
             head: [
-                'Package',
+                'Artifact',
                 'Incoming Version',
                 isBaselinOrgModeActivated ? 'Version in baseline org' : 'Version in org',
                 'To be installed?',
@@ -480,10 +480,10 @@ export default class DeployImpl {
 
         groupSection.end();
 
-        groupSection = new GroupConsoleLogs(`Packages to be deployed`, this.props.logger).begin();
+        groupSection = new GroupConsoleLogs(`Artifacts to be installed`, this.props.logger).begin();
         let minTable = new Table({
             head: [
-                'Package',
+                'Artifact',
                 'Incoming Version',
                 isBaselinOrgModeActivated ? 'Version in baseline org' : 'Version in org',
             ],
@@ -509,7 +509,7 @@ export default class DeployImpl {
             let tableData = {
                 table: {
                     head:  [
-                        'Package',
+                        'Artifact',
                         'Incoming Version',
                          isBaselinOrgModeActivated ? 'Version in baseline org' : 'Version in org',
                         'To be installed?',
@@ -633,7 +633,7 @@ export default class DeployImpl {
             }
 
             const outputHandler:FileOutputHandler = FileOutputHandler.getInstance();
-            outputHandler.writeOutput('deployment-breakdown.md',`Please find the packages that will be deployed below`);
+            outputHandler.writeOutput('deployment-breakdown.md',`Please find the artifacts that will be installed below`);
             outputHandler.appendOutput('deployment-breakdown.md',`\n\n${getMarkdownTable(tableData)}`) ;
         }
 
@@ -782,9 +782,12 @@ export default class DeployImpl {
      */
     private isSkipDeployment(packageDescriptor: any, targetUsername: string): boolean {
         let skipDeployOnOrgs: string[] = packageDescriptor.skipDeployOnOrgs;
+        if(packageDescriptor.skipInstallOnOrgs) {
+            skipDeployOnOrgs = packageDescriptor.skipInstallOnOrgs;
+        }
         if (skipDeployOnOrgs) {
             if (!(skipDeployOnOrgs instanceof Array))
-                throw new Error(`Property 'skipDeployOnOrgs' must be of type Array`);
+                throw new Error(`Property 'skipDeployOnOrgs' or 'skipInstallOnOrgs' must be of type Array`);
             else return skipDeployOnOrgs.includes(targetUsername);
         } else return false;
     }
