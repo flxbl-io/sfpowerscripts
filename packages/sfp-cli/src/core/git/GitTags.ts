@@ -61,6 +61,9 @@ export default class GitTags {
 
         let tags = await this.listTagsOnBranch();
         let latestTag = tags.pop();
+
+        console.log(`Tags: ${tags}, Latest Tag: ${latestTag}`);
+
         if (latestTag) {
             let match: RegExpMatchArray = latestTag.match(
                 /^.*_v(?<version>[0-9]+\.[0-9]+\.[0-9]+(\.[0-9]+|\.LATEST|\.NEXT)?(\-ALIGN)?)$/
