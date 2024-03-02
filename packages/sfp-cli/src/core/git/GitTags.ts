@@ -17,6 +17,8 @@ export default class GitTags {
             `--sort=creatordate`,
             `--merged`,
         ]);
+        
+        console.log(`DEBUG: Tags: ${tags}, Package: ${this.sfdx_package}`);
 
         if (tags.length > 0) return this.filterTagsAgainstBranch(tags);
         else return tags;
@@ -62,7 +64,7 @@ export default class GitTags {
         let tags = await this.listTagsOnBranch();
         let latestTag = tags.pop();
 
-        console.log(`Tags: ${tags}, Latest Tag: ${latestTag}`);
+        console.log(`DEBUG: Tags: ${tags}, Latest Tag: ${latestTag}`);
 
         if (latestTag) {
             let match: RegExpMatchArray = latestTag.match(
