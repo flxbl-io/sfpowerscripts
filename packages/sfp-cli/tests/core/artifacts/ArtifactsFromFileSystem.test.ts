@@ -15,7 +15,7 @@ describe('Provided a path to the artifacts folder containing sfp artifact', () =
          });
 
        
-        let artifacts = ArtifactFetcher.findArtifacts('artifacts');
+        const artifacts = ArtifactFetcher.findArtifacts('artifacts');
         expect(artifacts).toEqual(
             [
                 '/path/to/core_sfpowerscripts_artifact_1.0.0-2.zip',
@@ -32,7 +32,7 @@ describe('Provided a path to the artifacts folder containing sfp artifact', () =
             return new Array('/path/to/core_sfpowerscripts_artifact_1.0.0-2.zip');
          });
 
-        let artifacts = ArtifactFetcher.findArtifacts('artifacts', 'core');
+        const artifacts = ArtifactFetcher.findArtifacts('artifacts', 'core');
         expect(artifacts).toEqual(new Array('/path/to/core_sfpowerscripts_artifact_1.0.0-2.zip'));
     });
 
@@ -46,7 +46,7 @@ describe('Provided a path to the artifacts folder containing sfp artifact', () =
                 '/path/to/core_sfpowerscripts_artifact_1.0.0-5.tgz'
             ];
          });
-        let artifacts = ArtifactFetcher.findArtifacts('artifacts', 'core');
+        const artifacts = ArtifactFetcher.findArtifacts('artifacts', 'core');
         expect(artifacts).toEqual(new Array('/path/to/core_sfpowerscripts_artifact_1.0.0-5.tgz'));
     });
 });

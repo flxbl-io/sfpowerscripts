@@ -43,13 +43,13 @@ export default class PackageDependencyResolver {
             }
             if (packageDirectory.dependencies && Array.isArray(packageDirectory.dependencies)) {
                 for (let i = 0; i < packageDirectory.dependencies.length; i++) {
-                    let dependency = packageDirectory.dependencies[i];
+                    const dependency = packageDirectory.dependencies[i];
                     if (this.projectConfig.packageAliases[dependency.package] === undefined && !this.isSubscriberPackageVersionId(dependency.package)) {
                         
                         throw new Error(`Can't find package id for dependency: ${dependency.package}, Please ensure that the package is added to sfdx-project.json in your packageAliases`);
                     }
 
-                    let packageVersionId = this.isSubscriberPackageVersionId(dependency.package)?dependency.package:this.projectConfig.packageAliases[dependency.package]
+                    const packageVersionId = this.isSubscriberPackageVersionId(dependency.package)?dependency.package:this.projectConfig.packageAliases[dependency.package]
 
                     if (this.isSubscriberPackageVersionId(packageVersionId)) {
                         // Already resolved
@@ -75,7 +75,7 @@ export default class PackageDependencyResolver {
                                                  +`${package2VersionForDependency.PatchVersion}.`
                                                  +`${package2VersionForDependency.BuildNumber}`, LoggerLevel.INFO);
 
-                        let branchedPackageAlias = `${dependency.package}@`
+                        const branchedPackageAlias = `${dependency.package}@`
                                                     +`${package2VersionForDependency.MajorVersion}.`
                                                     +`${package2VersionForDependency.MinorVersion}.`
                                                     +`${package2VersionForDependency.PatchVersion}.`
@@ -128,7 +128,7 @@ export default class PackageDependencyResolver {
         let package2Version: Package2Version;
 
         let versionNumber: string = dependency.versionNumber;
-        let vers: string[] = versionNumber.split('.');
+        const vers: string[] = versionNumber.split('.');
         if (vers.length === 4 && vers[3] === 'LATEST') {
             versionNumber = `${vers[0]}.${vers[1]}.${vers[2]}`;
         }

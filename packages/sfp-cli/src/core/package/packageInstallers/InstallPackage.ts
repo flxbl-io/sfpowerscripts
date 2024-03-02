@@ -56,7 +56,7 @@ export abstract class InstallPackage {
     ) { }
 
     public async exec(): Promise<PackageInstallationResult> {
-        let startTime = Date.now();
+        const startTime = Date.now();
         let elapsedTime: number;
         try {
             this.packageDescriptor = ProjectConfig.getSFDXPackageDescriptor(
@@ -100,7 +100,7 @@ export abstract class InstallPackage {
     }
     
     checkPackageDirectoryExists() {
-        let absPackageDirectory: string = path.join(this.sfpPackage.sourceDir, this.packageDirectory);
+        const absPackageDirectory: string = path.join(this.sfpPackage.sourceDir, this.packageDirectory);
         if (!fs.existsSync(absPackageDirectory)) {
             throw new Error(`Package directory ${absPackageDirectory} does not exist`);
         }
@@ -109,7 +109,7 @@ export abstract class InstallPackage {
     private async waitTillAllPermissionSetGroupIsUpdated() {
         try {
             //Package Has Permission Set Group
-            let permissionSetGroupUpdateAwaiter: PermissionSetGroupUpdateAwaiter = new PermissionSetGroupUpdateAwaiter(
+            const permissionSetGroupUpdateAwaiter: PermissionSetGroupUpdateAwaiter = new PermissionSetGroupUpdateAwaiter(
                 this.connection,
                 this.logger
             );
@@ -132,7 +132,7 @@ export abstract class InstallPackage {
 
             let aliasDir: string;
 
-            let alias = await this.sfpOrg.getAlias();
+            const alias = await this.sfpOrg.getAlias();
             aliasDir = files.find(
                 (file) => path.basename(file) === alias && fs.lstatSync(path.join(searchDirectory, file)).isDirectory()
             );
@@ -220,7 +220,7 @@ export abstract class InstallPackage {
 
     protected async isPackageToBeInstalled(skipIfPackageInstalled: boolean): Promise<boolean> {
         if (skipIfPackageInstalled) {
-            let installationStatus = await this.sfpOrg.isArtifactInstalledInOrg(this.logger, this.sfpPackage);
+            const installationStatus = await this.sfpOrg.isArtifactInstalledInOrg(this.logger, this.sfpPackage);
             return !installationStatus.isInstalled;
         } else if(this.sfpPackage.packageType == PackageType.Diff) 
         {
@@ -253,9 +253,9 @@ export abstract class InstallPackage {
     }
 
     public async executePreDeploymentScripts() {
-        let preDeploymentScript: string = path.join(this.sfpPackage.sourceDir, `scripts`, `preDeployment`);
+        const preDeploymentScript: string = path.join(this.sfpPackage.sourceDir, `scripts`, `preDeployment`);
         if (fs.existsSync(preDeploymentScript)) {
-            let alias = await this.sfpOrg.getAlias();
+            const alias = await this.sfpOrg.getAlias();
             SFPLogger.log('Executing preDeployment script', LoggerLevel.INFO, this.logger);
             await ScriptExecutor.executeScript(
                 this.logger,
@@ -290,10 +290,10 @@ export abstract class InstallPackage {
     }
 
     public async executePostDeploymentScript() {
-        let postDeploymentScript: string = path.join(this.sfpPackage.sourceDir, `scripts`, `postDeployment`);
+        const postDeploymentScript: string = path.join(this.sfpPackage.sourceDir, `scripts`, `postDeployment`);
         if (fs.existsSync(postDeploymentScript)) {
             SFPLogger.log('Executing postDeployment script', LoggerLevel.INFO, this.logger);
-            let alias = await this.sfpOrg.getAlias();
+            const alias = await this.sfpOrg.getAlias();
             await ScriptExecutor.executeScript(
                 this.logger,
                 postDeploymentScript,
@@ -310,7 +310,7 @@ export abstract class InstallPackage {
         SFPLogger.log(`Executing Post Deployers`, LoggerLevel.INFO, this.logger);
 
         //Gather componentSet
-        let componentSet = ComponentSet.fromSource(
+        const componentSet = ComponentSet.fromSource(
             path.join(this.sfpPackage.projectDirectory, this.sfpPackage.packageDirectory)
         );
 
@@ -357,11 +357,11 @@ export abstract class InstallPackage {
         SFPLogger.log(`Executing Pre Deployers`, LoggerLevel.INFO, this.logger);
 
         //Gather componentSet
-        let componentSet = ComponentSet.fromSource(
+        const componentSet = ComponentSet.fromSource(
             path.join(this.sfpPackage.projectDirectory, this.sfpPackage.packageDirectory)
         );
 
-        let analyzers = AnalyzerRegistry.getAnalyzers();
+        const analyzers = AnalyzerRegistry.getAnalyzers();
         for (const analyzer of analyzers) {
             if(await analyzer.isEnabled(this.sfpPackage, this.logger)) 
             {
@@ -420,7 +420,7 @@ export abstract class InstallPackage {
         target_org: string,
         apiVersion: string
     ): Promise<any> {
-        let deploymentOptions: DeploymentOptions = {
+        const deploymentOptions: DeploymentOptions = {
             ignoreWarnings: true,
             waitTime: waitTime,
         };
@@ -491,7 +491,7 @@ export abstract class InstallPackage {
     }
     
     private getAStringOfSpecificTestClasses(apexTestClassses: string[]) {
-        let specifedTests = apexTestClassses.join();
+        const specifedTests = apexTestClassses.join();
         return specifedTests;
     }
 }

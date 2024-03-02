@@ -83,7 +83,7 @@ export default class Fetch extends SfpCommand {
 
         this.flags.apiversion = this.flags.apiversion || (await hubConn.retrieveMaxApiVersion());
 
-        let fetchImpl = new PoolFetchImpl(
+        const fetchImpl = new PoolFetchImpl(
             this.hubOrg,
             this.flags.tag,
             false,
@@ -100,14 +100,14 @@ export default class Fetch extends SfpCommand {
             fetchImpl.setSourceTrackingOnFetch();
         }
 
-        let result = (await fetchImpl.execute()) as ScratchOrg;
+        const result = (await fetchImpl.execute()) as ScratchOrg;
 
         if (!this.flags.json && !this.flags.sendtouser) {
             await this.displayOrgContents(result);
 
             ux.log(`======== Scratch org details ========`);
-            let list = [];
-            for (let [key, value] of Object.entries(result)) {
+            const list = [];
+            for (const [key, value] of Object.entries(result)) {
                 if (value) {
                     list.push({ key: key, value: value });
                 }
@@ -128,12 +128,12 @@ export default class Fetch extends SfpCommand {
      */
     private async displayOrgContents(soDetail: ScratchOrg) {
         try {
-            let scratchOrgAsSFPOrg = await SFPOrg.create({ aliasOrUsername: soDetail.username });
-            let installedManagedPackages = await scratchOrgAsSFPOrg.getAllInstalledManagedPackages();
+            const scratchOrgAsSFPOrg = await SFPOrg.create({ aliasOrUsername: soDetail.username });
+            const installedManagedPackages = await scratchOrgAsSFPOrg.getAllInstalledManagedPackages();
             SFPLogger.log('Installed managed packages:', LoggerLevel.INFO);
             InstalledPackageDisplayer.printInstalledPackages(installedManagedPackages, null);
 
-            let installedArtifacts = await scratchOrgAsSFPOrg.getInstalledArtifacts();
+            const installedArtifacts = await scratchOrgAsSFPOrg.getInstalledArtifacts();
             InstalledArtifactsDisplayer.printInstalledArtifacts(installedArtifacts, null);
         } catch (error) {
             SFPLogger.log(

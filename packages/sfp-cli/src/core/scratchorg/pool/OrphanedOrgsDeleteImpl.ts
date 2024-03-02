@@ -14,12 +14,12 @@ export default class OrphanedOrgsDeleteImpl extends PoolBaseImpl {
     protected async onExec(): Promise<ScratchOrg[]> {
         const results = (await new ScratchOrgInfoFetcher(this.hubOrg).getOrphanedScratchOrgs()) as any;
 
-        let scratchOrgToDelete: ScratchOrg[] = new Array<ScratchOrg>();
+        const scratchOrgToDelete: ScratchOrg[] = new Array<ScratchOrg>();
         if (results.records.length > 0) {
-            let scrathOrgIds: string[] = [];
-            for (let element of results.records) {
+            const scrathOrgIds: string[] = [];
+            for (const element of results.records) {
                 if (element.Description?.includes(`"requestedBy":"sfp"`)) {
-                    let soDetail: ScratchOrg = {};
+                    const soDetail: ScratchOrg = {};
                     soDetail.orgId = element.ScratchOrg;
                     soDetail.username = element.SignupUsername;
                     soDetail.status = 'recovered';
@@ -29,12 +29,12 @@ export default class OrphanedOrgsDeleteImpl extends PoolBaseImpl {
             }
 
             if (scrathOrgIds.length > 0) {
-                let activeScrathOrgs = await new ScratchOrgInfoFetcher(this.hubOrg).getActiveScratchOrgsByInfoId(
+                const activeScrathOrgs = await new ScratchOrgInfoFetcher(this.hubOrg).getActiveScratchOrgsByInfoId(
                     scrathOrgIds.join(',')
                 );
 
                 if (activeScrathOrgs.records.length > 0) {
-                    for (let scratchOrg of activeScrathOrgs.records) {
+                    for (const scratchOrg of activeScrathOrgs.records) {
                         await new ScratchOrgOperator(this.hubOrg).delete(scratchOrg.Id);
                         SFPLogger.log(`Scratch org with username ${scratchOrg.SignupUsername} is recovered`,LoggerLevel.TRACE,this.logger);
                     }

@@ -18,9 +18,9 @@ jest.mock('../../../../src/core/package/SfpPackageBuilder', () => {
             projectDirectory: string,
             sfdx_package: string
         ) {
-            let propertyFetchers: PropertyFetcher[] = [new DestructiveManifestPathFetcher()];
+            const propertyFetchers: PropertyFetcher[] = [new DestructiveManifestPathFetcher()];
 
-            let sfpPackage: SfpPackage = new SfpPackage();
+            const sfpPackage: SfpPackage = new SfpPackage();
              sfpPackage.packageDescriptor = packageDescriptor;
              for (const propertyFetcher of propertyFetchers) {
                 await propertyFetcher.getsfpProperties(sfpPackage, logger);
@@ -42,15 +42,15 @@ describe('Given a package descriptor with a destructiveChangePath', () => {
     });
 
     it('Should set destructiveChangesPath property in SfpPackage', async () => {
-        let destructiveManifestPathFetcher: DestructiveManifestPathFetcher = new DestructiveManifestPathFetcher();
-        let sfpPackage: SfpPackage = await SfpPackageBuilder.buildPackageFromProjectDirectory(null, null, null);
+        const destructiveManifestPathFetcher: DestructiveManifestPathFetcher = new DestructiveManifestPathFetcher();
+        const sfpPackage: SfpPackage = await SfpPackageBuilder.buildPackageFromProjectDirectory(null, null, null);
         await destructiveManifestPathFetcher.getsfpProperties(sfpPackage);
         expect(sfpPackage.destructiveChangesPath).toBe('destructiveChanges.xml');
     });
 
     it('Should set destructiveChanges property in SfpPackage', async () => {
-        let destructiveManifestPathFetcher: DestructiveManifestPathFetcher = new DestructiveManifestPathFetcher();
-        let sfpPackage: SfpPackage = await  SfpPackageBuilder.buildPackageFromProjectDirectory(null, null, null);
+        const destructiveManifestPathFetcher: DestructiveManifestPathFetcher = new DestructiveManifestPathFetcher();
+        const sfpPackage: SfpPackage = await  SfpPackageBuilder.buildPackageFromProjectDirectory(null, null, null);
         await destructiveManifestPathFetcher.getsfpProperties(sfpPackage);
         expect(sfpPackage.destructiveChanges).toEqual(destructiveChanges);
     });

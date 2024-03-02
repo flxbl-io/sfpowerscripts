@@ -69,18 +69,18 @@ export default class PackageComponentDiff {
             ProjectConfig.getPackageDescriptorFromConfig(this.sfdxPackage, sfdxManifest).path,
         ]);
 
-        let content = data.split(sepRegex);
-        let diffFile: DiffFile = await this.parseContent(content);
+        const content = data.split(sepRegex);
+        const diffFile: DiffFile = await this.parseContent(content);
         await this.gitDiffUtils.fetchFileListRevisionTo(this.revisionTo, this.logger);
 
-        let filesToCopy = diffFile.addedEdited;
+        const filesToCopy = diffFile.addedEdited;
         let deletedFiles = diffFile.deleted;
 
         deletedFiles = deletedFiles.filter((deleted) => {
             let found = false;
-            let deletedMetadata = MetadataFiles.getFullApiNameWithExtension(deleted.path);
+            const deletedMetadata = MetadataFiles.getFullApiNameWithExtension(deleted.path);
             for (let i = 0; i < filesToCopy.length; i++) {
-                let addedOrEdited = MetadataFiles.getFullApiNameWithExtension(filesToCopy[i].path);
+                const addedOrEdited = MetadataFiles.getFullApiNameWithExtension(filesToCopy[i].path);
                 if (deletedMetadata === addedOrEdited) {
                     found = true;
                     break;
@@ -99,9 +99,9 @@ export default class PackageComponentDiff {
             for (let i = 0; i < filesToCopy.length; i++) {
 
                 try {
-                    let filePath = filesToCopy[i].path;
+                    const filePath = filesToCopy[i].path;
 
-                    let sourceComponents = resolver.getComponentsFromPath(filePath);
+                    const sourceComponents = resolver.getComponentsFromPath(filePath);
                     for (const sourceComponent of sourceComponents) {
                         if (sourceComponent.type.strategies?.adapter == AdapterId.MatchingContentFile) {
                             await this.gitDiffUtils.copyFile(sourceComponent.xml, outputFolder, this.logger);
@@ -182,9 +182,9 @@ export default class PackageComponentDiff {
         this.destructivePackageObjPre = [];
         //returns root, dir, base and name
         for (let i = 0; i < filePaths.length; i++) {
-            let filePath = filePaths[i].path;
+            const filePath = filePaths[i].path;
             try {
-                let matcher = filePath.match(SOURCE_EXTENSION_REGEX);
+                const matcher = filePath.match(SOURCE_EXTENSION_REGEX);
                 let extension = '';
                 if (matcher) {
                     extension = matcher[0];
@@ -192,7 +192,7 @@ export default class PackageComponentDiff {
                     extension = path.parse(filePath).ext;
                 }
 
-                let name = MetadataInfo.getMetadataName(filePath);
+                const name = MetadataInfo.getMetadataName(filePath);
 
                 if (name) {
                     if (!MetadataFiles.isCustomMetadata(filePath, name)) {
@@ -209,9 +209,9 @@ export default class PackageComponentDiff {
 
                         continue;
                     }
-                    let member = MetadataFiles.getMemberNameFromFilepath(filePath, name);
+                    const member = MetadataFiles.getMemberNameFromFilepath(filePath, name);
                     if (name === METADATA_INFO.CustomField.xmlName) {
-                        let isFormular = await this.gitDiffUtils.isFileIncludesContent(filePaths[i], '<formula>');
+                        const isFormular = await this.gitDiffUtils.isFileIncludesContent(filePaths[i], '<formula>');
                         if (isFormular) {
                             this.destructivePackageObjPre = this.buildDestructiveTypeObj(
                                 this.destructivePackageObjPre,
@@ -296,7 +296,7 @@ export default class PackageComponentDiff {
         });
 
         if (destrucObj.length > 0) {
-            let dest = {
+            const dest = {
                 Package: {
                     $: {
                         xmlns: 'http://soap.sforce.com/2006/04/metadata',
@@ -305,10 +305,10 @@ export default class PackageComponentDiff {
                 },
             };
 
-            let destructivePackageName = fileName;
-            let filepath = path.join(outputFolder, destructivePackageName);
-            let builder = new xml2js.Builder();
-            let xml = builder.buildObject(dest);
+            const destructivePackageName = fileName;
+            const filepath = path.join(outputFolder, destructivePackageName);
+            const builder = new xml2js.Builder();
+            const xml = builder.buildObject(dest);
             fs.writeFileSync(filepath, xml);
         }
     }
@@ -340,16 +340,16 @@ export default class PackageComponentDiff {
         const deletedFileRegEx = new RegExp(/\sD\t/);
         const lineBreakRegEx = /\r?\n|\r|( $)/;
 
-        let metadataFiles = new MetadataFiles();
+        const metadataFiles = new MetadataFiles();
 
-        let diffFile: DiffFile = {
+        const diffFile: DiffFile = {
             deleted: [],
             addedEdited: [],
         };
 
         for (let i = 0; i < fileContents.length; i++) {
             if (statusRegEx.test(fileContents[i])) {
-                let lineParts = fileContents[i].split(statusRegEx);
+                const lineParts = fileContents[i].split(statusRegEx);
 
                 let finalPath = path.join('.', lineParts[1].replace(lineBreakRegEx, ''));
                 finalPath = finalPath.trim();
@@ -363,7 +363,7 @@ export default class PackageComponentDiff {
                     continue;
                 }
 
-                let revisionPart = lineParts[0].split(/\t|\s/);
+                const revisionPart = lineParts[0].split(/\t|\s/);
 
                 if (deletedFileRegEx.test(fileContents[i])) {
                     //Deleted
@@ -381,13 +381,13 @@ export default class PackageComponentDiff {
                     });
                 }
             } else if (renamedRegEx.test(fileContents[i])) {
-                let lineParts = fileContents[i].split(renamedRegEx);
+                const lineParts = fileContents[i].split(renamedRegEx);
 
-                let paths = lineParts[1].trim().split(tabRegEx);
+                const paths = lineParts[1].trim().split(tabRegEx);
 
                 let finalPath = path.join('.', paths[1].trim());
                 finalPath = finalPath.replace('\\303\\251', 'é');
-                let revisionPart = lineParts[0].split(/\t|\s/);
+                const revisionPart = lineParts[0].split(/\t|\s/);
 
                 if (!(await metadataFiles.isInModuleFolder(finalPath))) {
                     continue;

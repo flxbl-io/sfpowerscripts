@@ -18,7 +18,7 @@ describe('Given a WorkItemUpdater', () => {
         );
     });
 
-    let latestRelease: Release = {
+    const latestRelease: Release = {
         names: ['release-1'],
         buildNumber: 1,
         workItems: {},

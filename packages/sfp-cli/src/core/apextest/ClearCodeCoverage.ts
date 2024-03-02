@@ -17,12 +17,12 @@ export default class ClearTestResults {
         this.conn = this.org.getConnection();
 
         SFPLogger.log(`Clearing Coverage Results`, LoggerLevel.DEBUG, this.logger);
-        let codeCoverageAggregate = await QueryHelper.query(CODECOV_AGGREGATE_QUERY, this.conn, true);
+        const codeCoverageAggregate = await QueryHelper.query(CODECOV_AGGREGATE_QUERY, this.conn, true);
         await this.deleteRecords('ApexCodeCoverageAggregate', codeCoverageAggregate);
         SFPLogger.log(`Cleared Coverage Results`, LoggerLevel.DEBUG, this.logger);
 
         SFPLogger.log(`Clearing Test Results`, LoggerLevel.DEBUG, this.logger);
-        let testResults = await QueryHelper.query(APEX_TEST_RESULT_QUERY, this.conn, true);
+        const testResults = await QueryHelper.query(APEX_TEST_RESULT_QUERY, this.conn, true);
         await this.deleteRecords('ApexTestResult', testResults);
         SFPLogger.log(`Cleared Test Results`, LoggerLevel.DEBUG, this.logger);
 
@@ -34,9 +34,9 @@ export default class ClearTestResults {
 
     private async deleteRecords(objectType: string, records: any[]) {
         if (records && records.length > 0) {
-            let idsList: string[] = records.map((elem) => elem.Id);
+            const idsList: string[] = records.map((elem) => elem.Id);
             let errors = [];
-            for (let idsToDelete of chunkArray(2000, idsList)) {
+            for (const idsToDelete of chunkArray(2000, idsList)) {
                 const deleteResults: any = await this.conn.tooling.destroy(objectType, idsToDelete);
                 deleteResults.forEach((elem) => {
                     if (!elem.success) {

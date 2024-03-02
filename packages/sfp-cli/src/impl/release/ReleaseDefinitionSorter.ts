@@ -15,7 +15,7 @@ export default class ReleaseDefinitionSorter {
         logger: Logger
     ): ReleaseDefinition[] {
 
-        let clonedReleaseDefintions:ReleaseDefinition[] = _.cloneDeep(releaseDefinitions);
+        const clonedReleaseDefintions:ReleaseDefinition[] = _.cloneDeep(releaseDefinitions);
         const allPackagesInConfig = ProjectConfig.getAllPackagesFromProjectConfig(leadingSfProjectConfig);
         const packageOccurrenceCount = new Map<string, number>();
 

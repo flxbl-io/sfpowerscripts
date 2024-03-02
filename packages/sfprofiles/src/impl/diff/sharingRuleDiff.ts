@@ -31,15 +31,15 @@ export default class SharingRuleDiff {
         let sharingRulesObj2: any = {};
 
         if (sharingRuleXml1 !== '') {
-            let parseResult = await parseString(sharingRuleXml1);
+            const parseResult = await parseString(sharingRuleXml1);
             sharingRulesObj1 = parseResult.SharingRules || {};
         }
         if (sharingRuleXml2 !== '') {
-            let parseResult = await parseString(sharingRuleXml2);
+            const parseResult = await parseString(sharingRuleXml2);
             sharingRulesObj2 = parseResult.SharingRules || {};
         }
 
-        let addedEditedOrDeleted = SharingRuleDiff.buildSharingRulesObj(sharingRulesObj1, sharingRulesObj2);
+        const addedEditedOrDeleted = SharingRuleDiff.buildSharingRulesObj(sharingRulesObj1, sharingRulesObj2);
 
         SharingRuleDiff.writeSharingRule(addedEditedOrDeleted.addedEdited, outputFilePath);
 
@@ -95,7 +95,7 @@ export default class SharingRuleDiff {
         });
     }
     private static ensureArray(sharingObj) {
-        let keys = Object.keys(sharingObj);
+        const keys = Object.keys(sharingObj);
         keys.forEach((key) => {
             if (typeof sharingObj[key] === 'object' && !Array.isArray(sharingObj[key]) && key !== '$') {
                 sharingObj[key] = [sharingObj[key]];
@@ -105,12 +105,12 @@ export default class SharingRuleDiff {
     }
 
     public static async getMembers(filePath: string) {
-        let fileContent = fs.readFileSync(filePath, 'utf8').toString();
+        const fileContent = fs.readFileSync(filePath, 'utf8').toString();
         const parseString = util.promisify(parser.parseString) as _.Function1<xml2js.convertableToString, Promise<{ SharingRules: any }>>;
-        let members = {};
+        const members = {};
         if (fileContent !== '') {
-            let parseResult = await parseString(fileContent);
-            let sharingRulesObj = parseResult.SharingRules || {};
+            const parseResult = await parseString(fileContent);
+            const sharingRulesObj = parseResult.SharingRules || {};
             if (!_.isNil(sharingRulesObj.sharingCriteriaRules)) {
                 if (!Array.isArray(sharingRulesObj.sharingCriteriaRules)) {
                     members['SharingCriteriaRule'] = [sharingRulesObj.sharingCriteriaRules.fullName];
@@ -155,7 +155,7 @@ export default class SharingRuleDiff {
         sharingRuleObj1: any,
         sharingRulesObj2: any
     ): { addedEdited: any; deleted: any } {
-        let newSharingRuleObj = {
+        const newSharingRuleObj = {
             $: { xmlns: 'http://soap.sforce.com/2006/04/metadata' },
             sharingCriteriaRules: [],
             sharingOwnerRules: [],
@@ -166,7 +166,7 @@ export default class SharingRuleDiff {
         sharingRuleObj1 = SharingRuleDiff.ensureArray(sharingRuleObj1);
         sharingRulesObj2 = SharingRuleDiff.ensureArray(sharingRulesObj2);
 
-        let deletedSharingObj = {
+        const deletedSharingObj = {
             $: { xmlns: 'http://soap.sforce.com/2006/04/metadata' },
             sharingCriteriaRules: [],
             sharingOwnerRules: [],
@@ -282,10 +282,10 @@ export default class SharingRuleDiff {
         const builder = new xml2js.Builder({
             xmldec: { version: '1.0', encoding: 'UTF-8', standalone: null },
         });
-        let sharingRulesObj = {
+        const sharingRulesObj = {
             SharingRules: newSharingRulesObj,
         };
-        let xml = builder.buildObject(sharingRulesObj);
+        const xml = builder.buildObject(sharingRulesObj);
         fs.writeFileSync(outputFilePath, xml);
     }
 }

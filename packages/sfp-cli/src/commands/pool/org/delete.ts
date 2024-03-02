@@ -39,7 +39,7 @@ export default class Delete extends SfpCommand {
 
         this.flags.apiversion = this.flags.apiversion || (await hubConn.retrieveMaxApiVersion());
 
-        let aliasAccessor = await AliasAccessor.create();
+        const aliasAccessor = await AliasAccessor.create();
         let resolvedAliasOrUserName:string;
         if (aliasAccessor.resolveAlias(this.flags.targetusername)) {
             resolvedAliasOrUserName = aliasAccessor.resolveUsername(this.flags.targetusername);
@@ -47,7 +47,7 @@ export default class Delete extends SfpCommand {
             resolvedAliasOrUserName = this.flags.targetusername;
         }
 
-        let poolOrgDeleteImpl = new PoolOrgDeleteImpl(this.hubOrg, resolvedAliasOrUserName);
+        const poolOrgDeleteImpl = new PoolOrgDeleteImpl(this.hubOrg, resolvedAliasOrUserName);
 
         await poolOrgDeleteImpl.execute();
         if (!this.flags.json)

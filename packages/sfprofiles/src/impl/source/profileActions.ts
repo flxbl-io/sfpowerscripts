@@ -28,16 +28,16 @@ export default abstract class ProfileActions {
         profileNames: string[],
         packageDirectories?: string[]
     ): Promise<ProfileStatus> {
-        let profilesStatus: ProfileStatus = {} as ProfileStatus;
+        const profilesStatus: ProfileStatus = {} as ProfileStatus;
         profilesStatus.added = [];
         profilesStatus.updated = [];
         profilesStatus.deleted = [];
 
         //Load all local profiles
-        let localProfiles = await this.loadProfileFromPackageDirectories(packageDirectories);
+        const localProfiles = await this.loadProfileFromPackageDirectories(packageDirectories);
 
         //generate default path for new profiles
-        let profilePath = path.join(await Sfpowerkit.getDefaultFolder(), 'main', 'default', 'profiles');
+        const profilePath = path.join(await Sfpowerkit.getDefaultFolder(), 'main', 'default', 'profiles');
         //create folder structure
         FileUtils.mkDirByPathSync(profilePath);
 
@@ -46,7 +46,7 @@ export default abstract class ProfileActions {
 
         if (profileNames && profileNames.length > 0) {
             for (let i = 0; i < profileNames.length; i++) {
-                let profileName = profileNames[i];
+                const profileName = profileNames[i];
                 let found = false;
 
                 for (let j = 0; j < localProfiles.length; j++) {
@@ -59,7 +59,7 @@ export default abstract class ProfileActions {
                 if (!found) {
                     for (let k = 0; k < remoteProfiles.length; k++) {
                         if (remoteProfiles[k] === profileName) {
-                            let newProfilePath = path.join(profilePath, remoteProfiles[k] + this.profileFileExtension);
+                            const newProfilePath = path.join(profilePath, remoteProfiles[k] + this.profileFileExtension);
                             profilesStatus.added.push({ path: newProfilePath, name: profileName });
                             found = true;
                             break;
@@ -82,10 +82,10 @@ export default abstract class ProfileActions {
             });
 
             if (remoteProfiles && remoteProfiles.length > 0) {
-                let newProfiles = remoteProfiles.filter((profileObj) => {
+                const newProfiles = remoteProfiles.filter((profileObj) => {
                     let found = false;
                     for (let i = 0; i < profilesStatus.updated.length; i++) {
-                        let fileName = profilesStatus.updated[i].name;
+                        const fileName = profilesStatus.updated[i].name;
                         //escape some caracters
                         let onlineName = profileObj.replace("'", '%27');
                         onlineName = onlineName.replace('/', '%2F');
@@ -100,7 +100,7 @@ export default abstract class ProfileActions {
                     SFPLogger.log('New profiles founds', LoggerLevel.DEBUG);
                     for (let i = 0; i < newProfiles.length; i++) {
                         SFPLogger.log(newProfiles[i], LoggerLevel.DEBUG);
-                        let newProfilePath = path.join(profilePath, newProfiles[i] + this.profileFileExtension);
+                        const newProfilePath = path.join(profilePath, newProfiles[i] + this.profileFileExtension);
                         profilesStatus.added.push({ path: newProfilePath, name: newProfiles[i] });
                     }
                 } else {
@@ -112,7 +112,7 @@ export default abstract class ProfileActions {
     }
 
     protected async loadProfileFromPackageDirectories(packageDirectories?: string[]): Promise<ProfileSourceFile[]> {
-        let resolver = new MetadataResolver();
+        const resolver = new MetadataResolver();
         let profiles: SourceComponent[] = [];
 
         //If packageDirectories are not mentioned, fetch all package directories
@@ -134,23 +134,23 @@ export default abstract class ProfileActions {
             );
         }
 
-        let profileSourceFile = profiles.map((elem) => {
+        const profileSourceFile = profiles.map((elem) => {
             return { path: elem.xml, name: elem.name };
         });
         return profileSourceFile;
     }
 
     protected async reconcileTabs(profileObj: Profile): Promise<void> {
-        let tabRetriever = new MetadataRetriever(this.org.getConnection(), registry.types.customtab.name);
+        const tabRetriever = new MetadataRetriever(this.org.getConnection(), registry.types.customtab.name);
 
         if (profileObj.tabVisibilities !== undefined) {
             if (!Array.isArray(profileObj.tabVisibilities)) {
                 profileObj.tabVisibilities = [profileObj.tabVisibilities];
             }
-            let validArray = [];
+            const validArray = [];
             for (let i = 0; i < profileObj.tabVisibilities.length; i++) {
-                let cmpObj = profileObj.tabVisibilities[i];
-                let exist = await tabRetriever.isComponentExistsInProjectDirectoryOrInOrg(cmpObj.tab);
+                const cmpObj = profileObj.tabVisibilities[i];
+                const exist = await tabRetriever.isComponentExistsInProjectDirectoryOrInOrg(cmpObj.tab);
                 if (exist) {
                     validArray.push(cmpObj);
                 }

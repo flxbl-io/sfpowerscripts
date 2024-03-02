@@ -28,7 +28,7 @@ export default class ImpactedRelaseConfigResolver {
 
                 // handle dependencyOn, only do impact if there is atleast one package that is impacted
                 if (releaseImpactedPackages.length>0 && isExplicitDependencyCheckEnabled && releaseConfig.dependencyOn) {
-                    let dependencyImpactedPackages = releaseConfig.dependencyOn.filter((artifact) =>
+                    const dependencyImpactedPackages = releaseConfig.dependencyOn.filter((artifact) =>
                         impactedPackages.includes(artifact)
                     );
                     releaseImpactedPackages.push(dependencyImpactedPackages);

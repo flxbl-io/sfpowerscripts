@@ -65,8 +65,8 @@ export default class Reconcile extends SfpCommand {
     protected static requiresProject = true;
 
     public async execute(): Promise<Array<{state: any, fullName: any, type: any, path: any}>> {
-        let argFolder = this.flags.folder;
-        let argProfileList = this.flags.profilelist;
+        const argFolder = this.flags.folder;
+        const argProfileList = this.flags.profilelist;
 
         if (!this.flags.sourceonly) {
             if (_.isNil(this.flags.targetorg)) {
@@ -82,11 +82,11 @@ export default class Reconcile extends SfpCommand {
             Sfpowerkit.setDefaultFolder(argFolder[0]);
         }
 
-        let result = [];
+        const result = [];
 
         try {
-            let profileReconciler = new ProfileReconcile(this.org);
-            let reconcileProfiles = await profileReconciler.reconcile(
+            const profileReconciler = new ProfileReconcile(this.org);
+            const reconcileProfiles = await profileReconciler.reconcile(
                 argFolder,
                 argProfileList || [],
                 this.flags.destfolder
@@ -114,7 +114,7 @@ export default class Reconcile extends SfpCommand {
                 head: ['State', 'Full Name', 'Type', 'Path'],
                 chars: ZERO_BORDER_TABLE,
             });
-        for (let res of result) {
+        for (const res of result) {
             table.push([res.state, res.fullName, res.type, res.path]);
         }
         SFPLogger.log(table.toString(), LoggerLevel.INFO);

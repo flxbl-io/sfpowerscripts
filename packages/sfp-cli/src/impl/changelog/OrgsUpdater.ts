@@ -21,7 +21,7 @@ export default class OrgsUpdater {
     update(): void {
         if (!this.idOfReleaseWithMatchingHashId) {
             if (this.releaseChangelog.orgs) {
-                let org = this.releaseChangelog.orgs.find((org) => org.name === this.org);
+                const org = this.releaseChangelog.orgs.find((org) => org.name === this.org);
 
                 if (org) {
                     org.releases.push(this.latestReleaseId);
@@ -55,10 +55,10 @@ export default class OrgsUpdater {
             );
         } else {
             // Update orgs
-            let org = this.releaseChangelog.orgs.find((org) => org.name === this.org);
+            const org = this.releaseChangelog.orgs.find((org) => org.name === this.org);
 
             if (org) {
-                let indexOfReleaseToOrg = org.releases.findIndex(
+                const indexOfReleaseToOrg = org.releases.findIndex(
                     (orgRelease) => orgRelease.hashId === this.idOfReleaseWithMatchingHashId.hashId
                 );
                 if (org.latestRelease.hashId !== this.idOfReleaseWithMatchingHashId.hashId) {
@@ -117,7 +117,7 @@ export default class OrgsUpdater {
      * @returns
      */
     private convertReleaseToId(release: Release): ReleaseId {
-        let releaseNames = [...release.names]; // Shallow copy
+        const releaseNames = [...release.names]; // Shallow copy
         return {
             names: releaseNames,
             buildNumber: release.buildNumber,

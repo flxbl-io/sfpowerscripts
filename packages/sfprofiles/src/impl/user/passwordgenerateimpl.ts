@@ -10,9 +10,9 @@ export default class Passwordgenerateimpl {
 
         const authInfo = await AuthInfo.create({ username: userName });
         const userConnection = await Connection.create({ authInfo: authInfo });
-        let queryUtil = new queryApi(userConnection);
-        let userRecord = await queryUtil.executeQuery(query, false);
-        let passwordBuffer = User.generatePasswordUtf8();
+        const queryUtil = new queryApi(userConnection);
+        const userRecord = await queryUtil.executeQuery(query, false);
+        const passwordBuffer = User.generatePasswordUtf8();
         let pwd;
 
         await passwordBuffer.value(async (buffer: Buffer) => {

@@ -16,7 +16,7 @@ describe('Retrieve all packages from devhub', () => {
             contents: await testData.getConfig(),
         });
 
-        let records: AnyJson = {
+        const records: AnyJson = {
             records: [
                 {
                     attributes: {
@@ -49,7 +49,7 @@ describe('Retrieve all packages from devhub', () => {
         };
         const org: SFPOrg = await SFPOrg.create({ aliasOrUsername: testData.username });
 
-        let packages = await org.listAllPackages();
+        const packages = await org.listAllPackages();
         expect(packages).toHaveLength(2);
         expect(packages[0].Name).toMatch('async-framework');
         expect(packages[0].Id).toMatch('0Ho1P005000k9bNSXQ');

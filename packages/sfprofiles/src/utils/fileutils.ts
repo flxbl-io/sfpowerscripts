@@ -31,22 +31,22 @@ export default class FileUtils {
      */
     public static getAllFilesSync(folder: string, extension = '.xml'): string[] {
         let result: string[] = [];
-        let pathExists = fs.existsSync(folder);
-        let folderName = path.basename(folder);
+        const pathExists = fs.existsSync(folder);
+        const folderName = path.basename(folder);
         if (!pathExists) {
             SFPLogger.log('Folder not exists: ' + folderName, LoggerLevel.ERROR);
             return result;
         }
-        let content: string[] = fs.readdirSync(folder);
+        const content: string[] = fs.readdirSync(folder);
         content.forEach((file) => {
-            let curFile = path.join(folder, file);
-            let stats = fs.statSync(curFile);
+            const curFile = path.join(folder, file);
+            const stats = fs.statSync(curFile);
             if (stats.isFile()) {
                 if (extension.indexOf(path.extname(curFile)) != -1 || extension === '') {
                     result.push(curFile);
                 }
             } else if (stats.isDirectory()) {
-                let files: string[] = this.getAllFilesSync(curFile, extension);
+                const files: string[] = this.getAllFilesSync(curFile, extension);
                 result = _.concat(result, files);
             }
         });
@@ -54,8 +54,8 @@ export default class FileUtils {
     }
 
     public static getGlobalCacheDir() {
-        let homedir = os.homedir();
-        let configDir = homedir + path.sep + PLUGIN_CACHE_FOLDER;
+        const homedir = os.homedir();
+        const configDir = homedir + path.sep + PLUGIN_CACHE_FOLDER;
         if (!fs.existsSync(configDir)) {
             SFPLogger.log('Config folder does not exists, Creating Folder', LoggerLevel.INFO);
             fs.mkdirSync(configDir);
@@ -69,8 +69,8 @@ export default class FileUtils {
      * @param fileName
      */
     public static getGlobalCachePath(fileName: string) {
-        let homedir = os.homedir();
-        let configDir = homedir + path.sep + PLUGIN_CACHE_FOLDER;
+        const homedir = os.homedir();
+        const configDir = homedir + path.sep + PLUGIN_CACHE_FOLDER;
         if (!fs.existsSync(configDir)) {
             SFPLogger.log('Config folder does not exists, Creating Folder', LoggerLevel.INFO);
             fs.mkdirSync(configDir);
@@ -84,7 +84,7 @@ export default class FileUtils {
      */
      public static getLocalCachePath(fileName: string) {
       
-        let configDir = path.join(process.cwd(),'.sfdx','sfpowerkit');
+        const configDir = path.join(process.cwd(),'.sfdx','sfpowerkit');
         if (!fs.existsSync(configDir)) {
             SFPLogger.log('Config folder does not exists, Creating Folder', LoggerLevel.INFO);
             fs.ensureDirSync(configDir);
@@ -120,7 +120,7 @@ export default class FileUtils {
      * @param extension extension
      */
     public static getFileNameWithoutExtension(filePath: string, extension?: string): string {
-        let fileParts = filePath.split(SEP);
+        const fileParts = filePath.split(SEP);
         let fileName = fileParts[fileParts.length - 1];
         if (extension) {
             fileName = fileName.substr(0, fileName.lastIndexOf(extension));
@@ -138,8 +138,8 @@ export default class FileUtils {
     public static copyRecursiveSync(src, dest) {
         let exists = fs.existsSync(src);
         if (exists) {
-            let stats = fs.statSync(src);
-            let isDirectory = stats.isDirectory();
+            const stats = fs.statSync(src);
+            const isDirectory = stats.isDirectory();
             if (isDirectory) {
                 exists = fs.existsSync(dest);
                 if (!exists) {
@@ -159,19 +159,19 @@ export default class FileUtils {
      * @param foldername folder to build the path to
      */
     public static getFolderPath(src, foldername) {
-        let exists = fs.existsSync(src);
+        const exists = fs.existsSync(src);
         let toReturn = '';
         if (exists) {
-            let stats = fs.statSync(src);
-            let isDirectory = stats.isDirectory();
+            const stats = fs.statSync(src);
+            const isDirectory = stats.isDirectory();
             if (isDirectory) {
-                let childs = fs.readdirSync(src);
+                const childs = fs.readdirSync(src);
                 for (let i = 0; i < childs.length; i++) {
-                    let childItemName = childs[i];
+                    const childItemName = childs[i];
                     if (childItemName === foldername) {
                         toReturn = path.join(src, childItemName);
                     } else {
-                        let childStat = fs.statSync(path.join(src, childItemName));
+                        const childStat = fs.statSync(path.join(src, childItemName));
                         if (childStat.isDirectory()) {
                             toReturn = FileUtils.getFolderPath(path.join(src, childItemName), foldername);
                         }
@@ -192,7 +192,7 @@ export default class FileUtils {
     public static deleteFolderRecursive(folder) {
         if (fs.existsSync(folder)) {
             fs.readdirSync(folder).forEach(function (file, index) {
-                let curPath = path.join(folder, file);
+                const curPath = path.join(folder, file);
                 if (fs.lstatSync(curPath).isDirectory()) {
                     // recurse
                     //console.log("Delete recursively");
@@ -210,7 +210,7 @@ export default class FileUtils {
     public static makefolderid(length): string {
         let result = '';
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        let charactersLength = characters.length;
+        const charactersLength = characters.length;
         for (let i = 0; i < length; i++) {
             result += characters.charAt(Math.floor(Math.random() * charactersLength));
         }

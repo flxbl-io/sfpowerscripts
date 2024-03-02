@@ -59,7 +59,7 @@ export default class Generate extends SfpCommand {
 
     async execute(): Promise<any> {
         try {
-            let releaseDefinitionGenerator: ReleaseDefinitionGenerator = new ReleaseDefinitionGenerator(
+            const releaseDefinitionGenerator: ReleaseDefinitionGenerator = new ReleaseDefinitionGenerator(
                 new ConsoleLogger(),
                 this.flags.gitref,
                 this.flags.configfile,
@@ -74,7 +74,7 @@ export default class Generate extends SfpCommand {
         } catch (err) {
             let errorMessage: string = '';
             if (err instanceof Array) {
-                for (let e of err) {
+                for (const e of err) {
                     errorMessage += e.message + `\n`;
                 }
             } else {

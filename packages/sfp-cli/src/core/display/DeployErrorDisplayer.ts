@@ -7,13 +7,13 @@ export default class DeployErrorDisplayer {
     private static printMetadataFailedToDeploy(componentFailures: DeployMessage | DeployMessage[], logger: Logger) {
         if (componentFailures === null || componentFailures === undefined) return;
 
-        let table = new Table({
+        const table = new Table({
             head: ['Metadata Type', 'API Name', 'Problem Type', 'Problem'],
             chars: ZERO_BORDER_TABLE
         });
 
-        let pushComponentFailureIntoTable = (componentFailure) => {
-            let item = [
+        const pushComponentFailureIntoTable = (componentFailure) => {
+            const item = [
                 componentFailure.componentType,
                 componentFailure.fullName,
                 componentFailure.problemType,
@@ -23,11 +23,11 @@ export default class DeployErrorDisplayer {
         };
 
         if (componentFailures instanceof Array) {
-            for (let failure of componentFailures) {
+            for (const failure of componentFailures) {
                 pushComponentFailureIntoTable(failure);
             }
         } else {
-            let failure = componentFailures;
+            const failure = componentFailures;
             pushComponentFailureIntoTable(failure);
         }
         SFPLogger.log('The following components resulted in failures:', LoggerLevel.ERROR, logger);
@@ -60,7 +60,7 @@ export default class DeployErrorDisplayer {
         codeCoverageWarnings: CodeCoverageWarnings | CodeCoverageWarnings[],
         logger: Logger
     ) {
-        let table = new Table({
+        const table = new Table({
             head: ['Name', 'Message'],
         });
 
@@ -83,7 +83,7 @@ export default class DeployErrorDisplayer {
     }
 
     private static displayTestFailures(testFailures: Failures | Failures[], logger: Logger) {
-        let table = new Table({
+        const table = new Table({
             head: ['Test Name', 'Method Name', 'Message'],
             chars: ZERO_BORDER_TABLE
         });

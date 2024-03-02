@@ -21,21 +21,21 @@ const createOrg = async () => {
 
 describe('Fetch a list of sfp artifacts from an org', () => {
     it('Return a  blank list of sfp artifact, if there are no previously installed artifacts ', async () => {
-        let org = await createOrg();
+        const org = await createOrg();
 
-        let records = { records: [] };
+        const records = { records: [] };
         $$.fakeConnectionRequest = (request) => {
             return Promise.resolve(records);
         };
 
-        let artifacts = await org.getInstalledArtifacts();
+        const artifacts = await org.getInstalledArtifacts();
         expect(artifacts).toEqual([]);
     });
 
     it('Return a list of sfp artifact, if there are previously installed artifacts ', async () => {
-        let org = await createOrg();
+        const org = await createOrg();
 
-        let records = { records:[
+        const records = { records:[
             {
                 Id: 'a0zR0000003F1FuIAK',
                 Name: 'sfp-package',
@@ -49,8 +49,8 @@ describe('Fetch a list of sfp artifacts from an org', () => {
             return Promise.resolve(records);
         };
 
-        let artifacts = await org.getInstalledArtifacts();
-        let expectedpackage = {
+        const artifacts = await org.getInstalledArtifacts();
+        const expectedpackage = {
             Id: 'a0zR0000003F1FuIAK',
             Name: 'sfp-package',
             CommitId__c: '0a516404aa92f02866f9d2725bda5b1b3f23547e',
@@ -61,24 +61,24 @@ describe('Fetch a list of sfp artifacts from an org', () => {
     });
 
     it('When unable to fetch, it should return a blank list', async () => {
-        let org = await createOrg();
+        const org = await createOrg();
 
         $$.fakeConnectionRequest = (request) => {
             return Promise.reject('Failed');
         };
 
-       let artifacts = await org.getInstalledArtifacts();
+       const artifacts = await org.getInstalledArtifacts();
        expect(artifacts).toEqual([]);
     },45000);
 });
 
 describe('Update a sfp artifact to an org', () => {
     it('Update a sfp artifact, installing it the first time', async () => {
-        let org = await createOrg();
+        const org = await createOrg();
 
-        let records = { records: [] };
+        const records = { records: [] };
 
-        let pushResult = {
+        const pushResult = {
             id: 'a0zR0000003F1FuIAK',
             success: true,
             errors: [],
@@ -90,7 +90,7 @@ describe('Update a sfp artifact to an org', () => {
             else return Promise.resolve(pushResult);
         };
 
-        let sfpPackage: SfpPackage = {
+        const sfpPackage: SfpPackage = {
             package_name: 'core',
             repository_url: 'https://example.com',
             package_version_number: '1.0.0.NEXT',
@@ -109,14 +109,14 @@ describe('Update a sfp artifact to an org', () => {
             },
         };
 
-        let result = await org.updateArtifactInOrg(new VoidLogger(), sfpPackage);
+        const result = await org.updateArtifactInOrg(new VoidLogger(), sfpPackage);
         expect(result).toEqual(pushResult.id);
     });
 
     it('Update a sfp artifact, installing a newer version of it', async () => {
-        let org = await createOrg();
+        const org = await createOrg();
 
-        let records = { records : [
+        const records = { records : [
             {
                 Id: 'a0zR0000003F1FuIAK',
                 Name: 'core',
@@ -126,7 +126,7 @@ describe('Update a sfp artifact to an org', () => {
             }
         ]};
 
-        let pushResult: AnyJson = {
+        const pushResult: AnyJson = {
             id: 'a0zR0000003F1FuIAK',
             success: true,
             errors: [],
@@ -138,7 +138,7 @@ describe('Update a sfp artifact to an org', () => {
             else return Promise.resolve(pushResult);
         };
 
-        let sfpPackage: SfpPackage = {
+        const sfpPackage: SfpPackage = {
             package_name: 'core',
             repository_url: 'https://example.com',
             package_version_number: '1.0.0.NEXT',
@@ -157,15 +157,15 @@ describe('Update a sfp artifact to an org', () => {
             },
         };
 
-        let result = await org.updateArtifactInOrg(new ConsoleLogger(), sfpPackage);
+        const result = await org.updateArtifactInOrg(new ConsoleLogger(), sfpPackage);
 
         expect(result).toEqual(pushResult.id);
     });
 
     it('Update a sfp artifact and resulting an error,should throw an exception', async () => {
-        let org = await createOrg();
+        const org = await createOrg();
 
-        let records={ records : [
+        const records={ records : [
             {
                 Id: 'a0zR0000003F1FuIAK',
                 Name: 'core',
@@ -175,7 +175,7 @@ describe('Update a sfp artifact to an org', () => {
             },
         ]};
 
-        let pushResult: AnyJson = {
+        const pushResult: AnyJson = {
             success: false,
             errors: [],
         };
@@ -186,7 +186,7 @@ describe('Update a sfp artifact to an org', () => {
             else return Promise.resolve(pushResult);
         };
 
-        let sfpPackage: SfpPackage = {
+        const sfpPackage: SfpPackage = {
             package_name: 'core',
             repository_url: 'https://example.com',
             package_version_number: '1.0.0.NEXT',

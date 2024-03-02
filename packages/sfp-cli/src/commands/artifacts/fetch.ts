@@ -58,15 +58,15 @@ export default class Fetch extends SfpCommand {
     public async execute() {
         this.validateFlags();
 
-        let releaseDefinition = await ReleaseDefinitionLoader.loadReleaseDefinition(this.flags.releasedefinition);
+        const releaseDefinition = await ReleaseDefinitionLoader.loadReleaseDefinition(this.flags.releasedefinition);
         let result: {
             success: ArtifactVersion[];
             failed:  ArtifactVersion[];
         };
 
-        let executionStartTime = Date.now();
+        const executionStartTime = Date.now();
         try {
-            let fetchImpl: FetchImpl = new FetchImpl(
+            const fetchImpl: FetchImpl = new FetchImpl(
                 this.flags.artifactdir,
                 this.flags.scriptpath,
                 this.flags.scope,
@@ -84,7 +84,7 @@ export default class Fetch extends SfpCommand {
 
             process.exitCode = 1;
         } finally {
-            let totalElapsedTime: number = Date.now() - executionStartTime;
+            const totalElapsedTime: number = Date.now() - executionStartTime;
 
             if (result) this.printSummary(result, totalElapsedTime);
         }

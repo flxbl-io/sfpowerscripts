@@ -37,9 +37,9 @@ export default class GeneratePackageChangelog {
         }
        
 
-        let revTo: string = await git.revparse(['--short', `${this.revTo}^{}`]);
+        const revTo: string = await git.revparse(['--short', `${this.revTo}^{}`]);
 
-        let options: LogOptions = {
+        const options: LogOptions = {
             file: packageDescriptor ? `${packageDescriptor['path']}*` : packageDescriptor,
         };
         if(revFrom)
@@ -50,7 +50,7 @@ export default class GeneratePackageChangelog {
 
         const gitLogResult = await git.log(options);
 
-        let changelog: Changelog = {
+        const changelog: Changelog = {
             name: undefined,
             from: undefined,
             to: undefined,
@@ -61,7 +61,7 @@ export default class GeneratePackageChangelog {
         changelog['from'] = revFrom;
         changelog['to'] = revTo;
 
-        for (let commit of gitLogResult.all) {
+        for (const commit of gitLogResult.all) {
             changelog['commits'].push({
                 commitId: commit.hash.slice(0, 8),
                 date: commit.date,

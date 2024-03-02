@@ -56,9 +56,9 @@ describe("Given a TransitiveDependencyResolver", () => {
 
   it("should resolve missing package dependencies with transitive dependency", async () => {
     const transitiveDependencyResolver = new TransitiveDependencyResolver(projectConfig);
-    let resolvedDependencies = await transitiveDependencyResolver.resolveTransitiveDependencies();
+    const resolvedDependencies = await transitiveDependencyResolver.resolveTransitiveDependencies();
 
-    let dependencies =  resolvedDependencies.get('candidate-management');
+    const dependencies =  resolvedDependencies.get('candidate-management');
     expect(dependencies?.find(dependency => dependency.package === "temp")).toBeTruthy();
     expect(dependencies?.find(dependency => dependency.package === "temp")?.versionNumber).toBe("1.0.0.LATEST");
   });
@@ -67,11 +67,11 @@ describe("Given a TransitiveDependencyResolver", () => {
     const transitiveDependencyResolver = new TransitiveDependencyResolver(projectConfig);
     const resolvedDependencies = await transitiveDependencyResolver.resolveTransitiveDependencies();
     
-    let baseIndex = resolvedDependencies.get('candidate-management')?.findIndex(dependency => dependency.package === "base");
+    const baseIndex = resolvedDependencies.get('candidate-management')?.findIndex(dependency => dependency.package === "base");
     expect(baseIndex).toBe(2);
-    let tempIndex = resolvedDependencies.get('candidate-management')?.findIndex(dependency => dependency.package === "temp");
+    const tempIndex = resolvedDependencies.get('candidate-management')?.findIndex(dependency => dependency.package === "temp");
     expect(tempIndex).toBe(3);
-    let coreIndex = resolvedDependencies.get('candidate-management')?.findIndex(dependency => dependency.package === "core");
+    const coreIndex = resolvedDependencies.get('candidate-management')?.findIndex(dependency => dependency.package === "core");
     expect(coreIndex).toBe(4);
     
   });
@@ -81,7 +81,7 @@ describe("Given a TransitiveDependencyResolver", () => {
     const transitiveDependencyResolver = new TransitiveDependencyResolver(projectConfig);
     const resolvedDependencies = await transitiveDependencyResolver.resolveTransitiveDependencies();
     
-    let dependencies =  resolvedDependencies.get('quote-management');
+    const dependencies =  resolvedDependencies.get('quote-management');
     expect(dependencies?.find(dependency => dependency.package === "core")?.versionNumber).toBe("1.2.0.LATEST");
   
   });
@@ -96,13 +96,13 @@ describe("Given a TransitiveDependencyResolver", () => {
   it("should expand the dependencies of external packages", async () => {
     const transitiveDependencyResolver = new TransitiveDependencyResolver(projectConfig);
     const resolvedDependencies = await transitiveDependencyResolver.resolveTransitiveDependencies();
-    let externalDependencyIndex = resolvedDependencies.get('contact-management')?.findIndex(dependency => dependency.package === "sfdc-framework");
+    const externalDependencyIndex = resolvedDependencies.get('contact-management')?.findIndex(dependency => dependency.package === "sfdc-framework");
     expect(externalDependencyIndex).toBe(0);
 
   });
 
   function verifyUniquePkgs(arr) {
-    let pkgs = {};
+    const pkgs = {};
     for (let i = 0; i < arr.length; i++) {
       if (arr[i].hasOwnProperty('package')) {
         if (pkgs.hasOwnProperty(arr[i].package)) {

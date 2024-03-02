@@ -79,7 +79,7 @@ export default class Install extends SfpCommand {
     };
 
     public async execute() {
-        let executionStartTime = Date.now();
+        const executionStartTime = Date.now();
 
         SFPLogger.log(COLOR_HEADER(`command: ${COLOR_KEY_MESSAGE(`install`)}`));
         SFPLogger.log(COLOR_HEADER(`Skip artifacts if already installed: ${this.flags.skipifalreadyinstalled}`));
@@ -91,7 +91,7 @@ export default class Install extends SfpCommand {
 
         let deploymentResult: DeploymentResult;
 
-        let tags = {
+        const tags = {
             targetOrg: this.flags.targetorg,
         };
 
@@ -99,7 +99,7 @@ export default class Install extends SfpCommand {
             tags['tag'] = this.flags.tag;
         }
 
-        let deployProps: DeployProps = {
+        const deployProps: DeployProps = {
             targetUsername: this.flags.targetorg,
             artifactDir: this.flags.artifactdir,
             waitTime: this.flags.waittime,
@@ -115,7 +115,7 @@ export default class Install extends SfpCommand {
         };
 
         try {
-            let deployImpl: DeployImpl = new DeployImpl(deployProps);
+            const deployImpl: DeployImpl = new DeployImpl(deployProps);
 
             deploymentResult = await deployImpl.exec();
 
@@ -126,7 +126,7 @@ export default class Install extends SfpCommand {
             SFPLogger.log(COLOR_ERROR(error));
             process.exitCode = 1;
         } finally {
-            let totalElapsedTime: number = Date.now() - executionStartTime;
+            const totalElapsedTime: number = Date.now() - executionStartTime;
 
         
             SFPLogger.printHeaderLine('',COLOR_HEADER,LoggerLevel.INFO);

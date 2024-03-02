@@ -7,29 +7,29 @@ export default class PackageMetadataPrinter {
         //If Manifest is null, just return
         if (payload === null || payload === undefined) return;
 
-        let table = new Table({
+        const table = new Table({
             head: ['Metadata Type', 'API Name'],
             chars: ZERO_BORDER_TABLE
         });
 
-        let pushTypeMembersIntoTable = (type) => {
+        const pushTypeMembersIntoTable = (type) => {
             if (type['members'] instanceof Array) {
-                for (let member of type['members']) {
-                    let item = [type.name, member];
+                for (const member of type['members']) {
+                    const item = [type.name, member];
                     table.push(item);
                 }
             } else {
-                let item = [type.name, type.members];
+                const item = [type.name, type.members];
                 table.push(item);
             }
         };
 
         if (payload['Package']['types'] instanceof Array) {
-            for (let type of payload['Package']['types']) {
+            for (const type of payload['Package']['types']) {
                 pushTypeMembersIntoTable(type);
             }
         } else {
-            let type = payload['Package']['types'];
+            const type = payload['Package']['types'];
             pushTypeMembersIntoTable(type);
         }
         SFPLogger.log('The following metadata will be deployed:', LoggerLevel.INFO, logger);

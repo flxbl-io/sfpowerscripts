@@ -74,7 +74,7 @@ export default class PackageManifest {
             xmldec: { version: '1.0', encoding: 'UTF-8' },
         });
 
-        let packageObj = {
+        const packageObj = {
             Package: packageJson,
         };
 
@@ -151,7 +151,7 @@ export default class PackageManifest {
     public isPermissionSetGroupsFoundInPackage(): boolean {
         let isPermissionSetGroupFound = false;
         if (Array.isArray(this._manifestJson?.Package?.types)) {
-            for (let type of this._manifestJson.Package.types) {
+            for (const type of this._manifestJson.Package.types) {
                 if (type.name === 'PermissionSetGroup') {
                     isPermissionSetGroupFound = true;
                     break;

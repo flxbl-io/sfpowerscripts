@@ -113,9 +113,9 @@ export default class ReleaseDefinitionGenerator {
             SFPLogger.log(`Processing Artifacts from reference.. ${this.gitRef}`, LoggerLevel.INFO, this.logger);
             git = await Git.initiateRepoAtTempLocation(this.logger);
             repoDir = git.getRepositoryPath();
-            let fetchedArtifacts = await this.fetchFromGitRef(git);
+            const fetchedArtifacts = await this.fetchFromGitRef(git);
 
-            let releaseDefiniton = await this.generateReleaseDefintion(
+            const releaseDefiniton = await this.generateReleaseDefintion(
                 fetchedArtifacts.artifacts,
                 fetchedArtifacts.packageDependencies,
                 git
@@ -129,21 +129,21 @@ export default class ReleaseDefinitionGenerator {
     }
 
     private async fetchFromGitRef(git: Git) {
-        let artifacts = {};
-        let packageDependencies = {};
+        const artifacts = {};
+        const packageDependencies = {};
         //Create A copy of repository to a particular commit
         //If already a duplicate directory switch to the passed git ref
         //then switch it back
-        let headCommit = await git.getCurrentCommitId();
+        const headCommit = await git.getCurrentCommitId();
         await git.checkout(this.gitRef, true);
 
-        let projectConfig = ProjectConfig.getSFDXProjectConfig(git.getRepositoryPath());
+        const projectConfig = ProjectConfig.getSFDXProjectConfig(git.getRepositoryPath());
         //Read sfdx project json
-        let sfdxPackages = ProjectConfig.getAllPackagesFromProjectConfig(projectConfig);
+        const sfdxPackages = ProjectConfig.getAllPackagesFromProjectConfig(projectConfig);
         for (const sfdxPackage of sfdxPackages) {
-            let latestGitTagVersion = new GitTags(git, sfdxPackage);
+            const latestGitTagVersion = new GitTags(git, sfdxPackage);
             try {
-                let version = await latestGitTagVersion.getVersionFromLatestTag();
+                const version = await latestGitTagVersion.getVersionFromLatestTag();
 
                 if (this.getArtifactPredicate(sfdxPackage)) {
                     artifacts[sfdxPackage] = version;
@@ -158,7 +158,7 @@ export default class ReleaseDefinitionGenerator {
         }
 
         if (!this.releaseConfiguration.excludeAllPackageDependencies) {
-            let allExternalPackages = ProjectConfig.getAllExternalPackages(projectConfig);
+            const allExternalPackages = ProjectConfig.getAllExternalPackages(projectConfig);
             for (const externalPackage of allExternalPackages) {
                 if (
                     this.getDependencyPredicate(externalPackage.alias) &&
@@ -190,7 +190,7 @@ export default class ReleaseDefinitionGenerator {
                 return obj;
             }, {});
 
-        let releaseDefinition: ReleaseDefinition = {
+        const releaseDefinition: ReleaseDefinition = {
             release: this.releaseName,
             releaseConfigName : this.releaseConfiguration?.releaseName,
             metadata: this.metadata,
@@ -219,7 +219,7 @@ export default class ReleaseDefinitionGenerator {
         if(this.inMemoryMode)
          return releaseDefinition;
 
-        let releaseDefinitonYAML = yaml.dump(releaseDefinition, {
+        const releaseDefinitonYAML = yaml.dump(releaseDefinition, {
             styles: {
                 '!!null': 'canonical', // dump null as ~
             },
@@ -230,7 +230,7 @@ export default class ReleaseDefinitionGenerator {
         SFPLogger.log(``);
         SFPLogger.log(COLOR_KEY_MESSAGE(releaseDefinitonYAML));
 
-        let pathToReleaseDefnDirectory = this.createDirectory(this.directory, git.getRepositoryPath());
+        const pathToReleaseDefnDirectory = this.createDirectory(this.directory, git.getRepositoryPath());
         fs.writeFileSync(path.join(pathToReleaseDefnDirectory, `${this.releaseName}.yml`), releaseDefinitonYAML);
         if (this.branch) {
             SFPLogger.log(`Checking out branch ${this.branch}`);
@@ -255,13 +255,13 @@ export default class ReleaseDefinitionGenerator {
     private validateReleaseDefinitionGeneratorConfig(
         releaseDefinitionGeneratorSchema: ReleaseConfig
     ): void {
-        let schema = fs.readJSONSync(
+        const schema = fs.readJSONSync(
             path.join(__dirname, '..', '..', '..', 'resources', 'schemas', 'release-config.schema.json'),
             { encoding: 'UTF-8' }
         );
 
-        let validator = new Ajv({ allErrors: true }).compile(schema);
-        let validationResult = validator(releaseDefinitionGeneratorSchema);
+        const validator = new Ajv({ allErrors: true }).compile(schema);
+        const validationResult = validator(releaseDefinitionGeneratorSchema);
 
         if (!validationResult) {
             let errorMsg: string =

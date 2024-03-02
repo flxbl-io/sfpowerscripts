@@ -30,17 +30,17 @@ export default class ShrinkImpl {
     }
 
     private async resolveAndShrinkDependencies(dependencyMap: any) {
-        let pkgs = [...dependencyMap.keys()];
+        const pkgs = [...dependencyMap.keys()];
 
-        for (let pkg of pkgs) {
+        for (const pkg of pkgs) {
             SFPLogger.log(
                 COLOR_HEADER(`cleaning up dependencies for package:`) + COLOR_KEY_MESSAGE(pkg),
                 LoggerLevel.TRACE,
                 this.logger
             );
-            let dependenencies = dependencyMap.get(pkg);
-            let updatedDependencies = _.cloneDeep(dependenencies);
-            for (let dependency of dependencyMap.get(pkg)) {
+            const dependenencies = dependencyMap.get(pkg);
+            const updatedDependencies = _.cloneDeep(dependenencies);
+            for (const dependency of dependencyMap.get(pkg)) {
                 if (dependencyMap.get(dependency.package)) {
                     SFPLogger.log(
                         `Shrinking ${dependencyMap.get(dependency.package).length} dependencies from package ${
@@ -49,7 +49,7 @@ export default class ShrinkImpl {
                         LoggerLevel.TRACE,
                         this.logger
                     );
-                    for (let temp of dependencyMap.get(dependency.package)) {
+                    for (const temp of dependencyMap.get(dependency.package)) {
                         for (let i = 0; i < updatedDependencies.length; i++) {
                             if (updatedDependencies[i].package == temp.package) {
                                 updatedDependencies.splice(i, 1);

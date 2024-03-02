@@ -8,8 +8,8 @@ export default class DeploymentSettingsService {
     //Enable Synchronus Compile on Deploy
     public async enableSynchronousCompileOnDeploy(logger: Logger) {
         try {
-            let apexSettingMetadata = { fullName: 'ApexSettings', enableCompileOnDeploy: true };
-            let result = await this.conn.metadata.upsert('ApexSettings', apexSettingMetadata);
+            const apexSettingMetadata = { fullName: 'ApexSettings', enableCompileOnDeploy: true };
+            const result = await this.conn.metadata.upsert('ApexSettings', apexSettingMetadata);
             if (result.success) {
                 SFPLogger.log(
                     `${COLOR_KEY_MESSAGE(
@@ -39,12 +39,12 @@ export default class DeploymentSettingsService {
                 ipRanges.push({ start: ipRange, end: ipRange });
             }
         }
-        let securitySettingsMetadata: SecuritySettings = {
+        const securitySettingsMetadata: SecuritySettings = {
             fullName: 'SecuritySettings',
             networkAccess: { ipRanges: ipRanges },
         };
         try {
-            let result = await this.conn.metadata.upsert('SecuritySettings', securitySettingsMetadata);
+            const result = await this.conn.metadata.upsert('SecuritySettings', securitySettingsMetadata);
             if (result.success) {
                 SFPLogger.log(`${COLOR_KEY_MESSAGE('Relaxed all ipRanges in the org')}`, LoggerLevel.INFO, logger);
             }
@@ -55,7 +55,7 @@ export default class DeploymentSettingsService {
     }
 
     private getFullRange(): IpRange[] {
-        let ipRanges = [];
+        const ipRanges = [];
         for (let i = 0; i < 255; i += 2) {
             ipRanges.push({ start: `${i}.0.0.0`, end: `${i + 1}.255.255.255` });
         }

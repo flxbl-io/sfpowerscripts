@@ -8,7 +8,7 @@ export default class ObjectCRUDHelper {
     static async updateRecord(conn: Connection, sObject: string, record: Record): Promise<string> {
         return retry(
             async (bail) => {
-                let result = await conn.update(sObject, record);
+                const result = await conn.update(sObject, record);
                 if (isArray(result)) {
                     let isAllRecordsSucceeded = true;
                     for (const individualResult of result as SaveResult[]) {
@@ -28,7 +28,7 @@ export default class ObjectCRUDHelper {
     static async createRecord(conn: Connection, sObject: string, record: Record): Promise<string> {
         return retry(
             async (bail) => {
-                let result = await conn.create(sObject, record);
+                const result = await conn.create(sObject, record);
                 if (result.success) return result.id;
                 else bail();
             },

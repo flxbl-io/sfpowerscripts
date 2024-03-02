@@ -47,7 +47,7 @@ export abstract class CreatePackage {
     abstract postCreatePackage(sfpPackage: SfpPackage);
 
     private sendMetricsWhenSuccessfullyCreated() {
-        let elapsedTime = Date.now() - this.startTime;
+        const elapsedTime = Date.now() - this.startTime;
 
         this.sfpPackage.creation_details = {
             creation_time: elapsedTime,

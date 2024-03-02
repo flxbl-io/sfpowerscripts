@@ -7,16 +7,16 @@ const path = require('path');
 import * as fs from 'fs-extra';
 
 describe('Given a CommitUpdater', () => {
-    let packagesToChangelogFilePaths: { [p: string]: string } = {
+    const packagesToChangelogFilePaths: { [p: string]: string } = {
         ESBaseCodeLWC: 'path/to/ESBaseCodeLWCChangelog',
         ESBaseStylesLWC: 'path/to/ESBaseStylesLWCChangelog',
         ESObjects: 'path/to/ESObjectsChangelog',
         ESSpaceMgmtLWC: 'path/to/ESSpaceMgmtLWCChangelog',
     };
 
-    let resourcesDir: string = path.join(__dirname, 'resources');
+    const resourcesDir: string = path.join(__dirname, 'resources');
 
-    let readPackageChangelog: ReadPackageChangelog = (changelogFilePath: string) => {
+    const readPackageChangelog: ReadPackageChangelog = (changelogFilePath: string) => {
         let packageChangelog: PackageChangelog;
 
         switch (path.basename(changelogFilePath)) {
@@ -47,7 +47,7 @@ describe('Given a CommitUpdater', () => {
     };
 
     it('should update latestRelease with all commits', () => {
-        let latestRelease: Release = {
+        const latestRelease: Release = {
             names: ['release-1'],
             buildNumber: 1,
             workItems: {},
@@ -99,7 +99,7 @@ describe('Given a CommitUpdater', () => {
     });
 
     it('should update latestRelease with subset of commits', () => {
-        let latestRelease: Release = {
+        const latestRelease: Release = {
             names: ['release-1'],
             buildNumber: 1,
             workItems: {},
@@ -140,7 +140,7 @@ describe('Given a CommitUpdater', () => {
             hashId: 'c97e09b76f82d830731359abe1bab2c9c5be13a9',
         };
 
-        let artifactsToLatestCommitId: { [p: string]: string } = {
+        const artifactsToLatestCommitId: { [p: string]: string } = {
             ESBaseCodeLWC: 'e88a3919',
             ESBaseStylesLWC: '5414295c',
             ESObjects: '5c0d9381',
@@ -163,7 +163,7 @@ describe('Given a CommitUpdater', () => {
     });
 
     it('should update latestRelease with empty commits', () => {
-        let latestRelease: Release = {
+        const latestRelease: Release = {
             names: ['release-1'],
             buildNumber: 1,
             workItems: {},

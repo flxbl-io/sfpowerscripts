@@ -136,7 +136,7 @@ export default class ValidateImpl implements PostDeployHook, PreDeployHook {
 			let packagesInstalledInOrgMappedToCommits: { [p: string]: string };
 
 			if (this.props.validationMode !== ValidationMode.INDIVIDUAL) {
-				let installedArtifacts = await this.orgAsSFPOrg.getInstalledArtifacts();
+				const installedArtifacts = await this.orgAsSFPOrg.getInstalledArtifacts();
 				if (installedArtifacts.length == 0) {
 					SFPLogger.log(
 						COLOR_ERROR("Failed to query org for sfp Artifacts"),
@@ -150,7 +150,7 @@ export default class ValidateImpl implements PostDeployHook, PreDeployHook {
 			if (this.props.validationMode == ValidationMode.INDIVIDUAL)
 				this.props.diffcheck = true;
 
-			let builtSfpPackages = await this.buildChangedSourcePackages(
+			const builtSfpPackages = await this.buildChangedSourcePackages(
 				packagesInstalledInOrgMappedToCommits,
 			);
 			deploymentResult = await this.deploySourcePackages(scratchOrgUsername);
@@ -189,7 +189,7 @@ export default class ValidateImpl implements PostDeployHook, PreDeployHook {
 		orgAsSFPOrg: SFPOrg,
 		installedArtifacts: any,
 	) {
-		let groupSection = new GroupConsoleLogs(
+		const groupSection = new GroupConsoleLogs(
 			`Artifacts installed in the Org ${orgAsSFPOrg.getUsername()}`,
 		).begin();
 
@@ -208,18 +208,18 @@ export default class ValidateImpl implements PostDeployHook, PreDeployHook {
 		sfpPackage: SfpPackage,
 		deployedPackages?: SfpPackage[],
 	) {
-		let deployedPackagesAsStringArray: Array<string> = [];
+		const deployedPackagesAsStringArray: Array<string> = [];
 		for (const deployedPackage of deployedPackages) {
 			deployedPackagesAsStringArray.push(deployedPackage.package_name);
 		}
 
 		//Resolve external package dependencies
-		let externalPackageResolver = new ExternalPackage2DependencyResolver(
+		const externalPackageResolver = new ExternalPackage2DependencyResolver(
 			this.props.hubOrg.getConnection(),
 			sfdxProjectConfig,
 			this.props.keys,
 		);
-		let externalPackage2s =
+		const externalPackage2s =
 			await externalPackageResolver.resolveExternalPackage2DependenciesToVersions(
 				[sfpPackage.packageName],
 				deployedPackagesAsStringArray,
@@ -232,13 +232,13 @@ export default class ValidateImpl implements PostDeployHook, PreDeployHook {
 			new ConsoleLogger(),
 		);
 		//Display resolved dependenencies
-		let externalDependencyDisplayer = new ExternalDependencyDisplayer(
+		const externalDependencyDisplayer = new ExternalDependencyDisplayer(
 			externalPackage2s,
 			new ConsoleLogger(),
 		);
 		externalDependencyDisplayer.display();
 
-		let packageCollectionInstaller = new InstallUnlockedPackageCollection(
+		const packageCollectionInstaller = new InstallUnlockedPackageCollection(
 			scratchOrgAsSFPOrg,
 			new ConsoleLogger(),
 		);
@@ -357,7 +357,7 @@ export default class ValidateImpl implements PostDeployHook, PreDeployHook {
 			deploymentResult: DeploymentResult,
 			totalElapsedTime: number,
 		): void {
-			let groupSection = new GroupConsoleLogs(`Deployment Summary`).begin();
+			const groupSection = new GroupConsoleLogs(`Deployment Summary`).begin();
 			SFPLogger.printHeaderLine('',COLOR_HEADER,LoggerLevel.INFO);
 			SFPLogger.log(
 				COLOR_SUCCESS(
@@ -381,7 +381,7 @@ export default class ValidateImpl implements PostDeployHook, PreDeployHook {
 				);
 
 				FileOutputHandler.getInstance().appendOutput(`validation-error.md`,`### 💣 Deployment Failed  💣`);
-				let firstPackageFailedToValdiate = deploymentResult.failed[0];
+				const firstPackageFailedToValdiate = deploymentResult.failed[0];
 				FileOutputHandler.getInstance().appendOutput(`validation-error.md`,`Package validation failed for  **${firstPackageFailedToValdiate.sfpPackage.packageName}** due to`);  
 				FileOutputHandler.getInstance().appendOutput(`validation-error.md`,"");  
 				FileOutputHandler.getInstance().appendOutput(`validation-error.md`,deploymentResult.error);  
@@ -403,7 +403,7 @@ export default class ValidateImpl implements PostDeployHook, PreDeployHook {
 	private async buildChangedSourcePackages(packagesInstalledInOrgMappedToCommits: {
 		[p: string]: string;
 	}): Promise<SfpPackage[]> {
-		let groupSection = new GroupConsoleLogs("Building Packages").begin();
+		const groupSection = new GroupConsoleLogs("Building Packages").begin();
 
 		const buildStartTime: number = Date.now();
 
@@ -476,7 +476,7 @@ export default class ValidateImpl implements PostDeployHook, PreDeployHook {
 
 
 		function computePackageOverrides(props: ValidateProps): { [key: string]: PackageType } {
-            let overridedPackages: { [key: string]: PackageType } = {};
+            const overridedPackages: { [key: string]: PackageType } = {};
             const allPackages = ProjectConfig.getAllPackages(null);
             const projectConfig = ProjectConfig.getSFDXProjectConfig(null);
             for (const pkg of allPackages) {
@@ -510,7 +510,7 @@ export default class ValidateImpl implements PostDeployHook, PreDeployHook {
 			) {
 				let includeOnlyPackages = [];
 				if (props.releaseConfigPaths?.length > 0) {
-					let releaseConfigAggregatedLoader = new ReleaseConfigAggregator(logger);
+					const releaseConfigAggregatedLoader = new ReleaseConfigAggregator(logger);
 					releaseConfigAggregatedLoader.addReleaseConfigs(props.releaseConfigPaths); 
 					includeOnlyPackages = releaseConfigAggregatedLoader.getAllPackages();
 					printIncludeOnlyPackages(includeOnlyPackages);

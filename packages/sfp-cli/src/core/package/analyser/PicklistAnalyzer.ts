@@ -13,8 +13,8 @@ export default class PicklistAnalyzer implements PackageAnalyzer {
      
     public async analyze(sfpPackage: SfpPackage, componentSet:ComponentSet, logger:Logger): Promise<SfpPackage> {
         try {
-            let sourceComponents = componentSet.getSourceComponents().toArray();
-            let components = [];
+            const sourceComponents = componentSet.getSourceComponents().toArray();
+            const components = [];
 
             for (const sourceComponent of sourceComponents) {
                 if (sourceComponent.type.name == registry.types.customobject.name) {
@@ -30,7 +30,7 @@ export default class PicklistAnalyzer implements PackageAnalyzer {
 
             if (components) {
                 for (const fieldComponent of components) {
-                    let customField = fieldComponent.parseXmlSync().CustomField;
+                    const customField = fieldComponent.parseXmlSync().CustomField;
                     //issues/1367
                     //if the component isn't a field customField will be undefined..so check
                     if (customField && customField['type'] == 'Picklist') {

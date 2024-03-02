@@ -5,7 +5,7 @@ import ProjectConfig from '../../../src/core/project/ProjectConfig';
 
 describe('Given a project directory or sfdx-project.json with multiple packages', () => {
     //given the below sfdx-project.json
-    let sfdx_project = {
+    const sfdx_project = {
         packageDirectories: [
             {
                 path: 'packages/temp',
@@ -109,7 +109,7 @@ describe('Given a project directory or sfdx-project.json with multiple packages'
 
 
     it('Gets the package descriptor of a provided package,provided directory', () => {
-        let corePackage = {
+        const corePackage = {
             path: 'packages/domains/core',
             package: 'core',
             default: false,
@@ -120,7 +120,7 @@ describe('Given a project directory or sfdx-project.json with multiple packages'
     });
 
     it('Gets the package descriptor of a provided package', () => {
-        let corePackage = {
+        const corePackage = {
             path: 'packages/domains/core',
             package: 'core',
             default: false,
@@ -131,7 +131,7 @@ describe('Given a project directory or sfdx-project.json with multiple packages'
     });
 
     it('Gets the default package, provided directory', () => {
-        let defaultPackage = {
+        const defaultPackage = {
             path: 'packages/temp',
             default: true,
             package: 'temp',
@@ -144,7 +144,7 @@ describe('Given a project directory or sfdx-project.json with multiple packages'
     });
 
     it('Cleans any other package, than the one provided', () => {
-        let cleaned_sfdx_project = {
+        const cleaned_sfdx_project = {
             packageDirectories: [
                 {
                     path: 'packages/temp',
@@ -165,7 +165,7 @@ describe('Given a project directory or sfdx-project.json with multiple packages'
     });
 
     it(`Gets all the external dependencies of a project`,()=>{
-        let sfdx_project = {
+        const sfdx_project = {
             packageDirectories: [
                 {
                     path: 'packages/temp',
@@ -223,7 +223,7 @@ describe('Given a project directory or sfdx-project.json with multiple packages'
     });
 
     it(`Returns empty if there are no external dependencies`,()=>{
-        let sfdx_project = {
+        const sfdx_project = {
             packageDirectories: [
                 {
                     path: 'packages/temp',

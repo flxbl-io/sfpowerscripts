@@ -94,7 +94,7 @@ export default class Validate extends SfpCommand {
     };
 
     async execute(): Promise<void> {
-        let executionStartTime = Date.now();
+        const executionStartTime = Date.now();
 
         await this.hubOrg.refreshAuth();
 
@@ -133,7 +133,7 @@ export default class Validate extends SfpCommand {
 
         let validateResult: ValidateResult;
         try {
-            let validateProps: ValidateProps = {
+            const validateProps: ValidateProps = {
                 validateAgainst: ValidateAgainst.PRECREATED_POOL,
                 validationMode:
                     ValidationMode[
@@ -159,7 +159,7 @@ export default class Validate extends SfpCommand {
 
             setReleaseConfigForReleaseBasedModes(this.flags.releaseconfig,validateProps);
 
-            let validateImpl: ValidateImpl = new ValidateImpl(validateProps);
+            const validateImpl: ValidateImpl = new ValidateImpl(validateProps);
 
             validateResult = await validateImpl.exec();
 
@@ -173,7 +173,7 @@ export default class Validate extends SfpCommand {
 
             process.exitCode = 1;
         } finally {
-            let totalElapsedTime: number = Date.now() - executionStartTime;
+            const totalElapsedTime: number = Date.now() - executionStartTime;
 
             SFPStatsSender.logGauge('validate.duration', totalElapsedTime, tags);
 

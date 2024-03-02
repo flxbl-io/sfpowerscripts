@@ -22,7 +22,7 @@ export default class SfpPackageInstaller {
 
         switch (packageType) {
             case PackageType.Unlocked:
-                let installUnlockedPackageImpl: InstallUnlockedPackage = new InstallUnlockedPackage(
+                const installUnlockedPackageImpl: InstallUnlockedPackage = new InstallUnlockedPackage(
                     sfpPackage,
                     targetOrg,
                     installationOptions,
@@ -35,7 +35,7 @@ export default class SfpPackageInstaller {
                 installationOptions.pathToReplacementForceIgnore =   installationContext?.currentStage == 'prepare'
                 ? path.join(sfpPackage.sourceDir, 'forceignores', '.prepareignore')
                 : null;
-                let installSourcePackageImpl: InstallSourcePackageImpl = new InstallSourcePackageImpl(
+                const installSourcePackageImpl: InstallSourcePackageImpl = new InstallSourcePackageImpl(
                     sfpPackage,
                     targetOrg,
                     installationOptions,
@@ -44,7 +44,7 @@ export default class SfpPackageInstaller {
                 installSourcePackageImpl.isArtifactToBeCommittedInOrg = !installationOptions.disableArtifactCommit;
                 return installSourcePackageImpl.exec();
             case PackageType.Data:
-                let installDataPackageImpl: InstallDataPackageImpl = new InstallDataPackageImpl(
+                const installDataPackageImpl: InstallDataPackageImpl = new InstallDataPackageImpl(
                     sfpPackage,
                     targetOrg,
                     logger,

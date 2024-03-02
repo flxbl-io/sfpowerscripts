@@ -98,9 +98,9 @@ export default abstract class BuildBase extends SfpCommand {
             failedPackages: string[];
         };
         let totalElapsedTime: number;
-        let artifactCreationErrors: string[] = [];
+        const artifactCreationErrors: string[] = [];
 
-        let tags = {
+        const tags = {
             is_diffcheck_enabled: String(flags.diffcheck),
             stage: this.getStage(),
             branch: flags.branch,
@@ -113,7 +113,7 @@ export default abstract class BuildBase extends SfpCommand {
             const buildOnlyPackages: string[] = flags.buildOnly;
 
             // Read Manifest
-            let projectConfig = ProjectConfig.getSFDXProjectConfig(process.cwd());
+            const projectConfig = ProjectConfig.getSFDXProjectConfig(process.cwd());
 
             SFPLogger.log(COLOR_HEADER(`command: ${COLOR_KEY_MESSAGE(this.getStage())}`));
             SFPLogger.log(COLOR_HEADER(`Build Packages Only Changed: ${flags.diffcheck}`));
@@ -128,7 +128,7 @@ export default abstract class BuildBase extends SfpCommand {
             }
             SFPLogger.log(COLOR_HEADER(`Artifact Directory: ${flags.artifactdir}`));
             SFPLogger.printHeaderLine('', COLOR_HEADER, LoggerLevel.INFO);
-            let executionStartTime = Date.now();
+            const executionStartTime = Date.now();
 
             if (!(flags.tag == null || flags.tag == undefined)) {
                 tags['tag'] = flags.tag;
@@ -164,7 +164,7 @@ export default abstract class BuildBase extends SfpCommand {
             SFPLogger.log(`${EOL}${EOL}`);
             SFPLogger.log('Generating Artifacts and Tags....');
 
-            for (let generatedPackage of buildExecResult.generatedPackages) {
+            for (const generatedPackage of buildExecResult.generatedPackages) {
                 try {
                     await ArtifactGenerator.generateArtifact(generatedPackage, process.cwd(), artifactDirectory);
                 } catch (error) {
@@ -216,7 +216,7 @@ export default abstract class BuildBase extends SfpCommand {
                     },
                 };
 
-                for (let generatedPackage of buildExecResult.generatedPackages) {
+                for (const generatedPackage of buildExecResult.generatedPackages) {
                     buildResult.packages.push({
                         name: generatedPackage.packageName,
                         version: generatedPackage.package_version_number,
@@ -227,7 +227,7 @@ export default abstract class BuildBase extends SfpCommand {
                     
                 }
 
-                for (let failedPackage of buildExecResult.failedPackages) {
+                for (const failedPackage of buildExecResult.failedPackages) {
                     buildResult.packages.push({
                         name: failedPackage,
                         version: null,
@@ -239,8 +239,8 @@ export default abstract class BuildBase extends SfpCommand {
                 //try to understad which release configs was successfull
                 buildResult.summary.sucessfullReleaseConfigs=[];
                 for (const releaseConfig in this.releaseConfigMap) {
-                    let packages = this.releaseConfigMap[releaseConfig];
-                    let failedPackages = packages.filter((x) => buildExecResult.failedPackages.includes(x));
+                    const packages = this.releaseConfigMap[releaseConfig];
+                    const failedPackages = packages.filter((x) => buildExecResult.failedPackages.includes(x));
                     if (failedPackages.length === 0) {
                         buildResult.summary.sucessfullReleaseConfigs.push(releaseConfig);
                     }
@@ -287,7 +287,7 @@ export default abstract class BuildBase extends SfpCommand {
 
         if (releaseConfigFilePaths?.length > 0) {
             buildProps.includeOnlyPackages = [];
-            let releaseConfigAggregatedLoader = new ReleaseConfigAggregator(logger);
+            const releaseConfigAggregatedLoader = new ReleaseConfigAggregator(logger);
 			releaseConfigAggregatedLoader.addReleaseConfigs(releaseConfigFilePaths); 
 			buildProps.includeOnlyPackages = releaseConfigAggregatedLoader.getAllPackages();
             printIncludeOnlyPackages(buildProps.includeOnlyPackages);

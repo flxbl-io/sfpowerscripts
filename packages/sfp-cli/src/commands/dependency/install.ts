@@ -38,12 +38,12 @@ export default class Install extends SfpCommand {
         const username = this.org.getUsername();
 
         //Resolve external package dependencies
-        let externalPackageResolver = new ExternalPackage2DependencyResolver(
+        const externalPackageResolver = new ExternalPackage2DependencyResolver(
             this.hubOrg.getConnection(),
             ProjectConfig.getSFDXProjectConfig(null),
             this.flags.installationkeys
         );
-        let externalPackage2s = await externalPackageResolver.resolveExternalPackage2DependenciesToVersions();
+        const externalPackage2s = await externalPackageResolver.resolveExternalPackage2DependenciesToVersions();
 
         SFPLogger.log(
             `Installing external package dependencies of this project  in ${username}`,
@@ -51,10 +51,10 @@ export default class Install extends SfpCommand {
             new ConsoleLogger()
         );
         //Display resolved dependenencies
-        let externalDependencyDisplayer = new ExternalDependencyDisplayer(externalPackage2s, new ConsoleLogger());
+        const externalDependencyDisplayer = new ExternalDependencyDisplayer(externalPackage2s, new ConsoleLogger());
         externalDependencyDisplayer.display();
 
-        let packageCollectionInstaller = new InstallUnlockedPackageCollection(
+        const packageCollectionInstaller = new InstallUnlockedPackageCollection(
             await SFPOrg.create({ aliasOrUsername: username }),
             new ConsoleLogger()
         );

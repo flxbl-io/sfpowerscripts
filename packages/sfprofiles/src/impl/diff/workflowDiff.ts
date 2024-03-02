@@ -32,16 +32,16 @@ export default class WorkflowDiff {
         const parseString = util.promisify(parser.parseString) as _.Function1<xml2js.convertableToString, Promise<any>>;
 
         if (workflowXml1 !== '') {
-            let parseResult = await parseString(workflowXml1);
+            const parseResult = await parseString(workflowXml1);
             workflowObj1 = parseResult.Workflow || {};
         }
 
         if (workflowXml2 !== '') {
-            let parseResult = await parseString(workflowXml2);
+            const parseResult = await parseString(workflowXml2);
             workflowObj2 = parseResult.Workflow || {};
         }
 
-        let addedEditedOrDeleted = WorkflowDiff.buildNewWorkflowObj(workflowObj1, workflowObj2);
+        const addedEditedOrDeleted = WorkflowDiff.buildNewWorkflowObj(workflowObj1, workflowObj2);
 
         WorkflowDiff.writeWorkflow(addedEditedOrDeleted.addedEdited, outputFilePath);
 
@@ -122,7 +122,7 @@ export default class WorkflowDiff {
     }
 
     private static ensureArray(workflowObj) {
-        let keys = Object.keys(workflowObj);
+        const keys = Object.keys(workflowObj);
         keys.forEach((key) => {
             if (typeof workflowObj[key] === 'object' && !Array.isArray(workflowObj[key]) && key !== '$') {
                 workflowObj[key] = [workflowObj[key]];
@@ -132,12 +132,12 @@ export default class WorkflowDiff {
     }
 
     public static async getMembers(filePath: string) {
-        let fileContent = fs.readFileSync(filePath, 'utf8').toString();
+        const fileContent = fs.readFileSync(filePath, 'utf8').toString();
         const parseString = util.promisify(parser.parseString) as _.Function1<xml2js.convertableToString, Promise<any>>;
-        let members = {};
+        const members = {};
         if (fileContent !== '') {
-            let parseResult = await parseString(fileContent);
-            let workFlowObj = parseResult.Workflow || {};
+            const parseResult = await parseString(fileContent);
+            const workFlowObj = parseResult.Workflow || {};
             if (!_.isNil(workFlowObj.alerts)) {
                 if (!Array.isArray(workFlowObj.alerts)) {
                     members['WorkflowAlert'] = [workFlowObj.alerts.fullName];
@@ -202,7 +202,7 @@ export default class WorkflowDiff {
         workflowObj1 = WorkflowDiff.ensureArray(workflowObj1);
         workflowObj2 = WorkflowDiff.ensureArray(workflowObj2);
 
-        let newWorkflowObj: any = {
+        const newWorkflowObj: any = {
             $: { xmlns: 'http://soap.sforce.com/2006/04/metadata' },
             alerts: [],
             fieldUpdates: [],
@@ -211,7 +211,7 @@ export default class WorkflowDiff {
             rules: [],
             tasks: [],
         };
-        let deletedWorkflowObj: any = {
+        const deletedWorkflowObj: any = {
             $: { xmlns: 'http://soap.sforce.com/2006/04/metadata' },
             alerts: [],
             fieldUpdates: [],
@@ -337,10 +337,10 @@ export default class WorkflowDiff {
         const builder = new xml2js.Builder({
             xmldec: { version: '1.0', encoding: 'UTF-8', standalone: null },
         });
-        let workflowObj = {
+        const workflowObj = {
             Workflow: newWorkflowObj,
         };
-        let xml = builder.buildObject(workflowObj);
+        const xml = builder.buildObject(workflowObj);
         fs.writeFileSync(outputFilePath, xml);
     }
 }

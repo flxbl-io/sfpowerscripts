@@ -11,7 +11,7 @@ describe('Retrieve assigned permsets provided username and a target org', () => 
         await $$.stubConfig({ [OrgConfigProperties.TARGET_ORG]: testData.username });
         await $$.stubAuths(testData);
 
-        let records: AnyJson = {
+        const records: AnyJson = {
             records: [
                 {
                     attributes: {
@@ -64,8 +64,8 @@ describe('Retrieve assigned permsets provided username and a target org', () => 
             authInfo: await AuthInfo.create({ username: testData.username }),
         });
 
-        let permsetListImpl: PermissionSetFetcher = new PermissionSetFetcher(testData.username, connection);
-        let permsetRecords = await permsetListImpl.fetchAllPermsetAssignment();
+        const permsetListImpl: PermissionSetFetcher = new PermissionSetFetcher(testData.username, connection);
+        const permsetRecords = await permsetListImpl.fetchAllPermsetAssignment();
         expect(permsetRecords).toHaveLength(2);
     });
 
@@ -74,7 +74,7 @@ describe('Retrieve assigned permsets provided username and a target org', () => 
         await $$.stubConfig({ [OrgConfigProperties.TARGET_ORG]: testData.username });
         await $$.stubAuths(testData);
 
-        let records: AnyJson = { records: [] };
+        const records: AnyJson = { records: [] };
         $$.fakeConnectionRequest = (request: AnyJson): Promise<AnyJson> => {
             return Promise.resolve(records);
         };
@@ -83,8 +83,8 @@ describe('Retrieve assigned permsets provided username and a target org', () => 
             authInfo: await AuthInfo.create({ username: testData.username }),
         });
 
-        let permsetListImpl: PermissionSetFetcher = new PermissionSetFetcher(testData.username, connection);
-        let permsetRecords = await permsetListImpl.fetchAllPermsetAssignment();
+        const permsetListImpl: PermissionSetFetcher = new PermissionSetFetcher(testData.username, connection);
+        const permsetRecords = await permsetListImpl.fetchAllPermsetAssignment();
         expect(permsetRecords).toHaveLength(0);
     });
 
@@ -95,7 +95,7 @@ describe('Retrieve assigned permsets provided username and a target org', () => 
             contents: await testData.getConfig(),
         });
 
-        let records: AnyJson = { records: [] };
+        const records: AnyJson = { records: [] };
         $$.fakeConnectionRequest = (request: AnyJson): Promise<AnyJson> => {
             throw new Error('Unable to fetch records');
         };
@@ -104,7 +104,7 @@ describe('Retrieve assigned permsets provided username and a target org', () => 
             authInfo: await AuthInfo.create({ username: testData.username }),
         });
 
-        let permsetListImpl: PermissionSetFetcher = new PermissionSetFetcher(testData.username, connection);
+        const permsetListImpl: PermissionSetFetcher = new PermissionSetFetcher(testData.username, connection);
 
         try {
             await permsetListImpl.fetchAllPermsetAssignment();

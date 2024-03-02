@@ -8,7 +8,7 @@ export class DXProjectManifestUtils {
 
     public removePackagesNotInDirectory(): void {
         //Validate projectJson Path
-        let sfdxProjectManifestPath = path.join(this.projectFolder, 'sfdx-project.json');
+        const sfdxProjectManifestPath = path.join(this.projectFolder, 'sfdx-project.json');
 
         if (!fs.existsSync(sfdxProjectManifestPath))
             throw new Error(`sfdx-project.json doesn't exist at ${sfdxProjectManifestPath}`);

@@ -19,7 +19,7 @@ export default class SQLITEKeyValue {
     }
 
     public get(key: string): any {
-        let q = 'SELECT * FROM kv WHERE k = ?';
+        const q = 'SELECT * FROM kv WHERE k = ?';
 
         let data = [];
 
@@ -47,7 +47,7 @@ export default class SQLITEKeyValue {
     }
 
     public set(key: string, value: any) {
-        let q = 'INSERT INTO kv (k,v) VALUES (@k, @v) ON CONFLICT(k) DO UPDATE SET v=@v,timestamp=CURRENT_TIMESTAMP';
+        const q = 'INSERT INTO kv (k,v) VALUES (@k, @v) ON CONFLICT(k) DO UPDATE SET v=@v,timestamp=CURRENT_TIMESTAMP';
         const data = {
             k: key,
             v: JSON.stringify(value),

@@ -29,7 +29,7 @@ export default class InstallUnlockedPackageCollection {
                     LoggerLevel.INFO,
                     this.logger
                 );
-                let installUnlockedPackageImpl: InstallUnlockedPackageImpl = new InstallUnlockedPackageImpl(
+                const installUnlockedPackageImpl: InstallUnlockedPackageImpl = new InstallUnlockedPackageImpl(
                     this.logger,
                     this.sfpOrg.getUsername(),
                     package2.subscriberPackageVersionId,
@@ -41,7 +41,7 @@ export default class InstallUnlockedPackageCollection {
                     if(!this.dryRun)
                         await installUnlockedPackageImpl.install();
                 } catch (error) {
-                    let message: string = error.message;
+                    const message: string = error.message;
                     if (
                         message.includes(`A newer version of this package is currently installed`) &&
                         ignoreErrorIfAHigherVersionPackageIsInstalled
@@ -95,7 +95,7 @@ export default class InstallUnlockedPackageCollection {
                     this.logger
                 );
 
-                let packageFound = this.installedPackages.find((installedPackage) => {
+                const packageFound = this.installedPackages.find((installedPackage) => {
                     return installedPackage.subscriberPackageVersionId.substring(0,15) === packageVersionId.substring(0,15);
                 });
 

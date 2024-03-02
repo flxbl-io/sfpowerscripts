@@ -19,7 +19,7 @@ export default class QuickBuild extends BuildBase {
     }
 
     getBuildProps(): BuildProps {
-        let buildProps: BuildProps = {
+        const buildProps: BuildProps = {
             configFilePath: this.flags.configfilepath,
             devhubAlias: this.flags.devhubalias,
             repourl: this.flags.repourl,
@@ -39,7 +39,7 @@ export default class QuickBuild extends BuildBase {
         return buildProps;
     }
     getBuildImplementer(buildProps: BuildProps): BuildImpl {
-        let buildImpl = new BuildImpl(buildProps);
+        const buildImpl = new BuildImpl(buildProps);
         return buildImpl;
     }
 }

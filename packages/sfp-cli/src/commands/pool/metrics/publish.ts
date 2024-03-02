@@ -65,7 +65,7 @@ export default class Publish extends SfpCommand {
         table.push(['sfp.pool.footprint', nPooledScratchOrgs, '']);
 
         if (pools) {
-            for (let pool of Object.entries(pools)) {
+            for (const pool of Object.entries(pools)) {
                 SFPStatsSender.logGauge('pool.total', pool[1].nTotal, { poolName: pool[0] });
                 SFPStatsSender.logGauge('pool.available', pool[1].nAvailable, { poolName: pool[0] });
                 SFPStatsSender.logGauge('pool.inuse', pool[1].nInUse, { poolName: pool[0] });

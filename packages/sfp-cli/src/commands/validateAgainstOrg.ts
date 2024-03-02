@@ -71,7 +71,7 @@ export default class ValidateAgainstOrg extends SfpCommand {
     };
 
     async execute(): Promise<void> {
-        let executionStartTime = Date.now();
+        const executionStartTime = Date.now();
 
         let tags: { [p: string]: string };
         tags = {
@@ -108,7 +108,7 @@ export default class ValidateAgainstOrg extends SfpCommand {
         
         let validateResult: ValidateResult;
         try {
-            let validateProps: ValidateProps = {
+            const validateProps: ValidateProps = {
                 validateAgainst: ValidateAgainst.PROVIDED_ORG,
                 validationMode:  ValidationMode[
                     Object.keys(ValidationMode)[
@@ -135,7 +135,7 @@ export default class ValidateAgainstOrg extends SfpCommand {
             }
 
             setReleaseConfigForReleaseBasedModes(this.flags.releaseconfig,validateProps);
-            let validateImpl: ValidateImpl = new ValidateImpl(validateProps);
+            const validateImpl: ValidateImpl = new ValidateImpl(validateProps);
             validateResult = await validateImpl.exec();
         } catch (error) {
             if (error instanceof ValidateError) {
@@ -146,7 +146,7 @@ export default class ValidateAgainstOrg extends SfpCommand {
 
             process.exitCode = 1;
         } finally {
-            let totalElapsedTime: number = Date.now() - executionStartTime;
+            const totalElapsedTime: number = Date.now() - executionStartTime;
 
             SFPStatsSender.logGauge('validate.duration', totalElapsedTime, tags);
 

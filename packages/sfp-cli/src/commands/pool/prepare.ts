@@ -58,13 +58,13 @@ export default class Prepare extends SfpCommand {
     public static examples = [`$ sfp prepare -f config/mypoolconfig.json  -v <devhub>`];
 
     public async execute(): Promise<any> {
-        let executionStartTime = Date.now();
+        const executionStartTime = Date.now();
 
         SFPLogger.log(COLOR_HEADER(`command: ${COLOR_KEY_MESSAGE(`prepare`)}`));
 
         //Read pool config
         try {
-            let poolConfig: PoolConfig = fs.readJSONSync(this.flags.poolconfig);
+            const poolConfig: PoolConfig = fs.readJSONSync(this.flags.poolconfig);
             this.validatePoolConfig(poolConfig);
             //Assign Keys to the config
             if (this.flags.keys) poolConfig.keys = this.flags.keys;
@@ -82,7 +82,7 @@ export default class Prepare extends SfpCommand {
                     );
             }
 
-            let tags = {
+            const tags = {
                 stage: Stage.PREPARE,
                 poolName: poolConfig.tag,
             };
@@ -92,12 +92,12 @@ export default class Prepare extends SfpCommand {
 
             this.flags.apiversion = this.flags.apiversion || (await hubConn.retrieveMaxApiVersion());
 
-            let hubOrgAsSfPOrg = await SFPOrg.create({ connection: this.hubOrg.getConnection() });
-            let prepareImpl = new PrepareImpl(hubOrgAsSfPOrg, poolConfig, this.flags.loglevel);
+            const hubOrgAsSfPOrg = await SFPOrg.create({ connection: this.hubOrg.getConnection() });
+            const prepareImpl = new PrepareImpl(hubOrgAsSfPOrg, poolConfig, this.flags.loglevel);
 
-            let results = await prepareImpl.exec();
+            const results = await prepareImpl.exec();
             if (results.isOk()) {
-                let totalElapsedTime = Date.now() - executionStartTime;
+                const totalElapsedTime = Date.now() - executionStartTime;
                 SFPLogger.printHeaderLine('',COLOR_HEADER,LoggerLevel.INFO);
                 SFPLogger.log(
                     COLOR_SUCCESS(
@@ -187,12 +187,12 @@ export default class Prepare extends SfpCommand {
                 true
             );
 
-            let tags = {
+            const tags = {
                 stage: Stage.PREPARE,
                 poolName: poolConfig.tag,
             };
 
-            let availableSo = results.records.filter((soInfo) => soInfo.Allocation_status__c === 'Available');
+            const availableSo = results.records.filter((soInfo) => soInfo.Allocation_status__c === 'Available');
 
             SFPStatsSender.logGauge('pool.available', availableSo.length, tags);
         } catch (error) {
@@ -201,13 +201,13 @@ export default class Prepare extends SfpCommand {
     }
 
     public validatePoolConfig(poolConfig: any) {
-        let ajv = new Ajv({ allErrors: true });
-        let schema = fs.readJSONSync(
+        const ajv = new Ajv({ allErrors: true });
+        const schema = fs.readJSONSync(
             path.join(__dirname, '..','..', '..', 'resources', 'schemas', 'pooldefinition.schema.json'),
             { encoding: 'UTF-8' }
         );
-        let validator = ajv.compile(schema);
-        let isSchemaValid = validator(poolConfig);
+        const validator = ajv.compile(schema);
+        const isSchemaValid = validator(poolConfig);
         if (!isSchemaValid) {
             let errorMsg: string = `The pool configuration is invalid, Please fix the following errors\n`;
 

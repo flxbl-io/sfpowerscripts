@@ -88,7 +88,7 @@ export default class TriggerApexTest extends SfpCommand {
 
             let testOptions: TestOptions;
             let coverageOptions: CoverageOptions;
-            let outputdir = path.join('.testresults');
+            const outputdir = path.join('.testresults');
 
             if (this.flags.testlevel === TestLevel.RunAllTestsInOrg.toString()) {
                 testOptions = new RunAllTestsInOrg(this.flags.waittime, outputdir, this.flags.synchronous);
@@ -96,7 +96,7 @@ export default class TriggerApexTest extends SfpCommand {
                 if (this.flags.package === null) {
                     throw new Error('Package name must be specified when test level is RunAllTestsInPackage');
                 }
-                let pkg: SfpPackage = await SfpPackageBuilder.buildPackageFromProjectDirectory(
+                const pkg: SfpPackage = await SfpPackageBuilder.buildPackageFromProjectDirectory(
                     new ConsoleLogger(),
                     null,
                     this.flags.package,
@@ -146,7 +146,7 @@ export default class TriggerApexTest extends SfpCommand {
                 null,
                 null
             );
-            let result = await triggerApexTests.exec();
+            const result = await triggerApexTests.exec();
 
             if (!result.result) {
                 throw new Error(`Error: ${result.message}`);

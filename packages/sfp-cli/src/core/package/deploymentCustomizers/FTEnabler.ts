@@ -49,8 +49,8 @@ export default class FTEnabler extends MetdataDeploymentCustomizer {
         logger: Logger
     ): Promise<{ location: string; componentSet: ComponentSet }> {
         //First retrieve all objects/fields  of interest from the package
-        let objList = [];
-        let fieldList = [];
+        const objList = [];
+        const fieldList = [];
         Object.keys(sfpPackage['ftFields']).forEach((key) => {
             objList.push(`'${key}'`);
             sfpPackage['ftFields'][key].forEach((field) => fieldList.push(key + '.' + field));
@@ -63,7 +63,7 @@ export default class FTEnabler extends MetdataDeploymentCustomizer {
         );
 
         SFPLogger.log('FT QUERY: '+`${QUERY_BODY + '(' + objList + ')'}`,LoggerLevel.DEBUG)
-        let ftFieldsInOrg = await QueryHelper.query<{
+        const ftFieldsInOrg = await QueryHelper.query<{
             QualifiedApiName: string;
             EntityDefinition: any;
             IsFeedEnabled: boolean;
@@ -71,7 +71,7 @@ export default class FTEnabler extends MetdataDeploymentCustomizer {
 
         //Clear of the fields that alread has FT applied and keep a reduced filter
         ftFieldsInOrg.map((record) => {
-            let field = record.EntityDefinition.QualifiedApiName + '.' + record.QualifiedApiName;
+            const field = record.EntityDefinition.QualifiedApiName + '.' + record.QualifiedApiName;
             const index = fieldList.indexOf(field);
             if (index > -1) {
                 fieldList.splice(index, 1);
@@ -80,9 +80,9 @@ export default class FTEnabler extends MetdataDeploymentCustomizer {
 
         if (fieldList.length > 0) {
             //Now retrieve the fields from the org
-            let customFieldFetcher: CustomFieldFetcher = new CustomFieldFetcher(logger);
-            let sfpOrg = await SFPOrg.create({ connection: conn });
-            let fetchedCustomFields = await customFieldFetcher.getCustomFields(sfpOrg, fieldList);
+            const customFieldFetcher: CustomFieldFetcher = new CustomFieldFetcher(logger);
+            const sfpOrg = await SFPOrg.create({ connection: conn });
+            const fetchedCustomFields = await customFieldFetcher.getCustomFields(sfpOrg, fieldList);
 
             //Modify the component set
             //Parsing is risky due to various encoding, so do an inplace replacement

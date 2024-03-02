@@ -64,7 +64,7 @@ export default class ProfileDiffImpl {
             SFPLogger.log('No profile provided, loading all profiles from source org. ', LoggerLevel.INFO);
             const conn = this.sourceOrg.getConnection();
 
-            let profileNamesPromise = retrieveMetadata([{ type: 'Profile', folder: null }], conn);
+            const profileNamesPromise = retrieveMetadata([{ type: 'Profile', folder: null }], conn);
             profileSource = profileNamesPromise.then((profileNames) => {
                 return this.retrieveProfiles(profileNames, this.sourceOrg);
             });
@@ -147,10 +147,10 @@ export default class ProfileDiffImpl {
                 profileNames.push(...Object.keys(profileXml));
             });
             const targetConn = this.targetOrg.getConnection();
-            let profileNamesPromise = retrieveMetadata([{ type: 'Profile', folder: null }], targetConn);
+            const profileNamesPromise = retrieveMetadata([{ type: 'Profile', folder: null }], targetConn);
             const profileTarget = profileNamesPromise
                 .then((targetProfileNames) => {
-                    let profileToRetrieveinTarget = profileNames.filter((oneProfile) => {
+                    const profileToRetrieveinTarget = profileNames.filter((oneProfile) => {
                         return targetProfileNames.includes(oneProfile);
                     });
                     return this.retrieveProfiles(profileToRetrieveinTarget, this.targetOrg);
@@ -167,21 +167,21 @@ export default class ProfileDiffImpl {
 
 
                     for (let i = 0; i < profilesSourceMap.length; i++) {
-                        let sourceProfileXml = profilesSourceMap[i];
-                        let sourceKeys = Object.keys(sourceProfileXml);
-                        let sourceProfileName = sourceKeys[0];
-                        let targetProfileXml = profilesTargetMap.find((targetProfile) => {
-                            let targetKeys = Object.keys(targetProfile);
-                            let targetProfileName = targetKeys[0];
+                        const sourceProfileXml = profilesSourceMap[i];
+                        const sourceKeys = Object.keys(sourceProfileXml);
+                        const sourceProfileName = sourceKeys[0];
+                        const targetProfileXml = profilesTargetMap.find((targetProfile) => {
+                            const targetKeys = Object.keys(targetProfile);
+                            const targetProfileName = targetKeys[0];
                             return targetProfileName === sourceProfileName;
                         });
                         SFPLogger.log('Processing profile ' + sourceProfileName, LoggerLevel.DEBUG);
-                        let sourceContent = sourceProfileXml[sourceProfileName];
+                        const sourceContent = sourceProfileXml[sourceProfileName];
                         let targetContent = '';
                         if (targetProfileXml) {
                             targetContent = targetProfileXml[sourceProfileName];
                         }
-                        let filePath =
+                        const filePath =
                             this.outputFolder + path.sep + sourceProfileName + METADATA_INFO.Profile.sourceExtension;
                         SFPLogger.log('Processing diff for profile ' + sourceProfileName, LoggerLevel.DEBUG);
                         this.processDiff(filePath, sourceContent, targetContent);
@@ -207,9 +207,9 @@ export default class ProfileDiffImpl {
             j: number,
             chunk = 10,
             temparray: string[];
-        let profileRetriever = new ProfileRetriever(retrieveOrg);
-        let retrievePromises = [];
-        let connection = retrieveOrg.getConnection();
+        const profileRetriever = new ProfileRetriever(retrieveOrg);
+        const retrievePromises = [];
+        const connection = retrieveOrg.getConnection();
 
         SFPLogger.log(
             `Retrieving ${profileNames.length} Profiles From ${connection.getUsername()}`,
@@ -221,17 +221,17 @@ export default class ProfileDiffImpl {
         for (i = 0, j = profileNames.length; i < j; i += chunk) {
             temparray = profileNames.slice(i, i + chunk);
 
-            let metadataListPromise = profileRetriever.loadProfiles(temparray);
+            const metadataListPromise = profileRetriever.loadProfiles(temparray);
             retrievePromises.push(
                 metadataListPromise
                     .then((metadataList) => {
-                        let profileWriter = new ProfileWriter();
-                        let profilesXmls = [];
+                        const profileWriter = new ProfileWriter();
+                        const profilesXmls = [];
                         for (let count = 0; count < metadataList.length; count++) {
                             //console.log(metadataList[count]);
-                            let profileObj = metadataList[count] as Profile;
+                            const profileObj = metadataList[count] as Profile;
 
-                            let profileXml = profileWriter.toXml(profileObj);
+                            const profileXml = profileWriter.toXml(profileObj);
                             profilesXmls.push({
                                 [profileObj.fullName]: profileXml,
                             });
@@ -250,7 +250,7 @@ export default class ProfileDiffImpl {
         }
         return Promise.all(retrievePromises)
             .then((metadataList) => {
-                let profiles = [];
+                const profiles = [];
                 metadataList.forEach((elem) => {
                     profiles.push(...elem);
                 });
@@ -272,8 +272,8 @@ export default class ProfileDiffImpl {
         let conflict = false;
 
         //Normalise line ending on windows
-        let matcherLocal = contentSource.match(CRLF_REGEX);
-        let matcherFetched = contentTarget.match(CRLF_REGEX);
+        const matcherLocal = contentSource.match(CRLF_REGEX);
+        const matcherFetched = contentTarget.match(CRLF_REGEX);
         if (matcherLocal && !matcherFetched) {
             lineEnd = matcherLocal[0];
             contentTarget = contentTarget.split(LF_REGEX).join(lineEnd);
@@ -292,17 +292,17 @@ export default class ProfileDiffImpl {
         const diffResult = diff_lineMode(contentSource, contentTarget);
         SFPLogger.log('Diff run completed. Processing result', LoggerLevel.DEBUG);
         for (let i = 0; i < diffResult.length; i++) {
-            let result = diffResult[i];
-            let index = i;
-            let originalArray = diffResult;
+            const result = diffResult[i];
+            const index = i;
+            const originalArray = diffResult;
 
-            let nextIndex = index + 1;
+            const nextIndex = index + 1;
             let nextElem = undefined;
             if (originalArray.length >= nextIndex) {
                 nextElem = originalArray[nextIndex];
             }
             let value = result[1];
-            let status = result[0];
+            const status = result[0];
 
             if (status === -1) {
                 if (!value.endsWith(lineEnd)) {
@@ -351,8 +351,8 @@ export default class ProfileDiffImpl {
             status = 'Local Change';
         }
 
-        let metaType = MetadataInfo.getMetadataName(filePath, false);
-        let member = MetadataFiles.getMemberNameFromFilepath(filePath, metaType);
+        const metaType = MetadataInfo.getMetadataName(filePath, false);
+        const member = MetadataFiles.getMemberNameFromFilepath(filePath, metaType);
         if (conflict || changedLocaly || changedRemote) {
             this.output.push({
                 status: status,

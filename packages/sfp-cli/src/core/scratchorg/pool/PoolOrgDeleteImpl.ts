@@ -14,7 +14,7 @@ export default class PoolOrgDeleteImpl extends PoolBaseImpl {
 
     protected async onExec(): Promise<void> {
         try {
-            let scratchOrgId = await new ScratchOrgInfoFetcher(this.hubOrg).getScratchOrgIdGivenUserName(this.username);
+            const scratchOrgId = await new ScratchOrgInfoFetcher(this.hubOrg).getScratchOrgIdGivenUserName(this.username);
             await new ScratchOrgOperator(this.hubOrg).delete(scratchOrgId);
         } catch (err) {
             throw new Error(

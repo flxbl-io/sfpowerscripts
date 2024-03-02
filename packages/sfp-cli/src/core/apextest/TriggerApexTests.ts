@@ -50,7 +50,7 @@ export default class TriggerApexTests {
         result: boolean;
         message: string;
     }> {
-        let org = await Org.create({ aliasOrUsername: this.target_org });
+        const org = await Org.create({ aliasOrUsername: this.target_org });
         this.conn = org.getConnection();
 
         // graceful shutdown
@@ -61,7 +61,7 @@ export default class TriggerApexTests {
         process.on('SIGINT', exitHandler);
         process.on('SIGTERM', exitHandler);
 
-        let startTime = Date.now();
+        const startTime = Date.now();
         let testExecutionResult: boolean = false;
         let testsRan: number;
         let commandTime: number;
@@ -71,7 +71,7 @@ export default class TriggerApexTests {
 
             //Clear Code Coverage before triggering tests
             try {
-                let clearCodeCoverage = new ClearCodeCoverage(org, this.fileLogger);
+                const clearCodeCoverage = new ClearCodeCoverage(org, this.fileLogger);
                 await clearCodeCoverage.clear();
             } catch (error) {
                 SFPLogger.log(
@@ -86,7 +86,7 @@ export default class TriggerApexTests {
             //Fetch tests passed in the testOptions
             let tests: string = null;
             let suites: string = null;
-            let isCoverageToBeFetched: boolean =
+            const isCoverageToBeFetched: boolean =
                 this.coverageOptions.isIndividualClassCoverageToBeValidated ||
                 this.coverageOptions.isPackageCoverageToBeValidated;
 
@@ -168,7 +168,7 @@ export default class TriggerApexTests {
             }
 
             //Print tests result to screen
-            let testReportDisplayer = new TestReportDisplayer(jsonOutput, this.testOptions, this.fileLogger);
+            const testReportDisplayer = new TestReportDisplayer(jsonOutput, this.testOptions, this.fileLogger);
             testReportDisplayer.printTestResults();
 
             commandTime = testResult.summary.commandTimeInMs;
@@ -183,7 +183,7 @@ export default class TriggerApexTests {
                 };
             } else {
                 if (isCoverageToBeFetched) {
-                    let coverageResults = await this.validateForApexCoverage(jsonOutput.coverage.coverage);
+                    const coverageResults = await this.validateForApexCoverage(jsonOutput.coverage.coverage);
                     testReportDisplayer.printCoverageReport(
                         this.coverageOptions.coverageThreshold,
                         coverageResults.classesCovered,
@@ -274,10 +274,10 @@ export default class TriggerApexTests {
     private removeDuplicateTestListing(testResult: any): any {
         let modifiedTestResult = _.cloneDeep(testResult);
 
-        let toEliminateIndices = [];
+        const toEliminateIndices = [];
         for (let index = 0; index < modifiedTestResult.tests.length; index++) {
             let idx = index;
-            let duplicateIndices = [index];
+            const duplicateIndices = [index];
             while (idx != -1) {
                 idx = _.findIndex(
                     modifiedTestResult.tests,
@@ -306,8 +306,8 @@ export default class TriggerApexTests {
     }
 
     private async getTranslatedOptionsForSpecifiedTests(testOptions: RunSpecifiedTestsOption) {
-        let translatedTestLevel = TestLevel.RunSpecifiedTests;
-        let tests = testOptions.specifiedTests;
+        const translatedTestLevel = TestLevel.RunSpecifiedTests;
+        const tests = testOptions.specifiedTests;
         SFPLogger.log(`Tests to be executed: ${COLOR_KEY_MESSAGE(tests)}`, LoggerLevel.INFO, this.fileLogger);
         SFPLogger.log(
             `Test Mode: ${COLOR_KEY_MESSAGE(this.testOptions.synchronous == true ? 'serial' : 'parallel')}`,
@@ -343,8 +343,8 @@ export default class TriggerApexTests {
             this.fileLogger,
             testOptions.synchronous == true ? true : false
         );
-        let translatedTestLevel = TestLevel.RunSpecifiedTests;
-        let tests = testOptions.specifiedTests;
+        const translatedTestLevel = TestLevel.RunSpecifiedTests;
+        const tests = testOptions.specifiedTests;
         SFPLogger.log(`Tests to be executed: ${COLOR_KEY_MESSAGE(tests)}`, LoggerLevel.INFO, this.fileLogger);
         return { translatedTestLevel, tests };
     }
@@ -357,10 +357,10 @@ export default class TriggerApexTests {
     ) {
         let modifiedTestResult = _.cloneDeep(testResult);
         if (!this.testOptions.synchronous) {
-            let parallelFailedTestClasses: string[] = [];
-            let testClassesThatDonotContributedCoverage: string[] = [];
+            const parallelFailedTestClasses: string[] = [];
+            const testClassesThatDonotContributedCoverage: string[] = [];
 
-            let testToBeTriggered: string[] = [];
+            const testToBeTriggered: string[] = [];
             for (const test of modifiedTestResult.tests) {
                 if (test.outcome == ApexTestResultOutcome.Fail) {
                     //Check for messages
@@ -570,7 +570,7 @@ export default class TriggerApexTests {
     ) {
         const payload = await testService.buildAsyncPayload(testLevel, null, tests, suites);
 
-        let result = await testService.runTestAsynchronous(
+        const result = await testService.runTestAsynchronous(
             payload,
             isCoverageToBeFetched,
             false,
@@ -601,7 +601,7 @@ export default class TriggerApexTests {
         }[];
     }> {
         if (this.testOptions instanceof RunAllTestsInPackageOptions) {
-            let packageTestCoverage: PackageTestCoverage = new PackageTestCoverage(
+            const packageTestCoverage: PackageTestCoverage = new PackageTestCoverage(
                 this.testOptions.sfppackage,
                 coverageReport,
                 this.fileLogger,
@@ -611,7 +611,7 @@ export default class TriggerApexTests {
             return packageTestCoverage.validateTestCoverage(this.coverageOptions.coverageThreshold);
         } else {
             if (this.coverageOptions.isIndividualClassCoverageToBeValidated) {
-                let coverageValidator: IndividualClassCoverage = new IndividualClassCoverage(
+                const coverageValidator: IndividualClassCoverage = new IndividualClassCoverage(
                     coverageReport,
                     this.fileLogger
                 );
@@ -620,7 +620,7 @@ export default class TriggerApexTests {
                     this.coverageOptions.coverageThreshold
                 );
             } else {
-                let coverageValidator: IndividualClassCoverage = new IndividualClassCoverage(
+                const coverageValidator: IndividualClassCoverage = new IndividualClassCoverage(
                     coverageReport,
                     this.fileLogger
                 );
@@ -638,7 +638,7 @@ export default class TriggerApexTests {
                 `test-result-${testResult.summary.testRunId}-junit.xml`
             )}`
         );
-        let reportAsJUnitReport = new JUnitReporter().format(testResult);
+        const reportAsJUnitReport = new JUnitReporter().format(testResult);
         fs.writeFileSync(
             path.join(this.testOptions.outputdir, `test-result-${testResult.summary.testRunId}-junit.xml`),
             reportAsJUnitReport
@@ -684,8 +684,8 @@ export default class TriggerApexTests {
     private async toggleParallelApexTesting(conn: Connection, logger: Logger, toEnable: boolean) {
         try {
             SFPLogger.log(`Set enableDisableParallelApexTesting:${toEnable}`, LoggerLevel.TRACE, logger);
-            let apexSettingMetadata = { fullName: 'ApexSettings', enableDisableParallelApexTesting: toEnable };
-            let result = await conn.metadata.upsert('ApexSettings', apexSettingMetadata);
+            const apexSettingMetadata = { fullName: 'ApexSettings', enableDisableParallelApexTesting: toEnable };
+            const result = await conn.metadata.upsert('ApexSettings', apexSettingMetadata);
             if (result.success) {
                 SFPLogger.log(`Successfully updated apex testing setting`, LoggerLevel.INFO, logger);
             }
@@ -708,7 +708,7 @@ export default class TriggerApexTests {
             commandTime?: number;
         }
     ) {
-        let elapsedTime = Date.now() - testMetrics.startTime;
+        const elapsedTime = Date.now() - testMetrics.startTime;
 
         if (testMetrics.testExecutionResult)
             SFPStatsSender.logGauge('apextest.tests.ran', testMetrics.testsRan, {
@@ -749,7 +749,7 @@ export class ProgressReporter implements Progress<ApexTestProgressValue> {
 
     report(value: ApexTestProgressValue): void {
         try {
-            let count = {};
+            const count = {};
             //Limit printing an update to 30 seconds
             if (Date.now() - this.lastExecutedTime > Duration.seconds(30).milliseconds) {
                 if (value.type == 'TestQueueProgress') {

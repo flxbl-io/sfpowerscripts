@@ -30,7 +30,7 @@ export abstract class MetdataDeploymentCustomizer implements DeploymentCustomize
                 LoggerLevel.INFO,
                 logger
             );
-            let modifiedPackage = await this.gatherComponentsToBeDeployed(
+            const modifiedPackage = await this.gatherComponentsToBeDeployed(
                 sfpPackage,
                 componentSet,
                 sfpOrg.getConnection(),
@@ -49,17 +49,17 @@ export abstract class MetdataDeploymentCustomizer implements DeploymentCustomize
 
 
             //deploy the fht enabled components to the org
-            let deploymentOptions = await this.getDeploymentOptions(
+            const deploymentOptions = await this.getDeploymentOptions(
                 sfpOrg.getUsername(),
                 deploymentContext.waitTime,
                 deploymentContext.apiVersion
             );
 
             //Print components inside Component Set
-            let components = modifiedPackage.componentSet.getSourceComponents();
+            const components = modifiedPackage.componentSet.getSourceComponents();
             PackageComponentPrinter.printComponentTable(components, logger);
 
-            let deploySourceToOrgImpl: DeploymentExecutor = new DeploySourceToOrgImpl(
+            const deploySourceToOrgImpl: DeploymentExecutor = new DeploySourceToOrgImpl(
                 sfpOrg,
                 modifiedPackage.location,
                 modifiedPackage.componentSet,
@@ -67,7 +67,7 @@ export abstract class MetdataDeploymentCustomizer implements DeploymentCustomize
                 logger
             );
 
-            let result = await deploySourceToOrgImpl.exec();
+            const result = await deploySourceToOrgImpl.exec();
             if (!result.result) {
                 DeployErrorDisplayer.displayErrors(result.response, logger);
             }

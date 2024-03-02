@@ -18,7 +18,7 @@ describe("Given a PackageDependencyResolver", () => {
             contents: await testData.getConfig(),
         });
 
-        let records: any = {
+        const records: any = {
             records: [
               {
                 attributes: {

@@ -40,14 +40,14 @@ export default class SFPOrg extends Org {
         logger: Logger,
         sfpPackage: SfpPackage
     ): Promise<{ isInstalled: boolean; versionNumber?: string }> {
-        let result: { isInstalled: boolean; versionNumber?: string } = {
+        const result: { isInstalled: boolean; versionNumber?: string } = {
             isInstalled: false,
         };
         try {
             SFPLogger.log(`Querying for version of ${sfpPackage.packageName} in the Org.`, LoggerLevel.TRACE, logger);
             result.isInstalled = false;
-            let installedArtifacts = await this.getInstalledArtifacts();
-            let packageName = sfpPackage.packageName;
+            const installedArtifacts = await this.getInstalledArtifacts();
+            const packageName = sfpPackage.packageName;
             for (const artifact of installedArtifacts) {
                 if (artifact.Name === packageName) {
                     result.versionNumber = artifact.Version__c;
@@ -86,7 +86,7 @@ export default class SFPOrg extends Org {
             logger
         );
 
-        let packageName = sfpPackage.package_name;
+        const packageName = sfpPackage.package_name;
 
         if (artifactId == null) {
             artifactId = await ObjectCRUDHelper.createRecord(
@@ -126,9 +126,9 @@ export default class SFPOrg extends Org {
     }
 
     private async getArtifactRecordId(sfpPackage: SfpPackage): Promise<string> {
-        let installedArtifacts = await this.getInstalledArtifacts();
+        const installedArtifacts = await this.getInstalledArtifacts();
 
-        let packageName = sfpPackage.packageName;
+        const packageName = sfpPackage.packageName;
         for (const artifact of installedArtifacts) {
             if (artifact.Name === packageName) {
                 return artifact.Id;
@@ -142,12 +142,12 @@ export default class SFPOrg extends Org {
     public async getAllInstalled2GPPackages(): Promise<Package2Detail[]> {
         const installedPackages: Package2Detail[] = [];
 
-        let records = await InstalledPackagesQueryExecutor.exec(this.getConnection());
+        const records = await InstalledPackagesQueryExecutor.exec(this.getConnection());
 
         records.forEach((record) => {
-            let packageVersionNumber = `${record.SubscriberPackageVersion.MajorVersion}.${record.SubscriberPackageVersion.MinorVersion}.${record.SubscriberPackageVersion.PatchVersion}.${record.SubscriberPackageVersion.BuildNumber}`;
+            const packageVersionNumber = `${record.SubscriberPackageVersion.MajorVersion}.${record.SubscriberPackageVersion.MinorVersion}.${record.SubscriberPackageVersion.PatchVersion}.${record.SubscriberPackageVersion.BuildNumber}`;
 
-            let packageDetails: Package2Detail = {
+            const packageDetails: Package2Detail = {
                 name: record.SubscriberPackage.Name,
                 package2Id: record.SubscriberPackageId,
                 namespacePrefix: record.SubscriberPackage.NamespacePrefix,
@@ -175,7 +175,7 @@ export default class SFPOrg extends Org {
      */
     public async listAllPackages() {
         if (await this.determineIfDevHubOrg(true)) {
-            let records = await QueryHelper.query<PackageTypeInfo>(packageQuery, this.getConnection(), true);
+            const records = await QueryHelper.query<PackageTypeInfo>(packageQuery, this.getConnection(), true);
             records.forEach((record) => {
                 record.IsOrgDependent =
                     record.ContainerOptions === 'Managed' ? 'N/A' : record.IsOrgDependent === true ? 'Yes' : 'No';
@@ -193,18 +193,18 @@ export default class SFPOrg extends Org {
      *  Return all artifacts including sfp as well as external unlocked/managed
      */
     public async getAllInstalledArtifacts():Promise<InstalledArtifact[]> {
-        let artifacts = await this.getInstalledArtifacts(`Name`);
-        let installedArtifacts: InstalledArtifact[]=[];
-        let installed2GPPackages = await this.getAllInstalled2GPPackages();
+        const artifacts = await this.getInstalledArtifacts(`Name`);
+        const installedArtifacts: InstalledArtifact[]=[];
+        const installed2GPPackages = await this.getAllInstalled2GPPackages();
 
         artifacts.forEach((artifact) => {
-            let installedArtifact: InstalledArtifact = {
+            const installedArtifact: InstalledArtifact = {
                 name: artifact.Name,
                 version: artifact.Version__c,
                 commitId:artifact.CommitId__c,
                 isInstalledBysfp: true,
             };
-            let packageFound = installed2GPPackages.find((elem) => elem.name == artifact.Name);
+            const packageFound = installed2GPPackages.find((elem) => elem.name == artifact.Name);
             if (packageFound) {
                 installedArtifact.subscriberVersion = packageFound.subscriberPackageVersionId;
                 if (packageFound.isOrgDependent) installedArtifact.type = `OrgDependendent`;
@@ -217,9 +217,9 @@ export default class SFPOrg extends Org {
         });
 
         installed2GPPackages.forEach((installed2GPPackage) => {
-            let packageFound = installedArtifacts.find((elem) => elem.name == installed2GPPackage.name);
+            const packageFound = installedArtifacts.find((elem) => elem.name == installed2GPPackage.name);
             if (!packageFound) {
-                let installedArtifact: InstalledArtifact = {
+                const installedArtifact: InstalledArtifact = {
                     name: installed2GPPackage.name,
                     version: installed2GPPackage.versionNumber,
                     commitId: `N/A`,

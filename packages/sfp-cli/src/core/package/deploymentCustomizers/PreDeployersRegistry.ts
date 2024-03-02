@@ -4,9 +4,9 @@ import PicklistEnabler from './PicklistEnabler';
 
 export class PreDeployersRegistry {
     static getPreDeployers(): DeploymentCustomizer[] {
-        let preDeployers: DeploymentCustomizer[] = [];
+        const preDeployers: DeploymentCustomizer[] = [];
 
-        let picklistEnabler = new PicklistEnabler();
+        const picklistEnabler = new PicklistEnabler();
         preDeployers.push(picklistEnabler);
 
         return preDeployers;

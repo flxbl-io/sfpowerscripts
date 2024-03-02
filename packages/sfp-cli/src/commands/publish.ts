@@ -105,11 +105,11 @@ export default class Publish extends SfpCommand {
 
     public async execute() {
         let nPublishedArtifacts: number = 0;
-        let failedArtifacts: string[] = [];
+        const failedArtifacts: string[] = [];
 
-        let executionStartTime = Date.now();
+        const executionStartTime = Date.now();
 
-        let succesfullyPublishedPackageNamesForTagging: {
+        const succesfullyPublishedPackageNamesForTagging: {
             name: string;
             version: string;
             type: string;
@@ -117,7 +117,7 @@ export default class Publish extends SfpCommand {
             commitId: string;
         }[] = [];
 
-        let npmrcFilesToCleanup: string[] = [];
+        const npmrcFilesToCleanup: string[] = [];
         this.git = await Git.initiateRepo(new ConsoleLogger());
 
         try {
@@ -129,21 +129,21 @@ export default class Publish extends SfpCommand {
             SFPLogger.printHeaderLine('',COLOR_HEADER,LoggerLevel.INFO);
             let packageVersionList: any;
             if (this.flags.publishpromotedonly) {
-                let hubOrg = await SFPOrg.create({ aliasOrUsername: this.flags.devhubalias });
-                let packageVersionLister: PackageVersionLister = new PackageVersionLister(hubOrg);
+                const hubOrg = await SFPOrg.create({ aliasOrUsername: this.flags.devhubalias });
+                const packageVersionLister: PackageVersionLister = new PackageVersionLister(hubOrg);
                 packageVersionList = await packageVersionLister.listAllReleasedVersions(process.cwd());
             }
 
-            let artifacts = ArtifactFetcher.findArtifacts(this.flags.artifactdir);
-            let artifactFilePaths = ArtifactFetcher.fetchArtifacts(this.flags.artifactdir);
+            const artifacts = ArtifactFetcher.findArtifacts(this.flags.artifactdir);
+            const artifactFilePaths = ArtifactFetcher.fetchArtifacts(this.flags.artifactdir);
 
             // Pattern captures two named groups, the "package" name and "version" number
-            let pattern = new RegExp('(?<package>^.*)(?:_sfpowerscripts_artifact_)(?<version>.*)(?:\\.zip)');
-            for (let artifact of artifacts) {
+            const pattern = new RegExp('(?<package>^.*)(?:_sfpowerscripts_artifact_)(?<version>.*)(?:\\.zip)');
+            for (const artifact of artifacts) {
                 let packageName: string;
                 let packageVersionNumber: string;
 
-                let match: RegExpMatchArray = path.basename(artifact).match(pattern);
+                const match: RegExpMatchArray = path.basename(artifact).match(pattern);
 
                 if (match !== null) {
                     packageName = match.groups.package;
@@ -153,13 +153,13 @@ export default class Publish extends SfpCommand {
                     continue;
                 }
 
-                let sfpPackage = await this.getPackageInfo(artifactFilePaths, packageName, packageVersionNumber);
+                const sfpPackage = await this.getPackageInfo(artifactFilePaths, packageName, packageVersionNumber);
 
-                let packageType = sfpPackage.package_type;
-                let packageVersionId = sfpPackage.package_version_id;
+                const packageType = sfpPackage.package_type;
+                const packageVersionId = sfpPackage.package_version_id;
 
                 if (this.flags.publishpromotedonly && packageType === PackageType.Unlocked) {
-                    let isReleased = this.isPackageVersionIdReleased(packageVersionList, packageVersionId);
+                    const isReleased = this.isPackageVersionIdReleased(packageVersionList, packageVersionId);
 
                     if (!isReleased) {
                         failedArtifacts.push(`${packageName} v${packageVersionNumber}`);
@@ -221,7 +221,7 @@ export default class Publish extends SfpCommand {
                 });
             }
 
-            let totalElapsedTime: number = Date.now() - executionStartTime;
+            const totalElapsedTime: number = Date.now() - executionStartTime;
 
             SFPLogger.printHeaderLine('',COLOR_HEADER,LoggerLevel.INFO);
             SFPLogger.log(
@@ -236,7 +236,7 @@ export default class Publish extends SfpCommand {
                 SFPLogger.log(COLOR_ERROR(`Packages Failed to Publish`, failedArtifacts));
             }
             SFPLogger.printHeaderLine('',COLOR_HEADER,LoggerLevel.INFO);
-            let tags = {
+            const tags = {
                 publish_promoted_only: this.flags.publishpromotedonly ? 'true' : 'false',
             };
 
@@ -255,8 +255,8 @@ export default class Publish extends SfpCommand {
     }
 
     private async publishUsingNpm(sfpPackage: SfpPackage, packageVersionNumber: string, npmrcFilesToCleanup: string[]) {
-        let publishGroupSection = new GroupConsoleLogs(`Publishing ${sfpPackage.packageName}`).begin();
-        let artifactRootDirectory = path.dirname(sfpPackage.sourceDir);
+        const publishGroupSection = new GroupConsoleLogs(`Publishing ${sfpPackage.packageName}`).begin();
+        const artifactRootDirectory = path.dirname(sfpPackage.sourceDir);
 
         // NPM does not accept packages with uppercase characters
         let name: string = sfpPackage.packageName.toLowerCase() + '_sfpowerscripts_artifact';
@@ -264,11 +264,11 @@ export default class Publish extends SfpCommand {
         //Check whether the user has already passed in @
 
         if (this.flags.scope) {
-            let scope: string = this.flags.scope.replace(/@/g, '').toLowerCase();
+            const scope: string = this.flags.scope.replace(/@/g, '').toLowerCase();
             name = `@${scope}/` + name;
         }
 
-        let packageJson = {
+        const packageJson = {
             name: name,
             version: packageVersionNumber,
             repository: sfpPackage.repository_url,
@@ -294,14 +294,14 @@ export default class Publish extends SfpCommand {
             );
         }
 
-        let npmPublishExecutor: ExecuteCommand = new ExecuteCommand(new ConsoleLogger(), LoggerLevel.INFO, true);
+        const npmPublishExecutor: ExecuteCommand = new ExecuteCommand(new ConsoleLogger(), LoggerLevel.INFO, true);
         await npmPublishExecutor.execCommand(cmd, artifactRootDirectory);
 
         publishGroupSection.end();
     }
 
     private async publishUsingScript(packageName: string, packageVersionNumber: string, artifact: string) {
-        let publishGroupSection = new GroupConsoleLogs(`Publishing ${packageName}`).begin();
+        const publishGroupSection = new GroupConsoleLogs(`Publishing ${packageName}`).begin();
         let cmd: string;
         if (process.platform !== 'win32') {
             cmd = `${defaultShell()} -e ${this.flags.scriptpath} ${packageName} ${packageVersionNumber} ${artifact} ${
@@ -315,7 +315,7 @@ export default class Publish extends SfpCommand {
 
         SFPLogger.log(COLOR_KEY_MESSAGE(`Publishing ${packageName} Version ${packageVersionNumber}...`));
 
-        let scriptExecutor: ExecuteCommand = new ExecuteCommand(new ConsoleLogger(), LoggerLevel.INFO, true);
+        const scriptExecutor: ExecuteCommand = new ExecuteCommand(new ConsoleLogger(), LoggerLevel.INFO, true);
         await scriptExecutor.execCommand(cmd, process.cwd());
         publishGroupSection.end();
     }
@@ -341,8 +341,8 @@ export default class Publish extends SfpCommand {
     ) {
 
         if (this.flags.pushgittag) {
-            let tagsForPushing:string[]=[];
-            for (let succesfullyPublishedPackage of sucessfullyPublishedPackages) {
+            const tagsForPushing:string[]=[];
+            for (const succesfullyPublishedPackage of sucessfullyPublishedPackages) {
                 SFPLogger.log(COLOR_KEY_MESSAGE(`Pushing Git Tags to Repo ${succesfullyPublishedPackage.tag}`));
                 tagsForPushing.push(succesfullyPublishedPackage.tag);
             }
@@ -360,7 +360,7 @@ export default class Publish extends SfpCommand {
         }[]
     ) {
 
-        for (let sucessFullyPublishedPackage of sucessfullyPublishedPackages) {
+        for (const sucessFullyPublishedPackage of sucessfullyPublishedPackages) {
             SFPLogger.log(COLOR_KEY_MESSAGE(`Creating Git Tags in Repo ${sucessFullyPublishedPackage.tag}`));
             await this.git.addAnnotatedTag(
                 sucessFullyPublishedPackage.tag,
@@ -389,7 +389,7 @@ export default class Publish extends SfpCommand {
 
               if (tagsToDelete.length > 0) {
                 SFPLogger.log(COLOR_KEY_MESSAGE('Removing the following Git tag(s):'));
-                for (let tag of tagsToDelete) {
+                for (const tag of tagsToDelete) {
                     SFPLogger.log(COLOR_KEY_MESSAGE(tag));
                 }
                 await this.git.deleteTags(tagsToDelete);
@@ -416,7 +416,7 @@ export default class Publish extends SfpCommand {
 
           if (tagsToDelete.length > 0) {
             SFPLogger.log(COLOR_KEY_MESSAGE('Removing the following Git tag(s):'));
-            for (let tag of tagsToDelete) {
+            for (const tag of tagsToDelete) {
                 SFPLogger.log(COLOR_KEY_MESSAGE(tag));
             }
             await this.git.deleteTags(tagsToDelete);
@@ -426,7 +426,7 @@ export default class Publish extends SfpCommand {
 
 
     private isPackageVersionIdReleased(packageVersionList: any, packageVersionId: string): boolean {
-        let packageVersion = packageVersionList.find((pkg) => {
+        const packageVersion = packageVersionList.find((pkg) => {
             return pkg.SubscriberPackageVersionId === packageVersionId;
         });
 
@@ -441,8 +441,8 @@ export default class Publish extends SfpCommand {
      * @param packageVersionNumber
      */
     private async getPackageInfo(artifacts: Artifact[], packageName, packageVersionNumber): Promise<SfpPackage> {
-        for (let artifact of artifacts) {
-            let sfpPackage = await SfpPackageBuilder.buildPackageFromArtifact(artifact, new ConsoleLogger());
+        for (const artifact of artifacts) {
+            const sfpPackage = await SfpPackageBuilder.buildPackageFromArtifact(artifact, new ConsoleLogger());
             if (
                 sfpPackage.packageName === packageName &&
                 sfpPackage.versionNumber === packageVersionNumber.replace('-', '.')

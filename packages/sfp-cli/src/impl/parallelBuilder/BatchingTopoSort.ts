@@ -4,11 +4,11 @@ export default class BatchingTopoSort {
     public sort(dag: AdjacentList) {
         try {
             const indegrees = this.countInDegrees(dag);
-            let sorted = [];
+            const sorted = [];
             let roots = this.getRoots(indegrees);
             while (roots.length) {
                 sorted.push(roots);
-                let newRoots = [];
+                const newRoots = [];
                 roots.forEach((root) => {
                     dag[root].forEach((dependents) => {
                         indegrees[dependents]--;
@@ -30,7 +30,7 @@ export default class BatchingTopoSort {
     }
 
     private countInDegrees(dag: AdjacentList): DAGDegrees {
-        let counts: DAGDegrees = {};
+        const counts: DAGDegrees = {};
         Object.entries(dag).forEach(([key, dependents]) => {
             counts[key] = counts[key] || 0;
             dependents.forEach((dependent) => {

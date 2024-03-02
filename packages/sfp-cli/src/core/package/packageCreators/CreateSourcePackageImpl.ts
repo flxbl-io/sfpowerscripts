@@ -47,7 +47,7 @@ export default class CreateSourcePackageImpl extends CreatePackage {
     postCreatePackage(sfpPackage) {}
 
     protected handleApexTestClasses(sfpPackage: SfpPackage) {
-        let classTypes: ApexSortedByType = sfpPackage.apexClassesSortedByTypes;
+        const classTypes: ApexSortedByType = sfpPackage.apexClassesSortedByTypes;
 
         if (sfpPackage.isApexFound && classTypes?.testClass?.length == 0) {
             this.printSlowDeploymentWarning();
@@ -102,13 +102,13 @@ export default class CreateSourcePackageImpl extends CreatePackage {
     private printClassesIdentified(fetchedClasses: FileDescriptor[]) {
         if (fetchedClasses === null || fetchedClasses === undefined) return;
 
-        let table = new Table({
+        const table = new Table({
             head: ['Class', 'Error'],
             chars: ZERO_BORDER_TABLE
         });
 
-        for (let fetchedClass of fetchedClasses) {
-            let item = [fetchedClass.name, fetchedClass.error ? JSON.stringify(fetchedClass.error) : 'N/A'];
+        for (const fetchedClass of fetchedClasses) {
+            const item = [fetchedClass.name, fetchedClass.error ? JSON.stringify(fetchedClass.error) : 'N/A'];
             table.push(item);
         }
         SFPLogger.log('Following apex test classes were identified', LoggerLevel.INFO, this.logger);

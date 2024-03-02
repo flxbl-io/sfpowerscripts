@@ -81,7 +81,7 @@ export default class DeployImpl {
     }
 
     public async exec(): Promise<DeploymentResult> {
-        let deployed: PackageInfo[] = [];
+        const deployed: PackageInfo[] = [];
         let failed: PackageInfo[] = [];
         let queue: SfpPackage[];
         let packagesToPackageInfo: { [p: string]: PackageInfo };
@@ -89,7 +89,7 @@ export default class DeployImpl {
             //Create Org
             this.targetOrg = await SFPOrg.create({ aliasOrUsername: this.props.targetUsername });
 
-            let artifacts = ArtifactFetcher.fetchArtifacts(this.props.artifactDir, null, this.props.logger);
+            const artifacts = ArtifactFetcher.fetchArtifacts(this.props.artifactDir, null, this.props.logger);
 
             if (artifacts.length === 0) throw new Error(`No artifacts to install found in ${this.props.artifactDir}`);
 
@@ -102,7 +102,7 @@ export default class DeployImpl {
             sfpPackages = this.filterSfPPackagesBasedOnReleaseConfig(sfpPackages,this.props.releaseConfigPath,this.props.logger);
 
             //Grab the latest projectConfig from Packages
-            let sfpPackageInquirer: SfpPackageInquirer = new SfpPackageInquirer(sfpPackages, this.props.logger);
+            const sfpPackageInquirer: SfpPackageInquirer = new SfpPackageInquirer(sfpPackages, this.props.logger);
             let sfdxProjectConfig = sfpPackageInquirer.getLatestProjectConfig();
             if (sfdxProjectConfig == null) {
                 // If unable to find latest package manifest in artifacts, use package manifest in project directory
@@ -133,7 +133,7 @@ export default class DeployImpl {
                     this.props.baselineOrg = this.props.targetUsername; //Change baseline to the target one itself
                 }
 
-                let filteredDeploymentQueue = await this.filterByPackagesInstalledInTheOrg(
+                const filteredDeploymentQueue = await this.filterByPackagesInstalledInTheOrg(
                     sfdxProjectConfig,
                     queue,
                     packagesToPackageInfo,
@@ -151,12 +151,12 @@ export default class DeployImpl {
             }
 
             for (let i = 0; i < queue.length; i++) {
-                let packageInfo = packagesToPackageInfo[queue[i].packageName];
-                let sfpPackage: SfpPackage = packageInfo.sfpPackage;
+                const packageInfo = packagesToPackageInfo[queue[i].packageName];
+                const sfpPackage: SfpPackage = packageInfo.sfpPackage;
 
-                let packageType: string = sfpPackage.packageType;
+                const packageType: string = sfpPackage.packageType;
 
-                let pkgDescriptor = ProjectConfig.getPackageDescriptorFromConfig(
+                const pkgDescriptor = ProjectConfig.getPackageDescriptorFromConfig(
                     queue[i].packageName,
                     sfdxProjectConfig
                 );
@@ -176,7 +176,7 @@ export default class DeployImpl {
                 //Display Header
                 this.displayHeader(sfpPackage, pkgDescriptor, queue[i].packageName);
 
-                let preHookStatus = await this._preDeployHook?.preDeployPackage(
+                const preHookStatus = await this._preDeployHook?.preDeployPackage(
                     sfpPackage,
                     this.props.targetUsername,
                     sfpPackages,
@@ -193,7 +193,7 @@ export default class DeployImpl {
                 }
 
                 let isToBeRetried: boolean = this.props.isRetryOnFailure;
-                let packageInstallationResult: PackageInstallationResult = await retry(
+                const packageInstallationResult: PackageInstallationResult = await retry(
                     async (bail, attemptCount) => {
                         try {
                             try {
@@ -205,7 +205,7 @@ export default class DeployImpl {
 
                             this.displayRetryHeader(isToBeRetried, attemptCount);
 
-                            let installPackageResult = await this.installPackage(
+                            const installPackageResult = await this.installPackage(
                                 packageType,
                                 queue[i],
                                 this.targetOrg,
@@ -228,7 +228,7 @@ export default class DeployImpl {
                                 throw error;
                             } else {
                                 // Any other exception, in regular cases dont retry, just bail out
-                                let failedPackageInstallationResult: PackageInstallationResult = {
+                                const failedPackageInstallationResult: PackageInstallationResult = {
                                     result: PackageInstallationStatus.Failed,
                                     message: error,
                                 };
@@ -273,7 +273,7 @@ export default class DeployImpl {
 
                 // Only deploy post hook when package installation is successful
                 if(packageInstallationResult.result === PackageInstallationStatus.Succeeded) {
-                    let postHookStatus = await this._postDeployHook?.postDeployPackage(
+                    const postHookStatus = await this._postDeployHook?.postDeployPackage(
                         sfpPackage,
                         packageInstallationResult,
                         this.props.targetUsername,
@@ -327,10 +327,10 @@ export default class DeployImpl {
        else
        {
           SFPLogger.log(COLOR_KEY_MESSAGE(`Filtering packages to be deployed based on release config ${COLOR_KEY_VALUE(releaseConfigPath)}`),LoggerLevel.INFO,logger);
-          let releaseConfigLoader:ReleaseConfigLoader = new ReleaseConfigLoader(logger,releaseConfigPath);
-          let packages = releaseConfigLoader.getPackagesAsPerReleaseConfig();
+          const releaseConfigLoader:ReleaseConfigLoader = new ReleaseConfigLoader(logger,releaseConfigPath);
+          const packages = releaseConfigLoader.getPackagesAsPerReleaseConfig();
           //Filter artifacts based on packages
-            let filteredSfPPackages:SfpPackage[] = [];
+            const filteredSfPPackages:SfpPackage[] = [];
 
             for (const sfpPackage of sfpPackages) {
                 if (packages.includes(sfpPackage.packageName)) {
@@ -344,9 +344,9 @@ export default class DeployImpl {
 
 
     private async generateSfpPackageFromArtifacts(artifacts: Artifact[]): Promise<SfpPackage[]> {
-        let sfpPackages: SfpPackage[] = [];
+        const sfpPackages: SfpPackage[] = [];
         for (const artifact of artifacts) {
-            let sfpPackage = await SfpPackageBuilder.buildPackageFromArtifact(artifact, this.props.logger);
+            const sfpPackage = await SfpPackageBuilder.buildPackageFromArtifact(artifact, this.props.logger);
             sfpPackages.push(sfpPackage);
         }
         return sfpPackages;
@@ -360,7 +360,7 @@ export default class DeployImpl {
                 );
                 if(!this.props.isDryRun)
                 {
-                    let promoteUnlockedPackageImpl: PromoteUnlockedPackageImpl = new PromoteUnlockedPackageImpl(
+                    const promoteUnlockedPackageImpl: PromoteUnlockedPackageImpl = new PromoteUnlockedPackageImpl(
                         sourceDirectory,
                         sfpPackage.package_version_id,
                         this.props.devhubUserName
@@ -457,7 +457,7 @@ export default class DeployImpl {
         props:DeployProps
     ) {
         let groupSection = new GroupConsoleLogs(`Full Installation Breakdown`, this.props.logger).begin();
-        let maxTable = new Table({
+        const maxTable = new Table({
             head: [
                 'Artifact',
                 'Incoming Version',
@@ -481,7 +481,7 @@ export default class DeployImpl {
         groupSection.end();
 
         groupSection = new GroupConsoleLogs(`Artifacts to be installed`, this.props.logger).begin();
-        let minTable = new Table({
+        const minTable = new Table({
             head: [
                 'Artifact',
                 'Incoming Version',
@@ -506,7 +506,7 @@ export default class DeployImpl {
 
 
         function printDeploymentBreakDownInMarkdown() {
-            let tableData = {
+            const tableData = {
                 table: {
                     head:  [
                         'Artifact',
@@ -573,8 +573,8 @@ export default class DeployImpl {
                         promotionStatus = '![Pending](https://img.shields.io/badge/Pending-yellow.svg)';
                     }
                     else if(props.promotePackagesBeforeDeploymentToOrg == props.targetUsername  ) {
-                        let versionInstalledInOrgConvertedToSemver = convertBuildNumDotDelimToHyphen(versionInstalledInOrg);
-                        let versionNumberConvertedToSemver = convertBuildNumDotDelimToHyphen(versionNumber);
+                        const versionInstalledInOrgConvertedToSemver = convertBuildNumDotDelimToHyphen(versionInstalledInOrg);
+                        const versionNumberConvertedToSemver = convertBuildNumDotDelimToHyphen(versionNumber);
                         if (semver.diff(versionInstalledInOrgConvertedToSemver, versionNumberConvertedToSemver) == 'prerelease') {
                             promotionStatus = '![Already Promoted](https://img.shields.io/badge/Already%20Promoted-red.svg)';
                         }
@@ -602,8 +602,8 @@ export default class DeployImpl {
     }
 
     private printArtifactVersions(queue: SfpPackage[], packagesToPackageInfo: { [p: string]: PackageInfo }) {
-        let groupSection = new GroupConsoleLogs(`Packages to be deployed`, this.props.logger).begin();
-        let table = new Table({
+        const groupSection = new GroupConsoleLogs(`Packages to be deployed`, this.props.logger).begin();
+        const table = new Table({
             head: ['Package', 'Version to be installed'],
             chars: ZERO_BORDER_TABLE,
         });
@@ -618,7 +618,7 @@ export default class DeployImpl {
 
 
         function printDeploymentBreakDownInMarkdown() {
-            let tableData = {
+            const tableData = {
                 table: {
                     head:  [
                         'Package',
@@ -638,8 +638,8 @@ export default class DeployImpl {
         }
 
         function getRowForMarkdownTable(pkg:SfpPackage) {
-            let packageName = pkg.packageName;
-            let versionNumber = pkg.versionNumber;
+            const packageName = pkg.packageName;
+            const versionNumber = pkg.versionNumber;
             return [packageName, versionNumber];
           }
     }
@@ -650,18 +650,18 @@ export default class DeployImpl {
         packagesToPackageInfo: { [p: string]: PackageInfo },
         targetUsername: string
     ): Promise<any[]> {
-        let targetOrg = await SFPOrg.create({ aliasOrUsername: targetUsername });
+        const targetOrg = await SFPOrg.create({ aliasOrUsername: targetUsername });
 
         const clonedQueue = _.clone(queue);
 
         for (let i = queue.length - 1; i >= 0; i--) {
-            let packageInfo = packagesToPackageInfo[clonedQueue[i].packageName];
-            let sfpPackage: SfpPackage = packageInfo.sfpPackage;
-            let pkgDescriptor = ProjectConfig.getPackageDescriptorFromConfig(
+            const packageInfo = packagesToPackageInfo[clonedQueue[i].packageName];
+            const sfpPackage: SfpPackage = packageInfo.sfpPackage;
+            const pkgDescriptor = ProjectConfig.getPackageDescriptorFromConfig(
                 clonedQueue[i].packageName,
                 packageManifest
             );
-            let packageInstalledInTheOrg = await targetOrg.isArtifactInstalledInOrg(
+            const packageInstalledInTheOrg = await targetOrg.isArtifactInstalledInOrg(
                 this.props.logger,
                 sfpPackage
             );
@@ -683,14 +683,14 @@ export default class DeployImpl {
      * @param artifacts
      */
     private async getPackagesToPackageInfo(sfpPackages: SfpPackage[]): Promise<{ [p: string]: PackageInfo }> {
-        let packagesToPackageInfo: { [p: string]: PackageInfo } = {};
+        const packagesToPackageInfo: { [p: string]: PackageInfo } = {};
 
-        for (let sfpPackage of sfpPackages) {
+        for (const sfpPackage of sfpPackages) {
             if (packagesToPackageInfo[sfpPackage.packageName]) {
-                let previousVersionNumber = convertBuildNumDotDelimToHyphen(
+                const previousVersionNumber = convertBuildNumDotDelimToHyphen(
                     packagesToPackageInfo[sfpPackage.packageName].sfpPackage.versionNumber
                 );
-                let currentVersionNumber = convertBuildNumDotDelimToHyphen(sfpPackage.versionNumber);
+                const currentVersionNumber = convertBuildNumDotDelimToHyphen(sfpPackage.versionNumber);
 
                 // replace existing packageInfo if package version number is newer
                 if (semver.gt(currentVersionNumber, previousVersionNumber)) {
@@ -723,12 +723,12 @@ export default class DeployImpl {
         apiVersion: string
     ): Promise<PackageInstallationResult> {
         //Compute Deployment Type
-        let deploymentType =
+        const deploymentType =
             this.props.deploymentMode === DeploymentMode.SOURCEPACKAGES_PUSH
                 ? DeploymentType.SOURCE_PUSH : DeploymentType.MDAPI_DEPLOY;
 
         //Add Installation Options
-        let installationOptions = new SfpPackageInstallationOptions();
+        const installationOptions = new SfpPackageInstallationOptions();
         installationOptions.installationkey = null,
         installationOptions.apexcompile = 'package';
         installationOptions.waitTime = waitTime;
@@ -807,7 +807,7 @@ export default class DeployImpl {
     ): SfpPackage[] {
         let packagesToDeploy: SfpPackage[] = [];
 
-        let packages = sfdxProjectConfig['packageDirectories'];
+        const packages = sfdxProjectConfig['packageDirectories'];
 
         // Filter package manifest by whats available in artifacts
         for (const pkg of packages) {

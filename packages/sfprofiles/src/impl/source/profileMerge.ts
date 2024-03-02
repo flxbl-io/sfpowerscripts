@@ -38,7 +38,7 @@ export default class ProfileMerge extends ProfileActions {
             profileObj.applicationVisibilities = [profileObj.applicationVisibilities];
         }
         for (let i = 0; i < applicationVisibilities.length; i++) {
-            let appVisibility = applicationVisibilities[i];
+            const appVisibility = applicationVisibilities[i];
             let found = false;
             for (let j = 0; j < profileObj.applicationVisibilities.length; j++) {
                 if (appVisibility.application === profileObj.applicationVisibilities[j].application) {
@@ -73,7 +73,7 @@ export default class ProfileMerge extends ProfileActions {
             profileObj.classAccesses = [profileObj.classAccesses];
         }
         for (let i = 0; i < classes.length; i++) {
-            let classAccess = classes[i];
+            const classAccess = classes[i];
             let found = false;
             for (let j = 0; j < profileObj.classAccesses.length; j++) {
                 if (classAccess.apexClass === profileObj.classAccesses[j].apexClass) {
@@ -107,7 +107,7 @@ export default class ProfileMerge extends ProfileActions {
             profileObj.fieldPermissions = [profileObj.fieldPermissions];
         }
         for (let i = 0; i < fieldPermissions.length; i++) {
-            let fieldPermission = fieldPermissions[i];
+            const fieldPermission = fieldPermissions[i];
             let found = false;
             for (let j = 0; j < profileObj.fieldPermissions.length; j++) {
                 if (fieldPermission.field === profileObj.fieldPermissions[j].field) {
@@ -145,8 +145,8 @@ export default class ProfileMerge extends ProfileActions {
             profileObj.layoutAssignments = [profileObj.layoutAssignments];
         }
         for (let i = 0; i < layoutAssignments.length; i++) {
-            let layoutAssignment = layoutAssignments[i];
-            let objName = layoutAssignment.layout.split('-')[0];
+            const layoutAssignment = layoutAssignments[i];
+            const objName = layoutAssignment.layout.split('-')[0];
             profileObj.layoutAssignments = profileObj.layoutAssignments.filter((layoutAss) => {
                 const otherObjName = layoutAss.layout.split('-')[0];
                 return objName !== otherObjName;
@@ -154,7 +154,7 @@ export default class ProfileMerge extends ProfileActions {
         }
 
         for (let i = 0; i < layoutAssignments.length; i++) {
-            let layoutAssignment = layoutAssignments[i];
+            const layoutAssignment = layoutAssignments[i];
             let found = false;
             for (let j = 0; j < profileObj.layoutAssignments.length; j++) {
                 if (
@@ -200,7 +200,7 @@ export default class ProfileMerge extends ProfileActions {
             profileObj.objectPermissions = [profileObj.objectPermissions];
         }
         for (let i = 0; i < objectPermissions.length; i++) {
-            let objPerm = objectPermissions[i];
+            const objPerm = objectPermissions[i];
             let found = false;
             for (let j = 0; j < profileObj.objectPermissions.length; j++) {
                 if (objPerm.object === profileObj.objectPermissions[j].object) {
@@ -239,7 +239,7 @@ export default class ProfileMerge extends ProfileActions {
             profileObj.pageAccesses = [profileObj.pageAccesses];
         }
         for (let i = 0; i < pages.length; i++) {
-            let page = pages[i];
+            const page = pages[i];
             let found = false;
             for (let j = 0; j < profileObj.pageAccesses.length; j++) {
                 if (page.apexPage === profileObj.pageAccesses[j].apexPage) {
@@ -273,7 +273,7 @@ export default class ProfileMerge extends ProfileActions {
             profileObj.recordTypeVisibilities = [profileObj.recordTypeVisibilities];
         }
         for (let i = 0; i < recordTypes.length; i++) {
-            let recordType = recordTypes[i];
+            const recordType = recordTypes[i];
             let found = false;
             for (let j = 0; j < profileObj.recordTypeVisibilities.length; j++) {
                 if (recordType.recordType === profileObj.recordTypeVisibilities[j].recordType) {
@@ -311,7 +311,7 @@ export default class ProfileMerge extends ProfileActions {
             profileObj.tabVisibilities = [profileObj.tabVisibilities];
         }
         for (let i = 0; i < tabs.length; i++) {
-            let tab = tabs[i];
+            const tab = tabs[i];
             let found = false;
             for (let j = 0; j < profileObj.tabVisibilities.length; j++) {
                 if (tab.tab === profileObj.tabVisibilities[j].tab) {
@@ -345,7 +345,7 @@ export default class ProfileMerge extends ProfileActions {
             profileObj.userPermissions = [profileObj.userPermissions];
         }
         for (let i = 0; i < permissions.length; i++) {
-            let perm = permissions[i];
+            const perm = permissions[i];
             let found = false;
             for (let j = 0; j < profileObj.userPermissions.length; j++) {
                 if (perm.name === profileObj.userPermissions[j].name) {
@@ -379,7 +379,7 @@ export default class ProfileMerge extends ProfileActions {
             profileObj.customPermissions = [profileObj.customPermissions];
         }
         for (let i = 0; i < permissions.length; i++) {
-            let perm = permissions[i];
+            const perm = permissions[i];
             let found = false;
             for (let j = 0; j < profileObj.customPermissions.length; j++) {
                 if (perm.name === profileObj.customPermissions[j].name) {
@@ -415,7 +415,7 @@ export default class ProfileMerge extends ProfileActions {
             profileObj.customMetadataTypeAccesses = [profileObj.customMetadataTypeAccesses];
         }
         for (let i = 0; i < custonMetadataAccesses.length; i++) {
-            let customMetadata = custonMetadataAccesses[i];
+            const customMetadata = custonMetadataAccesses[i];
             let found = false;
             for (let j = 0; j < profileObj.customMetadataTypeAccesses.length; j++) {
                 if (customMetadata.name === profileObj.customMetadataTypeAccesses[j].name) {
@@ -448,7 +448,7 @@ export default class ProfileMerge extends ProfileActions {
             profileObj.customSettingAccesses = [profileObj.customSettingAccesses];
         }
         for (let i = 0; i < customSettingAccesses.length; i++) {
-            let customSetting = customSettingAccesses[i];
+            const customSetting = customSettingAccesses[i];
             let found = false;
             for (let j = 0; j < profileObj.customSettingAccesses.length; j++) {
                 if (customSetting.name === profileObj.customSettingAccesses[j].name) {
@@ -482,7 +482,7 @@ export default class ProfileMerge extends ProfileActions {
             profileObj.flowAccesses = [profileObj.flowAccesses];
         }
         for (let i = 0; i < flowAccesses.length; i++) {
-            let flowAccess = flowAccesses[i];
+            const flowAccess = flowAccesses[i];
             let found = false;
             for (let j = 0; j < profileObj.flowAccesses.length; j++) {
                 if (flowAccess.flow === profileObj.flowAccesses[j].flow) {
@@ -519,7 +519,7 @@ export default class ProfileMerge extends ProfileActions {
             profileObj.loginFlows = [profileObj.loginFlows];
         }
         for (let i = 0; i < loginFlows.length; i++) {
-            let loginFlow = loginFlows[i];
+            const loginFlow = loginFlows[i];
             let found = false;
             for (let j = 0; j < profileObj.loginFlows.length; j++) {
                 if (loginFlow.flow === profileObj.loginFlows[j].flow && loginFlow.flow !== undefined) {
@@ -571,7 +571,7 @@ export default class ProfileMerge extends ProfileActions {
             profileObj.externalDataSourceAccesses = [profileObj.externalDataSourceAccesses];
         }
         for (let i = 0; i < externalDatasources.length; i++) {
-            let dataSource = externalDatasources[i];
+            const dataSource = externalDatasources[i];
             let found = false;
             for (let j = 0; j < profileObj.externalDataSourceAccesses.length; j++) {
                 if (dataSource.externalDataSource === profileObj.externalDataSourceAccesses[j].externalDataSource) {
@@ -671,20 +671,20 @@ export default class ProfileMerge extends ProfileActions {
     ): Promise<ProfileStatus> {
         SFPLogger.log('Merging profiles...', LoggerLevel.DEBUG);
 
-        let fetchNewProfiles = _.isNil(srcFolders) || srcFolders.length === 0;
+        const fetchNewProfiles = _.isNil(srcFolders) || srcFolders.length === 0;
         if (fetchNewProfiles) {
             srcFolders = await Sfpowerkit.getProjectDirectories();
         }
         this.metadataFiles = new MetadataFiles();
         for (let i = 0; i < srcFolders.length; i++) {
-            let srcFolder = srcFolders[i];
-            let normalizedPath = path.join(process.cwd(), srcFolder);
+            const srcFolder = srcFolders[i];
+            const normalizedPath = path.join(process.cwd(), srcFolder);
             this.metadataFiles.loadComponents(normalizedPath);
         }
-        let profileListToReturn: string[] = [];
-        let profileNames: string[] = [];
+        const profileListToReturn: string[] = [];
+        const profileNames: string[] = [];
 
-        let localProfilesWithStatus = await this.getRemoteProfilesWithLocalStatus(profiles);
+        const localProfilesWithStatus = await this.getRemoteProfilesWithLocalStatus(profiles);
         let localProfiles = localProfilesWithStatus.updated || [];
         if (fetchNewProfiles) {
             localProfiles = _.union(localProfilesWithStatus.added, localProfilesWithStatus.updated);
@@ -693,8 +693,8 @@ export default class ProfileMerge extends ProfileActions {
         }
         localProfiles.sort();
         for (let i = 0; i < localProfiles.length; i++) {
-            let profileComponent = localProfiles[i];
-            let supported = !unsupportedprofiles.includes(profileComponent.name);
+            const profileComponent = localProfiles[i];
+            const supported = !unsupportedprofiles.includes(profileComponent.name);
             if (supported) {
                 profileNames.push(profileComponent.name);
             }
@@ -709,11 +709,11 @@ export default class ProfileMerge extends ProfileActions {
         for (i = 0, j = profileNames.length; i < j; i += chunk) {
             temparray = profileNames.slice(i, i + chunk);
             //SfPowerKit.ux.log(temparray.length);
-            let start = i + 1;
-            let end = i + chunk;
+            const start = i + 1;
+            const end = i + chunk;
             SFPLogger.log('Loading a chunk of profiles ' + start + ' to ' + end, LoggerLevel.INFO);
-            let profileList: string[] = [];
-            let metadataList = await this.profileRetriever.loadProfiles(temparray);
+            const profileList: string[] = [];
+            const metadataList = await this.profileRetriever.loadProfiles(temparray);
 
             for (let count = 0; count < metadataList.length; count++) {
                 //handle profile merge here
@@ -725,20 +725,20 @@ export default class ProfileMerge extends ProfileActions {
                 }
                 //Check if the component exists in the file system
 
-                let profileWriter = new ProfileWriter();
+                const profileWriter = new ProfileWriter();
                 let profileObj: Profile;
-                let indices = _.keys(_.pickBy(localProfiles, { name: profileObjFromServer.fullName }));
+                const indices = _.keys(_.pickBy(localProfiles, { name: profileObjFromServer.fullName }));
                 for (const index of indices) {
                     Sfpowerkit.log('Reconciling  Tabs on retrieved profiles.', LoggerLevel.DEBUG);
                     await this.reconcileTabs(profileObjFromServer);
-                    let filePath = localProfiles[index].path;
+                    const filePath = localProfiles[index].path;
                     if (filePath && fs.existsSync(filePath)) {
                         SFPLogger.log('Merging profile ' + profileObjFromServer.fullName, LoggerLevel.DEBUG);
-                        let profileXml = fs.readFileSync(filePath);
+                        const profileXml = fs.readFileSync(filePath);
 
                         const parser = new xml2js.Parser({ explicitArray: false });
                         const parseString = util.promisify(parser.parseString) as _.Function1<xml2js.convertableToString, Promise<{ Profile: Profile }>>;
-                        let parseResult = await parseString(profileXml);
+                        const parseResult = await parseString(profileXml);
 
                         profileObj = profileWriter.toProfile(parseResult.Profile);
                         profileObj = await this.mergeProfile(profileObj, profileObjFromServer);

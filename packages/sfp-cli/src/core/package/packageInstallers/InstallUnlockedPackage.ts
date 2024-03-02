@@ -22,7 +22,7 @@ export default class InstallUnlockedPackage extends InstallPackage {
     }
 
     public async install() {
-        let installUnlockedPackageWrapper: InstallUnlockedPackageImpl = new InstallUnlockedPackageImpl(
+        const installUnlockedPackageWrapper: InstallUnlockedPackageImpl = new InstallUnlockedPackageImpl(
             this.logger,
             this.sfpOrg.getUsername(),
             this.packageVersionId,
@@ -50,9 +50,9 @@ export default class InstallUnlockedPackage extends InstallPackage {
                     LoggerLevel.INFO,
                     this.logger
                 );
-                let installedPackages = await this.sfpOrg.getAllInstalled2GPPackages();
+                const installedPackages = await this.sfpOrg.getAllInstalled2GPPackages();
 
-                let packageFound = installedPackages.find((installedPackage) => {
+                const packageFound = installedPackages.find((installedPackage) => {
                     return installedPackage.subscriberPackageVersionId.substring(0,14) === this.packageVersionId.substring(0,14);
                 });
 

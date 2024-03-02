@@ -24,7 +24,7 @@ export class DataDogMetricsSender extends NativeMetricSender {
 
     public sendGaugeMetric(metric: string, value: number, tags: string[] | { [key: string]: string }) {
         try {
-            let transformedTags = this.transformTagsToStringArray(tags);
+            const transformedTags = this.transformTagsToStringArray(tags);
             this.nativeDataDogMetricsLogger.gauge(metric, value, transformedTags);
             this.nativeDataDogMetricsLogger.flush();
         } catch (error) {
@@ -38,7 +38,7 @@ export class DataDogMetricsSender extends NativeMetricSender {
 
     public sendCountMetric(metric: string, tags: string[] | { [key: string]: string }) {
         try {
-            let transformedTags = this.transformTagsToStringArray(tags);
+            const transformedTags = this.transformTagsToStringArray(tags);
             this.nativeDataDogMetricsLogger.increment(metric, 1, transformedTags);
             this.nativeDataDogMetricsLogger.flush();
         } catch (error) {

@@ -41,9 +41,9 @@ export default class ApexTypeFetcher {
             throw new Error(`Search directory does not exist`);
         }
 
-        for (let clsFile of clsFiles) {
-            let clsPayload: string = fs.readFileSync(clsFile, 'utf8');
-            let fileDescriptor: FileDescriptor = {
+        for (const clsFile of clsFiles) {
+            const clsPayload: string = fs.readFileSync(clsFile, 'utf8');
+            const fileDescriptor: FileDescriptor = {
                 name: path.basename(clsFile, '.cls'),
                 filepath: clsFile,
             };
@@ -51,10 +51,10 @@ export default class ApexTypeFetcher {
             // Parse cls file
             let compilationUnitContext;
             try {
-                let lexer = new ApexLexer(new CaseInsensitiveInputStream(clsFile, clsPayload));
-                let tokens: CommonTokenStream = new CommonTokenStream(lexer);
+                const lexer = new ApexLexer(new CaseInsensitiveInputStream(clsFile, clsPayload));
+                const tokens: CommonTokenStream = new CommonTokenStream(lexer);
 
-                let parser = new ApexParser(tokens);
+                const parser = new ApexParser(tokens);
                 parser.removeErrorListeners();
                 parser.addErrorListener(new ThrowingErrorListener());
 
@@ -69,12 +69,12 @@ export default class ApexTypeFetcher {
                 continue;
             }
 
-            let apexTypeListener: ApexTypeListener = new ApexTypeListener();
+            const apexTypeListener: ApexTypeListener = new ApexTypeListener();
 
             // Walk parse tree to determine Apex type
             ParseTreeWalker.DEFAULT.walk(apexTypeListener as ApexParserListener, compilationUnitContext);
 
-            let apexType = apexTypeListener.getApexType();
+            const apexType = apexTypeListener.getApexType();
 
             if (apexType.class) {
                 this.apexSortedByType.class.push(fileDescriptor);
@@ -92,7 +92,7 @@ export default class ApexTypeFetcher {
     }
 
     public getTestClasses(): ApexClasses {
-        let testClassNames: ApexClasses = this.apexSortedByType.testClass.map((fileDescriptor) => fileDescriptor.name);
+        const testClassNames: ApexClasses = this.apexSortedByType.testClass.map((fileDescriptor) => fileDescriptor.name);
         return testClassNames;
     }
 
@@ -100,19 +100,19 @@ export default class ApexTypeFetcher {
         let packageClasses: ApexClasses = this.apexSortedByType.class.map((fileDescriptor) => fileDescriptor.name);
 
         if (packageClasses != null) {
-            let testClassesInPackage: ApexClasses = this.apexSortedByType.testClass.map(
+            const testClassesInPackage: ApexClasses = this.apexSortedByType.testClass.map(
                 (fileDescriptor) => fileDescriptor.name
             );
             if (testClassesInPackage != null && testClassesInPackage.length > 0)
                 packageClasses = packageClasses.filter((item) => !testClassesInPackage.includes(item));
 
-            let interfacesInPackage: ApexClasses = this.apexSortedByType.testClass.map(
+            const interfacesInPackage: ApexClasses = this.apexSortedByType.testClass.map(
                 (fileDescriptor) => fileDescriptor.name
             );
             if (interfacesInPackage != null && interfacesInPackage.length > 0)
                 packageClasses = packageClasses.filter((item) => !interfacesInPackage.includes(item));
 
-            let parseError: ApexClasses = this.apexSortedByType.parseError.map((fileDescriptor) => fileDescriptor.name);
+            const parseError: ApexClasses = this.apexSortedByType.parseError.map((fileDescriptor) => fileDescriptor.name);
             if (parseError != null && parseError.length > 0)
                 packageClasses = packageClasses.filter((item) => !parseError.includes(item));
         }

@@ -18,12 +18,12 @@ const parser = new xml2js.Parser({
 
 export default class CustomLabelsDiff {
     public static async getMembers(filePath: string) {
-        let fileContent = fs.readFileSync(filePath, 'utf8').toString();
+        const fileContent = fs.readFileSync(filePath, 'utf8').toString();
         const parseString = util.promisify(parser.parseString) as _.Function1<xml2js.convertableToString, Promise<any>>;
         let members = [];
         if (fileContent !== '') {
-            let parseResult = await parseString(fileContent);
-            let customLabelsObj = parseResult.CustomLabels || {};
+            const parseResult = await parseString(fileContent);
+            const customLabelsObj = parseResult.CustomLabels || {};
             if (!_.isNil(customLabelsObj.labels)) {
                 if (!Array.isArray(customLabelsObj.labels)) {
                     members.push(customLabelsObj.labels.fullName);
@@ -50,17 +50,17 @@ export default class CustomLabelsDiff {
         const parseString = util.promisify(parser.parseString) as _.Function1<xml2js.convertableToString, Promise<any>>;
 
         if (customLabelsXml1 !== '') {
-            let parseResult = await parseString(customLabelsXml1);
+            const parseResult = await parseString(customLabelsXml1);
             customLabelsObj1 = parseResult.CustomLabels || {};
         }
 
         if (customLabelsXml2 !== '') {
-            let parseResult = await parseString(customLabelsXml2);
+            const parseResult = await parseString(customLabelsXml2);
             customLabelsObj2 = parseResult.CustomLabels || {};
         }
 
         // Building the new workflow object for the added and modified fields
-        let addedEditedOrDeleted = CustomLabelsDiff.buildCustomLabelsObj(customLabelsObj1, customLabelsObj2);
+        const addedEditedOrDeleted = CustomLabelsDiff.buildCustomLabelsObj(customLabelsObj1, customLabelsObj2);
 
         if (addedEditedOrDeleted.addedEdited.labels && addedEditedOrDeleted.addedEdited.labels.length > 0) {
             CustomLabelsDiff.writeCustomLabel(addedEditedOrDeleted.addedEdited, outputFilePath);
@@ -97,7 +97,7 @@ export default class CustomLabelsDiff {
     }
 
     private static buildCustomLabelsObj(customLabelsObj1: any, customLabelsObj2: any) {
-        let newcustomLabelsObj = {
+        const newcustomLabelsObj = {
             $: { xmlns: 'http://soap.sforce.com/2006/04/metadata' },
             labels: [],
         };
@@ -110,12 +110,12 @@ export default class CustomLabelsDiff {
             customLabelsObj2.labels = [customLabelsObj2.labels];
         }
 
-        let deletedCustomLabelsObj = {
+        const deletedCustomLabelsObj = {
             $: { xmlns: 'http://soap.sforce.com/2006/04/metadata' },
             labels: [],
         };
 
-        let addedDeleted = DiffUtil.getChangedOrAdded(customLabelsObj1.labels, customLabelsObj2.labels, 'fullName');
+        const addedDeleted = DiffUtil.getChangedOrAdded(customLabelsObj1.labels, customLabelsObj2.labels, 'fullName');
 
         newcustomLabelsObj.labels = addedDeleted.addedEdited;
         deletedCustomLabelsObj.labels = addedDeleted.deleted;
@@ -153,10 +153,10 @@ export default class CustomLabelsDiff {
         const builder = new xml2js.Builder({
             xmldec: { version: '1.0', encoding: 'UTF-8', standalone: null },
         });
-        let customLabelObj = {
+        const customLabelObj = {
             CustomLabels: newCustomLabelsObj,
         };
-        let xml = builder.buildObject(customLabelObj);
+        const xml = builder.buildObject(customLabelObj);
         fs.writeFileSync(outputFilePath, xml);
     }
 }

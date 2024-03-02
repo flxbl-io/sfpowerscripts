@@ -7,13 +7,13 @@ export default class ScratchOrgInfoFetcher {
     public async getScratchOrgInfoByOrgId(orgId: string[]) {
         const conn = this.hubOrg.getConnection();
 
-        let collection = orgId
+        const collection = orgId
             .map((id) => {
                 return `'${trimTo15(id)}'`;
             })
             .toString();
 
-        let query = `
+        const query = `
       SELECT Id, ScratchOrg, Status
       FROM ScratchOrgInfo
       WHERE ScratchOrg IN (${collection})

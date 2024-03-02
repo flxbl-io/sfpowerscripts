@@ -57,10 +57,10 @@ describe("Given a ShrinkImpl", () => {
 
   it("should remove duplicate package dependencies from its dependent package", async () => {
     const shrinkImpl = new ShrinkImpl(conn);
-    let resolvedDependencies = await shrinkImpl.shrinkDependencies(projectConfig);
+    const resolvedDependencies = await shrinkImpl.shrinkDependencies(projectConfig);
 
-    let dependencies =  resolvedDependencies.packageDirectories?.find(pkg => pkg.package === "candidate-management")?.dependencies;
-    let coreIndex = dependencies.findIndex(dependency => dependency.package === "core");
+    const dependencies =  resolvedDependencies.packageDirectories?.find(pkg => pkg.package === "candidate-management")?.dependencies;
+    const coreIndex = dependencies.findIndex(dependency => dependency.package === "core");
     expect(dependencies).toBeTruthy();
     expect(dependencies?.length)?.toBe(2);
     expect(coreIndex).toBe(1);
@@ -68,10 +68,10 @@ describe("Given a ShrinkImpl", () => {
 
   it("should remove duplicate package dependencies from external dependency map", async () => {
     const shrinkImpl = new ShrinkImpl(conn);
-    let resolvedDependencies = await shrinkImpl.shrinkDependencies(projectConfig);
+    const resolvedDependencies = await shrinkImpl.shrinkDependencies(projectConfig);
 
-    let dependencies =  resolvedDependencies.packageDirectories?.find(pkg => pkg.package === "contact-management")?.dependencies;
-    let coreIndex = dependencies.findIndex(dependency => dependency.package === "core");
+    const dependencies =  resolvedDependencies.packageDirectories?.find(pkg => pkg.package === "contact-management")?.dependencies;
+    const coreIndex = dependencies.findIndex(dependency => dependency.package === "core");
     expect(dependencies).toBeTruthy();
     expect(dependencies?.length)?.toBe(2);
     expect(coreIndex).toBe(1);

@@ -10,7 +10,7 @@ const PROFILE_NAMESPACE = 'http://soap.sforce.com/2006/04/metadata';
 export default class ProfileWriter {
     public writeProfile(profileObj: Profile, filePath: string) {
         //Delete eampty arrays
-        for (let key in profileObj) {
+        for (const key in profileObj) {
             if (Array.isArray(profileObj[key])) {
                 //All top element must be arays exept non arrayProperties
                 if (!nonArayProperties.includes(key) && profileObj[key].length === 0) {
@@ -19,16 +19,16 @@ export default class ProfileWriter {
             }
         }
 
-        let builder = new xml2js.Builder({
+        const builder = new xml2js.Builder({
             rootName: 'Profile',
             xmldec: { version: '1.0', encoding: 'UTF-8' },
         });
         profileObj['$'] = {
             xmlns: PROFILE_NAMESPACE,
         };
-        let xml = builder.buildObject(profileObj);
+        const xml = builder.buildObject(profileObj);
 
-        let formattedXml = format(xml, {
+        const formattedXml = format(xml, {
             indentation: '    ',
             filter: (node) => node.type !== 'Comment',
             collapseContent: true,
@@ -42,7 +42,7 @@ export default class ProfileWriter {
 
     public toXml(profileObj: Profile) {
         //Delete eampty arrays
-        for (let key in profileObj) {
+        for (const key in profileObj) {
             if (Array.isArray(profileObj[key])) {
                 //All top element must be arays exept non arrayProperties
                 if (!nonArayProperties.includes(key) && profileObj[key].length === 0) {
@@ -50,15 +50,15 @@ export default class ProfileWriter {
                 }
             }
         }
-        let builder = new xml2js.Builder({
+        const builder = new xml2js.Builder({
             rootName: 'Profile',
             xmldec: { version: '1.0', encoding: 'UTF-8' },
         });
         profileObj['$'] = {
             xmlns: PROFILE_NAMESPACE,
         };
-        let xml = builder.buildObject(profileObj);
-        let formattedXml = format(xml, {
+        const xml = builder.buildObject(profileObj);
+        const formattedXml = format(xml, {
             indentation: '    ',
             filter: (node) => node.type !== 'Comment',
             collapseContent: true,
@@ -68,8 +68,8 @@ export default class ProfileWriter {
     }
 
     public toProfile(profileObj: any): Profile {
-        let convertedObject: any = {};
-        for (let key in profileObj) {
+        const convertedObject: any = {};
+        for (const key in profileObj) {
             if (Array.isArray(profileObj[key])) {
                 //All top element must be arays exept non arrayProperties
                 if (nonArayProperties.includes(key)) {
@@ -80,9 +80,9 @@ export default class ProfileWriter {
                             ? false
                             : profileObj[key][0];
                 } else {
-                    let data = [];
+                    const data = [];
                     for (let i = 0; i < profileObj[key].length; i++) {
-                        let element = this.removeArrayNatureOnValue(profileObj[key][i]);
+                        const element = this.removeArrayNatureOnValue(profileObj[key][i]);
                         if (element !== '') {
                             data.push(element);
                         }
@@ -99,8 +99,8 @@ export default class ProfileWriter {
     }
 
     private removeArrayNatureOnValue(obj: any): any {
-        let toReturn = {};
-        for (let key in obj) {
+        const toReturn = {};
+        for (const key in obj) {
             if (Array.isArray(obj[key]) && obj[key].length > 0) {
                 //All top element must be arays exept non arrayProperties
                 toReturn[key] = obj[key][0] === 'true' ? true : obj[key][0] === 'false' ? false : obj[key][0];

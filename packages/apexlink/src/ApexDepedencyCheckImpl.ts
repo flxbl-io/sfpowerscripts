@@ -12,14 +12,14 @@ export default class ApexDepedencyCheckImpl {
 
     public async execute() {
 
-        let apexLinkProcessExecutor = new ExecuteCommand(this.logger, LoggerLevel.INFO, false);
-        let generatedCommand =  await this.getGeneratedCommandWithParams();
+        const apexLinkProcessExecutor = new ExecuteCommand(this.logger, LoggerLevel.INFO, false);
+        const generatedCommand =  await this.getGeneratedCommandWithParams();
        
         await apexLinkProcessExecutor.execCommand(
            generatedCommand,
             process.cwd()
         );
-        let result = fs.readJSONSync(`${this.projectDirectory}/apexlink.json`)
+        const result = fs.readJSONSync(`${this.projectDirectory}/apexlink.json`)
         return result;
     }
 
@@ -27,7 +27,7 @@ export default class ApexDepedencyCheckImpl {
         let javaHome:string = await this.getJavaHome();
         //Replace Program Files with Progra~1 in Windows
         javaHome = javaHome.replace(/Program Files/, "Progra~1");
-        let command = `${path.join(javaHome, 'bin', 'java')}  -jar  ${jarFile} -depends  -json ${
+        const command = `${path.join(javaHome, 'bin', 'java')}  -jar  ${jarFile} -depends  -json ${
             this.projectDirectory } > ${this.projectDirectory}/apexlink.json`;
         return command;
     }

@@ -29,21 +29,21 @@ describe('Given a package, listTagsOnBranch', () => {
 
     it('should return tags belonging to package, on current branch', async () => {
         tags = coreTags;
-        let git: Git = await Git.initiateRepo();
+        const git: Git = await Git.initiateRepo();
         const gitTags: GitTags = new GitTags(git, 'core');
         expect(await gitTags.listTagsOnBranch()).toEqual(coreTags.slice(0, 4));
     });
 
     it('should return an empty array if there are no tags', async () => {
         tags = [];
-        let git: Git = await Git.initiateRepo();
+        const git: Git = await Git.initiateRepo();
         const gitTags: GitTags = new GitTags(git, 'core');
         expect(await gitTags.listTagsOnBranch()).toEqual([]);
     });
 
     it('should return an empty array if there are no tags belonging to package, on current branch', async () => {
         tags = coreTags.slice(4);
-        let git: Git = await Git.initiateRepo();
+        const git: Git = await Git.initiateRepo();
         const gitTags: GitTags = new GitTags(git, 'core');
         expect(await gitTags.listTagsOnBranch()).toEqual([]);
     });

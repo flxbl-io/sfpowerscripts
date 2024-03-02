@@ -20,7 +20,7 @@ export default class FHTAnalyser implements PackageAnalyzer {
             let fhtFields: { [key: string]: Array<string> } = {};
 
             //read the yaml
-            let fhtYamlPath = path.join(
+            const fhtYamlPath = path.join(
                 sfpPackage.workingDirectory,
                 sfpPackage.projectDirectory,
                 sfpPackage.packageDirectory,
@@ -52,16 +52,16 @@ export default class FHTAnalyser implements PackageAnalyzer {
         fhtFields: { [key: string]: Array<string> },
         componentSet: ComponentSet
     ): Promise<Record<string, Array<string>>> {
-        let sourceComponents = componentSet.getSourceComponents().toArray();
+        const sourceComponents = componentSet.getSourceComponents().toArray();
 
         for (const sourceComponent of sourceComponents) {
             if (sourceComponent.type.name !== registry.types.customobject.children.types.customfield.name) {
                 continue;
             }
 
-            let customField = sourceComponent.parseXmlSync().CustomField;
+            const customField = sourceComponent.parseXmlSync().CustomField;
             if (customField['trackHistory'] == 'true') {
-                let objName = sourceComponent.parent.fullName;
+                const objName = sourceComponent.parent.fullName;
                 if (!fhtFields[objName]) fhtFields[objName] = [];
                 fhtFields[objName].push(sourceComponent.name);
             }

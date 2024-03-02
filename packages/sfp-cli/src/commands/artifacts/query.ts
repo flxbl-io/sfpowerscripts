@@ -25,10 +25,10 @@ export default class Query extends SfpCommand {
     public async execute() {
         await this.org.refreshAuth();
 
-        let sfpOrg: SFPOrg = await SFPOrg.create({ connection: this.org.getConnection() });
-        let installedArtifacts = await sfpOrg.getAllInstalledArtifacts();
+        const sfpOrg: SFPOrg = await SFPOrg.create({ connection: this.org.getConnection() });
+        const installedArtifacts = await sfpOrg.getAllInstalledArtifacts();
         if (!this.flags.json) {
-            let minTable = new Table({
+            const minTable = new Table({
                 head: [
                     'Package',
                     'Version in org',

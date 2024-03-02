@@ -31,9 +31,9 @@ export default class ReconcileWorker {
             await this.loadAllLocalComponents();
         }
 
-        let result: string[] = [];
+        const result: string[] = [];
         for (let count = 0; count < profilesToReconcile.length; count++) {
-            let reconciledProfile = await this.reconcileProfileJob(profilesToReconcile[count], destFolder);
+            const reconciledProfile = await this.reconcileProfileJob(profilesToReconcile[count], destFolder);
             result.push(reconciledProfile[0]);
         }
         return result;
@@ -42,7 +42,7 @@ export default class ReconcileWorker {
     private async loadAllLocalComponents() {
         const resolver = new MetadataResolver();
         const project = await SfProject.resolve();
-        let packageDirectories = project.getPackageDirectories();
+        const packageDirectories = project.getPackageDirectories();
 
         for (const packageDirectory of packageDirectories) {
             const components = resolver.getComponentsFromPath(packageDirectory.path);
@@ -55,7 +55,7 @@ export default class ReconcileWorker {
     private loadComponentsTocache(component:SourceComponent){
         Sfpowerkit.addToCache(`SOURCE_${component.type.name}_${component.fullName}`, true);
         Sfpowerkit.addToCache(`${component.type.name}_SOURCE_CACHE_AVAILABLE`, true);
-        let children:SourceComponent[] = component.getChildren();
+        const children:SourceComponent[] = component.getChildren();
         for (const child of children) {
             this.loadComponentsTocache(child);
         }
@@ -63,15 +63,15 @@ export default class ReconcileWorker {
 
     public reconcileProfileJob(profileComponent: ProfileSourceFile, destFolder: string): Promise<string[]> {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        let reconcilePromise = new Promise<string[]>((resolve, reject) => {
-            let result: string[] = []; // Handle result of command execution
+        const reconcilePromise = new Promise<string[]>((resolve, reject) => {
+            const result: string[] = []; // Handle result of command execution
 
-            let profileXmlString = fs.readFileSync(profileComponent.path);
+            const profileXmlString = fs.readFileSync(profileComponent.path);
             const parser = new xml2js.Parser({ explicitArray: true });
             const parseString = util.promisify(parser.parseString) as _.Function1<xml2js.convertableToString, Promise<{ Profile: Profile }>>;
             parseString(profileXmlString)
                 .then((parseResult) => {
-                    let profileWriter = new ProfileWriter();
+                    const profileWriter = new ProfileWriter();
                     const profileObj: Profile = profileWriter.toProfile(parseResult.Profile); // as Profile
                     return profileObj;
                 })
@@ -87,7 +87,7 @@ export default class ReconcileWorker {
                     if (destFolder != null) {
                         outputFile = path.join(destFolder, path.basename(profileComponent.path));
                     }
-                    let profileWriter = new ProfileWriter();
+                    const profileWriter = new ProfileWriter();
                     profileWriter.writeProfile(profileObj, outputFile);
                     result.push(outputFile);
                     resolve(result);
@@ -106,7 +106,7 @@ export default class ReconcileWorker {
 
 Sfpowerkit.setLogLevel(workerData.loglevel, workerData.isJsonFormatEnabled);
 
-let reconcileWorker = new ReconcileWorker(workerData.targetOrg, workerData.isSourceOnly);
+const reconcileWorker = new ReconcileWorker(workerData.targetOrg, workerData.isSourceOnly);
 reconcileWorker.reconcile(workerData.profileChunk, workerData.destFolder).then((result) => {
     parentPort.postMessage(result);
 })

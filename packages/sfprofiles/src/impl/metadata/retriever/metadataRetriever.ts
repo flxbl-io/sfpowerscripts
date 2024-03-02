@@ -20,7 +20,7 @@ export default class MetadataRetriever {
     }
 
     public async getComponents(parent?: string) {
-        let key = parent ? this._componentType + '_' + parent : this._componentType;
+        const key = parent ? this._componentType + '_' + parent : this._componentType;
 
         if (!this._conn) {
             return [];
@@ -61,9 +61,9 @@ export default class MetadataRetriever {
     }
 
     private async getUserLicense() {
-        let query = `Select Id, Name, LicenseDefinitionKey From UserLicense`;
+        const query = `Select Id, Name, LicenseDefinitionKey From UserLicense`;
 
-        let queryUtil = new QueryExecutor(this._conn);
+        const queryUtil = new QueryExecutor(this._conn);
         let items = await queryUtil.executeQuery(query, false);
 
         if (items === undefined || items === null) {
@@ -77,9 +77,9 @@ export default class MetadataRetriever {
         });
     }
     private async getTabs() {
-        let query = `SELECT Id,  Name, SobjectName, DurableId, IsCustom, Label FROM TabDefinition`;
+        const query = `SELECT Id,  Name, SobjectName, DurableId, IsCustom, Label FROM TabDefinition`;
 
-        let queryUtil = new QueryExecutor(this._conn);
+        const queryUtil = new QueryExecutor(this._conn);
         let items = await queryUtil.executeQuery(query, false);
 
         if (items === undefined || items === null) {
@@ -91,7 +91,7 @@ export default class MetadataRetriever {
             return tab;
         });
 
-        let listMetadataItems = await new MetadataOperation(this._conn).getComponentsFromOrgUsingListMetadata(
+        const listMetadataItems = await new MetadataOperation(this._conn).getComponentsFromOrgUsingListMetadata(
             this._componentType
         );
         if (listMetadataItems.length > 0) {
@@ -102,7 +102,7 @@ export default class MetadataRetriever {
     }
 
     public async isComponentExistsInTheOrg(item: string, parent?: string): Promise<boolean> {
-        let items = await this.getComponents(parent);
+        const items = await this.getComponents(parent);
         //Do a cache hit before deep interospection
         let foundItem = item ? Sfpowerkit.getFromCache(`${this.componentType}_${item}`) : null;
         if (_.isNil(foundItem) && !_.isNil(items) && Array.isArray(items)) {
@@ -134,8 +134,8 @@ export default class MetadataRetriever {
     }
 
     private async getCustomObjects(): Promise<any> {
-        let results = await this._conn.describeGlobal();
-        let entities = results.sobjects.map((sObject) => {
+        const results = await this._conn.describeGlobal();
+        const entities = results.sobjects.map((sObject) => {
             return {
                 QualifiedApiName: sObject.name,
                 fullName: sObject.name,
@@ -146,10 +146,10 @@ export default class MetadataRetriever {
     }
 
     public async getUserPermissions(): Promise<any[]> {
-        let describeResult = await this._conn.sobject('PermissionSet').describe();
-        let supportedPermissions = [];
+        const describeResult = await this._conn.sobject('PermissionSet').describe();
+        const supportedPermissions = [];
         describeResult.fields.forEach((field) => {
-            let fieldName = field['name'] as string;
+            const fieldName = field['name'] as string;
             if (fieldName.startsWith('Permissions')) {
                 supportedPermissions.push({
                     fullName: fieldName.replace('Permissions', '').trim(),
@@ -161,7 +161,7 @@ export default class MetadataRetriever {
 
     private async getObjectPermissions(): Promise<any[]> {
         let objectForPermission = [];
-        let res = await this._conn.query('SELECT SobjectType, count(Id) From ObjectPermissions Group By sObjectType');
+        const res = await this._conn.query('SELECT SobjectType, count(Id) From ObjectPermissions Group By sObjectType');
         if (res !== undefined) {
             objectForPermission = res.records.map((elem) => {
                 return { fullName: elem['SobjectType'] };
@@ -178,8 +178,8 @@ export default class MetadataRetriever {
         try {
             SFPLogger.log(`Fetching Field of Object ${objectName}`, LoggerLevel.TRACE);
 
-            let query = `SELECT Id, QualifiedApiName, EntityDefinitionId, DeveloperName, NameSpacePrefix FROM FieldDefinition WHERE EntityDefinition.QualifiedApiName='${objectName}'`;
-            let queryUtil = new QueryExecutor(this._conn);
+            const query = `SELECT Id, QualifiedApiName, EntityDefinitionId, DeveloperName, NameSpacePrefix FROM FieldDefinition WHERE EntityDefinition.QualifiedApiName='${objectName}'`;
+            const queryUtil = new QueryExecutor(this._conn);
             fields = await queryUtil.executeQuery(query, true);
 
             fields = fields.map((field) => {
@@ -196,10 +196,10 @@ export default class MetadataRetriever {
         try {
             SFPLogger.log(`Fetching RecordTypes`, LoggerLevel.TRACE);
 
-            let queryUtil = new QueryExecutor(this._conn);
+            const queryUtil = new QueryExecutor(this._conn);
 
-            let isPersonAccountFieldDefinitionQuery = `SELECT QualifiedApiName FROM FieldDefinition WHERE EntityDefinition.QualifiedApiName='Account' AND QualifiedApiName='IsPersonAccount'`;
-            let isPersonAccountFieldDefinitionRecords = await queryUtil.executeQuery(
+            const isPersonAccountFieldDefinitionQuery = `SELECT QualifiedApiName FROM FieldDefinition WHERE EntityDefinition.QualifiedApiName='Account' AND QualifiedApiName='IsPersonAccount'`;
+            const isPersonAccountFieldDefinitionRecords = await queryUtil.executeQuery(
                 isPersonAccountFieldDefinitionQuery,
                 true
             );
@@ -240,7 +240,7 @@ export default class MetadataRetriever {
 
     private async getLayouts(): Promise<any[]> {
         SFPLogger.log(`Fetching Layouts`, LoggerLevel.TRACE);
-        let apiversion: string = await Sfpowerkit.getApiVersion();
+        const apiversion: string = await Sfpowerkit.getApiVersion();
         let layouts = await this._conn.metadata.list(
             {
                 type: registry.types.layout.name,

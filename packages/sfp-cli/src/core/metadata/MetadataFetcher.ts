@@ -12,26 +12,26 @@ export default class MetadataFetcher {
 
    
     protected async fetchPackageFromOrg(org: SFPOrg, members: any) {
-        let connection = org.getConnection();
+        const connection = org.getConnection();
         const apiversion = await org.getConnection().retrieveMaxApiVersion();
 
-        let retrieveRequest = {
+        const retrieveRequest = {
             apiVersion: Number(apiversion),
         };
 
         retrieveRequest['singlePackage'] = true;
         retrieveRequest['unpackaged'] = members;
         connection.metadata.pollTimeout = 60;
-        let retrievedId = await connection.metadata.retrieve(retrieveRequest);
+        const retrievedId = await connection.metadata.retrieve(retrieveRequest);
         SFPLogger.log(`Fetching  metadata from ${connection.getUsername()}`, LoggerLevel.DEBUG, this.logger);
 
-        let metadata_retrieve_result = await this.checkRetrievalStatus(connection, retrievedId.id);
+        const metadata_retrieve_result = await this.checkRetrievalStatus(connection, retrievedId.id);
         if (!metadata_retrieve_result.zipFile)
             SFPLogger.log('Unable to find the requested metadata', LoggerLevel.ERROR, this.logger);
 
-        let retriveLocation = `.sfpowerscripts/retrieved/${retrievedId.id}`;
+        const retriveLocation = `.sfpowerscripts/retrieved/${retrievedId.id}`;
         //Extract Security
-        let zipFileName = `${retriveLocation}/unpackaged_${makeRandomId(8)}.zip`;
+        const zipFileName = `${retriveLocation}/unpackaged_${makeRandomId(8)}.zip`;
         fs.mkdirpSync(retriveLocation);
         fs.writeFileSync(zipFileName, metadata_retrieve_result.zipFile, {
             encoding: 'base64',
@@ -64,7 +64,7 @@ export default class MetadataFetcher {
 
     
     private extract(unzippedDirectory: string, zipFile: string) {
-        let zip = new AdmZip(zipFile);
+        const zip = new AdmZip(zipFile);
         // Overwrite existing files
         zip.extractAllTo(unzippedDirectory, true);
     }

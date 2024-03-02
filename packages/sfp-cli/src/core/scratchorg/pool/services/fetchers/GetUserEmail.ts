@@ -1,10 +1,10 @@
 import { LoggerLevel, Org } from '@salesforce/core';
 
-let retry = require('async-retry');
+const retry = require('async-retry');
 import SFPLogger from '@flxblio/sfp-logger';
 
 export async function getUserEmail(username: string, hubOrg: Org) {
-    let hubConn = hubOrg.getConnection();
+    const hubConn = hubOrg.getConnection();
 
     return retry(
         async (bail) => {
@@ -12,7 +12,7 @@ export async function getUserEmail(username: string, hubOrg: Org) {
                 bail(new Error('username cannot be null. provide a valid username'));
                 return;
             }
-            let query = `SELECT email FROM user WHERE username='${username}'`;
+            const query = `SELECT email FROM user WHERE username='${username}'`;
 
             SFPLogger.log('QUERY:' + query, LoggerLevel.TRACE);
             const results = (await hubConn.query(query)) as any;

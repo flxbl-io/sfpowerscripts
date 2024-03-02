@@ -21,10 +21,10 @@ export default class PoolListImpl extends PoolBaseImpl {
             !this.allScratchOrgs
         )) as any;
 
-        let scratchOrgList: ScratchOrg[] = new Array<ScratchOrg>();
+        const scratchOrgList: ScratchOrg[] = new Array<ScratchOrg>();
         if (results.records.length > 0) {
-            for (let element of results.records) {
-                let soDetail: ScratchOrg = {};
+            for (const element of results.records) {
+                const soDetail: ScratchOrg = {};
                 soDetail.tag = element.Pooltag__c;
                 soDetail.orgId = element.ScratchOrg;
                 soDetail.loginURL = element.LoginUrl;

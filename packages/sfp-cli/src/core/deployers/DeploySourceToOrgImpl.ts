@@ -34,12 +34,12 @@ export default class DeploySourceToOrgImpl implements DeploymentExecutor {
     ) {}
 
     public async exec(): Promise<DeploySourceResult> {
-        let deploySourceResult = {} as DeploySourceResult;
+        const deploySourceResult = {} as DeploySourceResult;
 
         if (this.deploymentOptions.apiVersion) this.componentSet.sourceApiVersion = this.deploymentOptions.apiVersion;
 
         //Get Deploy ID
-        let result = await this.deploy(this.componentSet);
+        const result = await this.deploy(this.componentSet);
 
         this.writeResultToReport(result);
 
@@ -84,16 +84,16 @@ export default class DeploySourceToOrgImpl implements DeploymentExecutor {
 
         if (componentFailures instanceof Array) {
             //Search for other scenarios and if background Job is being executed, override the error message
-            for (let failure of componentFailures) {
-                let scenario = classifyErrorScenarios(failure);
+            for (const failure of componentFailures) {
+                const scenario = classifyErrorScenarios(failure);
                 if (scenario == `BackgroundJob`) {
                     errorMessage = `Unable to deploy due to an ongoing background job from a previous package`;
                     break;
                 }
             }
         } else {
-            let failure = componentFailures;
-            let scenario = classifyErrorScenarios(failure);
+            const failure = componentFailures;
+            const scenario = classifyErrorScenarios(failure);
             if (scenario == `BackgroundJob`) {
                 errorMessage = `Unable to deploy due to an ongoing background job from a previous package`;
             }
@@ -111,7 +111,7 @@ export default class DeploySourceToOrgImpl implements DeploymentExecutor {
     }
 
     private writeResultToReport(result: DeployResult) {
-        let deploymentReports = `.sfpowerscripts/mdapiDeployReports`;
+        const deploymentReports = `.sfpowerscripts/mdapiDeployReports`;
         fs.mkdirpSync(deploymentReports);
         fs.writeFileSync(
             path.join(deploymentReports, `${result.response.id}.json`),
@@ -120,7 +120,7 @@ export default class DeploySourceToOrgImpl implements DeploymentExecutor {
     }
 
     private async buildDeploymentOptions(org: SFPOrg): Promise<MetadataApiDeployOptions> {
-        let metdataDeployOptions: MetadataApiDeployOptions = {
+        const metdataDeployOptions: MetadataApiDeployOptions = {
             usernameOrConnection: org.getConnection(),
             apiOptions: {},
         };
@@ -146,10 +146,10 @@ export default class DeploySourceToOrgImpl implements DeploymentExecutor {
     }
 
     private async deploy(componentSet: ComponentSet) {
-        let deploymentOptions = await this.buildDeploymentOptions(this.org);
+        const deploymentOptions = await this.buildDeploymentOptions(this.org);
         const deploy = await componentSet.deploy(deploymentOptions);
 
-        let startTime = Date.now();
+        const startTime = Date.now();
         SFPLogger.log(`Deploying to ${this.org.getUsername()} with id:${deploy.id}`, LoggerLevel.INFO, this.logger);
         // Attach a listener to check the deploy status on each poll
         deploy.onUpdate((response) => {
@@ -160,7 +160,7 @@ export default class DeploySourceToOrgImpl implements DeploymentExecutor {
         });
 
         deploy.onFinish((response) => {
-            let deploymentDuration = Date.now() - startTime;
+            const deploymentDuration = Date.now() - startTime;
             if (response.response.success) {
                 SFPLogger.log(
                     COLOR_SUCCESS(

@@ -16,7 +16,7 @@ export default class PermissionSetGroupUpdateAwaiter {
         );
         while (true) {
             try {
-                let records = await QueryHelper.query(psGroupQuery, this.connection, false);
+                const records = await QueryHelper.query(psGroupQuery, this.connection, false);
                 if (records.length > 0) {
                     SFPLogger.log(
                         `Pausing deployment as ${records.length} PermissionSetGroups are being updated`,

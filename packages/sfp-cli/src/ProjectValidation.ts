@@ -17,9 +17,9 @@ export default class ProjectValidation {
     }
 
     public validateSFDXProjectJSON() {
-        let schema = fs.readJSONSync(path.join(this.resourcesDir, `sfdx-project.schema.json`), { encoding: 'UTF-8' });
-        let validator = this.ajv.compile(schema);
-        let isSchemaValid = validator(this.projectConfig);
+        const schema = fs.readJSONSync(path.join(this.resourcesDir, `sfdx-project.schema.json`), { encoding: 'UTF-8' });
+        const validator = this.ajv.compile(schema);
+        const isSchemaValid = validator(this.projectConfig);
         if (!isSchemaValid) {
             let errorMsg: string = `The sfdx-project.json is invalid, Please fix the following errors\n`;
 
@@ -39,7 +39,7 @@ export default class ProjectValidation {
 
     public validatePackageNames() {
         ProjectConfig.getAllPackageDirectoriesFromConfig(this.projectConfig).forEach((pkg) => {
-            let name = pkg.package;
+            const name = pkg.package;
             if ( name.length > 38) {
                 throw new Error(
                     'sfdx-project.json validation failed for package "' +
@@ -61,9 +61,9 @@ export default class ProjectValidation {
 
     public validatePackageBuildNumbers() {
         ProjectConfig.getAllPackageDirectoriesFromConfig(this.projectConfig).forEach((pkg) => {
-            let packageType = ProjectConfig.getPackageType(this.projectConfig, pkg.package);
+            const packageType = ProjectConfig.getPackageType(this.projectConfig, pkg.package);
 
-            let pattern: RegExp = /NEXT$|LATEST$/i;
+            const pattern: RegExp = /NEXT$|LATEST$/i;
             if (
                 pkg.versionNumber.match(pattern) &&
                 (packageType === PackageType.Source || packageType === PackageType.Data)

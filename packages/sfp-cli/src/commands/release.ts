@@ -113,7 +113,7 @@ export default class Release extends SfpCommand {
     public async execute() {
         this.validateFlags();
 
-        let tags = {
+        const tags = {
             targetOrg: this.flags.targetorg,
         };
 
@@ -121,7 +121,7 @@ export default class Release extends SfpCommand {
             tags['tag'] = this.flags.tag;
         }
 
-        let executionStartTime = Date.now();
+        const executionStartTime = Date.now();
 
         SFPLogger.log(COLOR_HEADER(`command: ${COLOR_KEY_MESSAGE(`release`)}`));
         SFPLogger.log(COLOR_HEADER(`Target Org: ${this.flags.targetorg}`));
@@ -130,9 +130,9 @@ export default class Release extends SfpCommand {
 
         SFPLogger.printHeaderLine('', COLOR_HEADER, LoggerLevel.INFO);
 
-        let releaseDefinitions: ReleaseDefinition[] = [];
+        const releaseDefinitions: ReleaseDefinition[] = [];
         for (const pathToReleaseDefintion of this.flags.releasedefinition) {
-            let releaseDefinition = await ReleaseDefinitionLoader.loadReleaseDefinition(pathToReleaseDefintion);
+            const releaseDefinition = await ReleaseDefinitionLoader.loadReleaseDefinition(pathToReleaseDefintion);
 
             //Support Legacy by taking the existing single workItemFilter and pushing it to the new model
             if (releaseDefinition.changelog?.workItemFilter) {
@@ -155,7 +155,7 @@ export default class Release extends SfpCommand {
 
         let releaseResult: ReleaseResult;
         try {
-            let props: ReleaseProps = {
+            const props: ReleaseProps = {
                 releaseDefinitions: releaseDefinitions,
                 targetOrg: this.flags.targetorg,
                 fetchArtifactScript: this.flags.scriptpath,
@@ -173,7 +173,7 @@ export default class Release extends SfpCommand {
                 directory: this.flags.directory,
             };
 
-            let releaseImpl: ReleaseImpl = new ReleaseImpl(props, new ConsoleLogger());
+            const releaseImpl: ReleaseImpl = new ReleaseImpl(props, new ConsoleLogger());
 
             releaseResult = await releaseImpl.exec();
             if (!this.flags.dryrun) SFPStatsSender.logCount('release.succeeded', tags);
@@ -187,7 +187,7 @@ export default class Release extends SfpCommand {
             // Fail the task when an error occurs
             process.exitCode = 1;
         } finally {
-            let totalElapsedTime: number = Date.now() - executionStartTime;
+            const totalElapsedTime: number = Date.now() - executionStartTime;
 
             if (releaseResult) {
                 this.printReleaseSummary(releaseResult, totalElapsedTime);

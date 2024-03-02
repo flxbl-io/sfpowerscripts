@@ -97,18 +97,18 @@ export default class DiffImpl {
 
         SFPLogger.log(data, LoggerLevel.TRACE);
 
-        let content = data.split(sepRegex);
-        let diffFile: DiffFile = await DiffUtil.parseContent(content);
+        const content = data.split(sepRegex);
+        const diffFile: DiffFile = await DiffUtil.parseContent(content);
         await DiffUtil.fetchFileListRevisionTo(this.revisionTo);
 
-        let filesToCopy = diffFile.addedEdited;
+        const filesToCopy = diffFile.addedEdited;
         let deletedFiles = diffFile.deleted;
 
         deletedFiles = deletedFiles.filter((deleted) => {
             let found = false;
-            let deletedMetadata = MetadataFiles.getFullApiNameWithExtension(deleted.path);
+            const deletedMetadata = MetadataFiles.getFullApiNameWithExtension(deleted.path);
             for (let i = 0; i < filesToCopy.length; i++) {
-                let addedOrEdited = MetadataFiles.getFullApiNameWithExtension(filesToCopy[i].path);
+                const addedOrEdited = MetadataFiles.getFullApiNameWithExtension(filesToCopy[i].path);
                 if (deletedMetadata === addedOrEdited) {
                     found = true;
                     break;
@@ -129,10 +129,10 @@ export default class DiffImpl {
 
         if (filesToCopy && filesToCopy.length > 0) {
             for (let i = 0; i < filesToCopy.length; i++) {
-                let filePath = filesToCopy[i].path;
+                const filePath = filesToCopy[i].path;
                 try {
                     if (DiffImpl.checkForIngore(this.pathToIgnore, filePath)) {
-                        let matcher = filePath.match(SOURCE_EXTENSION_REGEX);
+                        const matcher = filePath.match(SOURCE_EXTENSION_REGEX);
                         let extension = '';
                         if (matcher) {
                             extension = matcher[0];
@@ -179,15 +179,15 @@ export default class DiffImpl {
             try {
                 //check if package path is provided
                 if (packagedirectories) {
-                    let sourceApiVersion = await Sfpowerkit.getApiVersion();
-                    let packageDirectorieslist = [];
+                    const sourceApiVersion = await Sfpowerkit.getApiVersion();
+                    const packageDirectorieslist = [];
                     packagedirectories.forEach((path) => {
                         packageDirectorieslist.push({
                             path: path,
                         });
                     });
                     packageDirectorieslist[0].default = true;
-                    let sfdx_project = {
+                    const sfdx_project = {
                         packageDirectories: packageDirectorieslist,
                         namespace: '',
                         sourceApiVersion: sourceApiVersion,
@@ -199,7 +199,7 @@ export default class DiffImpl {
                     await DiffUtil.copyFile('sfdx-project.json', outputFolder);
                 }
                 //Remove Project Directories that doesnt  have any components in ths diff  Fix #178
-                let dxProjectManifestUtils: DXProjectManifestUtils = new DXProjectManifestUtils(outputFolder);
+                const dxProjectManifestUtils: DXProjectManifestUtils = new DXProjectManifestUtils(outputFolder);
                 dxProjectManifestUtils.removePackagesNotInDirectory();
             } catch (e) {
                 SFPLogger.log(`sfdx-project.json not found, skipping..`, LoggerLevel.INFO);
@@ -227,16 +227,16 @@ export default class DiffImpl {
         return returnVal;
     }
     private buildOutput(outputFolder) {
-        let metadataFiles = new MetadataFiles();
+        const metadataFiles = new MetadataFiles();
         metadataFiles.loadComponents(outputFolder, false);
 
-        let keys = Object.keys(METADATA_INFO);
-        let excludedFiles = _.difference(unsplitedMetadataExtensions, permissionExtensions);
+        const keys = Object.keys(METADATA_INFO);
+        const excludedFiles = _.difference(unsplitedMetadataExtensions, permissionExtensions);
 
         keys.forEach((key) => {
             if (METADATA_INFO[key].files && METADATA_INFO[key].files.length > 0) {
                 METADATA_INFO[key].files.forEach((filePath) => {
-                    let matcher = filePath.match(SOURCE_EXTENSION_REGEX);
+                    const matcher = filePath.match(SOURCE_EXTENSION_REGEX);
 
                     let extension = '';
                     if (matcher) {
@@ -249,8 +249,8 @@ export default class DiffImpl {
                         let name = FileUtils.getFileNameWithoutExtension(filePath, METADATA_INFO[key].sourceExtension);
 
                         if (METADATA_INFO[key].isChildComponent) {
-                            let fileParts = filePath.split(SEP);
-                            let parentName = fileParts[fileParts.length - 3];
+                            const fileParts = filePath.split(SEP);
+                            const parentName = fileParts[fileParts.length - 3];
                             name = parentName + '.' + name;
                         }
 
@@ -288,8 +288,8 @@ export default class DiffImpl {
 
         if (diffFile.path.endsWith(METADATA_INFO.Workflow.sourceExtension)) {
             //Workflow
-            let baseName = path.parse(diffFile.path).base;
-            let objectName = baseName.split('.')[0];
+            const baseName = path.parse(diffFile.path).base;
+            const objectName = baseName.split('.')[0];
             await WorkflowDiff.generateWorkflowXml(
                 content1,
                 content2,
@@ -302,8 +302,8 @@ export default class DiffImpl {
         }
 
         if (diffFile.path.endsWith(METADATA_INFO.SharingRules.sourceExtension)) {
-            let baseName = path.parse(diffFile.path).base;
-            let objectName = baseName.split('.')[0];
+            const baseName = path.parse(diffFile.path).base;
+            const objectName = baseName.split('.')[0];
             await SharingRuleDiff.generateSharingRulesXml(
                 content1,
                 content2,
@@ -345,15 +345,15 @@ export default class DiffImpl {
                     this.destructivePackageObjPost.push(profileType);
                 }
 
-                let baseName = path.parse(diffFile.path).base;
-                let profileName = baseName.split('.')[0];
+                const baseName = path.parse(diffFile.path).base;
+                const profileName = baseName.split('.')[0];
                 profileType.members.push(profileName);
             } else {
                 await ProfileDiff.generateProfileXml(content1, content2, path.join(outputFolder, diffFile.path));
             }
         }
         if (diffFile.path.endsWith(METADATA_INFO.PermissionSet.sourceExtension)) {
-            let sourceApiVersion = await Sfpowerkit.getApiVersion();
+            const sourceApiVersion = await Sfpowerkit.getApiVersion();
             if (content1 === '') {
                 await DiffUtil.copyFile(diffFile.path, outputFolder);
 
@@ -373,8 +373,8 @@ export default class DiffImpl {
                         this.destructivePackageObjPost.push(permsetType);
                     }
 
-                    let baseName = path.parse(diffFile.path).base;
-                    let permsetName = baseName.split('.')[0];
+                    const baseName = path.parse(diffFile.path).base;
+                    const permsetName = baseName.split('.')[0];
                     permsetType.members.push(permsetName);
                 } else {
                     await PermsetDiff.generatePermissionsetXml(
@@ -404,9 +404,9 @@ export default class DiffImpl {
         this.destructivePackageObjPre = new Array();
         //returns root, dir, base and name
         for (let i = 0; i < filePaths.length; i++) {
-            let filePath = filePaths[i].path;
+            const filePath = filePaths[i].path;
             try {
-                let matcher = filePath.match(SOURCE_EXTENSION_REGEX);
+                const matcher = filePath.match(SOURCE_EXTENSION_REGEX);
                 let extension = '';
                 if (matcher) {
                     extension = matcher[0];
@@ -419,9 +419,9 @@ export default class DiffImpl {
                     continue;
                 }
 
-                let parsedPath = path.parse(filePath);
-                let filename = parsedPath.base;
-                let name = MetadataInfo.getMetadataName(filePath);
+                const parsedPath = path.parse(filePath);
+                const filename = parsedPath.base;
+                const name = MetadataInfo.getMetadataName(filePath);
 
                 if (name) {
                     if (!MetadataFiles.isCustomMetadata(filePath, name)) {
@@ -438,9 +438,9 @@ export default class DiffImpl {
 
                         continue;
                     }
-                    let member = MetadataFiles.getMemberNameFromFilepath(filePath, name);
+                    const member = MetadataFiles.getMemberNameFromFilepath(filePath, name);
                     if (name === METADATA_INFO.CustomField.xmlName) {
-                        let isFormular = await DiffUtil.isFormulaField(filePaths[i]);
+                        const isFormular = await DiffUtil.isFormulaField(filePaths[i]);
                         if (isFormular) {
                             this.destructivePackageObjPre = this.buildDestructiveTypeObj(
                                 this.destructivePackageObjPre,
@@ -528,7 +528,7 @@ export default class DiffImpl {
         });
 
         if (destrucObj.length > 0) {
-            let dest = {
+            const dest = {
                 Package: {
                     $: {
                         xmlns: 'htt@impl/metadata',
@@ -537,10 +537,10 @@ export default class DiffImpl {
                 },
             };
 
-            let destructivePackageName = fileName;
-            let filepath = path.join(outputFolder, destructivePackageName);
-            let builder = new xml2js.Builder();
-            let xml = builder.buildObject(dest);
+            const destructivePackageName = fileName;
+            const filepath = path.join(outputFolder, destructivePackageName);
+            const builder = new xml2js.Builder();
+            const xml = builder.buildObject(dest);
             fs.writeFileSync(filepath, xml);
         }
     }

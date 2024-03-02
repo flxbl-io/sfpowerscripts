@@ -22,7 +22,7 @@ export default class InstallUnlockedPackageImpl {
     }
 
     public async install(payloadToDisplay?: any): Promise<any> {
-        let connection = (await SFPOrg.create({ aliasOrUsername: this.targetUserName })).getConnection();
+        const connection = (await SFPOrg.create({ aliasOrUsername: this.targetUserName })).getConnection();
         //Print Metadata carried in the package
         if (payloadToDisplay) PackageMetadataPrinter.printMetadataToDeploy(payloadToDisplay, this.logger);
 

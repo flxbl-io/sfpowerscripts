@@ -43,7 +43,7 @@ export default class IndividualClassCoverage {
             LoggerLevel.INFO,
             this.logger
         );
-        let classesWithInvalidCoverage = individualClassCoverage.filter((cls) => {
+        const classesWithInvalidCoverage = individualClassCoverage.filter((cls) => {
             return cls.coveredPercent < coverageThreshold;
         });
 

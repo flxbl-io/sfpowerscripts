@@ -108,7 +108,7 @@ export class Packagexml {
 
     public async build() {
         if (this.configs.excludeFilters.length > 0 && this.configs.includeFilters.length > 0) {
-            let conflict = this.configs.excludeFilters.filter((element) =>
+            const conflict = this.configs.excludeFilters.filter((element) =>
                 this.configs.includeFilters.includes(element)
             );
             if (conflict.length > 0) {
@@ -123,9 +123,9 @@ export class Packagexml {
 
             this.setStandardValueset();
 
-            let packageXml = this.generateXml();
+            const packageXml = this.generateXml();
 
-            let dir = path.parse(this.configs.outputFile).dir;
+            const dir = path.parse(this.configs.outputFile).dir;
             if (!fs.existsSync(dir)) {
                 FileUtils.mkDirByPathSync(dir);
             }
@@ -158,7 +158,7 @@ export class Packagexml {
         // fetch and execute installed package promise to build regex
         let ipRegexStr = '^(';
 
-        let instPack = await this.conn.metadata.list(
+        const instPack = await this.conn.metadata.list(
             {
                 type: 'InstalledPackage',
             },
@@ -194,7 +194,7 @@ export class Packagexml {
     }
     private async handleFolderObject(object) {
         const folderType = object.xmlName.replace('Template', '');
-        let folderdescribeRes = await this.conn.metadata.list(
+        const folderdescribeRes = await this.conn.metadata.list(
             {
                 type: `${folderType}Folder`,
             },
@@ -202,12 +202,12 @@ export class Packagexml {
         );
         try {
             //Handle Folder
-            let folderDescribeItems = this.convertToArray(folderdescribeRes);
+            const folderDescribeItems = this.convertToArray(folderdescribeRes);
             folderDescribeItems.forEach(async (FolderMetadataEntries) => {
                 this.addMember(FolderMetadataEntries.type, FolderMetadataEntries);
 
                 //Handle Folder Item
-                let folderItemsRes = await this.conn.metadata.list(
+                const folderItemsRes = await this.conn.metadata.list(
                     {
                         type: object.xmlName,
                         folder: FolderMetadataEntries.fullName,
@@ -216,7 +216,7 @@ export class Packagexml {
                 );
                 try {
                     //Handle Folder
-                    let folderItems = this.convertToArray(folderItemsRes);
+                    const folderItems = this.convertToArray(folderItemsRes);
                     folderItems.forEach((FolderItemMetadataEntries) => {
                         this.addMember(FolderItemMetadataEntries.type, FolderItemMetadataEntries);
                     });
@@ -229,7 +229,7 @@ export class Packagexml {
         }
     }
     private async handleNonFolderObject(object) {
-        let unfolderItemsRes = await this.conn.metadata.list(
+        const unfolderItemsRes = await this.conn.metadata.list(
             {
                 type: object.xmlName,
             },
@@ -237,8 +237,8 @@ export class Packagexml {
         );
         try {
             //Handle Parent
-            let unfolderItems = this.convertToArray(unfolderItemsRes);
-            let filterunfolderItems = this.filterItems(unfolderItems);
+            const unfolderItems = this.convertToArray(unfolderItemsRes);
+            const filterunfolderItems = this.filterItems(unfolderItems);
 
             filterunfolderItems.forEach((metadataEntries) => {
                 this.addMember(metadataEntries.type, metadataEntries);
@@ -246,19 +246,19 @@ export class Packagexml {
 
             //Handle Child
             if (object.childXmlNames && object.childXmlNames.length > 0 && this.configs.includeChilds) {
-                for (let child of object.childXmlNames) {
+                for (const child of object.childXmlNames) {
                     if (child === 'ManagedTopic') {
                         continue;
                     }
-                    let unfolderChildItemsRes = await this.conn.metadata.list(
+                    const unfolderChildItemsRes = await this.conn.metadata.list(
                         {
                             type: child,
                         },
                         this.configs.apiVersion
                     );
                     try {
-                        let unfolderChilItems = this.convertToArray(unfolderChildItemsRes);
-                        let filterunfolderChildItems = this.filterChildItems(unfolderChilItems, object.xmlName);
+                        const unfolderChilItems = this.convertToArray(unfolderChildItemsRes);
+                        const filterunfolderChildItems = this.filterChildItems(unfolderChilItems, object.xmlName);
 
                         filterunfolderChildItems.forEach((metadataEntries) => {
                             this.addMember(metadataEntries.type, metadataEntries);
@@ -276,7 +276,7 @@ export class Packagexml {
     private isAvailableinIncludeList(type: string, member = '') {
         let found = false;
 
-        for (let includeFilter of this.configs.includeFilters) {
+        for (const includeFilter of this.configs.includeFilters) {
             if (!includeFilter.includes(':') && includeFilter === type) {
                 found = true;
                 break;
@@ -331,7 +331,7 @@ export class Packagexml {
             types: [],
             version: this.configs.apiVersion,
         };
-        let mdtypes = Object.keys(this.packageTypes);
+        const mdtypes = Object.keys(this.packageTypes);
         mdtypes.sort();
         mdtypes.forEach((mdtype) => {
             packageJson.types.push({
@@ -343,10 +343,10 @@ export class Packagexml {
         const builder = new xml2js.Builder({
             xmldec: { version: '1.0', encoding: 'utf-8' },
         });
-        let packageObj = {
+        const packageObj = {
             Package: packageJson,
         };
-        let packageXml = builder.buildObject(packageObj);
+        const packageXml = builder.buildObject(packageObj);
         return packageXml;
     }
 
@@ -377,8 +377,8 @@ export class Packagexml {
                     //Handle Layout
                     if (member.type === 'Layout' && member.namespacePrefix && member.manageableState === 'installed') {
                         const { fullName, namespacePrefix } = member;
-                        let objectName = fullName.substr(0, fullName.indexOf('-'));
-                        let layoutName = fullName.substr(fullName.indexOf('-') + 1);
+                        const objectName = fullName.substr(0, fullName.indexOf('-'));
+                        const layoutName = fullName.substr(fullName.indexOf('-') + 1);
                         this.packageTypes[type].push(objectName + '-' + namespacePrefix + '__' + layoutName);
                         this.result.push(member);
                     } else {

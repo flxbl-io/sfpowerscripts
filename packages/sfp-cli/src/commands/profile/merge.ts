@@ -56,9 +56,9 @@ export default class Merge extends SfpCommand {
     protected static requiresProject = true;
 
     public async execute(): Promise<any> {
-        let argFolder = this.flags.folder;
-        let argProfileList = this.flags.profilelist;
-        let argMetadatas = this.flags.metadata;
+        const argFolder = this.flags.folder;
+        const argProfileList = this.flags.profilelist;
+        const argMetadatas = this.flags.metadata;
 
         //  argMetadatas = (val: string) => {
         //         let parts = val.split(':');
@@ -71,7 +71,7 @@ export default class Merge extends SfpCommand {
         Sfpowerkit.initCache();
 
         let metadatas = undefined;
-        let invalidArguments = [];
+        const invalidArguments = [];
 
         if (argMetadatas !== undefined) {
             metadatas = {};
@@ -101,7 +101,7 @@ export default class Merge extends SfpCommand {
         this.org = await Org.create({ aliasOrUsername: this.flags.targetorg });
         const profileUtils = new ProfileMerge(this.org);
 
-        let mergedProfiles = await profileUtils.merge(argFolder, argProfileList || [], metadatas, this.flags.delete);
+        const mergedProfiles = await profileUtils.merge(argFolder, argProfileList || [], metadatas, this.flags.delete);
 
         const table = new Table({
             head: ['State', 'Full Name', 'Type', 'Path'],

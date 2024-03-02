@@ -34,7 +34,7 @@ export default class Expand extends SfpCommand {
     };
 
     public async execute() {
-        let defaultProjectConfigPath = './project-config';
+        const defaultProjectConfigPath = './project-config';
         let projectConfigFilePath: string;
         try {
             //Validate dependencies in sfdx-project.json // Read Manifest
@@ -44,7 +44,7 @@ export default class Expand extends SfpCommand {
             );
 
             
-            let resolvedDependencyMap =  await transitiveDependencyResolver.resolveTransitiveDependencies();
+            const resolvedDependencyMap =  await transitiveDependencyResolver.resolveTransitiveDependencies();
             projectConfig = await ProjectConfig.updateProjectConfigWithDependencies(projectConfig,resolvedDependencyMap);
             projectConfig = await (new UserDefinedExternalDependency()).addDependencyEntries(projectConfig, this.hubOrg.getConnection());
 
@@ -55,7 +55,7 @@ export default class Expand extends SfpCommand {
                 SFPLogger.log(`Overwriting sfdx-project.json with expanded project config file`,LoggerLevel.INFO)
                 projectConfigFilePath = `sfdx-project.json`;
 
-                let backupFilePath: string = path.join(defaultProjectConfigPath, `sfdx-project.json.bak`);
+                const backupFilePath: string = path.join(defaultProjectConfigPath, `sfdx-project.json.bak`);
                 SFPLogger.log(`Saving a backup to ${backupFilePath}`,LoggerLevel.INFO)
                 fs.copySync(projectConfigFilePath, backupFilePath);
                 

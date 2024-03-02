@@ -7,7 +7,7 @@ export default class InstalledArtifactsDisplayer {
         if (!artifacts) return;
         else if(artifacts.length==0) return;
      
-        let table = new Table({
+        const table = new Table({
             head: ['Artifact', 'Version', 'Commit Id'],
             chars: ZERO_BORDER_TABLE
         });

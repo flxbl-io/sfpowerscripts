@@ -6,7 +6,7 @@
 export default function convertBuildNumDotDelimToHyphen(version: string) {
     let convertedVersion = version;
 
-    let indexOfBuildNumDelimiter = getIndexOfBuildNumDelimeter(version);
+    const indexOfBuildNumDelimiter = getIndexOfBuildNumDelimeter(version);
     if (version[indexOfBuildNumDelimiter] === '.') {
         convertedVersion =
             version.substring(0, indexOfBuildNumDelimiter) + '-' + version.substring(indexOfBuildNumDelimiter + 1);

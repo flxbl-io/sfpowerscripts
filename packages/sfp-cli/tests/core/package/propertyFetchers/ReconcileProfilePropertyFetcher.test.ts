@@ -16,9 +16,9 @@ jest.mock('../../../../src/core/package/SfpPackageBuilder', () => {
             projectDirectory: string,
             sfdx_package: string
         ) {
-            let propertyFetchers: PropertyFetcher[] = [new ReconcileProfilePropertyFetcher()];
+            const propertyFetchers: PropertyFetcher[] = [new ReconcileProfilePropertyFetcher()];
 
-            let sfpPackage: SfpPackage = new SfpPackage();
+            const sfpPackage: SfpPackage = new SfpPackage();
              sfpPackage.packageDescriptor = packageDescriptor;
              for (const propertyFetcher of propertyFetchers) {
                 await propertyFetcher.getsfpProperties(sfpPackage, logger);
@@ -33,8 +33,8 @@ jest.mock('../../../../src/core/package/SfpPackageBuilder', () => {
 
 describe('Given a package descriptor with reconcileProfiles', () => {
     it('Should set reconcileProfiles property in SfpPackage', async () => {
-        let reconcileProfilePropertyFetcher: ReconcileProfilePropertyFetcher = new ReconcileProfilePropertyFetcher();
-        let sfpPackage: SfpPackage = await SfpPackageBuilder.buildPackageFromProjectDirectory(null, null, null);
+        const reconcileProfilePropertyFetcher: ReconcileProfilePropertyFetcher = new ReconcileProfilePropertyFetcher();
+        const sfpPackage: SfpPackage = await SfpPackageBuilder.buildPackageFromProjectDirectory(null, null, null);
         reconcileProfilePropertyFetcher.getsfpProperties(sfpPackage);
         expect(sfpPackage.reconcileProfiles).toBe(false);
     });

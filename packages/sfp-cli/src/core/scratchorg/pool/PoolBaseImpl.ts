@@ -13,7 +13,7 @@ export abstract class PoolBaseImpl {
     }
 
     public async execute(): Promise<ScratchOrg | ScratchOrg[] | Result<PoolConfig, PoolError>|void> {
-        let prerequisiteCheck: PreRequisiteCheck = new PreRequisiteCheck(this.hubOrg);
+        const prerequisiteCheck: PreRequisiteCheck = new PreRequisiteCheck(this.hubOrg);
         await prerequisiteCheck.checkForPrerequisites();
         return this.onExec();
     }

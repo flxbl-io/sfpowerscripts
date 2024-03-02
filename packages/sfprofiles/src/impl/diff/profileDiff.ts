@@ -8,17 +8,17 @@ import ProfileWriter from '@impl/metadata/writer/profileWriter';
 
 export default abstract class ProfileDiff {
     public static async generateProfileXml(profileXml1: string, profileXml2: string, outputFilePath: string) {
-        let profileWriter = new ProfileWriter();
+        const profileWriter = new ProfileWriter();
 
         const parser = new xml2js.Parser({ explicitArray: true });
         const parseString = util.promisify(parser.parseString) as _.Function1<xml2js.convertableToString, Promise<{ Profile: Profile }>>;
 
         let parseResult = await parseString(profileXml1);
-        let profileObj1 = profileWriter.toProfile(parseResult.Profile);
+        const profileObj1 = profileWriter.toProfile(parseResult.Profile);
         parseResult = await parseString(profileXml2);
-        let profileObj2 = profileWriter.toProfile(parseResult.Profile);
+        const profileObj2 = profileWriter.toProfile(parseResult.Profile);
 
-        let newProObj = {
+        const newProObj = {
             fullName: profileObj2.fullName,
             applicationVisibilities: [],
             classAccesses: [],
@@ -152,7 +152,7 @@ export default abstract class ProfileDiff {
         profileWriter.writeProfile(newProObj, outputFilePath);
     }
     private static getChangedOrAddedLayouts(list1: any[], list2: any[]) {
-        let result: any[] = [];
+        const result: any[] = [];
         if (_.isNil(list1) && !_.isNil(list2) && list2.length > 0) {
             result.push(...list2);
         }
@@ -160,7 +160,7 @@ export default abstract class ProfileDiff {
             list2.forEach((layoutAss2) => {
                 let found = false;
                 for (let i = 0; i < list1.length; i++) {
-                    let layoutAss1 = list1[i];
+                    const layoutAss1 = list1[i];
                     if (layoutAss1.layout === layoutAss2.layout) {
                         //check if edited
                         if (_.isEqual(layoutAss1, layoutAss2)) {

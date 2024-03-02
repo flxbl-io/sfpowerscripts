@@ -15,7 +15,7 @@ export default class EntitlementVersionFilter implements DeploymentFilter {
   
     public async apply(org: SFPOrg, componentSet: ComponentSet, logger: Logger): Promise<ComponentSet> {
         //Only do if entitlment exits in the package
-        let sourceComponents = componentSet.getSourceComponents().toArray();
+        const sourceComponents = componentSet.getSourceComponents().toArray();
         let isEntitlementFound: boolean = false;
         for (const sourceComponent of sourceComponents) {
             if (sourceComponent.type.name === registry.types.entitlementprocess.name) {
@@ -26,7 +26,7 @@ export default class EntitlementVersionFilter implements DeploymentFilter {
         if (!isEntitlementFound) return componentSet;
 
         try {
-            let entitlementSettings = await new SettingsFetcher(logger).getSetttingMetadata(org, `Entitlement`);
+            const entitlementSettings = await new SettingsFetcher(logger).getSetttingMetadata(org, `Entitlement`);
 
             let query;
             if (entitlementSettings.enableEntitlementVersioning == true) {
@@ -39,15 +39,15 @@ export default class EntitlementVersionFilter implements DeploymentFilter {
 
             SFPLogger.log(`Filtering Entitlement Process....`, LoggerLevel.INFO, logger);
             //Fetch Entitlements currently in the org
-            let slaProcessesInOrg = await QueryHelper.query<SlaProcess>(query, org.getConnection(), false);
-            let modifiedComponentSet = new ComponentSet();
+            const slaProcessesInOrg = await QueryHelper.query<SlaProcess>(query, org.getConnection(), false);
+            const modifiedComponentSet = new ComponentSet();
             //Compare version numbers in the org vs version in the component set
             //Remove if the version numbers match
             for (const sourceComponent of sourceComponents) {
                 if (sourceComponent.type.name === registry.types.entitlementprocess.name) {
-                    let slaProcessLocal = sourceComponent.parseXmlSync();
+                    const slaProcessLocal = sourceComponent.parseXmlSync();
 
-                    let slaProcessMatchedByName: SlaProcess = slaProcessesInOrg.find(
+                    const slaProcessMatchedByName: SlaProcess = slaProcessesInOrg.find(
                         (element: SlaProcess) => element.Name == slaProcessLocal['EntitlementProcess']['name']
                     );
 
@@ -59,12 +59,12 @@ export default class EntitlementVersionFilter implements DeploymentFilter {
                         //This is a deployment candidate
                         //Modify versionMaster tag to match in the org
                         slaProcessLocal['EntitlementProcess']['versionMaster'] = slaProcessMatchedByName.VersionMaster;
-                        let builder = new XMLBuilder({
+                        const builder = new XMLBuilder({
                             format: true,
                             ignoreAttributes: false,
                             attributeNamePrefix: '@_',
                         });
-                        let xmlContent = builder.build(slaProcessLocal);
+                        const xmlContent = builder.build(slaProcessLocal);
                         fs.writeFileSync(sourceComponent.xml, xmlContent);
                         modifiedComponentSet.add(sourceComponent);
                     } else if (slaProcessMatchedByName) {

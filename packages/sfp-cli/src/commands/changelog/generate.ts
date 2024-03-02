@@ -77,7 +77,7 @@ export default class GenerateChangelog extends SfpCommand {
 
     async execute() {
         try {
-            let changelogImpl: ChangelogImpl = new ChangelogImpl(
+            const changelogImpl: ChangelogImpl = new ChangelogImpl(
                 new ConsoleLogger(),
                 this.flags.artifactdir,
                 this.flags.releasename,
@@ -98,7 +98,7 @@ export default class GenerateChangelog extends SfpCommand {
         } catch (err) {
             let errorMessage: string = '';
             if (err instanceof Array) {
-                for (let e of err) {
+                for (const e of err) {
                     errorMessage += e.message + `\n`;
                 }
             } else {

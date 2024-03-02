@@ -67,8 +67,8 @@ export default class ReleaseConfig extends SfpCommand {
 
         const impactedPackageResolver = new ImpactedPackageResolver(this.props, new ConsoleLogger());
 
-        let packagesToBeBuiltWithReasons = await impactedPackageResolver.getImpactedPackages();
-        let packageDiffTable = this.createDiffPackageScheduledDisplayedAsATable(packagesToBeBuiltWithReasons);
+        const packagesToBeBuiltWithReasons = await impactedPackageResolver.getImpactedPackages();
+        const packageDiffTable = this.createDiffPackageScheduledDisplayedAsATable(packagesToBeBuiltWithReasons);
         const packagesToBeBuilt = Array.from(packagesToBeBuiltWithReasons.keys());
 
         //Log Packages to be built
@@ -77,14 +77,14 @@ export default class ReleaseConfig extends SfpCommand {
 
         const impactedReleaseConfigResolver = new ImpactedRelaseConfigResolver();
 
-        let impactedReleaseConfigs = impactedReleaseConfigResolver.getImpactedReleaseConfigs(
+        const impactedReleaseConfigs = impactedReleaseConfigResolver.getImpactedReleaseConfigs(
             packagesToBeBuilt,
             this.flags.releaseconfig,
             this.flags.explicitDependencyCheck,
             this.flags.filterBy
         );
 
-        let impactedReleaseConfigTable = this.createImpactedReleaseConfigsAsATable(impactedReleaseConfigs.include);
+        const impactedReleaseConfigTable = this.createImpactedReleaseConfigsAsATable(impactedReleaseConfigs.include);
         //Log Packages to be built
         SFPLogger.log(COLOR_KEY_MESSAGE('Release Configs  impacted...'));
         SFPLogger.log(impactedReleaseConfigTable.toString());
@@ -107,16 +107,16 @@ export default class ReleaseConfig extends SfpCommand {
     }
 
     private createDiffPackageScheduledDisplayedAsATable(packagesToBeBuilt: Map<string, any>) {
-        let tableHead = ['Package', 'Reason', 'Last Known Tag'];
+        const tableHead = ['Package', 'Reason', 'Last Known Tag'];
         if (this.isMultiConfigFilesEnabled && this.props.currentStage == Stage.BUILD) {
             tableHead.push('Scratch Org Config File');
         }
-        let table = new Table({
+        const table = new Table({
             head: tableHead,
             chars: ZERO_BORDER_TABLE,
         });
         for (const pkg of packagesToBeBuilt.keys()) {
-            let item = [
+            const item = [
                 pkg,
                 packagesToBeBuilt.get(pkg).reason,
                 packagesToBeBuilt.get(pkg).tag ? packagesToBeBuilt.get(pkg).tag : '',
@@ -128,13 +128,13 @@ export default class ReleaseConfig extends SfpCommand {
     }
 
     private createImpactedReleaseConfigsAsATable(impacatedReleaseConfigs: any[]) {
-        let tableHead = ['Release/Domain Name', 'Pools', 'ReleaseConfig Path'];
-        let table = new Table({
+        const tableHead = ['Release/Domain Name', 'Pools', 'ReleaseConfig Path'];
+        const table = new Table({
             head: tableHead,
             chars: ZERO_BORDER_TABLE,
         });
         for (const impactedReleaseConfig of impacatedReleaseConfigs) {
-            let item = [
+            const item = [
                 impactedReleaseConfig.releaseName,
                 impactedReleaseConfig.pool,
                 impactedReleaseConfig.filePath,

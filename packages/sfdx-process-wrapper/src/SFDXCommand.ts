@@ -18,9 +18,9 @@ export abstract class SFDXCommand {
         command += ' ' + this.getGeneratedParams();
 
         SFPLogger.log('Generated Command:' + command, LoggerLevel.TRACE, this.logger);
-        let executor: ExecuteCommand = new ExecuteCommand(this.logger, this.logLevel, showProgress);
+        const executor: ExecuteCommand = new ExecuteCommand(this.logger, this.logLevel, showProgress);
         //CLI writes errors to Output Stream during errors in JSON Mode, so if quiet is true, use swap output for error
-        let output = await executor.execCommand(command, this.project_directory, timeout, quiet);
+        const output = await executor.execCommand(command, this.project_directory, timeout, quiet);
         if (quiet) {
             return JSON.parse(output).result;
         }

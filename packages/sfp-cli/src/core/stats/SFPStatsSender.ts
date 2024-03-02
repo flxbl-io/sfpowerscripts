@@ -13,7 +13,7 @@ export default class SFPStatsSender {
     private static nativeMetricsSender: NativeMetricSender;
 
     static initialize(port: string, host: string, protocol: string) {
-        let options: ClientOptions = {
+        const options: ClientOptions = {
             host: host,
             port: port == null ? 8125 : Number(port),
             protocol: protocol == 'tcp' ? 'tcp' : 'udp',
@@ -61,7 +61,7 @@ export default class SFPStatsSender {
             SFPStatsSender.nativeMetricsSender.sendGaugeMetric(metric, elapsedMilliSeconds, tags);
         }
 
-        let metrics = {
+        const metrics = {
             metric: `sfpowerscripts.${metric}`,
             type: `timers`,
             value: elapsedMilliSeconds,
@@ -79,7 +79,7 @@ export default class SFPStatsSender {
             SFPStatsSender.nativeMetricsSender.sendGaugeMetric(metric, value, tags);
         }
 
-        let metrics = {
+        const metrics = {
             metric: `sfpowerscripts.${metric}`,
             type: `guage`,
             value: value,
@@ -97,7 +97,7 @@ export default class SFPStatsSender {
             SFPStatsSender.nativeMetricsSender.sendCountMetric(metric, tags);
         }
 
-        let metrics = {
+        const metrics = {
             metric: `sfpowerscripts.${metric}`,
             type: `count`,
             timestamp: Date.now(),

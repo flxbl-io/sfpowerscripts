@@ -28,23 +28,23 @@ export default class GitDiffUtils {
     }[];
 
     public async isFileIncludesContent(diffFile: DiffFileStatus, content: string): Promise<boolean> {
-        let fileAsString = await git.show(['--raw', diffFile.revisionFrom]);
-        let result = fileAsString.includes(content);
+        const fileAsString = await git.show(['--raw', diffFile.revisionFrom]);
+        const result = fileAsString.includes(content);
         return result;
     }
 
     public async fetchFileListRevisionTo(revisionTo: string, logger: Logger) {
         SFPLogger.log('Fetching file list from target revision ' + revisionTo, LoggerLevel.TRACE, logger);
         this.gitTreeRevisionTo = [];
-        let revisionTree = await git.raw(['ls-tree', '-r', revisionTo]);
+        const revisionTree = await git.raw(['ls-tree', '-r', revisionTo]);
         const sepRegex = /\n|\r/;
-        let lines = revisionTree.split(sepRegex);
+        const lines = revisionTree.split(sepRegex);
         for (let i = 0; i < lines.length; i++) {
             if (lines[i] === '') continue;
-            let fields = lines[i].split(/\t/);
-            let pathStr = fields[1];
-            let revisionSha = fields[0].split(/\s/)[2];
-            let fileMetadata = {
+            const fields = lines[i].split(/\t/);
+            const pathStr = fields[1];
+            const revisionSha = fields[0].split(/\s/)[2];
+            const fileMetadata = {
                 revision: revisionSha,
                 path: path.join('.', pathStr),
             };
@@ -60,7 +60,7 @@ export default class GitDiffUtils {
             return;
         }
 
-        let gitFiles: {
+        const gitFiles: {
             revision: string;
             path: string;
         }[] = [];
@@ -73,10 +73,10 @@ export default class GitDiffUtils {
         if(gitFiles.length==0)
           throw new Error(`Unable to find the required file  ${filePath} in Git.., Did you really commit the file?`)
 
-        let copyOutputFolder = outputFolder;
+        const copyOutputFolder = outputFolder;
         for (let i = 0; i < gitFiles.length; i++) {
             outputFolder = copyOutputFolder;
-            let gitFile = gitFiles[i];
+            const gitFile = gitFiles[i];
 
             SFPLogger.log(
                 `Associated file ${i}: ${gitFile.path}  Revision: ${gitFile.revision}`,
@@ -84,22 +84,22 @@ export default class GitDiffUtils {
                 logger
             );
 
-            let outputPath = path.join(outputFolder, gitFile.path);
+            const outputPath = path.join(outputFolder, gitFile.path);
 
-            let filePathParts = gitFile.path.split(SEP);
+            const filePathParts = gitFile.path.split(SEP);
 
             if (fs.existsSync(outputFolder) == false) {
                 fs.mkdirSync(outputFolder);
             }
             // Create folder structure
             for (let i = 0; i < filePathParts.length - 1; i++) {
-                let folder = filePathParts[i].replace('"', '');
+                const folder = filePathParts[i].replace('"', '');
                 outputFolder = path.join(outputFolder, folder);
                 if (fs.existsSync(outputFolder) == false) {
                     fs.mkdirSync(outputFolder);
                 }
             }
-            let fileContent = await git.binaryCatFile(['-p', gitFile.revision]);
+            const fileContent = await git.binaryCatFile(['-p', gitFile.revision]);
             fs.writeFileSync(outputPath, fileContent);
         }
     }
@@ -112,7 +112,7 @@ export default class GitDiffUtils {
         }
 
         this.gitTreeRevisionTo.forEach((file) => {
-            let fileToCompare = file.path;
+            const fileToCompare = file.path;
             if (fileToCompare.startsWith(folderPath)) {
                 this.copyFile(fileToCompare, outputFolder, logger);
             }
@@ -120,7 +120,7 @@ export default class GitDiffUtils {
     }
 
     public getChangedOrAdded(list1: any[], list2: any[], key: string) {
-        let result: any = {
+        const result: any = {
             addedEdited: [],
             deleted: [],
         };
@@ -145,7 +145,7 @@ export default class GitDiffUtils {
             list1.forEach((elem1) => {
                 let found = false;
                 for (let i = 0; i < list2.length; i++) {
-                    let elem2 = list2[i];
+                    const elem2 = list2[i];
                     if (elem1[key] === elem2[key]) {
                         //check if edited
                         if (!_.isEqual(elem1, elem2)) {
@@ -162,7 +162,7 @@ export default class GitDiffUtils {
 
             //Check for added elements
 
-            let addedElement = _.differenceWith(list2, list1, function (element1: any, element2: any) {
+            const addedElement = _.differenceWith(list2, list1, function (element1: any, element2: any) {
                 return element1[key] === element2[key];
             });
 

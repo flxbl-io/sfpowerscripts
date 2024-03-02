@@ -23,20 +23,20 @@ export default class AssignPermissionSetsImpl {
             permset: string;
         }[];
     }> {
-        let permsetListImpl: PermissionSetFetcher = new PermissionSetFetcher(this.conn.getUsername(), this.conn);
-        let assignedPermSets = await permsetListImpl.fetchAllPermsetAssignment();
+        const permsetListImpl: PermissionSetFetcher = new PermissionSetFetcher(this.conn.getUsername(), this.conn);
+        const assignedPermSets = await permsetListImpl.fetchAllPermsetAssignment();
 
-        let failedAssignments: {
+        const failedAssignments: {
             username: string;
             permset: string;
         }[] = [];
-        let successfullAssignments: {
+        const successfullAssignments: {
             username: string;
             permset: string;
         }[] = [];
 
-        for (let permSet of this.permSets) {
-            let permSetAssignmentMatch = assignedPermSets.find((record) => {
+        for (const permSet of this.permSets) {
+            const permSetAssignmentMatch = assignedPermSets.find((record) => {
                 return record.PermissionSet.Name === permSet;
             });
 
@@ -47,7 +47,7 @@ export default class AssignPermissionSetsImpl {
             }
 
             try {
-                let permsetAssignmentJson: string = child_process.execSync(
+                const permsetAssignmentJson: string = child_process.execSync(
                     `sf org assign permset -n ${permSet} -o ${this.conn.getUsername()} --json`,
                     {
                         cwd: this.project_directory,
@@ -56,7 +56,7 @@ export default class AssignPermissionSetsImpl {
                     }
                 );
 
-                let permsetAssignment = JSON.parse(permsetAssignmentJson);
+                const permsetAssignment = JSON.parse(permsetAssignmentJson);
                 if (permsetAssignment.status === 0)
                     successfullAssignments.push({ username: this.conn.getUsername(), permset: permSet });
                 else failedAssignments.push({ username: this.conn.getUsername(), permset: permSet });
@@ -79,7 +79,7 @@ export default class AssignPermissionSetsImpl {
     }
 
     private printPermsetAssignments(assignments: { username: string; permset: string }[]) {
-        let table = new Table({
+        const table = new Table({
             head: ['Username', 'Permission Set Assignment'],
             chars: ZERO_BORDER_TABLE
         });

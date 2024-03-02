@@ -22,17 +22,17 @@ export default class InstallDataPackageImpl extends InstallPackage {
     public async install() {
         try {
             //Fetch the sfdxcommand executor for the type
-            let dataPackageDeployer: SFDXCommand = await this.getSFDXCommand(
+            const dataPackageDeployer: SFDXCommand = await this.getSFDXCommand(
                 this.sfpPackage.sourceDir,
                 this.packageDirectory
             );
 
             SFPLogger.log(`Executing installation command: ${dataPackageDeployer.getGeneratedSFDXCommandWithParams()}`,LoggerLevel.INFO,this.logger);
-            let result = await dataPackageDeployer.exec(false);
+            const result = await dataPackageDeployer.exec(false);
 
             SFPLogger.log(result, LoggerLevel.INFO, this.logger);
         } catch (error) {
-            let csvIssuesReportFilepath: string = path.join(
+            const csvIssuesReportFilepath: string = path.join(
                 this.sfpPackage.sourceDir,
                 this.packageDirectory,
                 `CSVIssuesReport.csv`
@@ -50,12 +50,12 @@ export default class InstallDataPackageImpl extends InstallPackage {
     }
     private async getSFDXCommand(sourceDirectory: string, packageDirectory: string): Promise<SFDXCommand> {
         //Determine package type
-        let packageType: string = this.determinePackageType(path.join(sourceDirectory, packageDirectory));
+        const packageType: string = this.determinePackageType(path.join(sourceDirectory, packageDirectory));
 
         //Pick the type of SFDX command to use
         let dataPackageDeployer: SFDXCommand;
         if (packageType === 'sfdmu') {
-            let orgDomainUrl = await new OrgDetailsFetcher( this.sfpOrg.getUsername()).getOrgDomainUrl();
+            const orgDomainUrl = await new OrgDetailsFetcher( this.sfpOrg.getUsername()).getOrgDomainUrl();
 
             dataPackageDeployer = new SFDMURunImpl(
                 sourceDirectory,

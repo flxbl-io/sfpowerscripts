@@ -42,7 +42,7 @@ export default class CreateUnlockedPackageImpl extends CreatePackage {
 
         this.connection = this.devhubOrg.getConnection();
 
-        let packageId = ProjectConfig.getPackageId(sfpPackage.projectConfig, this.sfpPackage.packageName);
+        const packageId = ProjectConfig.getPackageId(sfpPackage.projectConfig, this.sfpPackage.packageName);
 
         // Get working directory
         this.workingDirectory = sfpPackage.workingDirectory;
@@ -52,8 +52,8 @@ export default class CreateUnlockedPackageImpl extends CreatePackage {
 
         //Get Type of Package
         SFPLogger.log('Fetching Package Type Info from DevHub', LoggerLevel.INFO, this.logger);
-        let packageTypeInfos = await this.getPackageTypeInfos();
-        let packageTypeInfo = packageTypeInfos.find((pkg) => pkg.Id == packageId);
+        const packageTypeInfos = await this.getPackageTypeInfos();
+        const packageTypeInfo = packageTypeInfos.find((pkg) => pkg.Id == packageId);
         if (packageTypeInfo == null) {
             SFPLogger.log(
                 'Unable to find a package info for this particular package, Are you sure you created this package?',
@@ -100,11 +100,11 @@ export default class CreateUnlockedPackageImpl extends CreatePackage {
         // bug packaging lib doesnt support unpackaged metadata from working directory which is not the root
         // it keeps on searching for the unpackage in the root folder
         // so fix up the path manually
-        let targetPackageDir = sfProject.getPackageDirectories()[0];
+        const targetPackageDir = sfProject.getPackageDirectories()[0];
         if (targetPackageDir['unpackagedMetadata'])
             targetPackageDir['unpackagedMetadata'] = { path: path.join(this.workingDirectory, 'unpackagedMetadata') };
 
-        let result = await PackageVersion.create(
+        const result = await PackageVersion.create(
             {
                 connection: this.devhubOrg.getConnection(),
                 project: sfProject,
@@ -196,8 +196,8 @@ export default class CreateUnlockedPackageImpl extends CreatePackage {
     printAdditionalPackageSpecificHeaders() {}
 
     private deletesfpAdditionsToProjectConfig(workingDirectory: string) {
-        let projectManifestFromWorkingDirectory = ProjectConfig.getSFDXProjectConfig(workingDirectory);
-        let packageDescriptorInWorkingDirectory = ProjectConfig.getPackageDescriptorFromConfig(
+        const projectManifestFromWorkingDirectory = ProjectConfig.getSFDXProjectConfig(workingDirectory);
+        const packageDescriptorInWorkingDirectory = ProjectConfig.getPackageDescriptorFromConfig(
             this.sfpPackage.packageName,
             projectManifestFromWorkingDirectory
         );
@@ -226,14 +226,14 @@ export default class CreateUnlockedPackageImpl extends CreatePackage {
     }
 
     private async getPackageInfo(sfpPackage: SfpPackage) {
-        let packageVersionCoverage: PackageVersionCoverage = new PackageVersionCoverage(this.connection, this.logger);
+        const packageVersionCoverage: PackageVersionCoverage = new PackageVersionCoverage(this.connection, this.logger);
         let count = 0;
         while (count < 10) {
             count++;
             try {
                 SFPLogger.log('Fetching Version Number and Coverage details', LoggerLevel.INFO, this.logger);
 
-                let pkgInfoResult = await packageVersionCoverage.getCoverage(sfpPackage.package_version_id);
+                const pkgInfoResult = await packageVersionCoverage.getCoverage(sfpPackage.package_version_id);
 
                 sfpPackage.isDependencyValidated = !this.packageCreationParams.isSkipValidation;
                 sfpPackage.package_version_number = pkgInfoResult.packageVersionNumber;

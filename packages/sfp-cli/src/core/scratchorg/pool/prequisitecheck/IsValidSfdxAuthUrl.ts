@@ -2,7 +2,7 @@ export default function isValidSfdxAuthUrl(sfdxAuthUrl: string): boolean {
     if (sfdxAuthUrl.match(/force:\/\/(?<refreshToken>[a-zA-Z0-9._]+)@.+/)) {
         return true;
     } else {
-        let match = sfdxAuthUrl.match(
+        const match = sfdxAuthUrl.match(
             /force:\/\/(?<clientId>[a-zA-Z0-9._=]+):(?<clientSecret>[a-zA-Z0-9]*):(?<refreshToken>[a-zA-Z0-9._=]+)@.+/
         );
 

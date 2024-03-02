@@ -49,7 +49,7 @@ export default class PrepareImpl {
 
     public async exec() {
         SFPLogger.log(COLOR_KEY_MESSAGE('Validating Org Authentication Mechanism..'), LoggerLevel.INFO);
-        let orgDisplayResult = await new OrgDetailsFetcher(this.hubOrg.getUsername()).getOrgDetails();
+        const orgDisplayResult = await new OrgDetailsFetcher(this.hubOrg.getUsername()).getOrgDetails();
 
         if (!(orgDisplayResult.sfdxAuthUrl && isValidSfdxAuthUrl(orgDisplayResult.sfdxAuthUrl)))
             throw new Error(
@@ -77,28 +77,28 @@ export default class PrepareImpl {
             await this.getPackageArtifacts(restrictedPackages);
         }
 
-        let checkpointPackages = this.getcheckPointPackages(new ConsoleLogger(), projectConfig);
+        const checkpointPackages = this.getcheckPointPackages(new ConsoleLogger(), projectConfig);
 
-        let externalPackageResolver = new ExternalPackage2DependencyResolver(
+        const externalPackageResolver = new ExternalPackage2DependencyResolver(
             this.hubOrg.getConnection(),
             projectConfig,
             this.pool.keys
         );
-        let externalPackage2s = await externalPackageResolver.resolveExternalPackage2DependenciesToVersions();
+        const externalPackage2s = await externalPackageResolver.resolveExternalPackage2DependenciesToVersions();
 
         //Display resolved dependencies
-        let externalDependencyDisplayer = new ExternalDependencyDisplayer(externalPackage2s, new ConsoleLogger());
+        const externalDependencyDisplayer = new ExternalDependencyDisplayer(externalPackage2s, new ConsoleLogger());
         externalDependencyDisplayer.display();
 
-        let prepareASingleOrgImpl: PrepareOrgJob = new PrepareOrgJob(this.pool, checkpointPackages, externalPackage2s);
+        const prepareASingleOrgImpl: PrepareOrgJob = new PrepareOrgJob(this.pool, checkpointPackages, externalPackage2s);
 
-        let createPool: PoolCreateImpl = new PoolCreateImpl(
+        const createPool: PoolCreateImpl = new PoolCreateImpl(
             this.hubOrg,
             this.pool,
             prepareASingleOrgImpl,
             this.logLevel
         );
-        let pool = (await createPool.execute()) as Result<PoolConfig, PoolError>;
+        const pool = (await createPool.execute()) as Result<PoolConfig, PoolError>;
 
         if (pool.isOk()) {
             await this.displayPoolSummary(pool.value);
@@ -107,7 +107,7 @@ export default class PrepareImpl {
         return pool;
 
         async function getArtifactsByGeneratingReleaseDefinitionFromConfig(releaseConfigFile: string) {
-            let releaseDefinitionGenerator: ReleaseDefinitionGenerator = new ReleaseDefinitionGenerator(
+            const releaseDefinitionGenerator: ReleaseDefinitionGenerator = new ReleaseDefinitionGenerator(
                 new ConsoleLogger(),
                 'HEAD',
                 releaseConfigFile,
@@ -119,7 +119,7 @@ export default class PrepareImpl {
                 false,
                 true
             );
-            let releaseDefinition = (await releaseDefinitionGenerator.exec()) as ReleaseDefinition;
+            const releaseDefinition = (await releaseDefinitionGenerator.exec()) as ReleaseDefinition;
             return Object.keys(releaseDefinition.artifacts);
         }
     }
@@ -128,7 +128,7 @@ export default class PrepareImpl {
     private getcheckPointPackages(projectConfig: any, logger: Logger) {
         SFPLogger.log('Fetching checkpoints for prepare if any.....', LoggerLevel.INFO, logger);
 
-        let checkPointPackages = [];
+        const checkPointPackages = [];
 
         ProjectConfig.getAllPackageDirectoriesFromConfig(projectConfig).forEach((pkg) => {
             if (pkg.checkpointForPrepare) checkPointPackages.push(pkg['package']);
@@ -138,7 +138,7 @@ export default class PrepareImpl {
     }
 
     private async displayPoolSummary(pool: PoolConfig) {
-        let table = new Table({
+        const table = new Table({
             head: [
                 'Scratch Org Alias Id',
                 'Scratch Org Username',
@@ -150,11 +150,11 @@ export default class PrepareImpl {
 
         for (const scratchOrg of pool.scratchOrgs) {
             try {
-                let scratchOrgAsSFPOrg = await SFPOrg.create({ aliasOrUsername: scratchOrg.username });
-                let installedArtifacts = await scratchOrgAsSFPOrg.getInstalledArtifacts();
+                const scratchOrgAsSFPOrg = await SFPOrg.create({ aliasOrUsername: scratchOrg.username });
+                const installedArtifacts = await scratchOrgAsSFPOrg.getInstalledArtifacts();
                 if (installedArtifacts && installedArtifacts.length >= 1) {
-                    let installationCount = installedArtifacts.length;
-                    let lastInstalledArifact = installedArtifacts[installedArtifacts.length - 1];
+                    const installationCount = installedArtifacts.length;
+                    const lastInstalledArifact = installedArtifacts[installedArtifacts.length - 1];
                     table.push([
                         scratchOrg.alias,
                         scratchOrg.username,
@@ -202,14 +202,14 @@ export default class PrepareImpl {
 
     private async getPackageArtifacts(restrictedPackages?: string[]) {
         //Filter Packages to be ignored from prepare to be fetched
-        let packages = ProjectConfig.getAllPackageDirectoriesFromDirectory(null).filter((pkg) => {
+        const packages = ProjectConfig.getAllPackageDirectoriesFromDirectory(null).filter((pkg) => {
             return isPkgToBeInstalled(pkg, restrictedPackages);
         });
 
         let artifactFetcher: FetchAnArtifact;
         if (this.pool.fetchArtifacts) {
             
-            let fetchArtifactsLogGroup = new GroupConsoleLogs(`Fetching Artifacts`); 
+            const fetchArtifactsLogGroup = new GroupConsoleLogs(`Fetching Artifacts`); 
             fetchArtifactsLogGroup.begin();
             artifactFetcher = new FetchArtifactSelector(
                 this.pool.fetchArtifacts.artifactFetchScript,
@@ -223,8 +223,8 @@ export default class PrepareImpl {
             //but the package is not yet available in the validated package list and can cause prepare to fail
             for (const pkg of packages) {
                 try {
-                    let latestGitTagVersion: GitTags = new GitTags(git, pkg.package);
-                    let version = await latestGitTagVersion.getVersionFromLatestTag();
+                    const latestGitTagVersion: GitTags = new GitTags(git, pkg.package);
+                    const version = await latestGitTagVersion.getVersionFromLatestTag();
                     artifactFetcher.fetchArtifact(pkg.package, 'artifacts', version, true);
                     this.artifactFetchedCount++;
                 } catch (error) {
@@ -235,7 +235,7 @@ export default class PrepareImpl {
             }
             fetchArtifactsLogGroup.end();
         } else {
-            let buildArtifactsLogGroup = new GroupConsoleLogs(`Building Artifacts`); 
+            const buildArtifactsLogGroup = new GroupConsoleLogs(`Building Artifacts`); 
             buildArtifactsLogGroup.begin();
             //Build All Artifacts
             SFPLogger.log(`${EOL}`);
@@ -260,13 +260,13 @@ export default class PrepareImpl {
 
             buildProps = includeOnlyPackagesAsPerReleaseConfig(this.pool.releaseConfigFile, buildProps);
             
-            let buildImpl = new BuildImpl(buildProps);
-            let { generatedPackages, failedPackages } = await buildImpl.exec();
+            const buildImpl = new BuildImpl(buildProps);
+            const { generatedPackages, failedPackages } = await buildImpl.exec();
 
             if (failedPackages.length > 0)
                 throw new Error('Unable to build packages, Following packages failed to build' + failedPackages);
 
-            for (let generatedPackage of generatedPackages) {
+            for (const generatedPackage of generatedPackages) {
                 await ArtifactGenerator.generateArtifact(generatedPackage, process.cwd(), 'artifacts');
                 this.artifactFetchedCount++;
             }
@@ -274,7 +274,7 @@ export default class PrepareImpl {
         }
 
         function isPkgToBeInstalled(pkg, restrictedPackages?: string[]): boolean {
-            let ignoreOnStageFound = pkg.ignoreOnStage?.find((stage) => {
+            const ignoreOnStageFound = pkg.ignoreOnStage?.find((stage) => {
                 stage = stage.toLowerCase();
                 if (stage === 'prepare') return true;
             });
@@ -289,7 +289,7 @@ export default class PrepareImpl {
 
         function includeOnlyPackagesAsPerReleaseConfig(releaseConfigFilePath:string,buildProps: BuildProps,logger?:Logger): BuildProps {
             if (releaseConfigFilePath) {
-            let releaseConfigLoader:ReleaseConfigLoader = new ReleaseConfigLoader(logger, releaseConfigFilePath);
+            const releaseConfigLoader:ReleaseConfigLoader = new ReleaseConfigLoader(logger, releaseConfigFilePath);
              buildProps.includeOnlyPackages = releaseConfigLoader.getPackagesAsPerReleaseConfig();
              printIncludeOnlyPackages(buildProps.includeOnlyPackages);
             }

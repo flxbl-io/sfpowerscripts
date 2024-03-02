@@ -51,8 +51,8 @@ export default class ReleaseImpl {
     constructor(private props: ReleaseProps, private logger?: Logger) {}
 
     public async exec(): Promise<ReleaseResult> {
-        let groupSection = new GroupConsoleLogs('Fetching artifacts').begin();
-        let fetchImpl: FetchImpl = new FetchImpl(
+        const groupSection = new GroupConsoleLogs('Fetching artifacts').begin();
+        const fetchImpl: FetchImpl = new FetchImpl(
             'artifacts',
             this.props.fetchArtifactScript,
             this.props.scope,
@@ -82,11 +82,11 @@ export default class ReleaseImpl {
         FileOutputHandler.getInstance().deleteOutputFile(`deployment-breakdown.md`);
         FileOutputHandler.getInstance().deleteOutputFile(`release-changelog.md`);
       
-        let deploymentResults = await this.deployArtifacts(sortedReleaseDefns);
+        const deploymentResults = await this.deployArtifacts(sortedReleaseDefns);
 
         //Get all suceeded deploys
-        let succeededDeploymentResults: DeploymentStatus[] = [];
-        let failedDeploymentResults: DeploymentStatus[] = [];
+        const succeededDeploymentResults: DeploymentStatus[] = [];
+        const failedDeploymentResults: DeploymentStatus[] = [];
         for (const deploymentResult of deploymentResults) {
             if (deploymentResult.result.failed.length === 0) succeededDeploymentResults.push(deploymentResult);
             else failedDeploymentResults.push(deploymentResult);
@@ -99,7 +99,7 @@ export default class ReleaseImpl {
             //ReleaseName combines all the release together .. even if failed
             //Combine all release defns to create release attributes
             let releaseName: string = '';
-            let workitemFilters = [];
+            const workitemFilters = [];
             let limit = 30;
             let workItemUrl: string;
             let showAllArtifacts: boolean = false;
@@ -107,7 +107,7 @@ export default class ReleaseImpl {
             //Lets go through all the succeeded deployments and get the changelog
             for (const succededDeployment of succeededDeploymentResults) {
                 releaseName = succededDeployment.releaseDefinition.release;
-                let releaseDefinition = succededDeployment.releaseDefinition;
+                const releaseDefinition = succededDeployment.releaseDefinition;
                 if (releaseDefinition.changelog) {
                     if (releaseDefinition.changelog.workItemFilters) {
                         workitemFilters.push(...releaseDefinition.changelog?.workItemFilters);
@@ -118,9 +118,9 @@ export default class ReleaseImpl {
                 }
 
                 if (this.props.isGenerateChangelog) {
-                    let groupSection = new GroupConsoleLogs('Release changelog').begin();
+                    const groupSection = new GroupConsoleLogs('Release changelog').begin();
                     try {
-                        let changelogImpl: ChangelogImpl = new ChangelogImpl(
+                        const changelogImpl: ChangelogImpl = new ChangelogImpl(
                             this.logger,
                             this.getArtifactDirectory(releaseDefinition),
                             releaseName,
@@ -139,7 +139,7 @@ export default class ReleaseImpl {
                             this.props.targetOrg
                         );
 
-                        let releaseChangelog = await changelogImpl.exec();
+                        const releaseChangelog = await changelogImpl.exec();
 
                         const aggregatedNumberOfWorkItemsInRelease = this.getAggregatedNumberOfWorkItemsInRelease(
                             releaseName,
@@ -232,15 +232,15 @@ export default class ReleaseImpl {
   
 
     private async deployArtifacts(releaseDefinitions: ReleaseDefinition[]): Promise<DeploymentStatus[]> {
-        let deploymentResults: { releaseDefinition: ReleaseDefinition; result: DeploymentResult }[] = [];
+        const deploymentResults: { releaseDefinition: ReleaseDefinition; result: DeploymentResult }[] = [];
         for (const releaseDefinition of releaseDefinitions) {
-            let groupSection = new GroupConsoleLogs(`Release ${releaseDefinition.release} for Release Configuration: ${releaseDefinition.releaseConfigName}`).begin();
+            const groupSection = new GroupConsoleLogs(`Release ${releaseDefinition.release} for Release Configuration: ${releaseDefinition.releaseConfigName}`).begin();
             SFPLogger.log(EOL);
 
             this.displayReleaseInfo(releaseDefinition, this.props);
 
 
-            let deployProps: DeployProps = {
+            const deployProps: DeployProps = {
                 targetUsername: this.props.targetOrg,
                 artifactDir: this.getArtifactDirectory(releaseDefinition),
                 waitTime: this.props.waitTime,
@@ -260,9 +260,9 @@ export default class ReleaseImpl {
             };
 
             FileOutputHandler.getInstance().appendOutput(`deployment-breakdown.md`,`## ReleaseConfig: ${releaseDefinition.releaseConfigName?releaseDefinition.releaseConfigName:""}\n`);
-            let deployImpl: DeployImpl = new DeployImpl(deployProps);
+            const deployImpl: DeployImpl = new DeployImpl(deployProps);
 
-            let deploymentResult = await deployImpl.exec();
+            const deploymentResult = await deployImpl.exec();
             deploymentResults.push({ releaseDefinition: releaseDefinition, result: deploymentResult });
             groupSection.end();
             //Don't continue deployments if a release breaks in between
@@ -273,23 +273,23 @@ export default class ReleaseImpl {
     }
 
     private async getSortedReleaseDefns(artifactDirectory: string,releaseDefns:ReleaseDefinition[], logger: Logger): Promise<any> {
-        let artifacts = ArtifactFetcher.fetchArtifacts(artifactDirectory, null, logger);
+        const artifacts = ArtifactFetcher.fetchArtifacts(artifactDirectory, null, logger);
         if (artifacts.length === 0) throw new Error(`No artifacts to deploy found in ${artifactDirectory}`);
 
         //Convert artifacts to SfpPackages
-        let sfpPackages = await this.generateSfpPackageFromArtifacts(artifacts, logger);
+        const sfpPackages = await this.generateSfpPackageFromArtifacts(artifacts, logger);
 
-        let sfpPackageInquirer: SfpPackageInquirer = new SfpPackageInquirer(sfpPackages, logger);
-        let sfdxProjectConfig = sfpPackageInquirer.getLatestProjectConfig();
+        const sfpPackageInquirer: SfpPackageInquirer = new SfpPackageInquirer(sfpPackages, logger);
+        const sfdxProjectConfig = sfpPackageInquirer.getLatestProjectConfig();
        
-        let releaseDefinitionSorter = new ReleaseDefinitionSorter();
+        const releaseDefinitionSorter = new ReleaseDefinitionSorter();
         return releaseDefinitionSorter.sortReleaseDefinitions(releaseDefns, sfdxProjectConfig, logger);
     }
 
     private async generateSfpPackageFromArtifacts(artifacts: Artifact[], logger: Logger): Promise<SfpPackage[]> {
-        let sfpPackages: SfpPackage[] = [];
+        const sfpPackages: SfpPackage[] = [];
         for (const artifact of artifacts) {
-            let sfpPackage = await SfpPackageBuilder.buildPackageFromArtifact(artifact, logger);
+            const sfpPackage = await SfpPackageBuilder.buildPackageFromArtifact(artifact, logger);
             sfpPackages.push(sfpPackage);
         }
         return sfpPackages;
@@ -301,7 +301,7 @@ export default class ReleaseImpl {
         keys: string,
         waitTime: number
     ): Promise<InstallDependenciesResult> {
-        let result: InstallDependenciesResult = {
+        const result: InstallDependenciesResult = {
             success: [],
             skipped: [],
             failed: [],
@@ -315,17 +315,17 @@ export default class ReleaseImpl {
             }
         });
 
-        let groupSection = new GroupConsoleLogs('Installing package dependencies').begin();
+        const groupSection = new GroupConsoleLogs('Installing package dependencies').begin();
 
         try {
             let packagesToKeys: { [p: string]: string };
             if (keys) {
                 packagesToKeys = this.parseKeys(keys);
             }
-            let externalPackage2s: Package2Detail[] = [];
+            const externalPackage2s: Package2Detail[] = [];
             // print packages dependencies to install
-            for (let pkg in packageDependencies) {
-                let dependendentPackage: Package2Detail = { name: pkg };
+            for (const pkg in packageDependencies) {
+                const dependendentPackage: Package2Detail = { name: pkg };
                 if (packageDependencies[pkg].startsWith('04t'))
                     dependendentPackage.subscriberPackageVersionId = packageDependencies[pkg];
 
@@ -334,8 +334,8 @@ export default class ReleaseImpl {
                 }
                 externalPackage2s.push(dependendentPackage);
             }
-            let sfpOrg = await SFPOrg.create({ aliasOrUsername: targetOrg });
-            let packageCollectionInstaller = new InstallUnlockedPackageCollection(
+            const sfpOrg = await SFPOrg.create({ aliasOrUsername: targetOrg });
+            const packageCollectionInstaller = new InstallUnlockedPackageCollection(
                 sfpOrg,
                 new ConsoleLogger(),
                 this.props.isDryRun
@@ -361,13 +361,13 @@ export default class ReleaseImpl {
      * @param keys
      */
     private parseKeys(keys: string) {
-        let output: { [p: string]: string } = {};
+        const output: { [p: string]: string } = {};
 
         keys = keys.trim();
-        let listOfKeys = keys.split(' ');
+        const listOfKeys = keys.split(' ');
 
-        for (let key of listOfKeys) {
-            let packageKeyPair = key.split(':');
+        for (const key of listOfKeys) {
+            const packageKeyPair = key.split(':');
             if (packageKeyPair.length === 2) {
                 output[packageKeyPair[0]] = packageKeyPair[1];
             } else {

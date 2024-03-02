@@ -20,7 +20,7 @@ export default class ImpactedApexTestClassFetcher {
 
         try
         {
-        let validatedChangedComponents = this.changedComponents.filter(
+        const validatedChangedComponents = this.changedComponents.filter(
             (component) => component.package == this.sfpPackage.packageName
         );
 

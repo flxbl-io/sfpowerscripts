@@ -4,7 +4,7 @@ import ProjectValidation from '../src/ProjectValidation';
 
 describe('Given a sfdx-project.json, it should be validated against the scehma', () => {
     it('should not throw an error for a valid sfdx-project.json without any sfp decorators', () => {
-        let sfdx_project = {
+        const sfdx_project = {
             packageDirectories: [
                 {
                     path: 'packages/temp',
@@ -58,7 +58,7 @@ describe('Given a sfdx-project.json, it should be validated against the scehma',
     });
 
     it('should not throw an error for a sfdx-project.json where a package directory is missing package name', () => {
-        let sfdx_project = {
+        const sfdx_project = {
             packageDirectories: [
                 {
                     path: 'packages/temp',
@@ -109,7 +109,7 @@ describe('Given a sfdx-project.json, it should be validated against the scehma',
     });
 
     it('should not throw an error for a sfdx-project.json where various sfp orchestrator properties are used', () => {
-        let sfdx_project = {
+        const sfdx_project = {
             packageDirectories: [
                 {
                     path: 'packages/temp',
@@ -186,7 +186,7 @@ describe('Given a sfdx-project.json, it should be validated against the scehma',
 
     it('should not throw an error for a sfdx-project.json where various sfp orchestrator properties are incorrectly used', () => {
         //As the errors are moved to warning, it will not throw an error
-        let sfdx_project = {
+        const sfdx_project = {
             packageDirectories: [
                 {
                     path: 'packages/temp',
@@ -255,7 +255,7 @@ describe('Given a sfdx-project.json, it should be validated against the scehma',
 
     it('should not throw an package-specific error for sfdx-project.json when version number is used correctly', () => {
         // sfdx-project.json includes one source package with specific build number (valid) and one unlocked package using NEXT keyword (also valid)
-        let sfdx_project = {
+        const sfdx_project = {
             packageDirectories: [
                 {
                     path: 'packages/temp',
@@ -290,7 +290,7 @@ describe('Given a sfdx-project.json, it should be validated against the scehma',
 
     it('should throw a package-specific error for sfdx-project.json when version number is used incorrectly', () => {
         // sfdx-project.json includes two source packages. One with specific build number (valid), one using NEXT keyword (invalid)
-        let sfdx_project = {
+        const sfdx_project = {
             packageDirectories: [
                 {
                     path: 'packages/temp',
@@ -332,7 +332,7 @@ describe('Given a sfdx-project.json, it should be validated against the scehma',
 
     it('should throw a package-specific error for sfdx-project.json when package name is more than 38 characters', () => {
         // sfdx-project.json includes two source packages. One with normal package name, one name is more than 38 characters (invalid)
-        let sfdx_project = {
+        const sfdx_project = {
             packageDirectories: [
                 {
                     path: 'packages/temp',
@@ -373,7 +373,7 @@ describe('Given a sfdx-project.json, it should be validated against the scehma',
 
     it('should throw a package-specific error for sfdx-project.json when package name contains invalid characters', () => {
         // sfdx-project.json includes two source packages. One with normal package name, one name contains & (invalid)
-        let sfdx_project = {
+        const sfdx_project = {
             packageDirectories: [
                 {
                     path: 'packages/temp',

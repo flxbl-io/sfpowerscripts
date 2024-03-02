@@ -11,8 +11,8 @@ export default class PromoteUnlockedPackageImpl {
     ) {}
 
     public async promote(): Promise<void> {
-        let hubOrg = await SFPOrg.create({ aliasOrUsername: this.devhub_alias });
-        let project = await SfProject.resolve(this.project_directory);
+        const hubOrg = await SFPOrg.create({ aliasOrUsername: this.devhub_alias });
+        const project = await SfProject.resolve(this.project_directory);
 
         const packageVersion = new PackageVersion({
             connection: hubOrg.getConnection(),

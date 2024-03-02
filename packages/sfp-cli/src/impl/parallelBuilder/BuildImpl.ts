@@ -95,7 +95,7 @@ export default class BuildImpl {
 		this.packagesBuilt = [];
 		this.failedPackages = [];
 		this.generatedPackages = [];
-		this.packageCreationPromises = new Array();
+		this.packageCreationPromises = [];
 	}
 
 	public async exec(): Promise<{
@@ -108,7 +108,7 @@ export default class BuildImpl {
 			});
 
 
-		let git = await Git.initiateRepo(new ConsoleLogger());
+		const git = await Git.initiateRepo(new ConsoleLogger());
 		this.repository_url = await git.getRemoteOriginUrl(this.props.repourl);
 		this.commit_id = await git.getHeadCommit();
 
@@ -130,7 +130,7 @@ export default class BuildImpl {
 		//Do a diff Impl
 		let table;
 		if (this.props.isDiffCheckEnabled) {
-			let packagesToBeBuiltWithReasons =
+			const packagesToBeBuiltWithReasons =
 				await this.filterPackagesToBeBuiltByChanged(
 					this.props.projectDirectory,
 					this.packagesToBeBuilt,
@@ -147,7 +147,7 @@ export default class BuildImpl {
 		SFPLogger.log(table.toString());
 
 		//Fix transitive dependency gap
-		let groupDependencyResolutionLogs = new GroupConsoleLogs(
+		const groupDependencyResolutionLogs = new GroupConsoleLogs(
 			"Resolving dependencies",
 			this.logger,
 		).begin();
@@ -156,13 +156,13 @@ export default class BuildImpl {
 		);
 		groupDependencyResolutionLogs.end();
 
-		let buildPackagesLogs = new GroupConsoleLogs(
+		const buildPackagesLogs = new GroupConsoleLogs(
 			"Building Packages",
 			this.logger,
 		).begin();
 
 		for await (const pkg of this.packagesToBeBuilt) {
-			let type = this.getPriorityandTypeOfAPackage(
+			const type = this.getPriorityandTypeOfAPackage(
 				this.projectConfig,
 				pkg,
 			).type;
@@ -196,7 +196,7 @@ export default class BuildImpl {
 			this.packagesToBeBuilt,
 		);
 
-		let sortedBatch = new BatchingTopoSort().sort(this.childs);
+		const sortedBatch = new BatchingTopoSort().sort(this.childs);
 
 		if (!this.props.isQuickBuild && this.sfpOrg) {
 			const packageDependencyResolver = new PackageDependencyResolver(
@@ -209,13 +209,13 @@ export default class BuildImpl {
 		}
 
 		//Do First Level Package First
-		let pushedPackages = [];
+		const pushedPackages = [];
 		for (const pkg of sortedBatch[0]) {
-			let { priority, type } = this.getPriorityandTypeOfAPackage(
+			const { priority, type } = this.getPriorityandTypeOfAPackage(
 				this.projectConfig,
 				pkg,
 			);
-			let packagePromise: Promise<SfpPackage> = this.limiter
+			const packagePromise: Promise<SfpPackage> = this.limiter
 				.schedule({ id: pkg, priority: priority }, () =>
 					this.createPackage(type, pkg, this.props.isBuildAllAsSourcePackages),
 				)
@@ -263,19 +263,19 @@ export default class BuildImpl {
 	private createDiffPackageScheduledDisplayedAsATable(
 		packagesToBeBuilt: Map<string, any>,
 	) {
-		let tableHead = ["Package", "Reason to be built", "Last Known Tag"];
+		const tableHead = ["Package", "Reason to be built", "Last Known Tag"];
 		if (
 			this.isMultiConfigFilesEnabled &&
 			this.props.currentStage == Stage.BUILD
 		) {
 			tableHead.push("Scratch Org Config File");
 		}
-		let table = new Table({
+		const table = new Table({
 			head: tableHead,
 			chars: ZERO_BORDER_TABLE,
 		});
 		for (const pkg of packagesToBeBuilt.keys()) {
-			let item = [
+			const item = [
 				pkg,
 				packagesToBeBuilt.get(pkg).reason,
 				packagesToBeBuilt.get(pkg).tag ? packagesToBeBuilt.get(pkg).tag : "",
@@ -297,19 +297,19 @@ export default class BuildImpl {
 	}
 
 	private createAllPackageScheduledDisplayedAsATable() {
-		let tableHead = ["Package", "Reason to be built"];
+		const tableHead = ["Package", "Reason to be built"];
 		if (
 			this.isMultiConfigFilesEnabled &&
 			this.props.currentStage == Stage.BUILD
 		) {
 			tableHead.push("Scratch Org Config File");
 		}
-		let table = new Table({
+		const table = new Table({
 			head: tableHead,
 			chars: ZERO_BORDER_TABLE,
 		});
 		for (const pkg of this.packagesToBeBuilt) {
-			let item = [pkg, "Activated as part of all package build"];
+			const item = [pkg, "Activated as part of all package build"];
 			if (
 				this.isMultiConfigFilesEnabled &&
 				this.props.currentStage == Stage.BUILD
@@ -329,8 +329,8 @@ export default class BuildImpl {
 		projectDirectory: string,
 		allPackagesInRepo: any,
 	) {
-		let packagesToBeBuilt = new Map<string, any>();
-		let buildCollections = new BuildCollections(projectDirectory);
+		const packagesToBeBuilt = new Map<string, any>();
+		const buildCollections = new BuildCollections(projectDirectory);
 		if (this.props.diffOptions)
 			this.props.diffOptions.pathToReplacementForceIgnore =
 				this.getPathToForceIgnoreForCurrentStage(
@@ -339,13 +339,13 @@ export default class BuildImpl {
 				);
 
 		for await (const pkg of allPackagesInRepo) {
-			let diffImpl: PackageDiffImpl = new PackageDiffImpl(
+			const diffImpl: PackageDiffImpl = new PackageDiffImpl(
 				new ConsoleLogger(),
 				pkg,
 				this.props.projectDirectory,
 				this.props.diffOptions,
 			);
-			let packageDiffCheck = await diffImpl.exec();
+			const packageDiffCheck = await diffImpl.exec();
 
 			if (packageDiffCheck.isToBeBuilt) {
 				packagesToBeBuilt.set(pkg, {
@@ -373,8 +373,8 @@ export default class BuildImpl {
 		projectDirectory: string,
 		includeOnlyPackages?: string[],
 	): string[] {
-		let projectConfig = ProjectConfig.getSFDXProjectConfig(projectDirectory);
-		let sfdxpackages = [];
+		const projectConfig = ProjectConfig.getSFDXProjectConfig(projectDirectory);
+		const sfdxpackages = [];
 
 		let packageDescriptors = projectConfig["packageDirectories"].filter(
 			(pkg) => {
@@ -447,7 +447,7 @@ export default class BuildImpl {
 		try {
 			// Append error to log file
 			fs.appendFileSync(`.sfpowerscripts/logs/${pkg}`, reason.message, "utf8");
-			let data = fs.readFileSync(`.sfpowerscripts/logs/${pkg}`, "utf8");
+			const data = fs.readFileSync(`.sfpowerscripts/logs/${pkg}`, "utf8");
 
 			const pathToMarkDownFile = `.sfpowerscripts/outputs/build-error-info.md`;
 			fs.mkdirpSync(".sfpowerscripts/outputs");
@@ -509,14 +509,14 @@ export default class BuildImpl {
 		});
 
 		// Do a second pass and push packages with fulfilled parents to queue
-		let pushedPackages = [];
+		const pushedPackages = [];
 		this.packagesToBeBuilt.forEach((pkg) => {
 			if (this.parentsToBeFulfilled[pkg]?.length == 0) {
-				let { priority, type } = this.getPriorityandTypeOfAPackage(
+				const { priority, type } = this.getPriorityandTypeOfAPackage(
 					this.projectConfig,
 					pkg,
 				);
-				let packagePromise: Promise<SfpPackage> = this.limiter
+				const packagePromise: Promise<SfpPackage> = this.limiter
 					.schedule({ id: pkg, priority: priority }, () =>
 						this.createPackage(
 							type,
@@ -591,11 +591,11 @@ export default class BuildImpl {
 
 	private getPriorityandTypeOfAPackage(projectConfig: any, pkg: string) {
 		let priority = 0;
-		let childs = DependencyHelper.getChildsOfAllPackages(
+		const childs = DependencyHelper.getChildsOfAllPackages(
 			this.props.projectDirectory,
 			this.packagesToBeBuilt,
 		);
-		let type = ProjectConfig.getPackageType(projectConfig, pkg);
+		const type = ProjectConfig.getPackageType(projectConfig, pkg);
 		if (type === PackageType.Unlocked) {
 			if (childs[pkg].length > 0)
 				priority = PRIORITY_UNLOCKED_PKG_WITH_DEPENDENCY;
@@ -801,7 +801,7 @@ export default class BuildImpl {
 	): string {
 		let stageForceIgnorePath: string;
 
-		let ignoreFiles: { [key in Stage]: string } =
+		const ignoreFiles: { [key in Stage]: string } =
 			projectConfig.plugins?.sfp?.ignoreFiles;
 		if (ignoreFiles) {
 			Object.keys(ignoreFiles).forEach((key) => {
@@ -836,7 +836,7 @@ export default class BuildImpl {
 	}
 
 	private async resolvePackageDependencies(projectConfig: any) {
-		let isDependencyResolverEnabled =
+		const isDependencyResolverEnabled =
 			!projectConfig?.plugins?.sfp
 				?.disableTransitiveDependencyResolver;
 
@@ -845,7 +845,7 @@ export default class BuildImpl {
 				projectConfig,
 				this.logger,
 			);
-			let resolvedDependencyMap =
+			const resolvedDependencyMap =
 				await transitiveDependencyResolver.resolveTransitiveDependencies();
 			projectConfig = await ProjectConfig.updateProjectConfigWithDependencies(
 				projectConfig,

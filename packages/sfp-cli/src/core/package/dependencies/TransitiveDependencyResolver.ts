@@ -30,7 +30,7 @@ export default class TransitiveDependencyResolver {
         externalDependencyMap: any
     ): Map<string, { package: string; versionNumber?: string }[]> {
         if (externalDependencyMap) {
-            for (let pkg of Object.keys(externalDependencyMap)) {
+            for (const pkg of Object.keys(externalDependencyMap)) {
                 pkgWithDependencies.set(pkg, externalDependencyMap[pkg]);
             }
         }
@@ -40,15 +40,15 @@ export default class TransitiveDependencyResolver {
     private fillDepsTransitively(
         dependencyMap: Map<string, { package: string; versionNumber?: string }[]>
     ): Map<string, { package: string; versionNumber?: string }[]> {
-        let pkgs = Array.from(dependencyMap.keys());
-        for (let pkg of pkgs) {
+        const pkgs = Array.from(dependencyMap.keys());
+        for (const pkg of pkgs) {
             SFPLogger.log(
                 COLOR_HEADER(`fetching dependencies for package:`) + COLOR_KEY_MESSAGE(pkg),
                 LoggerLevel.TRACE,
                 this.logger
             );
             let dependenencies: { package: string; versionNumber?: string }[] = [];
-            for (let dependency of dependencyMap.get(pkg)) {
+            for (const dependency of dependencyMap.get(pkg)) {
                 if (dependencyMap.get(dependency.package)) {
                     //push parents first
                     dependenencies = dependenencies.concat(dependencyMap.get(dependency.package));
@@ -69,11 +69,11 @@ export default class TransitiveDependencyResolver {
             ].map((tmpString) => JSON.parse(tmpString));
             for (let j = 0; j < uniqueDependencies.length; j++) {
                 if (uniqueDependencies[j].versionNumber) {
-                    let version = convertBuildNumDotDelimToHyphen(uniqueDependencies[j].versionNumber);
+                    const version = convertBuildNumDotDelimToHyphen(uniqueDependencies[j].versionNumber);
 
                     for (let i = j + 1; i < uniqueDependencies.length; i++) {
                         if (uniqueDependencies[j].package == uniqueDependencies[i].package) {
-                            let versionToCompare = convertBuildNumDotDelimToHyphen(uniqueDependencies[i].versionNumber);
+                            const versionToCompare = convertBuildNumDotDelimToHyphen(uniqueDependencies[i].versionNumber);
                             // replace existing packageInfo if package version number is newer
                             if (semver.lt(version, versionToCompare)) {
                                uniqueDependencies = this.swapAndDropArrayElement(uniqueDependencies,j,i);
@@ -100,7 +100,7 @@ export default class TransitiveDependencyResolver {
           return arr;
         }
         
-        let newArr = [...arr];
+        const newArr = [...arr];
         [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
         return [...newArr.slice(0, j), ...newArr.slice(j + 1)];
       }

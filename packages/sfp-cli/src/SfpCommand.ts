@@ -102,7 +102,7 @@ export default abstract class SfpCommand extends Command {
         }
 
         if (this.statics.requiresProject) {
-            let projectValidation = new ProjectValidation();
+            const projectValidation = new ProjectValidation();
             projectValidation.validateSFDXProjectJSON();
             projectValidation.validatePackageNames();
         }

@@ -62,14 +62,14 @@ export default class Delete extends SfpCommand {
 
         this.flags.apiversion = this.flags.apiversion || (await hubConn.retrieveMaxApiVersion());
 
-        let scratchOrgOperationResults: { orgId: string; username: string; operation: string }[] = [];
+        const scratchOrgOperationResults: { orgId: string; username: string; operation: string }[] = [];
         //User want to delete orphans only
         if (this.flags.orphans && !this.flags.tag) {
-            let orphanedOrgsDeleteImpl = new OrphanedOrgsDeleteImpl(this.hubOrg, new ConsoleLogger());
-            let recoveredScratchOrgs = (await orphanedOrgsDeleteImpl.execute()) as ScratchOrg[];
+            const orphanedOrgsDeleteImpl = new OrphanedOrgsDeleteImpl(this.hubOrg, new ConsoleLogger());
+            const recoveredScratchOrgs = (await orphanedOrgsDeleteImpl.execute()) as ScratchOrg[];
             this.pushToResults('recovered', recoveredScratchOrgs, scratchOrgOperationResults);
         } else {
-            let poolDeleteImpl = new PoolDeleteImpl(
+            const poolDeleteImpl = new PoolDeleteImpl(
                 this.hubOrg,
                 this.flags.tag,
                 this.flags.mypool,
@@ -78,11 +78,11 @@ export default class Delete extends SfpCommand {
                 new ConsoleLogger()
             );
 
-            let deletedOrgs = (await poolDeleteImpl.execute()) as ScratchOrg[];
+            const deletedOrgs = (await poolDeleteImpl.execute()) as ScratchOrg[];
             this.pushToResults('deleted', deletedOrgs, scratchOrgOperationResults);
 
-            let orphanedOrgsDeleteImpl = new OrphanedOrgsDeleteImpl(this.hubOrg, new ConsoleLogger());
-            let recoverdScratchOrgs = (await orphanedOrgsDeleteImpl.execute()) as ScratchOrg[];
+            const orphanedOrgsDeleteImpl = new OrphanedOrgsDeleteImpl(this.hubOrg, new ConsoleLogger());
+            const recoverdScratchOrgs = (await orphanedOrgsDeleteImpl.execute()) as ScratchOrg[];
             this.pushToResults('recovered', recoverdScratchOrgs, scratchOrgOperationResults);
         }
         this.displayScrathOrgOperationsAsTable(scratchOrgOperationResults);

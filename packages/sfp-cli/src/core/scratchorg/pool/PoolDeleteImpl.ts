@@ -29,12 +29,12 @@ export default class PoolDeleteImpl extends PoolBaseImpl {
             !this.allScratchOrgs
         )) as any;
 
-        let scratchOrgToDelete: ScratchOrg[] = new Array<ScratchOrg>();
+        const scratchOrgToDelete: ScratchOrg[] = new Array<ScratchOrg>();
         if (results.records.length > 0) {
-            let scrathOrgIds: string[] = [];
-            for (let element of results.records) {
+            const scrathOrgIds: string[] = [];
+            for (const element of results.records) {
                 if (!this.inprogressonly || element.Allocation_status__c === 'In Progress') {
-                    let soDetail: ScratchOrg = {};
+                    const soDetail: ScratchOrg = {};
                     soDetail.orgId = element.ScratchOrg;
                     soDetail.loginURL = element.LoginUrl;
                     soDetail.username = element.SignupUsername;
@@ -47,12 +47,12 @@ export default class PoolDeleteImpl extends PoolBaseImpl {
             }
 
             if (scrathOrgIds.length > 0) {
-                let activeScrathOrgs = await new ScratchOrgInfoFetcher(this.hubOrg).getActiveScratchOrgsByInfoId(
+                const activeScrathOrgs = await new ScratchOrgInfoFetcher(this.hubOrg).getActiveScratchOrgsByInfoId(
                     scrathOrgIds.join(',')
                 );
 
                 if (activeScrathOrgs.records.length > 0) {
-                    for (let scratchOrg of activeScrathOrgs.records) {
+                    for (const scratchOrg of activeScrathOrgs.records) {
                         await new ScratchOrgOperator(this.hubOrg).delete(scratchOrg.Id);
                         SFPLogger.log(`Scratch org with username ${scratchOrg.SignupUsername} is deleted successfully`,LoggerLevel.TRACE,this.logger);
                     }

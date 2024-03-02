@@ -10,22 +10,22 @@ export default class ScratchOrgInfoFetcher {
     public async getScratchOrgRecordId(scratchOrgs: ScratchOrg[]) {
         if (scratchOrgs == undefined || scratchOrgs.length == 0) return;
 
-        let hubConn = this.hubOrg.getConnection();
+        const hubConn = this.hubOrg.getConnection();
 
-        let scratchOrgIds = scratchOrgs
+        const scratchOrgIds = scratchOrgs
             .map(function (scratchOrg) {
                 scratchOrg.orgId = scratchOrg.orgId.slice(0, 15);
                 return `'${scratchOrg.orgId}'`;
             })
             .join(',');
 
-        let query = `SELECT Id, ScratchOrg FROM ScratchOrgInfo WHERE ScratchOrg IN ( ${scratchOrgIds} )`;
+        const query = `SELECT Id, ScratchOrg FROM ScratchOrgInfo WHERE ScratchOrg IN ( ${scratchOrgIds} )`;
         SFPLogger.log('QUERY:' + query, LoggerLevel.TRACE);
 
         return retry(
             async (bail) => {
                 const results = (await hubConn.query(query)) as any;
-                let resultAsObject = this.arrayToObject(results.records, 'ScratchOrg');
+                const resultAsObject = this.arrayToObject(results.records, 'ScratchOrg');
 
                 SFPLogger.log(JSON.stringify(resultAsObject), LoggerLevel.TRACE);
 
@@ -40,7 +40,7 @@ export default class ScratchOrgInfoFetcher {
     }
 
     public async getScratchOrgsByTag(tag: string, isMyPool: boolean, unAssigned: boolean) {
-        let hubConn = this.hubOrg.getConnection();
+        const hubConn = this.hubOrg.getConnection();
 
         return retry(
             async (bail) => {
@@ -69,7 +69,7 @@ export default class ScratchOrgInfoFetcher {
     }
 
     public async getOrphanedScratchOrgs() {
-        let hubConn = this.hubOrg.getConnection();
+        const hubConn = this.hubOrg.getConnection();
 
         return retry(
             async (bail) => {
@@ -85,11 +85,11 @@ export default class ScratchOrgInfoFetcher {
     }
 
     public async getActiveScratchOrgsByInfoId(scrathOrgIds: string) {
-        let hubConn = this.hubOrg.getConnection();
+        const hubConn = this.hubOrg.getConnection();
 
         return retry(
             async (bail) => {
-                let query = `SELECT Id, SignupUsername FROM ActiveScratchOrg WHERE ScratchOrgInfoId IN (${scrathOrgIds}) `;
+                const query = `SELECT Id, SignupUsername FROM ActiveScratchOrg WHERE ScratchOrgInfoId IN (${scrathOrgIds}) `;
 
                 SFPLogger.log('QUERY:' + query, LoggerLevel.TRACE);
                 const results = (await hubConn.query(query)) as any;
@@ -100,11 +100,11 @@ export default class ScratchOrgInfoFetcher {
     }
 
     public async getCountOfActiveScratchOrgsByTag(tag: string): Promise<number> {
-        let hubConn = this.hubOrg.getConnection();
+        const hubConn = this.hubOrg.getConnection();
 
         return retry(
             async (bail) => {
-                let query = `SELECT Id, CreatedDate, ScratchOrg, ExpirationDate, SignupUsername, SignupEmail, Password__c, Allocation_status__c, LoginUrl FROM ScratchOrgInfo WHERE Pooltag__c = '${tag}' AND Status = 'Active' `;
+                const query = `SELECT Id, CreatedDate, ScratchOrg, ExpirationDate, SignupUsername, SignupEmail, Password__c, Allocation_status__c, LoginUrl FROM ScratchOrgInfo WHERE Pooltag__c = '${tag}' AND Status = 'Active' `;
                 SFPLogger.log('QUERY:' + query, LoggerLevel.TRACE);
                 const results = (await hubConn.query(query)) as any;
                 SFPLogger.log('RESULT:' + JSON.stringify(results), LoggerLevel.TRACE);
@@ -115,11 +115,11 @@ export default class ScratchOrgInfoFetcher {
     }
 
     public async getCountOfActiveScratchOrgsByTagAndUsername(tag: string): Promise<number> {
-        let hubConn = this.hubOrg.getConnection();
+        const hubConn = this.hubOrg.getConnection();
 
         return retry(
             async (bail) => {
-                let query = `SELECT Id, CreatedDate, ScratchOrg, ExpirationDate, SignupUsername, SignupEmail, Password__c, Allocation_status__c, LoginUrl FROM ScratchOrgInfo WHERE Pooltag__c = '${tag}' AND Status = 'Active' `;
+                const query = `SELECT Id, CreatedDate, ScratchOrg, ExpirationDate, SignupUsername, SignupEmail, Password__c, Allocation_status__c, LoginUrl FROM ScratchOrgInfo WHERE Pooltag__c = '${tag}' AND Status = 'Active' `;
                 SFPLogger.log('QUERY:' + query, LoggerLevel.TRACE);
                 const results = (await hubConn.query(query)) as any;
                 return results.totalSize;
@@ -129,11 +129,11 @@ export default class ScratchOrgInfoFetcher {
     }
 
     public async getActiveScratchOrgRecordIdGivenScratchOrg(scratchOrgId: string): Promise<any> {
-        let hubConn = this.hubOrg.getConnection();
+        const hubConn = this.hubOrg.getConnection();
         return retry(
             async (bail) => {
-                let query = `SELECT Id FROM ActiveScratchOrg WHERE ScratchOrg = '${scratchOrgId}'`;
-                let records = (await hubConn.query<any>(query)).records;
+                const query = `SELECT Id FROM ActiveScratchOrg WHERE ScratchOrg = '${scratchOrgId}'`;
+                const records = (await hubConn.query<any>(query)).records;
 
                 SFPLogger.log('Retrieve Active ScratchOrg Id:' + JSON.stringify(records), LoggerLevel.TRACE);
                 return records[0].Id;
@@ -143,19 +143,19 @@ export default class ScratchOrgInfoFetcher {
     }
 
     public async getActiveScratchOrgRecordsAsMapByUser(hubOrg: Org) {
-        let conn = this.hubOrg.getConnection();
-        let query =
+        const conn = this.hubOrg.getConnection();
+        const query =
             'SELECT count(id) In_Use, SignupEmail FROM ActiveScratchOrg GROUP BY SignupEmail ORDER BY count(id) DESC';
         const results = (await conn.query(query)) as any;
         SFPLogger.log(`Info Fetched: ${JSON.stringify(results)}`, LoggerLevel.DEBUG);
 
-        let scratchOrgRecordAsMapByUser = this.arrayToObject(results.records, 'SignupEmail');
+        const scratchOrgRecordAsMapByUser = this.arrayToObject(results.records, 'SignupEmail');
         return scratchOrgRecordAsMapByUser;
     }
 
     public async getScratchOrgIdGivenUserName(username: string) {
-        let conn = this.hubOrg.getConnection();
-        let query = `SELECT Id FROM ActiveScratchOrg WHERE SignupUsername = '${username}'`;
+        const conn = this.hubOrg.getConnection();
+        const query = `SELECT Id FROM ActiveScratchOrg WHERE SignupUsername = '${username}'`;
         return retry(
             async (bail) => {
                 SFPLogger.log('QUERY:' + query, LoggerLevel.TRACE);
@@ -167,8 +167,8 @@ export default class ScratchOrgInfoFetcher {
     }
 
     public async getScratchOrgInfoIdGivenUserName(username: string) {
-        let conn = this.hubOrg.getConnection();
-        let query = `SELECT Id FROM ScratchOrgInfo WHERE SignupUsername = '${username}'`;
+        const conn = this.hubOrg.getConnection();
+        const query = `SELECT Id FROM ScratchOrgInfo WHERE SignupUsername = '${username}'`;
         return retry(
             async (bail) => {
                 SFPLogger.log('QUERY:' + query, LoggerLevel.TRACE);

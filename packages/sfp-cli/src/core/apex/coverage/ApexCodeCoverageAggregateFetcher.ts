@@ -26,7 +26,7 @@ export default class ApexCodeCoverageAggregateFetcher {
         const chunks = chunkCollection(listOfApexClassOrTriggerId);
         for (const chunk of chunks) {
             const formattedChunk = chunk.map(elem => `'${elem}'`).toString();
-            let query = `SELECT ApexClassorTriggerId, NumLinesCovered, NumLinesUncovered, Coverage FROM ApexCodeCoverageAggregate WHERE ApexClassorTriggerId IN (${formattedChunk})`;
+            const query = `SELECT ApexClassorTriggerId, NumLinesCovered, NumLinesUncovered, Coverage FROM ApexCodeCoverageAggregate WHERE ApexClassorTriggerId IN (${formattedChunk})`;
 
             const records = await QueryHelper.query<{
                 ApexClassOrTriggerId: string;

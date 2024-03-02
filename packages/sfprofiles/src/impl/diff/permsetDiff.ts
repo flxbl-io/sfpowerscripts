@@ -33,11 +33,11 @@ export default abstract class PermsetDiff {
         const parseString = util.promisify(parser.parseString) as _.Function1<xml2js.convertableToString, Promise<any>>;
 
         let parseResult = await parseString(permissionsetXml1);
-        let permsetObj1 = parseResult.PermissionSet;
+        const permsetObj1 = parseResult.PermissionSet;
         parseResult = await parseString(permissionsetXml2);
-        let permsetObj2 = parseResult.PermissionSet;
+        const permsetObj2 = parseResult.PermissionSet;
 
-        let newPermsetObj = {} as any;
+        const newPermsetObj = {} as any;
 
         newPermsetObj.label = permsetObj2.label;
 
@@ -110,7 +110,7 @@ export default abstract class PermsetDiff {
 
     private static async writePermset(permsetObj: any, filePath: string) {
         //Delete eampty arrays
-        for (let key in permsetObj) {
+        for (const key in permsetObj) {
             if (Array.isArray(permsetObj[key])) {
                 //All top element must be arays exept non arrayProperties
                 if (!nonArayProperties.includes(key) && permsetObj[key].length === 0) {
@@ -119,11 +119,11 @@ export default abstract class PermsetDiff {
             }
         }
         if (permsetObj.label != undefined) {
-            let builder = new xml2js.Builder({ rootName: 'PermissionSet' });
+            const builder = new xml2js.Builder({ rootName: 'PermissionSet' });
             permsetObj['$'] = {
                 xmlns: 'http://soap.sforce.com/2006/04/metadata',
             };
-            let xml = builder.buildObject(permsetObj);
+            const xml = builder.buildObject(permsetObj);
 
             fs.writeFileSync(filePath, xml);
         }

@@ -109,19 +109,19 @@ export default class ClientSourceTracking {
                 try {
                     const packageType = ProjectConfig.getPackageType(projectConfig, artifact.Name);
                     if (packageType === PackageType.Unlocked || packageType === PackageType.Source) {
-                        let componentSet = ComponentSet.fromSource(
+                        const componentSet = ComponentSet.fromSource(
                             path.join(
                                 git.getRepositoryPath(),
                                 ProjectConfig.getPackageDescriptorFromConfig(artifact.Name, projectConfig).path
                             )
                         );
-                        let components = componentSet.getSourceComponents();
+                        const components = componentSet.getSourceComponents();
 
                         //Get all components in the directory
                         //Count for logging purposes. dont have to waste processing convering
                         //a lazy collection to array once again
                         let componentCount = 1;
-                        let componentPaths: string[] = [];
+                        const componentPaths: string[] = [];
                         for (const component of components) {
                             componentCount++;
                             componentPaths.push(component.xml);
@@ -190,7 +190,7 @@ export default class ClientSourceTracking {
 
     private cleanupSFDXProjectJsonTonOnePackage(projectDir: string, packageName: string) {
         try {
-            let cleanedUpProjectManifest = ProjectConfig.cleanupMPDFromProjectDirectory(projectDir, packageName);
+            const cleanedUpProjectManifest = ProjectConfig.cleanupMPDFromProjectDirectory(projectDir, packageName);
             fs.writeJSONSync(path.join(projectDir, 'sfdx-project.json'), cleanedUpProjectManifest, {
                 spaces: 4,
             });

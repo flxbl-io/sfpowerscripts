@@ -1,21 +1,21 @@
 import { Connection } from 'jsforce';
 
-let retry = require('async-retry');
+const retry = require('async-retry');
 
 export async function getInstalledPackages(conn: Connection, fetchLicenses: boolean): Promise<PackageDetail[]> {
-    let packageDetails = [];
+    const packageDetails = [];
 
-    let installedPackagesQuery =
+    const installedPackagesQuery =
         'SELECT Id, SubscriberPackageId, SubscriberPackage.NamespacePrefix, SubscriberPackage.Name, ' +
         'SubscriberPackageVersion.Id, SubscriberPackageVersion.Name, SubscriberPackageVersion.MajorVersion, SubscriberPackageVersion.MinorVersion, ' +
         'SubscriberPackageVersion.PatchVersion, SubscriberPackageVersion.BuildNumber, SubscriberPackageVersion.Package2ContainerOptions, SubscriberPackageVersion.IsOrgDependent FROM InstalledSubscriberPackage ' +
         'ORDER BY SubscriberPackageId';
 
-    let packageNamespacePrefixList = [];
+    const packageNamespacePrefixList = [];
 
     return await retry(
         async (bail) => {
-            let results = await conn.tooling.query(installedPackagesQuery);
+            const results = await conn.tooling.query(installedPackagesQuery);
             const records = results.records;
 
             if (records && records.length > 0) {
@@ -36,13 +36,13 @@ export async function getInstalledPackages(conn: Connection, fetchLicenses: bool
             }
 
             if (fetchLicenses) {
-                let licenseMap = new Map();
+                const licenseMap = new Map();
                 if (packageNamespacePrefixList.length > 0) {
-                    let packageLicensingQuery = `SELECT AllowedLicenses, UsedLicenses,ExpirationDate, NamespacePrefix, IsProvisioned, Status FROM PackageLicense  WHERE NamespacePrefix IN (${packageNamespacePrefixList})`;
+                    const packageLicensingQuery = `SELECT AllowedLicenses, UsedLicenses,ExpirationDate, NamespacePrefix, IsProvisioned, Status FROM PackageLicense  WHERE NamespacePrefix IN (${packageNamespacePrefixList})`;
                     await conn.query(packageLicensingQuery).then((queryResult) => {
                         if (queryResult.records && queryResult.records.length > 0) {
                             queryResult.records.forEach((record) => {
-                                let licenseDetailObj = {} as PackageDetail;
+                                const licenseDetailObj = {} as PackageDetail;
                                 licenseDetailObj.allowedLicenses =
                                     record['AllowedLicenses'] > 0 ? record['AllowedLicenses'] : 0;
                                 licenseDetailObj.usedLicenses = record['UsedLicenses'];
@@ -57,7 +57,7 @@ export async function getInstalledPackages(conn: Connection, fetchLicenses: bool
                 if (packageDetails.length > 0 && licenseMap.size > 0) {
                     packageDetails.forEach((detail) => {
                         if (detail.packageNamespacePrefix && licenseMap.has(detail.packageNamespacePrefix)) {
-                            let licDetail = licenseMap.get(detail.packageNamespacePrefix);
+                            const licDetail = licenseMap.get(detail.packageNamespacePrefix);
                             detail.allowedLicenses = licDetail.allowedLicenses;
                             detail.usedLicenses = licDetail.usedLicenses;
                             detail.expirationDate = licDetail.expirationDate;

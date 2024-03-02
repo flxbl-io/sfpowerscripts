@@ -64,10 +64,10 @@ export default abstract class PackageCreateCommand extends SfpCommand {
      *
      */
     async execute(): Promise<any> {
-        let isToCreatePackage = await this.preCreate();
+        const isToCreatePackage = await this.preCreate();
         if (isToCreatePackage) {
             try {
-                let packageMetadata = await this.create();
+                const packageMetadata = await this.create();
                 await this.postCreate(packageMetadata);
             } catch (err) {
                 console.log(err);
@@ -88,16 +88,16 @@ export default abstract class PackageCreateCommand extends SfpCommand {
         let isToRunBuild;
 
         if (this.flags.diffcheck) {
-            let packageDiffImpl = new PackageDiffImpl(new ConsoleLogger(), this.sfdxPackage, null);
+            const packageDiffImpl = new PackageDiffImpl(new ConsoleLogger(), this.sfdxPackage, null);
 
-            let isToRunBuild = (await packageDiffImpl.exec()).isToBeBuilt;
+            const isToRunBuild = (await packageDiffImpl.exec()).isToBeBuilt;
 
             if (isToRunBuild) console.log(`Detected changes to ${this.sfdxPackage} package...proceeding\n`);
             else console.log(`No changes detected for ${this.sfdxPackage} package...skipping\n`);
         } else isToRunBuild = true;
 
         if (isToRunBuild) {
-            let git = await Git.initiateRepo(new ConsoleLogger());
+            const git = await Git.initiateRepo(new ConsoleLogger());
             this.repositoryURL = await git.getRemoteOriginUrl(this.flags.repourl);
             this.commitId = await git.getHeadCommit();
         }
@@ -113,15 +113,15 @@ export default abstract class PackageCreateCommand extends SfpCommand {
 
         if (this.flags.gittag) {
            
-            let git = await Git.initiateRepo(new ConsoleLogger());
-            let tagname = `${this.sfdxPackage}_v${sfpPackage.package_version_number}`;
+            const git = await Git.initiateRepo(new ConsoleLogger());
+            const tagname = `${this.sfdxPackage}_v${sfpPackage.package_version_number}`;
             await git.addAnnotatedTag(tagname, `${sfpPackage.packageName} sfp package ${sfpPackage.package_version_number}`)
 
             sfpPackage.tag = tagname;
         }
 
         //Generate Artifact
-        let artifactFilepath: string = await ArtifactGenerator.generateArtifact(
+        const artifactFilepath: string = await ArtifactGenerator.generateArtifact(
             sfpPackage,
             process.cwd(),
             this.artifactDirectory

@@ -2,7 +2,7 @@ const fs = require('fs-extra');
 import SFPLogger, { LoggerLevel } from '@flxblio/sfp-logger';
 import _ from 'lodash';
 import { PackageType } from '../package/SfpPackage';
-let path = require('path');
+const path = require('path');
 
 /**
  * Helper functions for retrieving info from project config
@@ -26,8 +26,8 @@ export default class ProjectConfig {
      * @param projectDirectory
      */
     public static getAllPackages(projectDirectory: string): string[] {
-        let projectConfig = ProjectConfig.getSFDXProjectConfig(projectDirectory);
-        let sfdxpackages = [];
+        const projectConfig = ProjectConfig.getSFDXProjectConfig(projectDirectory);
+        const sfdxpackages = [];
         projectConfig['packageDirectories'].forEach((pkg) => {
             //Only push packages that have package and versionNumber, ignore everything else
             if (pkg.package && pkg.versionNumber) sfdxpackages.push(pkg.package);
@@ -38,8 +38,8 @@ export default class ProjectConfig {
     public static getAllExternalPackages(
         projectConfig: any
     ): { alias: string; Package2IdOrSubscriberPackageVersionId: string }[] {
-        let externalPackages: { alias: string; Package2IdOrSubscriberPackageVersionId: string }[] = [];
-        let packagesInCurrentDirectory = ProjectConfig.getAllPackageDirectoriesFromConfig(projectConfig);
+        const externalPackages: { alias: string; Package2IdOrSubscriberPackageVersionId: string }[] = [];
+        const packagesInCurrentDirectory = ProjectConfig.getAllPackageDirectoriesFromConfig(projectConfig);
         const packageAliases = projectConfig.packageAliases || {};
         Object.entries(packageAliases).forEach(([key, value]) => {
             if (
@@ -61,7 +61,7 @@ export default class ProjectConfig {
      * @param projectDirectory
      */
     public static getAllPackagesFromProjectConfig(projectConfig: any): string[] {
-        let sfdxpackages = [];
+        const sfdxpackages = [];
         projectConfig.packageDirectories.forEach((pkg) => {
             //Only push packages that have package and versionNumber, ignore everything else
             if (pkg.package && pkg.versionNumber) sfdxpackages.push(pkg.package);
@@ -72,9 +72,9 @@ export default class ProjectConfig {
     public static getAllPackagesAndItsDependencies(
         projectConfig: any
     ): Map<string, { package: string; versionNumber?: string }[]> {
-        let pkgWithDependencies = new Map<string, { package: string; versionNumber?: string }[]>();
-        let packages = ProjectConfig.getAllPackageDirectoriesFromConfig(projectConfig);
-        for (let pkg of packages) {
+        const pkgWithDependencies = new Map<string, { package: string; versionNumber?: string }[]>();
+        const packages = ProjectConfig.getAllPackageDirectoriesFromConfig(projectConfig);
+        for (const pkg of packages) {
             if (pkg.dependencies) {
                 pkgWithDependencies.set(pkg.package, pkg.dependencies);
             }
@@ -83,8 +83,8 @@ export default class ProjectConfig {
     }
 
     public static getAllPackageDirectoriesFromDirectory(projectDirectory?: string): any[] {
-        let projectConfig = ProjectConfig.getSFDXProjectConfig(projectDirectory);
-        let sfdxpackages = [];
+        const projectConfig = ProjectConfig.getSFDXProjectConfig(projectDirectory);
+        const sfdxpackages = [];
         projectConfig.packageDirectories?.forEach((pkg) => {
             //Only push packages that have package and versionNumber, ignore everything else
             if (pkg.package && pkg.versionNumber) sfdxpackages.push(pkg);
@@ -93,7 +93,7 @@ export default class ProjectConfig {
     }
 
     public static getAllPackageDirectoriesFromConfig(projectConfig: any): any[] {
-        let sfdxpackages = [];
+        const sfdxpackages = [];
         projectConfig.packageDirectories?.forEach((pkg) => {
             //Only push packages that have package and versionNumber, ignore everything else
             if (pkg.package && pkg.versionNumber) sfdxpackages.push(pkg);
@@ -130,7 +130,7 @@ export default class ProjectConfig {
         projectConfig: any,
         sfdxPackage: string
     ): PackageType.Unlocked | PackageType.Data | PackageType.Source | PackageType.Diff {
-        let packageDescriptor = ProjectConfig.getPackageDescriptorFromConfig(sfdxPackage, projectConfig);
+        const packageDescriptor = ProjectConfig.getPackageDescriptorFromConfig(sfdxPackage, projectConfig);
 
         if (projectConfig['packageAliases']?.[sfdxPackage]) {
             return PackageType.Unlocked;
@@ -148,9 +148,9 @@ export default class ProjectConfig {
      * @param sfdxPackage
      */
     public static getSFDXPackageDescriptor(projectDirectory: string, sfdxPackage: string): any {
-        let projectConfig = ProjectConfig.getSFDXProjectConfig(projectDirectory);
+        const projectConfig = ProjectConfig.getSFDXProjectConfig(projectDirectory);
 
-        let sfdxPackageDescriptor = ProjectConfig.getPackageDescriptorFromConfig(sfdxPackage, projectConfig);
+        const sfdxPackageDescriptor = ProjectConfig.getPackageDescriptorFromConfig(sfdxPackage, projectConfig);
 
         return sfdxPackageDescriptor;
     }
@@ -184,7 +184,7 @@ export default class ProjectConfig {
         let packageDirectory: string;
         let sfdxPackageDescriptor: any;
 
-        let projectConfig = this.getSFDXProjectConfig(projectDirectory);
+        const projectConfig = this.getSFDXProjectConfig(projectDirectory);
 
         //Return the default package directory
         projectConfig['packageDirectories'].forEach((pkg) => {
@@ -240,9 +240,9 @@ export default class ProjectConfig {
      * @param sfdxPackages
      */
     public static cleanupPackagesFromProjectConfig(projectConfig: any, sfdxPackages: string[]): any {
-        let revisedPackageDirectory = [];
-        let originalPackageDirectory = projectConfig['packageDirectories'];
-        for (let pkg of originalPackageDirectory) {
+        const revisedPackageDirectory = [];
+        const originalPackageDirectory = projectConfig['packageDirectories'];
+        for (const pkg of originalPackageDirectory) {
             for (const sfdxPackage of sfdxPackages) {
                 if (pkg.package == sfdxPackage) {
                     pkg.default = false;
@@ -271,7 +271,7 @@ export default class ProjectConfig {
         projectConfig: any,
         dependencyMap: Map<string, { package: string; versionNumber?: string }[]>
     ) {
-        let updatedprojectConfig = await _.cloneDeep(projectConfig);
+        const updatedprojectConfig = await _.cloneDeep(projectConfig);
         updatedprojectConfig.packageDirectories.map((pkg) => {
             return Object.assign(pkg, { dependencies: dependencyMap.get(pkg.package) });
         });

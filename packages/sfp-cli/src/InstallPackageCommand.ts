@@ -60,7 +60,7 @@ export default abstract class InstallPackageCommand extends SfpCommand {
      * the primary install
      */
     private async preInstall(): Promise<void> {
-        let artifacts = ArtifactFetcher.fetchArtifacts(this.flags.artifactdir, this.flags.package, null);
+        const artifacts = ArtifactFetcher.fetchArtifacts(this.flags.artifactdir, this.flags.package, null);
         if (artifacts.length === 0) {
             if (!this.flags.skiponmissingartifact) {
                 throw new Error(

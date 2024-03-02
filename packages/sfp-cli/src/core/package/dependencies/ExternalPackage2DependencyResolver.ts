@@ -19,7 +19,7 @@ export default class ExternalPackage2DependencyResolver {
         if (isDependencyValidated == undefined) isDependencyValidated = true;
         //Do a dependency resolution first only for external dependencies
         //Resolve .LATEST to exact version numbers
-        let revisedProjectConfig = await new PackageDependencyResolver(
+        const revisedProjectConfig = await new PackageDependencyResolver(
             this.conn,
             this.projectConfig,
             packagesToBeSkipped,
@@ -27,8 +27,8 @@ export default class ExternalPackage2DependencyResolver {
             isDependencyValidated
         ).resolvePackageDependencyVersions();
 
-        let packageVersions: Package2Detail[] = [];
-        let packageVersionFetcher = new Package2VersionFetcher(this.conn);
+        const packageVersions: Package2Detail[] = [];
+        const packageVersionFetcher = new Package2VersionFetcher(this.conn);
 
         let packagesToKeys: { [p: string]: string };
         if (this.keys) {
@@ -43,20 +43,20 @@ export default class ExternalPackage2DependencyResolver {
 
             if (sfdxPackage.dependencies && Array.isArray(sfdxPackage.dependencies)) {
                 for (let i = 0; i < sfdxPackage.dependencies.length; i++) {
-                    let dependency = sfdxPackage.dependencies[i];
+                    const dependency = sfdxPackage.dependencies[i];
 
                     if (packagesToBeSkipped && packagesToBeSkipped.includes(dependency.package)) 
                     {
-                        let dependendentPackage: Package2Detail = { name: dependency.package };
+                        const dependendentPackage: Package2Detail = { name: dependency.package };
                         packageVersions.push(dependendentPackage);
                         continue;
                     }
 
                     if (!packageVersions.find((elem) => elem.name == dependency.package)) {
-                        let dependendentPackage: Package2Detail = { name: dependency.package };
+                        const dependendentPackage: Package2Detail = { name: dependency.package };
                         if (dependency.versionNumber) {
                             dependendentPackage.versionNumber = dependency.versionNumber;
-                            let packageVersion = await packageVersionFetcher.fetchByPackage2Id(
+                            const packageVersion = await packageVersionFetcher.fetchByPackage2Id(
                                 revisedProjectConfig.packageAliases[dependendentPackage.name],
                                 dependendentPackage.versionNumber,
                                 true
@@ -84,13 +84,13 @@ export default class ExternalPackage2DependencyResolver {
      * @param keys
      */
     private parseKeys(keys: string) {
-        let output: { [p: string]: string } = {};
+        const output: { [p: string]: string } = {};
 
         keys = keys.trim();
-        let listOfKeys = keys.split(' ');
+        const listOfKeys = keys.split(' ');
 
-        for (let key of listOfKeys) {
-            let packageKeyPair = key.split(':');
+        for (const key of listOfKeys) {
+            const packageKeyPair = key.split(':');
             if (packageKeyPair.length === 2) {
                 output[packageKeyPair[0]] = packageKeyPair[1];
             } else {

@@ -23,7 +23,7 @@ export default class SfpPackageInquirer {
     constructor(private readonly sfpPackages: SfpPackage[], private packageLogger?: Logger) {}
 
     public getLatestProjectConfig() {
-        let latestPackageManifest = this.getLatestPackageManifestFromArtifacts(this.sfpPackages);
+        const latestPackageManifest = this.getLatestPackageManifestFromArtifacts(this.sfpPackages);
 
         if (latestPackageManifest) {
             this._latestPackageManifestFromArtifacts = latestPackageManifest.latestPackageManifest;
@@ -53,14 +53,14 @@ export default class SfpPackageInquirer {
         this.validateArtifactsSourceRepository();
 
         let latestSfpPackage: SfpPackage;
-        for (let sfpPackage of sfpPackages) {
+        for (const sfpPackage of sfpPackages) {
             if (
                 latestSfpPackage == null ||
                 latestSfpPackage.creation_details.timestamp < sfpPackage.creation_details.timestamp
             ) {
                 latestSfpPackage = sfpPackage;
 
-                let pathToPackageManifest = path.join(sfpPackage.sourceDir, 'manifests', 'sfdx-project.json.ori');
+                const pathToPackageManifest = path.join(sfpPackage.sourceDir, 'manifests', 'sfdx-project.json.ori');
                 if (fs.existsSync(pathToPackageManifest)) {
                     latestPackageManifest = JSON.parse(fs.readFileSync(pathToPackageManifest, 'utf8'));
 
@@ -86,10 +86,10 @@ export default class SfpPackageInquirer {
     public validateArtifactsSourceRepository(): void {
         let remoteURL: RemoteURL;
 
-        for (let sfpPackage of this.sfpPackages) {
+        for (const sfpPackage of this.sfpPackages) {
             let currentRemoteURL: RemoteURL;
 
-            let isHttp: boolean = sfpPackage.repository_url.match(/^https?:\/\//) ? true : false;
+            const isHttp: boolean = sfpPackage.repository_url.match(/^https?:\/\//) ? true : false;
             if (isHttp) {
                 const url = new URL(sfpPackage.repository_url);
                 currentRemoteURL = {
@@ -144,9 +144,9 @@ export default class SfpPackageInquirer {
      * @param artifacts
      */
     private pruneLatestPackageManifest(latestPackageManifest: any, sfpPackages: SfpPackage[]) {
-        let prunedLatestPackageManifest = lodash.cloneDeep(latestPackageManifest);
+        const prunedLatestPackageManifest = lodash.cloneDeep(latestPackageManifest);
 
-        let packagesWithArtifacts: string[] = [];
+        const packagesWithArtifacts: string[] = [];
         sfpPackages.forEach((sfpPackage) => {
             packagesWithArtifacts.push(sfpPackage.packageName);
         });
@@ -154,11 +154,11 @@ export default class SfpPackageInquirer {
         let i = prunedLatestPackageManifest.packageDirectories.length;
         while (i--) {
             if (!packagesWithArtifacts.includes(prunedLatestPackageManifest.packageDirectories[i].package)) {
-                let removedPackageDirectory = prunedLatestPackageManifest.packageDirectories.splice(i, 1);
+                const removedPackageDirectory = prunedLatestPackageManifest.packageDirectories.splice(i, 1);
 
                 // Also remove references to the package as a dependency
                 prunedLatestPackageManifest.packageDirectories.forEach((pkg) => {
-                    let indexOfDependency = pkg.dependencies?.findIndex(
+                    const indexOfDependency = pkg.dependencies?.findIndex(
                         (dependency) => dependency.package === removedPackageDirectory[0].package
                     );
 

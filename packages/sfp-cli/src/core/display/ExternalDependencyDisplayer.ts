@@ -9,7 +9,7 @@ export default class ExternalDependencyDisplayer {
 
     public display() {
       if (this.externalPackage2s.length > 0) {
-        let table = new Table({
+        const table = new Table({
             head: ['Order', 'Package', 'Version', 'Subscriber Version Id'],
             chars: ZERO_BORDER_TABLE
         });

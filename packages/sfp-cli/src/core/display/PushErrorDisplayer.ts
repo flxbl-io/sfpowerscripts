@@ -15,7 +15,7 @@ export default class PushErrorDisplayer {
             });
 
             pushComponentFailureIntoTable = (componentFailure) => {
-                let item = [
+                const item = [
                     componentFailure.state,
                     componentFailure.fullName,
                     componentFailure.type,
@@ -37,7 +37,7 @@ export default class PushErrorDisplayer {
             });
 
             pushComponentFailureIntoTable = (componentFailure) => {
-                let item = [
+                const item = [
                     componentFailure.type,
                     componentFailure.fullName,
                     componentFailure.problemType,
@@ -60,11 +60,11 @@ export default class PushErrorDisplayer {
         }
 
         if (error.data instanceof Array) {
-            for (let componentFailure of error.data) {
+            for (const componentFailure of error.data) {
                 pushComponentFailureIntoTable(componentFailure);
             }
         } else {
-            let failure = error.data;
+            const failure = error.data;
             pushComponentFailureIntoTable(failure);
         }
 

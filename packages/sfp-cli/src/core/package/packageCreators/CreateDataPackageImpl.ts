@@ -24,13 +24,13 @@ export default class CreateDataPackageImpl extends CreatePackage {
     }
 
     isEmptyPackage(projectDirectory: string, packageDirectory: string): boolean {
-        let files: string[] = FileSystem.readdirRecursive(path.join(projectDirectory, packageDirectory));
+        const files: string[] = FileSystem.readdirRecursive(path.join(projectDirectory, packageDirectory));
 
-        let hasExportJson = files.find((file) => path.basename(file) === 'export.json');
+        const hasExportJson = files.find((file) => path.basename(file) === 'export.json');
 
-        let hasCsvFile = files.find((file) => path.extname(file) === '.csv');
+        const hasCsvFile = files.find((file) => path.extname(file) === '.csv');
 
-        let hasYAMLFile = files.find((file) => path.extname(file) === '.yaml'); //check for vlocity config
+        const hasYAMLFile = files.find((file) => path.extname(file) === '.yaml'); //check for vlocity config
 
         if(hasYAMLFile) return false;
 

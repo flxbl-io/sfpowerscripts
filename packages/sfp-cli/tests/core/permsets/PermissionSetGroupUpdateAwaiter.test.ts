@@ -15,7 +15,7 @@ describe('Await till permissionsets groups are updated', () => {
             contents: await testData.getConfig(),
         });
 
-        let records: AnyJson = {
+        const records: AnyJson = {
             records: [],
         };
         $$.fakeConnectionRequest = (request: AnyJson): Promise<AnyJson> => {
@@ -26,7 +26,7 @@ describe('Await till permissionsets groups are updated', () => {
             authInfo: await AuthInfo.create({ username: testData.username }),
         });
 
-        let permissionSetGroupUpdateAwaiter: PermissionSetGroupUpdateAwaiter = new PermissionSetGroupUpdateAwaiter(
+        const permissionSetGroupUpdateAwaiter: PermissionSetGroupUpdateAwaiter = new PermissionSetGroupUpdateAwaiter(
             connection,
             null
         );

@@ -45,10 +45,10 @@ export default class ReleaseConfigLoader {
     }
 
     public getPackagesAsPerReleaseConfig(directory?: string): string[] {
-        let packages: string[] = [];
-        let projectConfig = ProjectConfig.getSFDXProjectConfig(directory);
+        const packages: string[] = [];
+        const projectConfig = ProjectConfig.getSFDXProjectConfig(directory);
         //Read sfdx project json
-        let sfdxPackages = ProjectConfig.getAllPackagesFromProjectConfig(projectConfig);
+        const sfdxPackages = ProjectConfig.getAllPackagesFromProjectConfig(projectConfig);
         for (const sfdxPackage of sfdxPackages) {
             if (this.getArtifactPredicate(sfdxPackage)) {
                 packages.push(sfdxPackage);
@@ -71,13 +71,13 @@ export default class ReleaseConfigLoader {
     private validateReleaseDefinitionGeneratorConfig(
         releaseDefinitionGeneratorSchema: ReleaseConfig
     ): void {
-        let schema = fs.readJSONSync(
+        const schema = fs.readJSONSync(
             path.join(__dirname, '..', '..', '..', 'resources', 'schemas', 'release-config.schema.json'),
             { encoding: 'UTF-8' }
         );
 
-        let validator = new Ajv({ allErrors: true }).compile(schema);
-        let validationResult = validator(releaseDefinitionGeneratorSchema);
+        const validator = new Ajv({ allErrors: true }).compile(schema);
+        const validationResult = validator(releaseDefinitionGeneratorSchema);
 
         if (!validationResult) {
             let errorMsg: string =

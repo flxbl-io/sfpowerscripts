@@ -4,8 +4,8 @@ import * as path from 'path';
 export default class GetDefaults {
     public static defaultConfig: any;
     private static init() {
-        let resourcePath = path.join(__dirname, '..', '..', 'resources', 'default-config.json');
-        let fileData = fs.readFileSync(resourcePath, 'utf8');
+        const resourcePath = path.join(__dirname, '..', '..', 'resources', 'default-config.json');
+        const fileData = fs.readFileSync(resourcePath, 'utf8');
         this.defaultConfig = JSON.parse(fileData);
     }
     public static getApiVersion() {

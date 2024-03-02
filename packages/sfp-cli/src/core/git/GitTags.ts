@@ -11,7 +11,7 @@ export default class GitTags {
      * @param sfdx_package
      */
     async listTagsOnBranch(): Promise<string[]> {
-        let tags: string[] = await this.git.tag([
+        const tags: string[] = await this.git.tag([
             `-l`,
             `${this.sfdx_package}_v*`,
             `--sort=creatordate`,
@@ -24,20 +24,20 @@ export default class GitTags {
 
     private async filterTagsAgainstBranch(tags: string[]): Promise<string[]> {
         // Get full-length commit ID's on the current branch, following the first parent on merge commits
-        let commits: string[] = await this.git.log([`--pretty=format:%H`, `--first-parent`]);
+        const commits: string[] = await this.git.log([`--pretty=format:%H`, `--first-parent`]);
 
         // Get the tags' associated commit ID
         // Dereference (-d) tags into object IDs
         //TODO: Remove this direct usage
-        let gitShowRefTagsBuffer = child_process.execSync(`git show-ref --tags -d | grep "${this.sfdx_package}_v*"`, {
+        const gitShowRefTagsBuffer = child_process.execSync(`git show-ref --tags -d | grep "${this.sfdx_package}_v*"`, {
             maxBuffer: 5 * 1024 * 1024,
             stdio: 'pipe',
             cwd: this.git.getRepositoryPath()
         });
 
-        let gitShowRefTags = gitShowRefTagsBuffer.toString();
+        const gitShowRefTags = gitShowRefTagsBuffer.toString();
 
-        let refTags: string[] = gitShowRefTags.split('\n');
+        const refTags: string[] = gitShowRefTags.split('\n');
         refTags.pop(); // Remove last empty element
 
         // Filter ref tags, only including tags that point to the branch
@@ -51,7 +51,7 @@ export default class GitTags {
         });
 
         // Filter the sorted tags - only including tags that point to the branch
-        let tagsPointingToBranch: string[] = tags.filter((tag) => refTagsPointingToBranch?.includes(tag));
+        const tagsPointingToBranch: string[] = tags.filter((tag) => refTagsPointingToBranch?.includes(tag));
 
         return tagsPointingToBranch;
     }
@@ -59,10 +59,10 @@ export default class GitTags {
     public async getVersionFromLatestTag(): Promise<string> {
         let version: string;
 
-        let tags = await this.listTagsOnBranch();
-        let latestTag = tags.pop();
+        const tags = await this.listTagsOnBranch();
+        const latestTag = tags.pop();
         if (latestTag) {
-            let match: RegExpMatchArray = latestTag.match(
+            const match: RegExpMatchArray = latestTag.match(
                 /^.*_v(?<version>[0-9]+\.[0-9]+\.[0-9]+(\.[0-9]+|\.LATEST|\.NEXT)?(\-ALIGN)?)$/
             );
             if (match) version = this.substituteBuildNumberWithPreRelease(match.groups.version);
@@ -73,7 +73,7 @@ export default class GitTags {
     }
 
     private substituteBuildNumberWithPreRelease(packageVersionNumber: string) {
-        let segments = packageVersionNumber.split('.');
+        const segments = packageVersionNumber.split('.');
         //Strip ALIGN
         if (segments.length == 4 && segments[3].includes('ALIGN')) {
             segments[3] = segments[3].substring(0, segments[3].indexOf('-'));
@@ -91,7 +91,7 @@ export default class GitTags {
 
 
     public async limitTags(limit: number): Promise<string[]>{
-        let rawTags = await this.listTagsOnBranch();
+        const rawTags = await this.listTagsOnBranch();
 
         if (rawTags.length <= limit) {
             return [];
@@ -116,7 +116,7 @@ export default class GitTags {
             return [];
         }
 
-        let tags: string[] = await this.getTagsWithTimestamps(rawTags);
+        const tags: string[] = await this.getTagsWithTimestamps(rawTags);
 
         const filteredTags = tags
           .map(tagStr => {

@@ -15,13 +15,13 @@ jest.mock('../../../src/core/project/ProjectConfig', () => {
 describe('Given a BuildCollections class', () => {
     it('should be able to create a graph of collections defined in a sfdx-project.json', () => {
         packageManifest = packageManifestWithCollections;
-        let buildCollections = new BuildCollections(null);
+        const buildCollections = new BuildCollections(null);
         expect(buildCollections.graph.adjacencyList).toEqual(adjacencyList);
     });
 
     it('should create an empty graph when there are no collections defined in sfdx-project.json', () => {
         packageManifest = packageManifestWithNoCollections;
-        let buildCollections = new BuildCollections(null);
+        const buildCollections = new BuildCollections(null);
         expect(buildCollections.graph.adjacencyList).toEqual({});
     });
 
@@ -40,7 +40,7 @@ describe('Given a BuildCollections class', () => {
     });
 });
 
-let adjacencyList = {
+const adjacencyList = {
     temp: ['core'],
     core: ['temp', 'mass-dataload', 'sales'],
     'mass-dataload': ['core'],

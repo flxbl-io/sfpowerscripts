@@ -8,7 +8,7 @@ export function searchFilesInDirectory(dir: string, filter: string, ext: string)
         return;
     }
 
-    let filesFound = [];
+    const filesFound = [];
 
     // const files = fs.readdirSync(dir);
     const found = getFilesInDirectory(dir, ext);

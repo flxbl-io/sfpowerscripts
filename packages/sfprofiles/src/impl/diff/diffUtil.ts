@@ -29,23 +29,23 @@ export default class DiffUtil {
         path: string;
     }[];
     public static async isFormulaField(diffFile: DiffFileStatus): Promise<boolean> {
-        let content = await git.show(['--raw', diffFile.revisionFrom]);
-        let result = content.includes('<formula>');
+        const content = await git.show(['--raw', diffFile.revisionFrom]);
+        const result = content.includes('<formula>');
         return result;
     }
 
     public static async fetchFileListRevisionTo(revisionTo: string) {
         SFPLogger.log('Fetching file list from target revision ' + revisionTo, LoggerLevel.INFO);
         DiffUtil.gitTreeRevisionTo = [];
-        let revisionTree = await git.raw(['ls-tree', '-r', revisionTo]);
+        const revisionTree = await git.raw(['ls-tree', '-r', revisionTo]);
         const sepRegex = /\n|\r/;
-        let lines = revisionTree.split(sepRegex);
+        const lines = revisionTree.split(sepRegex);
         for (let i = 0; i < lines.length; i++) {
             if (lines[i] === '') continue;
-            let fields = lines[i].split(/\t/);
-            let pathStr = fields[1];
-            let revisionSha = fields[0].split(/\s/)[2];
-            let oneFIle = {
+            const fields = lines[i].split(/\t/);
+            const pathStr = fields[1];
+            const revisionSha = fields[0].split(/\s/)[2];
+            const oneFIle = {
                 revision: revisionSha,
                 path: path.join('.', pathStr),
             };
@@ -62,9 +62,9 @@ export default class DiffUtil {
             path: string;
         }[]
     > {
-        let relativeFiles = [];
+        const relativeFiles = [];
 
-        let filePathParts = filePath.split(SEP);
+        const filePathParts = filePath.split(SEP);
 
         const statResourcesRegExp = new RegExp(METADATA_INFO.StaticResource.directoryName);
         const experienceBundleRegExp = new RegExp(METADATA_INFO.ExperienceBundle.directoryName);
@@ -72,8 +72,8 @@ export default class DiffUtil {
         const lwcRegExp = new RegExp(METADATA_INFO.LightningComponentBundle.directoryName);
 
         if (filePath.endsWith('Translation-meta.xml') && filePath.indexOf('globalValueSet') < 0) {
-            let parentFolder = filePathParts[filePathParts.length - 2];
-            let objectTranslation = parentFolder + METADATA_INFO.CustomObjectTranslation.sourceExtension;
+            const parentFolder = filePathParts[filePathParts.length - 2];
+            const objectTranslation = parentFolder + METADATA_INFO.CustomObjectTranslation.sourceExtension;
 
             DiffUtil.gitTreeRevisionTo.forEach((file) => {
                 //copy objectTranslation if fieldTranslation changes
@@ -101,7 +101,7 @@ export default class DiffUtil {
                     if (SOURCE_EXTENSION_REGEX.test(fileOrDirname)) {
                         fileOrDirname = fileOrDirname.replace(SOURCE_EXTENSION_REGEX, '');
                     } else {
-                        let extension = path.parse(fileOrDirname).ext;
+                        const extension = path.parse(fileOrDirname).ext;
                         fileOrDirname = fileOrDirname.replace(extension, '');
                     }
                     baseFile = path.join(baseFile, fileOrDirname);
@@ -110,7 +110,7 @@ export default class DiffUtil {
             }
 
             DiffUtil.gitTreeRevisionTo.forEach((file) => {
-                let fileToCompare = file.path;
+                const fileToCompare = file.path;
                 if (fileToCompare.startsWith(baseFile)) {
                     relativeFiles.push(file);
                 }
@@ -120,7 +120,7 @@ export default class DiffUtil {
             if (SOURCE_EXTENSION_REGEX.test(filePath)) {
                 baseFile = filePath.replace(SOURCE_EXTENSION_REGEX, '');
             } else {
-                let extension = path.parse(filePath).ext;
+                const extension = path.parse(filePath).ext;
                 baseFile = filePath.replace(extension, '');
             }
             DiffUtil.gitTreeRevisionTo.forEach((file) => {
@@ -128,7 +128,7 @@ export default class DiffUtil {
                 if (SOURCE_EXTENSION_REGEX.test(fileToCompare)) {
                     fileToCompare = fileToCompare.replace(SOURCE_EXTENSION_REGEX, '');
                 } else {
-                    let extension = path.parse(fileToCompare).ext;
+                    const extension = path.parse(fileToCompare).ext;
                     fileToCompare = fileToCompare.replace(extension, '');
                 }
                 if (baseFile === fileToCompare) {
@@ -147,30 +147,30 @@ export default class DiffUtil {
             return;
         }
 
-        let gitFiles = await DiffUtil.getRelativeFiles(filePath);
-        let copyOutputFolder = outputFolder;
+        const gitFiles = await DiffUtil.getRelativeFiles(filePath);
+        const copyOutputFolder = outputFolder;
         for (let i = 0; i < gitFiles.length; i++) {
             outputFolder = copyOutputFolder;
-            let gitFile = gitFiles[i];
+            const gitFile = gitFiles[i];
 
             SFPLogger.log(`Associated file ${i}: ${gitFile.path}  Revision: ${gitFile.revision}`, LoggerLevel.TRACE);
 
-            let outputPath = path.join(outputFolder, gitFile.path);
+            const outputPath = path.join(outputFolder, gitFile.path);
 
-            let filePathParts = gitFile.path.split(SEP);
+            const filePathParts = gitFile.path.split(SEP);
 
             if (fs.existsSync(outputFolder) == false) {
                 fs.mkdirSync(outputFolder);
             }
             // Create folder structure
             for (let i = 0; i < filePathParts.length - 1; i++) {
-                let folder = filePathParts[i].replace('"', '');
+                const folder = filePathParts[i].replace('"', '');
                 outputFolder = path.join(outputFolder, folder);
                 if (fs.existsSync(outputFolder) == false) {
                     fs.mkdirSync(outputFolder);
                 }
             }
-            let fileContent = await git.binaryCatFile(['-p', gitFile.revision]);
+            const fileContent = await git.binaryCatFile(['-p', gitFile.revision]);
             fs.writeFileSync(outputPath, fileContent);
         }
     }
@@ -182,16 +182,16 @@ export default class DiffUtil {
         const deletedFileRegEx = new RegExp(/\sD\t/);
         const lineBreakRegEx = /\r?\n|\r|( $)/;
 
-        let metadataFiles = new MetadataFiles();
+        const metadataFiles = new MetadataFiles();
 
-        let diffFile: DiffFile = {
+        const diffFile: DiffFile = {
             deleted: [],
             addedEdited: [],
         };
 
         for (let i = 0; i < fileContents.length; i++) {
             if (statusRegEx.test(fileContents[i])) {
-                let lineParts = fileContents[i].split(statusRegEx);
+                const lineParts = fileContents[i].split(statusRegEx);
 
                 let finalPath = path.join('.', lineParts[1].replace(lineBreakRegEx, ''));
                 finalPath = finalPath.trim();
@@ -205,7 +205,7 @@ export default class DiffUtil {
                     continue;
                 }
 
-                let revisionPart = lineParts[0].split(/\t|\s/);
+                const revisionPart = lineParts[0].split(/\t|\s/);
 
                 if (deletedFileRegEx.test(fileContents[i])) {
                     //Deleted
@@ -223,13 +223,13 @@ export default class DiffUtil {
                     });
                 }
             } else if (renamedRegEx.test(fileContents[i])) {
-                let lineParts = fileContents[i].split(renamedRegEx);
+                const lineParts = fileContents[i].split(renamedRegEx);
 
-                let paths = lineParts[1].trim().split(tabRegEx);
+                const paths = lineParts[1].trim().split(tabRegEx);
 
                 let finalPath = path.join('.', paths[1].trim());
                 finalPath = finalPath.replace('\\303\\251', 'é');
-                let revisionPart = lineParts[0].split(/\t|\s/);
+                const revisionPart = lineParts[0].split(/\t|\s/);
 
                 if (!(await metadataFiles.isInModuleFolder(finalPath))) {
                     continue;
@@ -258,7 +258,7 @@ export default class DiffUtil {
     }
 
     public static getChangedOrAdded(list1: any[], list2: any[], key: string) {
-        let result: any = {
+        const result: any = {
             addedEdited: [],
             deleted: [],
         };
@@ -283,7 +283,7 @@ export default class DiffUtil {
             list1.forEach((elem1) => {
                 let found = false;
                 for (let i = 0; i < list2.length; i++) {
-                    let elem2 = list2[i];
+                    const elem2 = list2[i];
                     if (elem1[key] === elem2[key]) {
                         //check if edited
                         if (!_.isEqual(elem1, elem2)) {
@@ -300,7 +300,7 @@ export default class DiffUtil {
 
             //Check for added elements
 
-            let addedElement = _.differenceWith(list2, list1, function (element1: any, element2: any) {
+            const addedElement = _.differenceWith(list2, list1, function (element1: any, element2: any) {
                 return element1[key] === element2[key];
             });
 

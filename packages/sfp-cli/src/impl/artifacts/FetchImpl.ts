@@ -29,12 +29,12 @@ export default class FetchImpl {
     }> {
         const git: Git = await Git.initiateRepo();
 
-        let fetchedArtifacts: { success: ArtifactVersion[]; failed: ArtifactVersion[] } = {
+        const fetchedArtifacts: { success: ArtifactVersion[]; failed: ArtifactVersion[] } = {
             success: [],
             failed: [],
         };
 
-        let allArtifacts: { name: string; version: string }[] = [];
+        const allArtifacts: { name: string; version: string }[] = [];
 
         
         for (const releaseDefinition of releaseDefinitions) {
@@ -57,16 +57,16 @@ export default class FetchImpl {
             rimraf.sync(revisedArtifactDirectory);
             fs.mkdirpSync(revisedArtifactDirectory);
 
-            let artifactsToDownload: { name: string; version: string }[] = [];
+            const artifactsToDownload: { name: string; version: string }[] = [];
             //additional sanity to not  repeat download
-            for (let artifactEntry of Object.entries(releaseDefinition.artifacts)) {
+            for (const artifactEntry of Object.entries(releaseDefinition.artifacts)) {
                 if (!_.includes(allArtifacts, { name: artifactEntry[0], version: artifactEntry[1] }, 0)) {
                     allArtifacts.push({ name: artifactEntry[0], version: artifactEntry[1] });
                     artifactsToDownload.push({ name: artifactEntry[0], version: artifactEntry[1] });
                 }
             }
 
-            for (let artifact of artifactsToDownload) {
+            for (const artifact of artifactsToDownload) {
                 try {
                     await this.fetchAnArtifact(
                         artifact,
@@ -96,13 +96,13 @@ export default class FetchImpl {
     }> {
         const git: Git = await Git.initiateRepo();
 
-        let fetchedArtifacts: { success: ArtifactVersion[]; failed: ArtifactVersion[] } = {
+        const fetchedArtifacts: { success: ArtifactVersion[]; failed: ArtifactVersion[] } = {
             success: [],
             failed: [],
         };
 
-        let allArtifacts: ArtifactVersion[] = _.clone(artifactVersions);
-        let revisedArtifactDirectory = path.join(this.artifactDirectory, FileUtils.makefolderid(8));
+        const allArtifacts: ArtifactVersion[] = _.clone(artifactVersions);
+        const revisedArtifactDirectory = path.join(this.artifactDirectory, FileUtils.makefolderid(8));
         rimraf.sync(revisedArtifactDirectory);
         fs.mkdirpSync(revisedArtifactDirectory);
 
@@ -139,11 +139,11 @@ export default class FetchImpl {
     ) {
         let version: string;
         if (artifact.version === 'LATEST_TAG' || artifact.version === 'LATEST_GIT_TAG') {
-            let latestGitTagVersion: GitTags = new GitTags(git, artifact.name);
+            const latestGitTagVersion: GitTags = new GitTags(git, artifact.name);
             version = await latestGitTagVersion.getVersionFromLatestTag();
         } else version = artifact.version;
 
-        let artifactFetcher = new FetchArtifactSelector(scriptPath, scope, npmrcPath).getArtifactFetcher();
+        const artifactFetcher = new FetchArtifactSelector(scriptPath, scope, npmrcPath).getArtifactFetcher();
         artifactFetcher.fetchArtifact(artifact.name, revisedArtifactDirectory, version, false);
     }
 }

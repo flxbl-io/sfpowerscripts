@@ -8,9 +8,9 @@ export default class PackageToComponent {
     public generateComponents() {
         const components: Component[] = [];
 
-        let componentSet = ComponentSet.fromSource(this.packageDirectory);
+        const componentSet = ComponentSet.fromSource(this.packageDirectory);
 
-        let componentSetArray = componentSet.getSourceComponents().toArray();
+        const componentSetArray = componentSet.getSourceComponents().toArray();
 
         for (const individualComponentFromComponentSet of componentSetArray) {
             const component: Component = {

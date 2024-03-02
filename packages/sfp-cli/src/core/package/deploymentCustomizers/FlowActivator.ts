@@ -21,16 +21,16 @@ export default class FlowActivator implements DeploymentCustomizer {
         logger: Logger,
         deploymentContext: DeploymentContext
     ): Promise<DeploySourceResult> {
-        let sourceComponents = componentSet.getSourceComponents().toArray();
-        let masterLabelsOfAllFlowsInPackage = [];
-        let flowsToBeActivated = [];
-        let flowsToBeDeactivated = [];
+        const sourceComponents = componentSet.getSourceComponents().toArray();
+        const masterLabelsOfAllFlowsInPackage = [];
+        const flowsToBeActivated = [];
+        const flowsToBeDeactivated = [];
 
         for (const sourceComponent of sourceComponents) {
             if (sourceComponent.type.name === registry.types.flow.name) {
                 //Parse Flows
                 //Determining the flow to be activated
-                let flowAsJSON = sourceComponent.parseXmlSync();
+                const flowAsJSON = sourceComponent.parseXmlSync();
                 masterLabelsOfAllFlowsInPackage.push(flowAsJSON['Flow']['label']);
                 if (flowAsJSON['Flow']['status'] == 'Active') {
                     flowsToBeActivated.push(sourceComponent.fullName);
@@ -84,10 +84,10 @@ export default class FlowActivator implements DeploymentCustomizer {
     }
     private async activateLatestVersionOfFlows(flowsToBeActivated: string[], sfpOrg: SFPOrg, logger: Logger) {
         for (const flowName of flowsToBeActivated) {
-            let query = `SELECT Id, DeveloperName, ActiveVersion.FullName, ActiveVersion.VersionNumber, NamespacePrefix,LatestVersion.VersionNumber,LatestVersionId FROM FlowDefinition WHERE DeveloperName = '${flowName}'`;
+            const query = `SELECT Id, DeveloperName, ActiveVersion.FullName, ActiveVersion.VersionNumber, NamespacePrefix,LatestVersion.VersionNumber,LatestVersionId FROM FlowDefinition WHERE DeveloperName = '${flowName}'`;
     
             try {
-                let flowDefinitionsInOrg = await QueryHelper.query<FlowDefinition>(query, sfpOrg.getConnection(), true);
+                const flowDefinitionsInOrg = await QueryHelper.query<FlowDefinition>(query, sfpOrg.getConnection(), true);
     
                 for (const flowDefinition of flowDefinitionsInOrg) {
                     if (flowDefinition.ActiveVersion == null || flowDefinition.LatestVersion?.VersionNumber > flowDefinition.ActiveVersion?.VersionNumber) {
@@ -160,12 +160,12 @@ export default class FlowActivator implements DeploymentCustomizer {
             //count flow versions of each flow definition in the org
             SFPLogger.log(`Checking current versions of flows`, LoggerLevel.INFO, logger);
 
-            let query = `SELECT MasterLabel, COUNT(id) RecordCount FROM Flow GROUP BY MasterLabel`;
+            const query = `SELECT MasterLabel, COUNT(id) RecordCount FROM Flow GROUP BY MasterLabel`;
             let isFlowVersionPurgeDetected = false;
 
-            let flowVersionsInOrg = await QueryHelper.query<Flow>(query, sfpOrg.getConnection(), true);
-            let tableHead = ['Flow', 'Versions Count', 'Action'];
-            let table = new Table({
+            const flowVersionsInOrg = await QueryHelper.query<Flow>(query, sfpOrg.getConnection(), true);
+            const tableHead = ['Flow', 'Versions Count', 'Action'];
+            const table = new Table({
                 head: tableHead,
                 chars: ZERO_BORDER_TABLE,
             });
@@ -181,12 +181,12 @@ export default class FlowActivator implements DeploymentCustomizer {
                             LoggerLevel.INFO,
                             logger
                         );
-                        let flows = await QueryHelper.query<Flow>(
+                        const flows = await QueryHelper.query<Flow>(
                             `SELECT Id, VersionNumber, FullName, MasterLabel FROM Flow WHERE MasterLabel = '${flowVersion.MasterLabel}' ORDER BY VersionNumber DESC`,
                             sfpOrg.getConnection(),
                             true
                         );
-                        let flowsToDelete = flows.slice(49);
+                        const flowsToDelete = flows.slice(49);
                         await deleteFlows(flowsToDelete, sfpOrg, logger);
                         table.push([flowVersion.MasterLabel, flowVersion.RecordCount, 'Deleted 1 version']);
                     }

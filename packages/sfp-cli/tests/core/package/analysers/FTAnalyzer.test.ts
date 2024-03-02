@@ -27,8 +27,8 @@ describe('FT Analyzer', () => {
     });
 
     it('Should not be enabled for data packages', async () => {
-        let ftAnalyzer = new FTAnalyser();
-        let sfpPackage: SfpPackage = {
+        const ftAnalyzer = new FTAnalyser();
+        const sfpPackage: SfpPackage = {
             projectDirectory: process.cwd(),
             workingDirectory: 'force-app',
             mdapiDir: '',
@@ -47,8 +47,8 @@ describe('FT Analyzer', () => {
     });
 
     it('Should  be enabled for source packages by default', async () => {
-        let ftAnalyzer = new FTAnalyser();
-        let sfpPackage: SfpPackage = {
+        const ftAnalyzer = new FTAnalyser();
+        const sfpPackage: SfpPackage = {
             projectDirectory: '',
             workingDirectory: process.cwd(),
             mdapiDir: '',
@@ -67,8 +67,8 @@ describe('FT Analyzer', () => {
     });
 
     it('Should be enabled for unlocked packages by default', async () => {
-        let ftAnalyzer = new FTAnalyser();
-        let sfpPackage: SfpPackage = {
+        const ftAnalyzer = new FTAnalyser();
+        const sfpPackage: SfpPackage = {
             projectDirectory: process.cwd(),
             workingDirectory: 'force-app',
             mdapiDir: '',
@@ -99,7 +99,7 @@ describe('FT Analyzer', () => {
             return set;
         });
 
-        let ftAnalyzer = new FTAnalyser();
+        const ftAnalyzer = new FTAnalyser();
         let sfpPackage: SfpPackage = {
             projectDirectory: '',
             packageDirectory: 'force-app',
@@ -119,7 +119,7 @@ describe('FT Analyzer', () => {
         sfpPackage = await ftAnalyzer.analyze(sfpPackage,set,new VoidLogger());
         expect(sfpPackage['isFTFieldFound']).toBe(true);
         expect(sfpPackage['ftFields']).toBeDefined();
-        let ftFields = sfpPackage['ftFields'];
+        const ftFields = sfpPackage['ftFields'];
         expect(ftFields.Account).toStrictEqual(['Name', 'Phone']);
         expect(ftFields.Contact).toStrictEqual(['Name', 'Phone']);
     });
@@ -177,7 +177,7 @@ describe('FT Analyzer', () => {
             return set;
         });
 
-        let ftAnalyzer = new FTAnalyser();
+        const ftAnalyzer = new FTAnalyser();
         let sfpPackage: SfpPackage = {
             projectDirectory: '',
             packageDirectory: 'force-app',
@@ -197,7 +197,7 @@ describe('FT Analyzer', () => {
         sfpPackage = await ftAnalyzer.analyze(sfpPackage,set,new VoidLogger());
         expect(sfpPackage['isFTFieldFound']).toBe(true);
         expect(sfpPackage['ftFields']).toBeDefined();
-        let ftFields = sfpPackage['ftFields'];
+        const ftFields = sfpPackage['ftFields'];
         expect(ftFields.Account).toStrictEqual(['Name', 'Phone']);
         expect(ftFields.Contact).toStrictEqual(['Name', 'Phone']);
         expect(ftFields.Test__c).toStrictEqual(['AccountManager__c']);
@@ -257,7 +257,7 @@ describe('FT Analyzer', () => {
             return set;
         });
 
-        let ftAnalyzer = new FTAnalyser();
+        const ftAnalyzer = new FTAnalyser();
         let sfpPackage: SfpPackage = {
             projectDirectory: '',
             packageDirectory: 'force-app',
@@ -277,7 +277,7 @@ describe('FT Analyzer', () => {
         sfpPackage = await ftAnalyzer.analyze(sfpPackage,set,new VoidLogger());
         expect(sfpPackage['isFTFieldFound']).toBe(true);
         expect(sfpPackage['ftFields']).toBeDefined();
-        let ftFields = sfpPackage['ftFields'];
+        const ftFields = sfpPackage['ftFields'];
         expect(ftFields.Account).toStrictEqual(['Name', 'Phone']);
         expect(ftFields.Contact).toStrictEqual(['Name', 'Phone']);
         expect(ftFields).not.toHaveProperty('Test__c');
@@ -337,7 +337,7 @@ describe('FT Analyzer', () => {
             return set;
         });
 
-        let ftAnalyzer = new FTAnalyser();
+        const ftAnalyzer = new FTAnalyser();
         let sfpPackage: SfpPackage = {
             projectDirectory: '',
             packageDirectory: 'force-app',
@@ -357,7 +357,7 @@ describe('FT Analyzer', () => {
         sfpPackage = await ftAnalyzer.analyze(sfpPackage,set,new VoidLogger());
         expect(sfpPackage['isFTFieldFound']).toBe(true);
         expect(sfpPackage['ftFields']).toBeDefined();
-        let ftFields = sfpPackage['ftFields'];
+        const ftFields = sfpPackage['ftFields'];
         expect(ftFields.Test__c).toStrictEqual(['AccountManager__c']);
     });
 });

@@ -29,10 +29,10 @@ export default class PackageDiffImpl {
     ) {}
 
     public async exec(): Promise<{ isToBeBuilt: boolean; reason: string; tag?: string }> {
-        let git: Git = await Git.initiateRepo(this.logger,this.project_directory);
+        const git: Git = await Git.initiateRepo(this.logger,this.project_directory);
 
-        let projectConfig = ProjectConfig.getSFDXProjectConfig(this.project_directory);
-        let pkgDescriptor = ProjectConfig.getPackageDescriptorFromConfig(this.sfdx_package, projectConfig);
+        const projectConfig = ProjectConfig.getSFDXProjectConfig(this.project_directory);
+        const pkgDescriptor = ProjectConfig.getPackageDescriptorFromConfig(this.sfdx_package, projectConfig);
 
         SFPLogger.log(
             COLOR_KEY_MESSAGE(
@@ -72,7 +72,7 @@ export default class PackageDiffImpl {
                 throw new Error(`Failed to compute git diff for package ${this.sfdx_package} against commit id ${tag}`)
             }
 
-            let packageType: string = ProjectConfig.getPackageType(projectConfig, this.sfdx_package);
+            const packageType: string = ProjectConfig.getPackageType(projectConfig, this.sfdx_package);
 
             if (packageType !== PackageType.Data) modified_files = this.applyForceIgnoreToModifiedFiles(modified_files);
 
@@ -83,12 +83,12 @@ export default class PackageDiffImpl {
             );
 
             // Check whether the package has been modified
-            for (let filename of modified_files) {
+            for (const filename of modified_files) {
                 
-                let normalizedPkgPath = path.normalize(pkgDescriptor.path);
-                let normalizedFilename = path.normalize(filename);
+                const normalizedPkgPath = path.normalize(pkgDescriptor.path);
+                const normalizedFilename = path.normalize(filename);
             
-                let relativePath = path.relative(normalizedPkgPath, normalizedFilename);
+                const relativePath = path.relative(normalizedPkgPath, normalizedFilename);
             
                 if (!relativePath.startsWith('..')) {
                     SFPLogger.log(`Found change(s) in ${filename}`, LoggerLevel.TRACE, this.logger);
@@ -101,7 +101,7 @@ export default class PackageDiffImpl {
                 LoggerLevel.TRACE,
                 this.logger
             );
-            let isPackageDescriptorChanged = await this.isPackageDescriptorChanged(git, tag, pkgDescriptor);
+            const isPackageDescriptorChanged = await this.isPackageDescriptorChanged(git, tag, pkgDescriptor);
             if (isPackageDescriptorChanged) {
                 return { isToBeBuilt: true, reason: `Package Descriptor Changed`, tag: tag };
             }
@@ -112,15 +112,15 @@ export default class PackageDiffImpl {
             if(this.diffOptions?.useBranchCompare)
             {
                 const mergeBase = await git.raw(['merge-base', this.diffOptions.branch, this.diffOptions.baseBranch]);
-                let modified_files = await git.diff(['--no-renames','--name-only', this.diffOptions.branch, mergeBase.trim()]);
+                const modified_files = await git.diff(['--no-renames','--name-only', this.diffOptions.branch, mergeBase.trim()]);
 
                  // Check whether the package has been modified
-                for (let filename of modified_files) {
+                for (const filename of modified_files) {
                         
-                    let normalizedPkgPath = path.normalize(pkgDescriptor.path);
-                    let normalizedFilename = path.normalize(filename);
+                    const normalizedPkgPath = path.normalize(pkgDescriptor.path);
+                    const normalizedFilename = path.normalize(filename);
                 
-                    let relativePath = path.relative(normalizedPkgPath, normalizedFilename);
+                    const relativePath = path.relative(normalizedPkgPath, normalizedFilename);
                 
                     if (!relativePath.startsWith('..')) {
                         SFPLogger.log(`Found change(s) in ${filename}`, LoggerLevel.TRACE, this.logger);
@@ -147,7 +147,7 @@ export default class PackageDiffImpl {
         else if (this.project_directory != null) forceignorePath = path.join(this.project_directory, '.forceignore');
         else forceignorePath = '.forceignore';
 
-        let ignoreFiles: IgnoreFiles = new IgnoreFiles(fs.readFileSync(forceignorePath).toString());
+        const ignoreFiles: IgnoreFiles = new IgnoreFiles(fs.readFileSync(forceignorePath).toString());
 
         // Filter the list of modified files with .forceignore
         modified_files = ignoreFiles.filter(modified_files);
@@ -157,7 +157,7 @@ export default class PackageDiffImpl {
 
     private async getLatestTagFromGit(git: Git, sfdx_package: string): Promise<string> {
         const gitTags: GitTags = new GitTags(git, sfdx_package);
-        let tags: string[] = await gitTags.listTagsOnBranch();
+        const tags: string[] = await gitTags.listTagsOnBranch();
 
         SFPLogger.log('Analysing tags:', LoggerLevel.DEBUG);
         if (tags.length > 10) {
@@ -170,11 +170,11 @@ export default class PackageDiffImpl {
     }
 
     private async isPackageDescriptorChanged(git: Git, latestTag: string, packageDescriptor: any): Promise<boolean> {
-        let projectConfigJson: string = await git.show([`${latestTag}:sfdx-project.json`]);
-        let projectConfig = JSON.parse(projectConfigJson);
+        const projectConfigJson: string = await git.show([`${latestTag}:sfdx-project.json`]);
+        const projectConfig = JSON.parse(projectConfigJson);
 
         let packageDescriptorFromLatestTag: string;
-        for (let dir of projectConfig['packageDirectories']) {
+        for (const dir of projectConfig['packageDirectories']) {
             if (this.sfdx_package === dir.package) {
                 packageDescriptorFromLatestTag = dir;
             }

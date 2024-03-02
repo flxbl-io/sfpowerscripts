@@ -5,7 +5,7 @@ import * as fs from "fs-extra";
 import { Logger } from '@flxblio/sfp-logger';
 
 
-let packageType = PackageType.Source;
+const packageType = PackageType.Source;
 jest.mock('../../../src/core/project/ProjectConfig', () => {
     class ProjectConfig {
         static getSFDXPackageDescriptor(projectDirectory, sfdx_package) {
@@ -176,7 +176,7 @@ describe.skip('Given a sfdx package, build a sfp package', () => {
             return packageManifestXML;
         });
 
-        let sfpPackage: SfpPackage = await SfpPackageBuilder.buildPackageFromProjectDirectory(
+        const sfpPackage: SfpPackage = await SfpPackageBuilder.buildPackageFromProjectDirectory(
             null,
             null,
             'ESBaseCodeLWC'
@@ -228,7 +228,7 @@ describe.skip('Given a sfdx package, build a sfp package', () => {
             return packageManifestXML2;
         });
 
-        let sfpPackage: SfpPackage = await SfpPackageBuilder.buildPackageFromProjectDirectory(
+        const sfpPackage: SfpPackage = await SfpPackageBuilder.buildPackageFromProjectDirectory(
             null,
             null,
             'ESBaseCodeLWC'
@@ -249,7 +249,7 @@ describe.skip('Given a sfdx package, build a sfp package', () => {
     });
 });
 
-let packageManifestJSON = {
+const packageManifestJSON = {
     Package: {
         $: { xmlns: 'http://soap.sforce.com/2006/04/metadata' },
         types: [
@@ -300,7 +300,7 @@ let packageManifestJSON = {
     },
 };
 
-let packageManifestXML: string = `
+const packageManifestXML: string = `
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
   <types>
@@ -358,7 +358,7 @@ let packageManifestXML: string = `
 </Package>
 `;
 
-let packageManifestXML2: string = `
+const packageManifestXML2: string = `
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
   <types>

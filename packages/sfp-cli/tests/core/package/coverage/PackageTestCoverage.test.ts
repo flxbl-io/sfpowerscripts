@@ -28,7 +28,7 @@ jest.mock('../../../../src/core/package/SfpPackageBuilder', () => {
         ) {
           
 
-            let sfpPackage: SfpPackage = new SfpPackage();
+            const sfpPackage: SfpPackage = new SfpPackage();
              sfpPackage.apexClassWithOutTestClasses =  new Array<string>('CustomerServices', 'MarketServices');
              sfpPackage.triggers = new Array<string>('AccountTrigger');
              sfpPackage.packageType = packageType;
@@ -62,8 +62,8 @@ describe('Given a sfp package and code coverage report, a package coverage calcu
     it('should be able to provide the coverage of a provided unlocked package', async () => {
         const conn = await setupConnection();
 
-        let sfpPackage: SfpPackage = await SfpPackageBuilder.buildPackageFromProjectDirectory(null, 'es-base-code', null, null);
-        let packageTestCoverage: PackageTestCoverage = new PackageTestCoverage(
+        const sfpPackage: SfpPackage = await SfpPackageBuilder.buildPackageFromProjectDirectory(null, 'es-base-code', null, null);
+        const packageTestCoverage: PackageTestCoverage = new PackageTestCoverage(
             sfpPackage,
             succesfulTestCoverage,
             new ConsoleLogger(),
@@ -75,15 +75,15 @@ describe('Given a sfp package and code coverage report, a package coverage calcu
     it('should able to validate whether the coverage of unlocked  package is above a certain threshold', async () => {
         const conn = await setupConnection();
 
-        let sfpPackage: SfpPackage = await SfpPackageBuilder.buildPackageFromProjectDirectory(null, 'es-base-code', null, null);
-        let packageTestCoverage: PackageTestCoverage = new PackageTestCoverage(
+        const sfpPackage: SfpPackage = await SfpPackageBuilder.buildPackageFromProjectDirectory(null, 'es-base-code', null, null);
+        const packageTestCoverage: PackageTestCoverage = new PackageTestCoverage(
             sfpPackage,
             succesfulTestCoverage,
             new ConsoleLogger(),
             conn
         );
-        let requiredCoverage = 80;
-        let result = await packageTestCoverage.validateTestCoverage(requiredCoverage);
+        const requiredCoverage = 80;
+        const result = await packageTestCoverage.validateTestCoverage(requiredCoverage);
         expect(result.result).toBe(true);
         expect(result.packageTestCoverage).toBe(89);
         expect(result.message).toStrictEqual(`Package overall coverage is greater than ${requiredCoverage}%`);
@@ -98,15 +98,15 @@ describe('Given a sfp package and code coverage report, a package coverage calcu
     it('should able to validate whether the coverage of unlocked  package is above mandatory threshold', async () => {
         const conn = await setupConnection();
 
-        let sfpPackage: SfpPackage = await SfpPackageBuilder.buildPackageFromProjectDirectory(null, 'es-base-code', null, null);
-        let packageTestCoverage: PackageTestCoverage = new PackageTestCoverage(
+        const sfpPackage: SfpPackage = await SfpPackageBuilder.buildPackageFromProjectDirectory(null, 'es-base-code', null, null);
+        const packageTestCoverage: PackageTestCoverage = new PackageTestCoverage(
             sfpPackage,
             succesfulTestCoverage,
             new ConsoleLogger(),
             conn
         );
-        let requiredCoverage = 75;
-        let result = await packageTestCoverage.validateTestCoverage();
+        const requiredCoverage = 75;
+        const result = await packageTestCoverage.validateTestCoverage();
         expect(result.result).toBe(true);
         expect(result.packageTestCoverage).toBe(89);
         expect(result.message).toStrictEqual(`Package overall coverage is greater than ${requiredCoverage}%`);
@@ -122,8 +122,8 @@ describe('Given a sfp package and code coverage report, a package coverage calcu
         const conn = await setupConnection();
 
         packageType = PackageType.Source;
-        let sfpPackage: SfpPackage = await SfpPackageBuilder.buildPackageFromProjectDirectory(null, 'es-base-code', null, null);
-        let packageTestCoverage: PackageTestCoverage = new PackageTestCoverage(
+        const sfpPackage: SfpPackage = await SfpPackageBuilder.buildPackageFromProjectDirectory(null, 'es-base-code', null, null);
+        const packageTestCoverage: PackageTestCoverage = new PackageTestCoverage(
             sfpPackage,
             succesfulTestCoverage,
             new ConsoleLogger(),
@@ -136,15 +136,15 @@ describe('Given a sfp package and code coverage report, a package coverage calcu
         const conn = await setupConnection();
 
         packageType = PackageType.Source;
-        let sfpPackage: SfpPackage = await SfpPackageBuilder.buildPackageFromProjectDirectory(null, 'es-base-code', null, null);
-        let packageTestCoverage: PackageTestCoverage = new PackageTestCoverage(
+        const sfpPackage: SfpPackage = await SfpPackageBuilder.buildPackageFromProjectDirectory(null, 'es-base-code', null, null);
+        const packageTestCoverage: PackageTestCoverage = new PackageTestCoverage(
             sfpPackage,
             succesfulTestCoverage,
             new ConsoleLogger(),
             conn
         );
-        let requiredCoverage = 80;
-        let result = await packageTestCoverage.validateTestCoverage(requiredCoverage);
+        const requiredCoverage = 80;
+        const result = await packageTestCoverage.validateTestCoverage(requiredCoverage);
         expect(result.result).toBe(true);
         expect(result.packageTestCoverage).toBe(89);
         expect(result.message).toStrictEqual(`Individidual coverage of classes is greater than ${requiredCoverage}%`);
@@ -160,15 +160,15 @@ describe('Given a sfp package and code coverage report, a package coverage calcu
         const conn = await setupConnection();
 
         packageType = PackageType.Source;
-        let sfpPackage: SfpPackage = await SfpPackageBuilder.buildPackageFromProjectDirectory(null, 'es-base-code', null, null);
-        let packageTestCoverage: PackageTestCoverage = new PackageTestCoverage(
+        const sfpPackage: SfpPackage = await SfpPackageBuilder.buildPackageFromProjectDirectory(null, 'es-base-code', null, null);
+        const packageTestCoverage: PackageTestCoverage = new PackageTestCoverage(
             sfpPackage,
             succesfulTestCoverage,
             new ConsoleLogger(),
             conn
         );
-        let requiredCoverage = 75;
-        let result = await packageTestCoverage.validateTestCoverage();
+        const requiredCoverage = 75;
+        const result = await packageTestCoverage.validateTestCoverage();
         expect(result.result).toBe(true);
         expect(result.packageTestCoverage).toBe(89);
         expect(result.message).toStrictEqual(`Individidual coverage of classes is greater than ${requiredCoverage}%`);
@@ -195,14 +195,14 @@ describe('Given a sfp package and code coverage report, a package coverage calcu
         ]);
 
         packageType = PackageType.Source;
-        let sfpPackage: SfpPackage = await SfpPackageBuilder.buildPackageFromProjectDirectory(null, 'es-base-code', null, null);
-        let packageTestCoverage: PackageTestCoverage = new PackageTestCoverage(
+        const sfpPackage: SfpPackage = await SfpPackageBuilder.buildPackageFromProjectDirectory(null, 'es-base-code', null, null);
+        const packageTestCoverage: PackageTestCoverage = new PackageTestCoverage(
             sfpPackage,
             testCoverageWithUntouchedClasses,
             new ConsoleLogger(),
             conn
         );
-        let result = await packageTestCoverage.validateTestCoverage();
+        const result = await packageTestCoverage.validateTestCoverage();
 
         expect(result.result).toBe(false);
         expect(result.packageTestCoverage).toBe(71);
@@ -218,7 +218,7 @@ describe('Given a sfp package and code coverage report, a package coverage calcu
     });
 });
 
-let succesfulTestCoverage = [
+const succesfulTestCoverage = [
     {
         id: '01p0w000001n1SdAAI',
         name: 'CustomerServices',

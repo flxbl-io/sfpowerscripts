@@ -34,25 +34,25 @@ export default class Git {
     }
 
     async tag(options: string[]): Promise<string[]> {
-        let tagResult = await this._git.tag(options);
+        const tagResult = await this._git.tag(options);
 
-        let temp: string[] = tagResult.split('\n');
+        const temp: string[] = tagResult.split('\n');
         temp.pop();
 
         return temp;
     }
 
     async diff(options: string[]): Promise<string[]> {
-        let diffResult = await this._git.diff(options);
+        const diffResult = await this._git.diff(options);
 
-        let temp: string[] = diffResult.split('\n');
+        const temp: string[] = diffResult.split('\n');
         temp.pop();
 
         return temp;
     }
 
     async log(options: string[]): Promise<string[]> {
-        let gitLogResult = await this._git.log(options);
+        const gitLogResult = await this._git.log(options);
 
         return gitLogResult['all'][0]['hash'].split('\n');
     }
@@ -90,7 +90,7 @@ export default class Git {
     async pushTags(tags?: string[]) {
         if (!tags) await this._git.pushTags();
         else {
-            for (let tag of tags) {
+            for (const tag of tags) {
                 await this._git.push('origin', tag);
             }
         }
@@ -125,16 +125,16 @@ export default class Git {
     }
 
     static async initiateRepoAtTempLocation(logger: Logger, commitRef?: string, branch?: string): Promise<Git> {
-        let locationOfCopiedDirectory = tmp.dirSync({ unsafeCleanup: true });
+        const locationOfCopiedDirectory = tmp.dirSync({ unsafeCleanup: true });
 
         SFPLogger.log(`Copying the repository to ${locationOfCopiedDirectory.name}`, LoggerLevel.INFO, logger);
-        let repoDir = locationOfCopiedDirectory.name;
+        const repoDir = locationOfCopiedDirectory.name;
 
         // Copy source directory to temp dir
         fs.copySync(process.cwd(), repoDir);
 
         //Initiate git on new repo on using the abstracted object
-        let git = new Git(repoDir, logger);
+        const git = new Git(repoDir, logger);
         git._isATemporaryRepo = true;
         git.tempRepoLocation = locationOfCopiedDirectory;
 
@@ -157,7 +157,7 @@ export default class Git {
     }
 
     static async initiateRepo(logger?: Logger, projectDir?: string) {
-        let git = new Git(projectDir, logger);
+        const git = new Git(projectDir, logger);
         if (projectDir) await git.addSafeConfig(projectDir);
         else {
             await git.addSafeConfig(process.cwd());

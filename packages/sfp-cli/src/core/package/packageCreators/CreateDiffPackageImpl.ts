@@ -44,7 +44,7 @@ export default class CreateDiffPackageImp extends CreateSourcePackageImpl {
         //Fetch Baseline commit from DevHub or the provided org for validation
         let commitsOfPackagesInstalled = {};
         if (this.packageCreationParams.baselineOrg) {
-            let baselineOrg = await SFPOrg.create({ aliasOrUsername: this.packageCreationParams.baselineOrg });
+            const baselineOrg = await SFPOrg.create({ aliasOrUsername: this.packageCreationParams.baselineOrg });
             commitsOfPackagesInstalled = await this.getCommitsOfPackagesInstalledInOrg(baselineOrg);
         } else {
             commitsOfPackagesInstalled = await this.getCommitsOfPackagesInstalledInOrg(devhubOrg);
@@ -66,8 +66,8 @@ export default class CreateDiffPackageImp extends CreateSourcePackageImpl {
     }
 
     private async getCommitsOfPackagesInstalledInOrg(diffTargetSfpOrg: SFPOrg) {
-        let installedArtifacts = await diffTargetSfpOrg.getInstalledArtifacts();
-        let packagesInstalledInOrgMappedToCommits = await this.mapInstalledArtifactstoPkgAndCommits(installedArtifacts);
+        const installedArtifacts = await diffTargetSfpOrg.getInstalledArtifacts();
+        const packagesInstalledInOrgMappedToCommits = await this.mapInstalledArtifactstoPkgAndCommits(installedArtifacts);
         return packagesInstalledInOrgMappedToCommits;
     }
 
@@ -75,7 +75,7 @@ export default class CreateDiffPackageImp extends CreateSourcePackageImpl {
         //Unresolved SHAs can be same if the package is not installed in the org or is the same
         if (this.sfpPackage.commitSHAFrom != this.sfpPackage.commitSHATo) {
             try {
-                let packageComponentDiffer: PackageComponentDiff = new PackageComponentDiff(
+                const packageComponentDiffer: PackageComponentDiff = new PackageComponentDiff(
                     this.logger,
                     this.sfpPackage.packageName,
                     this.sfpPackage.commitSHAFrom,
@@ -188,29 +188,29 @@ export default class CreateDiffPackageImp extends CreateSourcePackageImpl {
         packageParams: SfpPackageParams,
         logger: Logger
     ): Promise<void> {
-        let workingDirectory = path.join(sfpPackage.workingDirectory, 'diff');
+        const workingDirectory = path.join(sfpPackage.workingDirectory, 'diff');
         if (fs.existsSync(path.join(workingDirectory, sfpPackage.packageDirectory))) {
-            let changedComponents = new PackageToComponent(
+            const changedComponents = new PackageToComponent(
                 sfpPackage.packageName,
                 path.join(workingDirectory, sfpPackage.packageDirectory)
             ).generateComponents();
 
-            let impactedApexTestClassFetcher: ImpactedApexTestClassFetcher = new ImpactedApexTestClassFetcher(
+            const impactedApexTestClassFetcher: ImpactedApexTestClassFetcher = new ImpactedApexTestClassFetcher(
                 sfpPackage,
                 changedComponents,
                 logger
             );
-            let impactedTestClasses = await impactedApexTestClassFetcher.getImpactedTestClasses();
+            const impactedTestClasses = await impactedApexTestClassFetcher.getImpactedTestClasses();
 
             //Convert again for finding the values in the diff package
-            let sourceToMdapiConvertor = new SourceToMDAPIConvertor(
+            const sourceToMdapiConvertor = new SourceToMDAPIConvertor(
                 workingDirectory,
                 sfpPackage.packageDescriptor.path,
                 sfpPackage.apiVersion,
                 logger
             );
 
-            let mdapiDirPath = (await sourceToMdapiConvertor.convert()).packagePath;
+            const mdapiDirPath = (await sourceToMdapiConvertor.convert()).packagePath;
 
             const packageManifest: PackageManifest = await PackageManifest.create(mdapiDirPath);
 
@@ -258,7 +258,7 @@ export default class CreateDiffPackageImp extends CreateSourcePackageImpl {
 
             // Get the names of all classes in the ApexSortedByType
             let apexClassNames = apexClassesSortedByTypes.class.map((cls) => cls.name);
-            let interfaces = apexClassesSortedByTypes.interface.map((cls) => cls.name);
+            const interfaces = apexClassesSortedByTypes.interface.map((cls) => cls.name);
             const apexTestClassNames = apexClassesSortedByTypes.testClass.map((cls) => cls.name);
             apexClassNames = apexClassNames.filter((name) => !apexTestClassNames.includes(name));
             apexClassNames = apexClassNames.filter((name) => !interfaces.includes(name));

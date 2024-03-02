@@ -33,8 +33,8 @@ export default class PicklistEnabler implements DeploymentCustomizer {
         deploymentContext: DeploymentContext
     ): Promise<DeploySourceResult> {
         try {
-            let sourceComponents = componentSet.getSourceComponents().toArray();
-            let components = [];
+            const sourceComponents = componentSet.getSourceComponents().toArray();
+            const components = [];
 
             for (const sourceComponent of sourceComponents) {
                 if (sourceComponent.type.name == registry.types.customobject.name) {
@@ -48,7 +48,7 @@ export default class PicklistEnabler implements DeploymentCustomizer {
 
             if (components) {
                 for (const fieldComponent of components) {
-                    let customField = fieldComponent.parseXmlSync().CustomField;
+                    const customField = fieldComponent.parseXmlSync().CustomField;
                     //check for empty picklists
                     if (
                         !customField ||
@@ -60,12 +60,12 @@ export default class PicklistEnabler implements DeploymentCustomizer {
                     //no updates for custom metadata picklists
                     if (customField['fieldManageability']) continue;
 
-                    let objName = fieldComponent.parent.fullName;
-                    let picklistName = fieldComponent.name;
-                    let urlId =
+                    const objName = fieldComponent.parent.fullName;
+                    const picklistName = fieldComponent.name;
+                    const urlId =
                         QUERY_BODY + "'" + objName + "'" + ' AND QualifiedApiName = ' + "'" + picklistName + "'";
 
-                    let picklistValueSource = await this.getPicklistSource(customField);
+                    const picklistValueSource = await this.getPicklistSource(customField);
 
                     SFPLogger.log(
                         `Fetching picklist for custom field ${picklistName} on object ${objName}`,
@@ -73,7 +73,7 @@ export default class PicklistEnabler implements DeploymentCustomizer {
                         logger
                     );
 
-                    let picklistInOrg = await this.getPicklistInOrg(urlId, sfpOrg.getConnection());
+                    const picklistInOrg = await this.getPicklistInOrg(urlId, sfpOrg.getConnection());
 
                     //check for empty picklists on org and fix first deployment issue
                     if (!picklistInOrg?.Metadata?.valueSet?.valueSetDefinition) {
@@ -85,7 +85,7 @@ export default class PicklistEnabler implements DeploymentCustomizer {
                         continue;
                     }
 
-                    let picklistValueInOrg = [];
+                    const picklistValueInOrg = [];
 
                     for (const value of picklistInOrg.Metadata.valueSet.valueSetDefinition.value) {
                         //ignore inactive values from org
@@ -93,7 +93,7 @@ export default class PicklistEnabler implements DeploymentCustomizer {
                             continue;
                         }
 
-                        let valueInfo: { [key: string]: string } = {};
+                        const valueInfo: { [key: string]: string } = {};
                         valueInfo.fullName = value['valueName'];
                         decodeURIComponent(valueInfo.fullName);
                         valueInfo.label = value['label'];
@@ -102,7 +102,7 @@ export default class PicklistEnabler implements DeploymentCustomizer {
                         picklistValueInOrg.push(valueInfo);
                     }
 
-                    let isPickListIdentical = this.arePicklistsIdentical(picklistValueInOrg, picklistValueSource);
+                    const isPickListIdentical = this.arePicklistsIdentical(picklistValueInOrg, picklistValueSource);
 
                     const limiter = new Bottleneck({maxConcurrent: 1});
 
@@ -146,12 +146,12 @@ export default class PicklistEnabler implements DeploymentCustomizer {
     }
 
     private async getPicklistInOrg(urlId: string, conn: Connection): Promise<any> {
-        let response = await QueryHelper.query<any>(urlId, conn, true);
+        const response = await QueryHelper.query<any>(urlId, conn, true);
 
         if (response && Array.isArray(response) && response.length > 0 && response[0].attributes) {
-            let responseUrl = response[0].attributes.url;
-            let fieldId = responseUrl.slice(responseUrl.lastIndexOf('.') + 1);
-            let responsePicklist = await conn.tooling.sobject('CustomField').find({ Id: fieldId });
+            const responseUrl = response[0].attributes.url;
+            const fieldId = responseUrl.slice(responseUrl.lastIndexOf('.') + 1);
+            const responsePicklist = await conn.tooling.sobject('CustomField').find({ Id: fieldId });
 
             if (responsePicklist) {
                 return responsePicklist[0];
@@ -172,8 +172,8 @@ export default class PicklistEnabler implements DeploymentCustomizer {
     }
 
     private async getPicklistSource(customField: any): Promise<any> {
-        let picklistValueSet = [];
-        let values = customField.valueSet?.valueSetDefinition?.value;
+        const picklistValueSet = [];
+        const values = customField.valueSet?.valueSetDefinition?.value;
         //only push values when picklist > 1 or exactly 1 value
         if (Array.isArray(values)) {
             for (const value of values) {

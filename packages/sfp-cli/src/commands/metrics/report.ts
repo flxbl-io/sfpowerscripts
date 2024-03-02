@@ -66,7 +66,7 @@ export default class Report extends SfpCommand {
         break;
       default:
         throw new Error('Invalid Metric Type');
-    };
+    }
 
 
   }

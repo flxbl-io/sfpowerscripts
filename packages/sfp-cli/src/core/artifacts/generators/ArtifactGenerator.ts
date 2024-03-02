@@ -16,7 +16,7 @@ export default class ArtifactGenerator {
     ): Promise<string> {
         try {
             // Artifact folder consisting of artifact metadata, changelog & source
-            let artifactFolder: string = `${sfpPackage.packageName}_sfpowerscripts_artifact`;
+            const artifactFolder: string = `${sfpPackage.packageName}_sfpowerscripts_artifact`;
 
             // Absolute filepath of artifact
             let artifactFilepath: string;
@@ -29,7 +29,7 @@ export default class ArtifactGenerator {
 
             fs.mkdirpSync(artifactFilepath);
 
-            let sourcePackage: string = path.join(artifactFilepath, `source`);
+            const sourcePackage: string = path.join(artifactFilepath, `source`);
             fs.mkdirpSync(sourcePackage);
 
             //Clean up temp directory
@@ -44,36 +44,36 @@ export default class ArtifactGenerator {
             //Modify Source Directory to the new source directory inside the artifact
             sfpPackage.sourceDir = `source`;
 
-            let artifactMetadataFilePath: string = path.join(artifactFilepath, `artifact_metadata.json`);
+            const artifactMetadataFilePath: string = path.join(artifactFilepath, `artifact_metadata.json`);
 
             fs.writeFileSync(artifactMetadataFilePath, JSON.stringify(sfpPackage, null, 4));
 
             // Generate package changelog
             // Doesnt need a from version number, as it always generate from start
-            let generatePackageChangelog: GeneratePackageChangelog = new GeneratePackageChangelog(
+            const generatePackageChangelog: GeneratePackageChangelog = new GeneratePackageChangelog(
                 sfpPackage.packageName,
                 undefined,
                 sfpPackage.sourceVersion,
                 project_directory
             );
 
-            let packageChangelog: Changelog = await generatePackageChangelog.exec();
+            const packageChangelog: Changelog = await generatePackageChangelog.exec();
 
-            let changelogFilepath: string = path.join(artifactFilepath, `changelog.json`);
+            const changelogFilepath: string = path.join(artifactFilepath, `changelog.json`);
 
             fs.writeFileSync(changelogFilepath, JSON.stringify(packageChangelog, null, 4));
 
             SFPLogger.log('Artifact Copy Completed', LoggerLevel.DEBUG);
 
-            let zip = new AdmZip();
+            const zip = new AdmZip();
             zip.addLocalFolder(artifactFilepath, artifactFolder);
             SFPLogger.log(`Zipping ${artifactFolder}`, LoggerLevel.DEBUG);
 
-            let packageVersionNumber: string = ArtifactGenerator.substituteBuildNumberWithPreRelease(
+            const packageVersionNumber: string = ArtifactGenerator.substituteBuildNumberWithPreRelease(
                 sfpPackage.versionNumber
             );
 
-            let zipArtifactFilepath: string = artifactFilepath + `_` + packageVersionNumber + `.zip`;
+            const zipArtifactFilepath: string = artifactFilepath + `_` + packageVersionNumber + `.zip`;
             zip.writeZip(zipArtifactFilepath);
 
             SFPLogger.log(
@@ -91,7 +91,7 @@ export default class ArtifactGenerator {
     }
 
     private static substituteBuildNumberWithPreRelease(packageVersionNumber: string) {
-        let segments = packageVersionNumber.split('.');
+        const segments = packageVersionNumber.split('.');
 
         if (segments.length === 4) {
             packageVersionNumber = segments.reduce((version, segment, segmentsIdx) => {

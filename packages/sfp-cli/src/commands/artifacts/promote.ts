@@ -51,21 +51,21 @@ export default class Promote extends SfpCommand {
         //Refresh HubOrg Authentication
         await this.hubOrg.refreshAuth();
 
-        let unpromotedPackages: { name: string; error: string }[] = [];
+        const unpromotedPackages: { name: string; error: string }[] = [];
         try {
-            let artifacts = ArtifactFetcher.fetchArtifacts(this.flags.artifactdir);
+            const artifacts = ArtifactFetcher.fetchArtifacts(this.flags.artifactdir);
 
             if (artifacts.length === 0) {
                 throw new Error(`No artifacts found at ${this.flags.artifactdir}`);
             }
 
             let result: boolean = true;
-            let promotedPackages: string[] = [];
-            for (let artifact of artifacts) {
-                let sfpPackage = await SfpPackageBuilder.buildPackageFromArtifact(artifact, new ConsoleLogger());
+            const promotedPackages: string[] = [];
+            for (const artifact of artifacts) {
+                const sfpPackage = await SfpPackageBuilder.buildPackageFromArtifact(artifact, new ConsoleLogger());
                 try {
                     if (sfpPackage.package_type === PackageType.Unlocked) {
-                        let promoteUnlockedPackageImpl = new PromoteUnlockedPackageImpl(
+                        const promoteUnlockedPackageImpl = new PromoteUnlockedPackageImpl(
                             artifact.sourceDirectoryPath,
                             sfpPackage.package_version_id,
                             this.hubOrg.getUsername()
@@ -103,7 +103,7 @@ export default class Promote extends SfpCommand {
     }
 
     private substituteBuildNumberWithPreRelease(packageVersionNumber: string) {
-        let segments = packageVersionNumber.split('.');
+        const segments = packageVersionNumber.split('.');
 
         if (segments.length === 4) {
             packageVersionNumber = segments.reduce((version, segment, segmentsIdx) => {

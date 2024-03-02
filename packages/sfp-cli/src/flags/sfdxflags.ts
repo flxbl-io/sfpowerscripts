@@ -60,7 +60,7 @@ const userNameFlag = Flags.custom({
   char: 'u',
   summary: messages.getMessage('flags.targetOrg.summary'),
   parse: async (input: string | undefined) =>  {
-    let aliasAccessor = (await AliasAccessor.create());
+    const aliasAccessor = (await AliasAccessor.create());
     if(aliasAccessor.resolveAlias(input))
       return aliasAccessor.resolveAlias(input);
     else
@@ -84,7 +84,7 @@ const devhubFlag = Flags.custom({
   char: 'v',
   summary: messages.getMessage('flags.targetDevHubOrg.summary'),
   parse: async (input: string | undefined) =>  {
-    let aliasAccessor = (await AliasAccessor.create());
+    const aliasAccessor = (await AliasAccessor.create());
     let resolvedAliasOrUserName;
     if(aliasAccessor.resolveAlias(input))
       resolvedAliasOrUserName=aliasAccessor.resolveAlias(input);

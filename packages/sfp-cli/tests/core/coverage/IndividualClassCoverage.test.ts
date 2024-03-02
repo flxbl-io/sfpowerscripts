@@ -4,11 +4,11 @@ import { ConsoleLogger } from '@flxblio/sfp-logger';
 
 describe('Given a test coverage report', () => {
     it('should be able to get a list of all classes and its test coverage', () => {
-        let individualClasCoverage: IndividualClassCoverage = new IndividualClassCoverage(
+        const individualClasCoverage: IndividualClassCoverage = new IndividualClassCoverage(
             testCoverage,
             new ConsoleLogger()
         );
-        let expectedValue = [
+        const expectedValue = [
             { name: 'CustomerServices', coveredPercent: 87 },
             { name: 'MarketServices', coveredPercent: 100 },
             { name: 'ReservationManagerController', coveredPercent: 72 },
@@ -18,11 +18,11 @@ describe('Given a test coverage report', () => {
     });
 
     it('given a coverage threshold, provide a list of classes that do not satisfy the threshold', () => {
-        let individualClasCoverage: IndividualClassCoverage = new IndividualClassCoverage(
+        const individualClasCoverage: IndividualClassCoverage = new IndividualClassCoverage(
             testCoverage,
             new ConsoleLogger()
         );
-        let validationResult = individualClasCoverage.validateIndividualClassCoverage(
+        const validationResult = individualClasCoverage.validateIndividualClassCoverage(
             individualClasCoverage.getIndividualClassCoverage(),
             75
         );
@@ -33,7 +33,7 @@ describe('Given a test coverage report', () => {
     });
 });
 
-let testCoverage = [
+const testCoverage = [
     {
         id: '01p0w000001qr8HAAQ',
         name: 'CustomerServices',

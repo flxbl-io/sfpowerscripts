@@ -70,7 +70,7 @@ describe('Given a set of permsets, assign it to the user who is deploying the pa
             authInfo: await AuthInfo.create({ username: testData.username }),
         });
 
-        let assignPermSetImpl: AssignPermissionSetsImpl = new AssignPermissionSetsImpl(
+        const assignPermSetImpl: AssignPermissionSetsImpl = new AssignPermissionSetsImpl(
             connection,
             ['test1', 'test2'],
             null,
@@ -101,7 +101,7 @@ describe('Given a set of permsets, assign it to the user who is deploying the pa
         }`);
             });
 
-        let results = await assignPermSetImpl.exec();
+        const results = await assignPermSetImpl.exec();
         expect(results.successfullAssignments).toHaveLength(2);
         expect(results.failedAssignments).toHaveLength(0);
     });
@@ -115,7 +115,7 @@ describe('Given a set of permsets, assign it to the user who is deploying the pa
         });
 
 
-        let assignPermSetImpl: AssignPermissionSetsImpl = new AssignPermissionSetsImpl(
+        const assignPermSetImpl: AssignPermissionSetsImpl = new AssignPermissionSetsImpl(
             connection,
             ['test1', 'test2'],
             null,
@@ -146,7 +146,7 @@ describe('Given a set of permsets, assign it to the user who is deploying the pa
         }`);
             });
 
-        let results = await assignPermSetImpl.exec();
+        const results = await assignPermSetImpl.exec();
         expect(results.successfullAssignments).toHaveLength(1);
         expect(results.failedAssignments).toHaveLength(1);
     });
@@ -160,7 +160,7 @@ describe('Given a set of permsets, assign it to the user who is deploying the pa
             authInfo: await AuthInfo.create({ username: testData.username }),
         });
 
-        let assignPermSetImpl: AssignPermissionSetsImpl = new AssignPermissionSetsImpl(
+        const assignPermSetImpl: AssignPermissionSetsImpl = new AssignPermissionSetsImpl(
             connection,
             ['test1', 'test2'],
             null,
@@ -191,7 +191,7 @@ describe('Given a set of permsets, assign it to the user who is deploying the pa
         }`);
             });
 
-        let results = await assignPermSetImpl.exec();
+        const results = await assignPermSetImpl.exec();
         expect(results.successfullAssignments).toHaveLength(0);
         expect(results.failedAssignments).toHaveLength(2);
     });

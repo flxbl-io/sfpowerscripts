@@ -7,8 +7,8 @@ export default class PackageVersionUpdater {
         if (!sfpPackage.versionNumber) {
             throw new Error('The package doesnt have a version attribute, Please check your definition');
         } else {
-            let segments = sfpPackage.versionNumber.split('.');
-            let numberToBeAppended = parseInt(buildNumber);
+            const segments = sfpPackage.versionNumber.split('.');
+            const numberToBeAppended = parseInt(buildNumber);
 
             if (isNaN(numberToBeAppended)) throw new Error('BuildNumber should be a number');
             else segments[3] = buildNumber;

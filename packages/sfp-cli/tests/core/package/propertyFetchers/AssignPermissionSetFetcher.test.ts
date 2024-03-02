@@ -16,9 +16,9 @@ jest.mock('../../../../src/core/package/SfpPackageBuilder', () => {
             projectDirectory: string,
             sfdx_package: string
         ) {
-            let propertyFetchers: PropertyFetcher[] = [new AssignPermissionSetFetcher()];
+            const propertyFetchers: PropertyFetcher[] = [new AssignPermissionSetFetcher()];
 
-            let sfpPackage: SfpPackage = new SfpPackage();
+            const sfpPackage: SfpPackage = new SfpPackage();
             sfpPackage.packageDescriptor = packageDescriptor;
             for (const propertyFetcher of propertyFetchers) {
                 await propertyFetcher.getsfpProperties(sfpPackage, logger);
@@ -32,15 +32,15 @@ jest.mock('../../../../src/core/package/SfpPackageBuilder', () => {
 
 describe('Given a package descriptor with assignPermSetsPreDeployment or assignPermSetsPostDeployment', () => {
     it('Should set assignPermSetsPreDeployment property in SfpPackage', async () => {
-        let assignPermissionSetFetcher: AssignPermissionSetFetcher = new AssignPermissionSetFetcher();
-        let sfpPackage: SfpPackage = await SfpPackageBuilder.buildPackageFromProjectDirectory(null, null, null);
+        const assignPermissionSetFetcher: AssignPermissionSetFetcher = new AssignPermissionSetFetcher();
+        const sfpPackage: SfpPackage = await SfpPackageBuilder.buildPackageFromProjectDirectory(null, null, null);
         assignPermissionSetFetcher.getsfpProperties(sfpPackage);
         expect(sfpPackage.assignPermSetsPreDeployment).toStrictEqual(['PermSetB']);
     });
 
     it('Should set assignPermSetsPostDeployment property in SfpPackage', async () => {
-        let assignPermissionSetFetcher: AssignPermissionSetFetcher = new AssignPermissionSetFetcher();
-        let sfpPackage: SfpPackage = await SfpPackageBuilder.buildPackageFromProjectDirectory(null, null, null);
+        const assignPermissionSetFetcher: AssignPermissionSetFetcher = new AssignPermissionSetFetcher();
+        const sfpPackage: SfpPackage = await SfpPackageBuilder.buildPackageFromProjectDirectory(null, null, null);
         assignPermissionSetFetcher.getsfpProperties(sfpPackage);
         expect(sfpPackage.assignPermSetsPostDeployment).toStrictEqual(['PermSetA']);
     });

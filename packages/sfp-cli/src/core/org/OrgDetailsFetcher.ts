@@ -19,7 +19,7 @@ export default class OrgDetailsFetcher {
 
         const authInfo = await AuthInfo.create({ username: this.username });
 
-        let authInfoFields = authInfo.getFields();
+        const authInfoFields = authInfo.getFields();
       
 
         let sfdxAuthUrl: string;
@@ -30,7 +30,7 @@ export default class OrgDetailsFetcher {
         }
 
         const isScratchOrg = authInfoFields.devHubUsername;
-        let scratchOrgInfo = isScratchOrg
+        const scratchOrgInfo = isScratchOrg
             ? await this.getScratchOrgDetails(authInfoFields.orgId, authInfo)
             : ({} as ScratchOrgDetails);
 
@@ -51,7 +51,7 @@ export default class OrgDetailsFetcher {
         await this.getOrgDetails();
 
         if (OrgDetailsFetcher.usernamesToOrgDetails[this.username]) {
-            let domain = extractDomainFromUrl(OrgDetailsFetcher.usernamesToOrgDetails[this.username].instanceUrl);
+            const domain = extractDomainFromUrl(OrgDetailsFetcher.usernamesToOrgDetails[this.username].instanceUrl);
             if (domain) return domain;
             else return '';
         } else {
@@ -68,7 +68,7 @@ export default class OrgDetailsFetcher {
             })
         ).getDevHubOrg();
 
-        let scratchOrgInfo = (
+        const scratchOrgInfo = (
             await new ScratchOrgInfoFetcher(hubOrg).getScratchOrgInfoByOrgId([trimTo15(orgId)])
         )[0];
 

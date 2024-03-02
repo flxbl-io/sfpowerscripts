@@ -11,10 +11,10 @@ export default class ReconcileProfileAgainstOrgImpl {
 
     public async exec() {
        
-        let result=[];
+        const result=[];
         try {
-            let profileReconciler = new ProfileReconcile(this.sfpOrg);
-            let reconcileProfiles = await profileReconciler.reconcile(
+            const profileReconciler = new ProfileReconcile(this.sfpOrg);
+            const reconcileProfiles = await profileReconciler.reconcile(
                 [ this.project_directory],
                 [],
                 undefined
@@ -42,7 +42,7 @@ export default class ReconcileProfileAgainstOrgImpl {
                 head: ['State', 'Full Name', 'Type', 'Path'],
                 chars: ZERO_BORDER_TABLE,
             });
-        for (let res of result) {
+        for (const res of result) {
             table.push([res.state, res.fullName, res.type, res.path]);
         }
         SFPLogger.log(table.toString(), LoggerLevel.INFO);

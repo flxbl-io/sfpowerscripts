@@ -171,9 +171,9 @@ describe("Given a PackageDependencyResolver", () => {
   // TODO: test cache
 });
 
-let coreGitTags = ['core_v1.0.0.2'];
+const coreGitTags = ['core_v1.0.0.2'];
 
-let coreResponse = {
+const coreResponse = {
   records: [
     {
       SubscriberPackageVersionId: '04t1P00000xxxxxxx3',

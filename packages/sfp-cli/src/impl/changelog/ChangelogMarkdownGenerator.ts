@@ -36,7 +36,7 @@ export default class ChangelogMarkdownGenerator {
 
         // Generate in descending order, starting from latest release
         for (let releaseNum = this.releaseChangelog.releases.length - 1; releaseNum >= limitReleases; releaseNum--) {
-            let release: Release = this.releaseChangelog.releases[releaseNum];
+            const release: Release = this.releaseChangelog.releases[releaseNum];
 
             if (!release.names) {
                 payload += `\n<a id=${release['name']}></a>\n `; // Create anchor from release hash Id
@@ -57,8 +57,8 @@ export default class ChangelogMarkdownGenerator {
 
             if(!this.isForWorkItemOnlyOutput)
             {
-            let versionChangeOnly: string[] = [];
-            let noChangeInVersion: string[] = [];
+            const versionChangeOnly: string[] = [];
+            const noChangeInVersion: string[] = [];
             payload = this.generateCommits(payload, release, versionChangeOnly, noChangeInVersion);
 
             if (versionChangeOnly.length > 0) {
@@ -87,15 +87,15 @@ export default class ChangelogMarkdownGenerator {
         let isCommitsSectionEmpty: boolean = true;
 
         payload += '\n### Commits :book:\n';
-        for (let artifact of release.artifacts) {
+        for (const artifact of release.artifacts) {
             if (artifact.from !== artifact.to) {
                 if (artifact.commits.length > 0) {
                     isCommitsSectionEmpty = false;
                     payload += `\n#### ${artifact.name}\n`;
 
-                    let tableOfCommits = [['Date', 'Time', 'Commit ID', 'Commit Message']];
-                    for (let commit of artifact.commits) {
-                        let commitDate: Date = new Date(commit.date);
+                    const tableOfCommits = [['Date', 'Time', 'Commit ID', 'Commit Message']];
+                    for (const commit of artifact.commits) {
+                        const commitDate: Date = new Date(commit.date);
                         let specificCommitURL: string;
                         if (artifact.repoUrl != null) {
                             if(artifact.repoUrl.startsWith("git"))
@@ -103,7 +103,7 @@ export default class ChangelogMarkdownGenerator {
                               specificCommitURL=""; //no http url available
                             }
                             else if (artifact.repoUrl.includes("github.com")) {
-                                let repoUrl = artifact.repoUrl.split('.git')[0];
+                                const repoUrl = artifact.repoUrl.split('.git')[0];
                                 specificCommitURL = `${repoUrl}/commit/${commit.commitId}`;
                             } else {
                                 specificCommitURL=""; //other git providers are not supported
@@ -134,7 +134,7 @@ export default class ChangelogMarkdownGenerator {
     private generateWorkItems(payload: string, release: Release) {
         payload += '### Work Items :gem:\n';
         if (Object.keys(release.workItems).length > 0) {
-            for (let workItem in release.workItems) {
+            for (const workItem in release.workItems) {
                 let specificWorkItemURL: string;
                 if (this.workItemURL != null) {
                     if (this.workItemURL.endsWith('/')) {
@@ -162,8 +162,8 @@ export default class ChangelogMarkdownGenerator {
 
     private generateOrgs(orgs: org[], payload: string) {
         const baseAddr = 'https://img.shields.io/static/v1';
-        for (let org of orgs) {
-            let url = new URL(
+        for (const org of orgs) {
+            const url = new URL(
                 `?label=${org.name}&message=${org.latestRelease.names[org.latestRelease.names.length - 1]}-${
                     org.latestRelease.buildNumber
                 }(${org.retryCount})&color=green`,
@@ -178,19 +178,19 @@ export default class ChangelogMarkdownGenerator {
 
 
     private getDate(date: Date): string {
-        let day: number = date.getDate();
-        let month: number = date.getMonth();
-        let year: number = date.getFullYear();
-        let pad = (n) => (n < 10 ? '0' + n : n);
+        const day: number = date.getDate();
+        const month: number = date.getMonth();
+        const year: number = date.getFullYear();
+        const pad = (n) => (n < 10 ? '0' + n : n);
 
         return pad(day) + '/' + pad(month + 1) + '/' + year;
     }
 
     private getTime(date: Date): string {
-        let hours: number = date.getHours();
-        let minutes: number = date.getMinutes();
-        let seconds: number = date.getSeconds();
-        let pad = (n) => (n < 10 ? '0' + n : n);
+        const hours: number = date.getHours();
+        const minutes: number = date.getMinutes();
+        const seconds: number = date.getSeconds();
+        const pad = (n) => (n < 10 ? '0' + n : n);
 
         return pad(hours) + ':' + pad(minutes) + ':' + pad(seconds);
     }

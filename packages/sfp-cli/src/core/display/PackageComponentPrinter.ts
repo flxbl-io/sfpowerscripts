@@ -8,16 +8,16 @@ export default class PackageComponentPrinter {
         //If Manifest is null, just return
         if (components === null || components === undefined) return;
 
-        let table = new Table({
+        const table = new Table({
             head: ['Metadata Type', 'API Name'],
             chars: ZERO_BORDER_TABLE
         });
 
-        let componentArray = components.toArray();
+        const componentArray = components.toArray();
         componentArray.sort((a, b) => a.type.name.localeCompare(b.type.name));
 
         for (const component of componentArray) {
-            let item = [component.type.name, component.fullName];
+            const item = [component.type.name, component.fullName];
             table.push(item);
         }
 

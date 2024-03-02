@@ -110,9 +110,9 @@ export default class MetadataSummaryInfoFetcher {
         filterTypes: string[] = MetadataSummaryInfoFetcher.NotSupportedTypes
     ): Promise<Map<string, MetadataSummary>> {
         let metadataMap: Map<string, MetadataSummary> = new Map<string, MetadataSummary>();
-        let types = [];
+        const types = [];
 
-        let result: DescribeMetadataResult = await conn.metadata.describe(getDefaults.getApiVersion());
+        const result: DescribeMetadataResult = await conn.metadata.describe(getDefaults.getApiVersion());
 
         result.metadataObjects.forEach((metadata) => {
             //Not supported .. ignore
@@ -122,7 +122,7 @@ export default class MetadataSummaryInfoFetcher {
 
             //Has childs.. check for each child and add to the list
             if (metadata.childXmlNames) {
-                for (let childMetadata of metadata.childXmlNames) {
+                for (const childMetadata of metadata.childXmlNames) {
                     if (!this.NotSupportedTypes.includes(childMetadata)) {
                         types.push({ type: childMetadata });
                     }
@@ -137,7 +137,7 @@ export default class MetadataSummaryInfoFetcher {
 
 
         //Fetch Summary Info in chunks of three
-        for (let typesInChunk of chunkArray(3, types)) {
+        for (const typesInChunk of chunkArray(3, types)) {
             try {
                 metadataMap = await this.fetchMetadataSummaryByTypesFromAnOrg(conn, typesInChunk, metadataMap);
                 // progressBar.increment(typesInChunk.length);
@@ -169,14 +169,14 @@ export default class MetadataSummaryInfoFetcher {
     ) {
         return await retry(
             async (bail) => {
-                let results: FileProperties[] = await conn.metadata.list(types, GetDefaults.getApiVersion());
+                const results: FileProperties[] = await conn.metadata.list(types, GetDefaults.getApiVersion());
 
                 if (!isArray(results)) {
                     throw new Error('Undefinded Metadata Type');
                 }
 
                 // if (results.length > 0)
-                for (let result of results) {
+                for (const result of results) {
                     metadataMap.set(result.id, {
                         id: result.id,
                         fullName: result.fullName,

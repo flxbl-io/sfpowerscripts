@@ -93,12 +93,12 @@ export default class UserPermissionBuilder {
     constructor() {}
 
     public addPermissionDependencies(profileOrPermissionSet: any) {
-        let objectAccessRequired = [];
+        const objectAccessRequired = [];
         for (let i = 0; i < userPermissionDependencies.length; i++) {
-            let dependedPermission = userPermissionDependencies[i];
+            const dependedPermission = userPermissionDependencies[i];
             if (profileOrPermissionSet.userPermissions != null && profileOrPermissionSet.userPermissions.length > 0) {
                 for (let j = 0; j < profileOrPermissionSet.userPermissions.length; j++) {
-                    let permission = profileOrPermissionSet.userPermissions[j];
+                    const permission = profileOrPermissionSet.userPermissions[j];
                     if (permission.name == dependedPermission.name) {
                         objectAccessRequired.push(...dependedPermission.objectsAccessRequired);
                     }
@@ -111,9 +111,9 @@ export default class UserPermissionBuilder {
     }
 
     private mergeObjectAccess(objectAccessRequired: any[]) {
-        let objectMapping = {};
+        const objectMapping = {};
         for (let i = 0; i < objectAccessRequired.length; i++) {
-            let objectAccess = objectAccessRequired[i];
+            const objectAccess = objectAccessRequired[i];
             if (objectMapping[objectAccess.object] != undefined) {
                 //console.log('Adding access');
                 this.addAccess(objectMapping[objectAccess.object], objectAccess);
@@ -142,10 +142,10 @@ export default class UserPermissionBuilder {
         ) {
             profileOrPermissionSet.objectPermissions = objectAccessRequired;
         } else {
-            let objectAccesses = objectAccessRequired.filter((objectAccess) => {
+            const objectAccesses = objectAccessRequired.filter((objectAccess) => {
                 let exist = false;
                 for (let i = 0; i < profileOrPermissionSet.objectPermissions.length; i++) {
-                    let profileObjectAccess = profileOrPermissionSet.objectPermissions[i];
+                    const profileObjectAccess = profileOrPermissionSet.objectPermissions[i];
                     exist = profileObjectAccess.object == objectAccess.object;
                     if (exist) {
                         this.addAccess(profileObjectAccess, objectAccess);
@@ -168,7 +168,7 @@ export default class UserPermissionBuilder {
         supportedPermissions: string[]
     ): any {
         userPermissionDependencies.forEach((userPermission) => {
-            let hasPermission = this.hasPermission(profileOrPermissionSet, userPermission.name);
+            const hasPermission = this.hasPermission(profileOrPermissionSet, userPermission.name);
             if (
                 hasPermission &&
                 userPermission.hasAccessOnData &&
@@ -208,7 +208,7 @@ export default class UserPermissionBuilder {
         let found = false;
         if (profileObj.userPermissions !== undefined && profileObj.userPermissions.length > 0) {
             for (let i = 0; i < profileObj.userPermissions.length; i++) {
-                let element = profileObj.userPermissions[i];
+                const element = profileObj.userPermissions[i];
                 if (element.name === permissionName) {
                     element.enabled = true;
                     found = true;
@@ -222,7 +222,7 @@ export default class UserPermissionBuilder {
                 profileObj.userPermissions = [];
             }
             if (!_.isNil(supportedPermission) && supportedPermission.includes(permissionName)) {
-                let permission = {
+                const permission = {
                     name: permissionName,
                     enabled: true,
                 } as ProfileUserPermission;
@@ -241,7 +241,7 @@ export default class UserPermissionBuilder {
         let found = false;
         if (!_.isNil(profileOrPermissionSet.userPermissions)) {
             for (let i = 0; i < profileOrPermissionSet.userPermissions.length; i++) {
-                let element = profileOrPermissionSet.userPermissions[i];
+                const element = profileOrPermissionSet.userPermissions[i];
                 if (element.name === permissionName) {
                     found = element.enabled;
                     break;

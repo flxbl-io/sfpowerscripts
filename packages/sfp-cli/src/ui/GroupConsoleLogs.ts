@@ -13,13 +13,13 @@ export default class GroupConsoleLogs {
     }
 
     public begin():GroupConsoleLogs {
-        let sectionStart = this.getSectionStart();
+        const sectionStart = this.getSectionStart();
         if (sectionStart && sectionStart.length > 0) SFPLogger.log(sectionStart, LoggerLevel.INFO,this.logger);
         return this;
     }
 
     public end():GroupConsoleLogs {
-        let sectionEnd = this.getSectionEnd();
+        const sectionEnd = this.getSectionEnd();
         if (sectionEnd && sectionEnd.length > 0) SFPLogger.log(sectionEnd, LoggerLevel.INFO,this.logger);
         return this;
     }

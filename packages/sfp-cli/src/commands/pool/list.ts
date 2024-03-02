@@ -55,9 +55,9 @@ export default class List extends SfpCommand {
 
         this.flags.apiversion = this.flags.apiversion || (await hubConn.retrieveMaxApiVersion());
 
-        let listImpl = new poolListImpl(this.hubOrg, this.flags.tag, this.flags.allscratchorgs);
+        const listImpl = new poolListImpl(this.hubOrg, this.flags.tag, this.flags.allscratchorgs);
 
-        let result = (await listImpl.execute()) as ScratchOrg[];
+        const result = (await listImpl.execute()) as ScratchOrg[];
 
         if (!this.flags.mypool && result.length > 0) {
             result.forEach((element) => {
@@ -65,9 +65,9 @@ export default class List extends SfpCommand {
             });
         }
 
-        let scratchOrgInuse = result.filter((element) => element.status === 'In use');
-        let scratchOrgNotInuse = result.filter((element) => element.status === 'Available');
-        let scratchOrgInProvision = result.filter((element) => element.status === 'Provisioning in progress');
+        const scratchOrgInuse = result.filter((element) => element.status === 'In use');
+        const scratchOrgNotInuse = result.filter((element) => element.status === 'Available');
+        const scratchOrgInProvision = result.filter((element) => element.status === 'Provisioning in progress');
 
         if (!this.flags.json) {
             if (result.length > 0) {
@@ -98,7 +98,7 @@ export default class List extends SfpCommand {
             }
         }
 
-        let output = {
+        const output = {
             total: scratchOrgInuse.length + scratchOrgNotInuse.length + scratchOrgInProvision.length,
             inuse: scratchOrgInuse.length,
             unused: scratchOrgNotInuse.length,
@@ -110,12 +110,12 @@ export default class List extends SfpCommand {
     }
 
     private logTagCount(result: ScratchOrg[]) {
-        let tagCounts: any = result.reduce(function (obj, v) {
+        const tagCounts: any = result.reduce(function (obj, v) {
             obj[v.tag] = (obj[v.tag] || 0) + 1;
             return obj;
         }, {});
 
-        let tagArray = new Array<any>();
+        const tagArray = new Array<any>();
 
         Object.keys(tagCounts).forEach(function (key) {
             tagArray.push({

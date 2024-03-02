@@ -33,7 +33,7 @@ export default class Shrink extends SfpCommand {
     };
 
     public async execute() {
-        let defaultProjectConfigPath = './project-config';
+        const defaultProjectConfigPath = './project-config';
         let projectConfigFilePath: string;
         try {
             //Validate dependencies in sfdx-project.json // Read Manifest
@@ -50,7 +50,7 @@ export default class Shrink extends SfpCommand {
                 SFPLogger.log(`Overwriting sfdx-project.json with shrunk project config file`,LoggerLevel.INFO)
                 projectConfigFilePath = `sfdx-project.json`;
 
-                let backupFilePath: string = path.join(defaultProjectConfigPath, `sfdx-project.json.bak`);
+                const backupFilePath: string = path.join(defaultProjectConfigPath, `sfdx-project.json.bak`);
                 SFPLogger.log(`Saving a backup to ${backupFilePath}`,LoggerLevel.INFO)
                 fs.copySync(projectConfigFilePath, backupFilePath);
                 

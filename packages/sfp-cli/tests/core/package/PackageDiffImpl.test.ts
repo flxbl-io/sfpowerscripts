@@ -53,7 +53,7 @@ describe('Determines whether a given package has changed', () => {
     });
 
     it('should throw error if package does not exist', () => {
-        let packageDiffImpl: PackageDiffImpl = new PackageDiffImpl(
+        const packageDiffImpl: PackageDiffImpl = new PackageDiffImpl(
             new ConsoleLogger(),
             'UNKNOWN-PACKAGE',
             null,
@@ -89,8 +89,8 @@ describe('Determines whether a given package has changed', () => {
         // Assume passthrough filter for ignore
         ignoreFilterResult = gitDiff;
 
-        let packageDiffImpl: PackageDiffImpl = new PackageDiffImpl(new ConsoleLogger(), 'core', null);
-        let result = await packageDiffImpl.exec();
+        const packageDiffImpl: PackageDiffImpl = new PackageDiffImpl(new ConsoleLogger(), 'core', null);
+        const result = await packageDiffImpl.exec();
         expect(result.isToBeBuilt).toEqual(true);
         expect(result.reason).toEqual(`Package Descriptor Changed`);
     });
@@ -103,8 +103,8 @@ describe('Determines whether a given package has changed', () => {
       // Assume passthrough filter for ignore
       ignoreFilterResult = gitDiff;
 
-      let packageDiffImpl: PackageDiffImpl = new PackageDiffImpl(new ConsoleLogger(), 'core', null,{skipPackageDescriptorChange:true});
-      let result = await packageDiffImpl.exec();
+      const packageDiffImpl: PackageDiffImpl = new PackageDiffImpl(new ConsoleLogger(), 'core', null,{skipPackageDescriptorChange:true});
+      const result = await packageDiffImpl.exec();
       expect(result.isToBeBuilt).toEqual(false);
   });
 
@@ -118,8 +118,8 @@ describe('Determines whether a given package has changed', () => {
         ignoreFilterResult = gitDiff;
 
         gitTags = coreTags;
-        let packageDiffImpl: PackageDiffImpl = new PackageDiffImpl(new ConsoleLogger(), 'core', null);
-        let result = await packageDiffImpl.exec();
+        const packageDiffImpl: PackageDiffImpl = new PackageDiffImpl(new ConsoleLogger(), 'core', null);
+        const result = await packageDiffImpl.exec();
         expect(result.isToBeBuilt).toEqual(false);
         expect(result.reason).toEqual(`No changes found`);
     });
@@ -127,17 +127,17 @@ describe('Determines whether a given package has changed', () => {
     it('should return true if package does not have any tags', async () => {
         gitTags = [];
 
-        let packageDiffImpl: PackageDiffImpl = new PackageDiffImpl(new ConsoleLogger(), 'core', null);
-        let result = await packageDiffImpl.exec();
+        const packageDiffImpl: PackageDiffImpl = new PackageDiffImpl(new ConsoleLogger(), 'core', null);
+        const result = await packageDiffImpl.exec();
         expect(result.isToBeBuilt).toEqual(true);
         expect(result.reason).toEqual(`Previous version not found`);
     });
 
     it('should return true if packageToCommits is an empty object', async () => {
-        let packageDiffOptions = new PackageDiffOptions();
+        const packageDiffOptions = new PackageDiffOptions();
         packageDiffOptions.packagesMappedToLastKnownCommitId={};
-        let packageDiffImpl: PackageDiffImpl = new PackageDiffImpl(new ConsoleLogger(), 'core', null,packageDiffOptions);
-        let result = await packageDiffImpl.exec();
+        const packageDiffImpl: PackageDiffImpl = new PackageDiffImpl(new ConsoleLogger(), 'core', null,packageDiffOptions);
+        const result = await packageDiffImpl.exec();
         expect(result.isToBeBuilt).toEqual(true);
         expect(result.reason).toEqual(`Previous version not found`);
     });
@@ -151,8 +151,8 @@ describe('Determines whether a given package has changed', () => {
         // Assume passthrough filter for ignore
         ignoreFilterResult = gitDiff;
 
-        let packageDiffImpl: PackageDiffImpl = new PackageDiffImpl(new ConsoleLogger(), 'core', null);
-        let result = await packageDiffImpl.exec();
+        const packageDiffImpl: PackageDiffImpl = new PackageDiffImpl(new ConsoleLogger(), 'core', null);
+        const result = await packageDiffImpl.exec();
         expect(result.isToBeBuilt).toEqual(false);
         expect(result.reason).toEqual(`No changes found`);
     });

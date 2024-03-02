@@ -79,7 +79,7 @@ export default class SFPLogger {
             if (logger.logType === LoggerType.void) {
                 return;
             } else if (logger.logType === LoggerType.file) {
-                let fileLogger = logger as FileLogger;
+                const fileLogger = logger as FileLogger;
                 message = message
                     ?.toString()
                     .replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '');

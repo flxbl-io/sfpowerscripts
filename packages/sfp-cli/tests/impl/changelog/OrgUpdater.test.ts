@@ -18,18 +18,18 @@ describe('Given an OrgsUpdater', () => {
     it('should add new org, for a new release', () => {
         new OrgsUpdater(releaseChangelog, newRelease, 'DEV', null).update();
 
-        let newReleaseId = convertReleaseToId(newRelease);
+        const newReleaseId = convertReleaseToId(newRelease);
         expectedResult.orgs.push({ name: 'DEV', releases: [newReleaseId], latestRelease: newReleaseId, retryCount: 0 });
         expect(releaseChangelog).toEqual(expectedResult);
     });
 
     it('should update an org, for a new release', () => {
-        let releaseIds: ReleaseId[] = [];
+        const releaseIds: ReleaseId[] = [];
         releaseChangelog.releases.forEach((release) => {
             releaseIds.push(convertReleaseToId(release));
         });
 
-        let org = {
+        const org = {
             name: 'DEV',
             releases: releaseIds,
             latestRelease: releaseIds[releaseIds.length - 1],
@@ -41,26 +41,26 @@ describe('Given an OrgsUpdater', () => {
 
         new OrgsUpdater(releaseChangelog, newRelease, 'DEV', null).update();
 
-        let newReleaseId = convertReleaseToId(newRelease);
+        const newReleaseId = convertReleaseToId(newRelease);
         expectedResult.orgs[0].releases.push(newReleaseId);
         expectedResult.orgs[0].latestRelease = newReleaseId;
         expect(releaseChangelog).toEqual(expectedResult);
     });
 
     it('should update an org with the release, for an old release', () => {
-        let releaseIds: ReleaseId[] = [];
+        const releaseIds: ReleaseId[] = [];
         releaseChangelog.releases.forEach((release) => {
             releaseIds.push(convertReleaseToId(release));
         });
 
-        let org_dev = {
+        const org_dev = {
             name: 'DEV',
             releases: releaseIds,
             latestRelease: releaseIds[releaseIds.length - 1],
             retryCount: 0,
         };
 
-        let org_sit = {
+        const org_sit = {
             name: 'SIT',
             releases: [releaseIds[0]],
             latestRelease: releaseIds[0],
@@ -72,7 +72,7 @@ describe('Given an OrgsUpdater', () => {
 
         expectedResult.orgs.push(lodash.cloneDeep(org_dev));
 
-        let expectedReleaseIds = lodash.cloneDeep(releaseIds);
+        const expectedReleaseIds = lodash.cloneDeep(releaseIds);
 
         expectedResult.orgs.push({
             name: 'SIT',
@@ -87,9 +87,9 @@ describe('Given an OrgsUpdater', () => {
     });
 
     it("should update an org's retryCount, for an old release", () => {
-        let releaseId = convertReleaseToId(releaseChangelog.releases[0]);
+        const releaseId = convertReleaseToId(releaseChangelog.releases[0]);
 
-        let org = {
+        const org = {
             name: 'DEV',
             releases: [releaseId],
             latestRelease: releaseId,
@@ -215,7 +215,7 @@ const referenceReleaseChangelog: ReleaseChangelog = {
 };
 
 function convertReleaseToId(release: Release): ReleaseId {
-    let releaseNames = [...release.names]; // Shallow copy
+    const releaseNames = [...release.names]; // Shallow copy
     return {
         names: releaseNames,
         buildNumber: release.buildNumber,

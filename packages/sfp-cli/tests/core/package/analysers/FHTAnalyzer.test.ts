@@ -27,8 +27,8 @@ describe('FHT Analyzer', () => {
     });
 
     it('Should not be enabled for data packages', async () => {
-        let fhtAnalyzer = new FHTAnalyser();
-        let sfpPackage: SfpPackage = {
+        const fhtAnalyzer = new FHTAnalyser();
+        const sfpPackage: SfpPackage = {
             projectDirectory: process.cwd(),
             workingDirectory: 'force-app',
             mdapiDir: '',
@@ -47,8 +47,8 @@ describe('FHT Analyzer', () => {
     });
 
     it('Should be enabled for source packages by default', async () => {
-        let fhtAnalyzer = new FHTAnalyser();
-        let sfpPackage: SfpPackage = {
+        const fhtAnalyzer = new FHTAnalyser();
+        const sfpPackage: SfpPackage = {
             projectDirectory: '',
             workingDirectory: process.cwd(),
             mdapiDir: '',
@@ -67,8 +67,8 @@ describe('FHT Analyzer', () => {
     });
 
     it('Should be enabled for unlocked packages by default', async () => {
-        let fhtAnalyzer = new FHTAnalyser();
-        let sfpPackage: SfpPackage = {
+        const fhtAnalyzer = new FHTAnalyser();
+        const sfpPackage: SfpPackage = {
             projectDirectory: process.cwd(),
             workingDirectory: 'force-app',
             mdapiDir: '',
@@ -99,7 +99,7 @@ describe('FHT Analyzer', () => {
             return set;
         });
 
-        let fhtAnalyzer = new FHTAnalyser();
+        const fhtAnalyzer = new FHTAnalyser();
         let sfpPackage: SfpPackage = {
             projectDirectory: '',
             packageDirectory: 'force-app',
@@ -119,7 +119,7 @@ describe('FHT Analyzer', () => {
         sfpPackage = await fhtAnalyzer.analyze(sfpPackage,set,new VoidLogger());
         expect(sfpPackage['isFHTFieldFound']).toBe(true);
         expect(sfpPackage['fhtFields']).toBeDefined();
-        let fhtFields = sfpPackage['fhtFields'];
+        const fhtFields = sfpPackage['fhtFields'];
         expect(fhtFields.Account).toStrictEqual(['Name', 'Phone']);
         expect(fhtFields.Contact).toStrictEqual(['Name', 'Phone']);
     });
@@ -176,7 +176,7 @@ describe('FHT Analyzer', () => {
             return set;
         });
 
-        let fhtAnalyzer = new FHTAnalyser();
+        const fhtAnalyzer = new FHTAnalyser();
         let sfpPackage: SfpPackage = {
             projectDirectory: '',
             packageDirectory: 'force-app',
@@ -196,7 +196,7 @@ describe('FHT Analyzer', () => {
         sfpPackage = await fhtAnalyzer.analyze(sfpPackage,set,new VoidLogger());
         expect(sfpPackage['isFHTFieldFound']).toBe(true);
         expect(sfpPackage['fhtFields']).toBeDefined();
-        let fhtFields = sfpPackage['fhtFields'];
+        const fhtFields = sfpPackage['fhtFields'];
         expect(fhtFields.Account).toStrictEqual(['Name', 'Phone']);
         expect(fhtFields.Contact).toStrictEqual(['Name', 'Phone']);
         expect(fhtFields.Test__c).toStrictEqual(['AccountManager__c']);
@@ -255,7 +255,7 @@ describe('FHT Analyzer', () => {
             return set;
         });
 
-        let fhtAnalyzer = new FHTAnalyser();
+        const fhtAnalyzer = new FHTAnalyser();
         let sfpPackage: SfpPackage = {
             projectDirectory: '',
             packageDirectory: 'force-app',
@@ -275,7 +275,7 @@ describe('FHT Analyzer', () => {
         sfpPackage = await fhtAnalyzer.analyze(sfpPackage,set,new VoidLogger());
         expect(sfpPackage['isFHTFieldFound']).toBe(true);
         expect(sfpPackage['fhtFields']).toBeDefined();
-        let fhtFields = sfpPackage['fhtFields'];
+        const fhtFields = sfpPackage['fhtFields'];
         expect(fhtFields.Account).toStrictEqual(['Name', 'Phone']);
         expect(fhtFields.Contact).toStrictEqual(['Name', 'Phone']);
         expect(fhtFields).not.toHaveProperty('Test__c');
@@ -334,7 +334,7 @@ describe('FHT Analyzer', () => {
             return set;
         });
 
-        let fhtAnalyzer = new FHTAnalyser();
+        const fhtAnalyzer = new FHTAnalyser();
         let sfpPackage: SfpPackage = {
             projectDirectory: '',
             packageDirectory: 'force-app',
@@ -354,7 +354,7 @@ describe('FHT Analyzer', () => {
         sfpPackage = await fhtAnalyzer.analyze(sfpPackage,set,new VoidLogger());
         expect(sfpPackage['isFHTFieldFound']).toBe(true);
         expect(sfpPackage['fhtFields']).toBeDefined();
-        let fhtFields = sfpPackage['fhtFields'];
+        const fhtFields = sfpPackage['fhtFields'];
         expect(fhtFields.Test__c).toStrictEqual(['AccountManager__c']);
     });
 });

@@ -72,7 +72,7 @@ export default class Patch extends SfpCommand {
     async execute(): Promise<any> {
         let git;
         try {
-            let logger: Logger = new ConsoleLogger();
+            const logger: Logger = new ConsoleLogger();
 
             SFPLogger.log(
                 COLOR_HEADER(`Source Branch: ${this.flags.sourcebranchname}`),
@@ -92,7 +92,7 @@ export default class Patch extends SfpCommand {
             SFPLogger.printHeaderLine('',COLOR_HEADER,LoggerLevel.INFO);
 
             //Load release definition
-            let releaseDefinitions = await this.loadReleaseDefintions(this.flags.releasedefinitions);
+            const releaseDefinitions = await this.loadReleaseDefintions(this.flags.releasedefinitions);
 
             SFPLogger.log(EOL, LoggerLevel.INFO, logger);
             SFPLogger.log(COLOR_WARNING('This process may take a bit of time'), LoggerLevel.INFO, logger);
@@ -133,25 +133,25 @@ export default class Patch extends SfpCommand {
         npmrcPath: string,
         logger: Logger
     ) {
-        let groupSection = new GroupConsoleLogs('Fetching artifacts').begin();
+        const groupSection = new GroupConsoleLogs('Fetching artifacts').begin();
         SFPLogger.log(COLOR_KEY_MESSAGE('Fetching artifacts'), LoggerLevel.INFO, logger);
-        let fetchImpl: FetchImpl = new FetchImpl('artifacts', fetchArtifactScript, scope, npmrcPath, logger);
+        const fetchImpl: FetchImpl = new FetchImpl('artifacts', fetchArtifactScript, scope, npmrcPath, logger);
         await fetchImpl.fetchArtifacts(releaseDefintions);
         groupSection.end();
     }
 
     private async loadReleaseDefintions(releaseDefinitionPaths: []): Promise<ReleaseDefinition[]> {
-        let releaseDefinitions: ReleaseDefinition[] = [];
+        const releaseDefinitions: ReleaseDefinition[] = [];
         for (const pathToReleaseDefintion of releaseDefinitionPaths) {
-            let releaseDefinition = await ReleaseDefinitionLoader.loadReleaseDefinition(pathToReleaseDefintion);
+            const releaseDefinition = await ReleaseDefinitionLoader.loadReleaseDefinition(pathToReleaseDefintion);
             releaseDefinitions.push(releaseDefinition);
         }
         return releaseDefinitions;
     }
 
     private async overwriteModules(releaseDefinitions: ReleaseDefinition[], git: Git, logger: Logger) {
-        let temporaryWorkingDirectory = git.getRepositoryPath();
-        let revisedProjectConfig = ProjectConfig.getSFDXProjectConfig(temporaryWorkingDirectory);
+        const temporaryWorkingDirectory = git.getRepositoryPath();
+        const revisedProjectConfig = ProjectConfig.getSFDXProjectConfig(temporaryWorkingDirectory);
         for (const releaseDefinition of releaseDefinitions) {
             let revisedArtifactDirectory = path.join(
                 'artifacts',
@@ -166,23 +166,23 @@ export default class Patch extends SfpCommand {
                 );
             }
 
-            let artifacts = ArtifactFetcher.fetchArtifacts(revisedArtifactDirectory, null, logger);
+            const artifacts = ArtifactFetcher.fetchArtifacts(revisedArtifactDirectory, null, logger);
 
             if (artifacts.length === 0) throw new Error(`No artifacts to deploy found in ${revisedArtifactDirectory}`);
 
             //Convert artifacts to SfpPackages
-            let sfpPackages = await this.generateSfpPackageFromArtifacts(artifacts, logger);
+            const sfpPackages = await this.generateSfpPackageFromArtifacts(artifacts, logger);
 
             //Grab the latest projectConfig from Packages
-            let sfpPackageInquirer: SfpPackageInquirer = new SfpPackageInquirer(sfpPackages, logger);
-            let sfdxProjectConfigFromLeadingArtifact = sfpPackageInquirer.getLatestProjectConfig();
+            const sfpPackageInquirer: SfpPackageInquirer = new SfpPackageInquirer(sfpPackages, logger);
+            const sfdxProjectConfigFromLeadingArtifact = sfpPackageInquirer.getLatestProjectConfig();
 
 
             let idx = 0;
             for (const sfpPackage of sfpPackages) {
                 SFPLogger.log(`Processing package ${sfpPackage.packageName}`);
 
-                let packageDescriptorFromArtifact=ProjectConfig.getPackageDescriptorFromConfig(
+                const packageDescriptorFromArtifact=ProjectConfig.getPackageDescriptorFromConfig(
                     sfpPackage.packageName,
                     sfdxProjectConfigFromLeadingArtifact
                 );
@@ -191,7 +191,7 @@ export default class Patch extends SfpCommand {
                 //Retrieve the project directory path from the current working directory and remove it
                 try {
                     //Find path
-                    let pathToPackageInSourceBranch = ProjectConfig.getPackageDescriptorFromConfig(
+                    const pathToPackageInSourceBranch = ProjectConfig.getPackageDescriptorFromConfig(
                         sfpPackage.packageName,
                         revisedProjectConfig
                     ).path;
@@ -302,9 +302,9 @@ export default class Patch extends SfpCommand {
     }
 
     private async generateSfpPackageFromArtifacts(artifacts: Artifact[], logger: Logger): Promise<SfpPackage[]> {
-        let sfpPackages: SfpPackage[] = [];
+        const sfpPackages: SfpPackage[] = [];
         for (const artifact of artifacts) {
-            let sfpPackage = await SfpPackageBuilder.buildPackageFromArtifact(artifact, logger);
+            const sfpPackage = await SfpPackageBuilder.buildPackageFromArtifact(artifact, logger);
             sfpPackages.push(sfpPackage);
         }
         return sfpPackages;

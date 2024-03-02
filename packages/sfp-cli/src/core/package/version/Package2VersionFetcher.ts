@@ -59,7 +59,7 @@ export default class Package2VersionFetcher {
     async fetchBySubscriberPackageVersionId(subscriberPackageVersionId: string): Promise<Package2Version> {
         let query = this.query;
 
-        let whereClause: string = `where SubscriberPackageVersionId='${subscriberPackageVersionId}'`;
+        const whereClause: string = `where SubscriberPackageVersionId='${subscriberPackageVersionId}'`;
         query += whereClause;
 
         const records = await QueryHelper.query<Package2Version>(query, this.conn, true);
@@ -84,7 +84,7 @@ export default class Package2VersionFetcher {
         }
         query += whereClause;
 
-        let orderByClause: string = `order by CreatedDate desc`;
+        const orderByClause: string = `order by CreatedDate desc`;
         query += orderByClause;
 
         const records = await QueryHelper.query<Package2Version>(query, this.conn, true);

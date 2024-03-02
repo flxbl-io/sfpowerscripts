@@ -12,7 +12,7 @@ import FileOutputHandler from "../outputs/FileOutputHandler";
 export default class OrgInfoDisplayer {
 
   public static printScratchOrgInfo(scratchOrg: ScratchOrg): void {
-    let groupSection = new GroupConsoleLogs(`Display Org Info`).begin();
+    const groupSection = new GroupConsoleLogs(`Display Org Info`).begin();
 
     SFPLogger.printHeaderLine('', COLOR_HEADER, LoggerLevel.INFO);
     SFPLogger.log(COLOR_KEY_VALUE(`-- Org Details:--`));
@@ -74,7 +74,7 @@ export default class OrgInfoDisplayer {
     const pathToMarkDownFile = `org-info.md`;
     const fileOutputHandler = FileOutputHandler.getInstance();
     fileOutputHandler.writeOutput(pathToMarkDownFile, `\nPlease find the validation org details below`);
-    let tableData = {
+    const tableData = {
       table: {
         head: [
           'Org Info',
@@ -102,7 +102,7 @@ export default class OrgInfoDisplayer {
   }
 
   public static printOrgInfo(org: SFPOrg): void {
-    let groupSection = new GroupConsoleLogs(`Display Org Info`).begin();
+    const groupSection = new GroupConsoleLogs(`Display Org Info`).begin();
 
     SFPLogger.printHeaderLine('', COLOR_HEADER, LoggerLevel.INFO);
     SFPLogger.log(COLOR_KEY_VALUE(`-- Org Details:--`));
@@ -136,7 +136,7 @@ export default class OrgInfoDisplayer {
     const pathToMarkDownFile = `org-info.md`;
     const fileOutputHandler = FileOutputHandler.getInstance();
     fileOutputHandler.appendOutput(pathToMarkDownFile, `\nPlease find the validation org details below`);
-    let tableData = {
+    const tableData = {
       table: {
           head:  [
               'Org Details',

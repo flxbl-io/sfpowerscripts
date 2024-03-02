@@ -47,7 +47,7 @@ export async function deleteFlows(flows: Flow[], org: SFPOrg, logger: Logger): P
     const flowIds = flows.map((flow) => flow.Id);
     const conn = org.getConnection();
     const succeededFlows = [];
-    for (let id of flowIds) {
+    for (const id of flowIds) {
          await retry(
             async (bail) => {
                 const results = await conn.tooling.sobject('Flow').del(id);

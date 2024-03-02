@@ -12,11 +12,11 @@ export default class DemoReelPlayer {
             renderer: new TerminalRenderer(),
         });
 
-        let demoReel: demoReel = fs.readJSONSync(path.join(demoReelFolderPath, 'demo.json'), {
+        const demoReel: demoReel = fs.readJSONSync(path.join(demoReelFolderPath, 'demo.json'), {
             encoding: 'UTF-8',
         });
-        for (let response of demoReel.sequence) {
-            let ext = path.extname(path.resolve(demoReelFolderPath, response.filepath));
+        for (const response of demoReel.sequence) {
+            const ext = path.extname(path.resolve(demoReelFolderPath, response.filepath));
             let data = fs.readFileSync(path.resolve(demoReelFolderPath, response.filepath), 'utf8');
 
             if (response.data) {

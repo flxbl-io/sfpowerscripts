@@ -30,9 +30,9 @@ export default class ReleaseDefinitionLoader {
         let releaseDefinition: ReleaseDefinition;
         try {
             if (pathToReleaseDefinition.includes(':')) {
-                let git = await Git.initiateRepo();
+                const git = await Git.initiateRepo();
                 await git.fetch();
-                let releaseFile = await git.show([pathToReleaseDefinition]);
+                const releaseFile = await git.show([pathToReleaseDefinition]);
                 releaseDefinition = yaml.load(releaseFile);
             } else {
                 releaseDefinition = yaml.load(fs.readFileSync(pathToReleaseDefinition, 'UTF8'));
@@ -41,24 +41,24 @@ export default class ReleaseDefinitionLoader {
             throw new Error(`Unable to read the release definition file due to ${JSON.stringify(error)}`);
         }
 
-        let releaseDefinitionLoader = new ReleaseDefinitionLoader(releaseDefinition);
+        const releaseDefinitionLoader = new ReleaseDefinitionLoader(releaseDefinition);
         return releaseDefinitionLoader.releaseDefinition;
     }
 
     private convertPackageDependenciesIdTo18Digits(packageDependencies: { [p: string]: string }) {
-        for (let pkg in packageDependencies) {
+        for (const pkg in packageDependencies) {
             packageDependencies[pkg] = get18DigitSalesforceId(packageDependencies[pkg]);
         }
     }
 
     private validateReleaseDefinition(releaseDefinition: ReleaseDefinition): void {
-        let schema = fs.readJSONSync(
+        const schema = fs.readJSONSync(
             path.join(__dirname, '..', '..', '..', 'resources', 'schemas', 'release-defn.schema.json'),
             { encoding: 'UTF-8' }
         );
 
-        let validator = new Ajv({ allErrors: true }).compile(schema);
-        let validationResult = validator(releaseDefinition);
+        const validator = new Ajv({ allErrors: true }).compile(schema);
+        const validationResult = validator(releaseDefinition);
 
         if (!validationResult) {
             let errorMsg: string =

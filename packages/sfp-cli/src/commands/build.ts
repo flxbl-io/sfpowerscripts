@@ -19,7 +19,7 @@ export default class Build extends BuildBase {
     }
 
     getBuildProps(): BuildProps {
-        let buildProps: BuildProps = {
+        const buildProps: BuildProps = {
             configFilePath: this.flags.configfilepath,
             devhubAlias: this.flags.devhubalias,
             repourl: this.flags.repourl,
@@ -40,7 +40,7 @@ export default class Build extends BuildBase {
     }
 
     getBuildImplementer(buildProps: BuildProps): BuildImpl {
-        let buildImpl = new BuildImpl(buildProps);
+        const buildImpl = new BuildImpl(buildProps);
         return buildImpl;
     }
 }

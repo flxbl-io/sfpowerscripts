@@ -39,8 +39,8 @@ export default class InstallSourcePackageImpl extends InstallPackage {
     }
 
     public async install() {
-        let tmpDirObj = tmp.dirSync({ unsafeCleanup: true });
-        let tempDir = tmpDirObj.name;
+        const tmpDirObj = tmp.dirSync({ unsafeCleanup: true });
+        const tempDir = tmpDirObj.name;
 
         try {
             //Handle the right force ignore file
@@ -82,9 +82,9 @@ export default class InstallSourcePackageImpl extends InstallPackage {
             }
 
             //Make a copy.. dont mutate sourceDirectory
-            let resolvedSourceDirectory = this.sfpPackage.sourceDir;
+            const resolvedSourceDirectory = this.sfpPackage.sourceDir;
 
-            let emptyCheck = this.handleEmptyPackage(resolvedSourceDirectory, this.packageDirectory);
+            const emptyCheck = this.handleEmptyPackage(resolvedSourceDirectory, this.packageDirectory);
 
             if (emptyCheck.isToSkip == true) {
                 SFPLogger.log(
@@ -105,7 +105,7 @@ export default class InstallSourcePackageImpl extends InstallPackage {
                 );
 
                 //Apply Filters
-                let deploymentFilters = DeploymentFilterRegistry.getImplementations();
+                const deploymentFilters = DeploymentFilterRegistry.getImplementations();
 
                 for (const deploymentFilter of deploymentFilters) {
                     if (
@@ -128,7 +128,7 @@ export default class InstallSourcePackageImpl extends InstallPackage {
                 }
 
                 //Print components inside Component Set
-                let components = componentSet.getSourceComponents();
+                const components = componentSet.getSourceComponents();
                 PackageComponentPrinter.printComponentTable(components, this.logger);
 
 
@@ -136,7 +136,7 @@ export default class InstallSourcePackageImpl extends InstallPackage {
                     DeploymentOptionDisplayer.printDeploymentOptions(deploymentOptions, this.logger);
                 }
 
-                let deploySourceToOrgImpl: DeploymentExecutor = new DeploySourceToOrgImpl(
+                const deploySourceToOrgImpl: DeploymentExecutor = new DeploySourceToOrgImpl(
                     this.sfpOrg,
                     this.sfpPackage.sourceDir,
                     componentSet,
@@ -185,7 +185,7 @@ export default class InstallSourcePackageImpl extends InstallPackage {
         packageDirectory: string
     ): { isToSkip: boolean; resolvedSourceDirectory: string } {
         //Check empty conditions
-        let status = PackageEmptyChecker.isToBreakBuildForEmptyDirectory(sourceDirectory, packageDirectory, false);
+        const status = PackageEmptyChecker.isToBreakBuildForEmptyDirectory(sourceDirectory, packageDirectory, false);
 
 
         if (status.result == 'break') {
@@ -227,7 +227,7 @@ export default class InstallSourcePackageImpl extends InstallPackage {
                 LoggerLevel.INFO,
                 this.logger
             );
-            let deployDestructiveManifestToOrg = new DeployDestructiveManifestToOrgImpl(
+            const deployDestructiveManifestToOrg = new DeployDestructiveManifestToOrgImpl(
                 this.sfpOrg,
                 path.join(this.sfpPackage.sourceDir, 'destructive', 'destructiveChanges.xml')
             );
@@ -278,7 +278,7 @@ export default class InstallSourcePackageImpl extends InstallPackage {
                 });
             }
             //Now Reconcile
-            let reconcileProfileAgainstOrg: ReconcileProfileAgainstOrgImpl = new ReconcileProfileAgainstOrgImpl(
+            const reconcileProfileAgainstOrg: ReconcileProfileAgainstOrgImpl = new ReconcileProfileAgainstOrgImpl(
                 this.sfpOrg,
                 path.join(sourceDirectoryPath),
                 this.logger
@@ -319,7 +319,7 @@ export default class InstallSourcePackageImpl extends InstallPackage {
             });
 
             //Now Reconcile
-            let reconcileProfileAgainstOrg: ReconcileProfileAgainstOrgImpl = new ReconcileProfileAgainstOrgImpl(
+            const reconcileProfileAgainstOrg: ReconcileProfileAgainstOrgImpl = new ReconcileProfileAgainstOrgImpl(
                 this.sfpOrg,
                 sourceDirectoryPath,
                 this.logger
@@ -354,19 +354,19 @@ export default class InstallSourcePackageImpl extends InstallPackage {
             );
 
             //Create componentSet To Be Deployed
-            let componentSet = ComponentSet.fromSource(
+            const componentSet = ComponentSet.fromSource(
                 path.resolve(profileDeploymentStagingDirectory, sourceDirectory)
             );
 
             DeploymentOptionDisplayer.printDeploymentOptions(deploymentOptions, this.logger);
-            let deploySourceToOrgImpl: DeploySourceToOrgImpl = new DeploySourceToOrgImpl(
+            const deploySourceToOrgImpl: DeploySourceToOrgImpl = new DeploySourceToOrgImpl(
                 this.sfpOrg,
                 this.sfpPackage.sourceDir,
                 componentSet,
                 deploymentOptions,
                 this.logger
             );
-            let profileReconcile: DeploySourceResult = await deploySourceToOrgImpl.exec();
+            const profileReconcile: DeploySourceResult = await deploySourceToOrgImpl.exec();
 
             if (!profileReconcile.result) {
                 DeployErrorDisplayer.displayErrors(profileReconcile.response, this.logger);

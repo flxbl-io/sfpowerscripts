@@ -40,13 +40,13 @@ export default class SfpPackageBuilder {
             projectConfig = lodash.cloneDeep(projectConfig);
         }
 
-        let propertyFetchers: PropertyFetcher[] = [
+        const propertyFetchers: PropertyFetcher[] = [
             new AssignPermissionSetFetcher(),
             new DestructiveManifestPathFetcher(),
             new ReconcilePropertyFetcher(),
         ];
 
-        let startTime = Date.now;
+        const startTime = Date.now;
         let sfpPackage: SfpPackage = new SfpPackage();
         sfpPackage.package_name = sfdx_package;
         sfpPackage.projectConfig = projectConfig;
@@ -93,7 +93,7 @@ export default class SfpPackageBuilder {
 
         //Don't proceed further if packageType is Data
         if (sfpPackage.package_type != PackageType.Data) {
-            let sourceToMdapiConvertor = new SourceToMDAPIConvertor(
+            const sourceToMdapiConvertor = new SourceToMDAPIConvertor(
                 sfpPackage.workingDirectory,
                 sfpPackage.packageDescriptor.path,
                 ProjectConfig.getSFDXProjectConfig(sfpPackage.workingDirectory).sourceApiVersion,
@@ -109,7 +109,7 @@ export default class SfpPackageBuilder {
             sfpPackage.isPermissionSetGroupFound = packageManifest.isPermissionSetGroupsFoundInPackage();
             sfpPackage.isPayLoadContainTypesSupportedByProfiles = packageManifest.isPayLoadContainTypesSupportedByProfiles();
 
-            let apexFetcher: ApexTypeFetcher = new ApexTypeFetcher(sfpPackage.mdapiDir);
+            const apexFetcher: ApexTypeFetcher = new ApexTypeFetcher(sfpPackage.mdapiDir);
             sfpPackage.apexClassesSortedByTypes = apexFetcher.getClassesClassifiedByType();
             sfpPackage.apexTestClassses = apexFetcher.getTestClasses();
             sfpPackage.metadataCount = await MetadataCount.getMetadataCount(
@@ -121,12 +121,12 @@ export default class SfpPackageBuilder {
             sfpPackage.isTriggerAllTests = this.isAllTestsToBeTriggered(sfpPackage, logger);
 
             //Load component Set
-            let componentSet = ComponentSet.fromSource(
+            const componentSet = ComponentSet.fromSource(
                 path.resolve(sfpPackage.workingDirectory, sfpPackage.projectDirectory, sfpPackage.packageDirectory)
             );
 
             //Run through all analyzers
-            let analyzers = AnalyzerRegistry.getAnalyzers();
+            const analyzers = AnalyzerRegistry.getAnalyzers();
             for (const analyzer of analyzers) {
                 if (analyzer.isEnabled(sfpPackage, logger)) sfpPackage = await analyzer.analyze(sfpPackage,componentSet, logger);
             }
@@ -199,7 +199,7 @@ export default class SfpPackageBuilder {
             sfpPackage.versionNumber = params.packageVersionNumber;
         } else if (packageCreationParams?.buildNumber) {
             if (sfpPackage.packageType != PackageType.Unlocked) {
-                let versionUpdater: PackageVersionUpdater = new PackageVersionUpdater();
+                const versionUpdater: PackageVersionUpdater = new PackageVersionUpdater();
                 sfpPackage.versionNumber = versionUpdater.substituteBuildNumber(
                     sfpPackage,
                     packageCreationParams.buildNumber
@@ -213,7 +213,7 @@ export default class SfpPackageBuilder {
 
     public static async buildPackageFromArtifact(artifact: Artifact, logger: Logger): Promise<SfpPackage> {
         //Read artifact metadata
-        let sfpPackage = new SfpPackage();
+        const sfpPackage = new SfpPackage();
         Object.assign(sfpPackage, fs.readJSONSync(artifact.packageMetadataFilePath, { encoding: 'utf8' }));
         sfpPackage.sourceDir = artifact.sourceDirectoryPath;
         sfpPackage.changelogFilePath = artifact.changelogFilePath;

@@ -22,9 +22,9 @@ export default class ScratchOrgOperator {
     ): Promise<ScratchOrg> {
         SFPLogger.log('Parameters: ' + alias + ' ' + config_file_path + ' ' + expiry + ' ', LoggerLevel.TRACE);
 
-        let startTime = Date.now();
+        const startTime = Date.now();
         SFPLogger.log(`Requesting Scratch Org ${alias}..`, LoggerLevel.INFO);
-        let scatchOrgResult = await this.requestAScratchOrg(
+        const scatchOrgResult = await this.requestAScratchOrg(
             alias,
             config_file_path,
             Duration.days(expiry),
@@ -34,7 +34,7 @@ export default class ScratchOrgOperator {
         SFPLogger.log(JSON.stringify(scatchOrgResult), LoggerLevel.TRACE);
 
         //create scratchOrg object
-        let scratchOrg: ScratchOrg = {
+        const scratchOrg: ScratchOrg = {
             alias: alias,
             orgId: scatchOrgResult.orgId,
             username: scatchOrgResult.username,
@@ -53,7 +53,7 @@ export default class ScratchOrgOperator {
         }
 
         //Generate Password
-        let passwordData = await new PasswordGenerator().exec(scratchOrg.username);
+        const passwordData = await new PasswordGenerator().exec(scratchOrg.username);
 
         scratchOrg.password = passwordData.password;
 
@@ -74,11 +74,11 @@ export default class ScratchOrgOperator {
     }
 
     public async delete(scratchOrgIds: string[]) {
-        let hubConn = this.hubOrg.getConnection();
+        const hubConn = this.hubOrg.getConnection();
 
         await retry(
             async (bail) => {
-                let result = await hubConn.del('ActiveScratchOrg', scratchOrgIds);
+                const result = await hubConn.del('ActiveScratchOrg', scratchOrgIds);
             },
             { retries: 3, minTimeout: 3000 }
         );
@@ -109,9 +109,9 @@ export default class ScratchOrgOperator {
     }
 
     public async shareScratchOrgThroughEmail(emailId: string, scratchOrg: ScratchOrg) {
-        let hubOrgUserName = this.hubOrg.getUsername();
-        let apiVersion = this.hubOrg.getConnection().retrieveMaxApiVersion();
-        let body = `${hubOrgUserName} has fetched a new scratch org from the Scratch Org Pool!\n
+        const hubOrgUserName = this.hubOrg.getUsername();
+        const apiVersion = this.hubOrg.getConnection().retrieveMaxApiVersion();
+        const body = `${hubOrgUserName} has fetched a new scratch org from the Scratch Org Pool!\n
    All the post scratch org scripts have been succesfully completed in this org!\n
    The Login url for this org is : ${scratchOrg.loginURL}\n
    Username: ${scratchOrg.username}\n

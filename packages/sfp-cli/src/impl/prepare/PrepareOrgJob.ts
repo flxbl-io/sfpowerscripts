@@ -42,9 +42,9 @@ export default class PrepareOrgJob extends PoolJobExecutor implements PreDeployH
         logLevel: LoggerLevel
     ): Promise<Result<ScriptExecutionResult, JobError>> {
         try {
-            let scratchOrgAsSfPOrg = await SFPOrg.create({ aliasOrUsername: scratchOrg.username });
-            let individualSODeploymentActivityLogger = new FileLogger(logToFilePath);
-            let packageCollectionInstaller = new InstallUnlockedPackageCollection(
+            const scratchOrgAsSfPOrg = await SFPOrg.create({ aliasOrUsername: scratchOrg.username });
+            const individualSODeploymentActivityLogger = new FileLogger(logToFilePath);
+            const packageCollectionInstaller = new InstallUnlockedPackageCollection(
                 scratchOrgAsSfPOrg,
                 individualSODeploymentActivityLogger
             );
@@ -79,7 +79,7 @@ export default class PrepareOrgJob extends PoolJobExecutor implements PreDeployH
             await this.prepareVlocityDataPacks(scratchOrg, individualSODeploymentActivityLogger, logLevel);
 
             //Deploy All Packages
-            let deploymentStatus = await this.deployAllPackages(
+            const deploymentStatus = await this.deployAllPackages(
                 scratchOrg,
                 hubOrg,
                 individualSODeploymentActivityLogger
@@ -172,7 +172,7 @@ export default class PrepareOrgJob extends PoolJobExecutor implements PreDeployH
         SFPLogger.log(`Deploying packages to ${scratchOrg.alias}`);
         SFPLogger.log(`Deploying packages to ${scratchOrg.alias}`, LoggerLevel.INFO, logger);
 
-        let deployProps: DeployProps = {
+        const deployProps: DeployProps = {
             targetUsername: scratchOrg.username,
             artifactDir: 'artifacts',
             waitTime: 120,
@@ -186,9 +186,9 @@ export default class PrepareOrgJob extends PoolJobExecutor implements PreDeployH
         };
 
         //Deploy the fetched artifacts to the org
-        let deployImpl: DeployImpl = new DeployImpl(deployProps);
+        const deployImpl: DeployImpl = new DeployImpl(deployProps);
         deployImpl.preDeployHook = this;
-        let deploymentResult = await deployImpl.exec();
+        const deploymentResult = await deployImpl.exec();
 
         return deploymentResult;
     }
@@ -203,8 +203,8 @@ export default class PrepareOrgJob extends PoolJobExecutor implements PreDeployH
     ): Promise<{ isToFailDeployment: boolean; message?: string }> {
         //Install dependencies per package if release config is provided
         if (this.pool.releaseConfigFile) {
-            let sfpOrg = await SFPOrg.create({ aliasOrUsername: targetUsername });
-            let hubOrg = await SFPOrg.create({ aliasOrUsername: devhubUserName });
+            const sfpOrg = await SFPOrg.create({ aliasOrUsername: targetUsername });
+            const hubOrg = await SFPOrg.create({ aliasOrUsername: devhubUserName });
             await this.installExternalPackageDependenciesPerPackage(logger, sfpOrg, hubOrg, this.pool.keys, sfpPackage);
         }
         return { isToFailDeployment: false };
@@ -220,7 +220,7 @@ export default class PrepareOrgJob extends PoolJobExecutor implements PreDeployH
             LoggerLevel.INFO,
             logger
         );
-        let packageCollectionInstaller = new InstallUnlockedPackageCollection(scratchOrgAsSFPOrg, logger);
+        const packageCollectionInstaller = new InstallUnlockedPackageCollection(scratchOrgAsSFPOrg, logger);
         await packageCollectionInstaller.install(externalPackage2s, true, true);
 
         SFPLogger.log(
@@ -238,12 +238,12 @@ export default class PrepareOrgJob extends PoolJobExecutor implements PreDeployH
         sfpPackage: SfpPackage
     ) {
         //Resolve external package dependencies
-        let externalPackageResolver = new ExternalPackage2DependencyResolver(
+        const externalPackageResolver = new ExternalPackage2DependencyResolver(
             hubOrg.getConnection(),
             ProjectConfig.getSFDXProjectConfig(null),
             keys
         );
-        let externalPackage2s = await externalPackageResolver.resolveExternalPackage2DependenciesToVersions(
+        const externalPackage2s = await externalPackageResolver.resolveExternalPackage2DependenciesToVersions(
             [sfpPackage?.packageName]
         );
 
@@ -256,11 +256,11 @@ export default class PrepareOrgJob extends PoolJobExecutor implements PreDeployH
                 logger
             );
             //Display resolved dependenencies
-            let externalDependencyDisplayer = new ExternalDependencyDisplayer(externalPackage2s, logger);
+            const externalDependencyDisplayer = new ExternalDependencyDisplayer(externalPackage2s, logger);
             externalDependencyDisplayer.display();
         }
 
-        let packageCollectionInstaller = new InstallUnlockedPackageCollection(scratchOrgAsSFPOrg, logger);
+        const packageCollectionInstaller = new InstallUnlockedPackageCollection(scratchOrgAsSFPOrg, logger);
         await packageCollectionInstaller.install(externalPackage2s, true, true);
 
         if (sfpPackage) {
@@ -309,7 +309,7 @@ export default class PrepareOrgJob extends PoolJobExecutor implements PreDeployH
         logger: Logger
     ) {
         if (this.checkPointPackages.length > 0) {
-            let isCheckPointSucceded = this.checkPointPackages.some((pkg) =>
+            const isCheckPointSucceded = this.checkPointPackages.some((pkg) =>
                 deploymentResult.deployed.map((packageInfo) => packageInfo.sfpPackage.packageName).includes(pkg.name)
             );
             if (!isCheckPointSucceded) {
@@ -356,7 +356,7 @@ export default class PrepareOrgJob extends PoolJobExecutor implements PreDeployH
     private async prepareVlocityDataPacks(scratchOrg: ScratchOrg, logger: Logger, logLevel: LoggerLevel) {
         if (this.pool.enableVlocity) {
             SFPLogger.log(COLOR_KEY_MESSAGE('Installing Vlocity Configurations..'), LoggerLevel.INFO, logger);
-            let vlocityPackSettingsUpdate: VlocityPackUpdateSettings = new VlocityPackUpdateSettings(
+            const vlocityPackSettingsUpdate: VlocityPackUpdateSettings = new VlocityPackUpdateSettings(
                 null,
                 scratchOrg.username,
                 logger,
@@ -364,7 +364,7 @@ export default class PrepareOrgJob extends PoolJobExecutor implements PreDeployH
             );
             await vlocityPackSettingsUpdate.exec(false);
 
-            let vlocityInitialInstall: VlocityInitialInstall = new VlocityInitialInstall(
+            const vlocityInitialInstall: VlocityInitialInstall = new VlocityInitialInstall(
                 null,
                 scratchOrg.username,
                 logger,

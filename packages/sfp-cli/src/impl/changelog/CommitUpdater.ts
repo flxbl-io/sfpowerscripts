@@ -16,8 +16,8 @@ export default class CommitUpdater {
      * @returns
      */
     update(): void {
-        for (let artifact of this.latestRelease['artifacts']) {
-            let packageChangelog: PackageChangelog = this.readPackageChangelog(
+        for (const artifact of this.latestRelease['artifacts']) {
+            const packageChangelog: PackageChangelog = this.readPackageChangelog(
                 this.packagesToChangelogFilePaths[artifact.name]
             );
 

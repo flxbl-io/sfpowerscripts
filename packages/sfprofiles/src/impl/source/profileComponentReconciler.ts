@@ -55,18 +55,18 @@ export default class ProfileComponentReconciler {
         if (profileObj.userPermissions !== undefined && profileObj.userPermissions.length > 0) {
             //Remove permission that are not present in the target org
             profileObj.userPermissions = profileObj.userPermissions.filter((permission) => {
-                let supported = supportedPermissions.includes(permission.name);
+                const supported = supportedPermissions.includes(permission.name);
                 return supported;
             });
         }
     }
 
     private async removePermissionsBasedOnProjectConfig(profileObj: Profile) {
-        let pluginConfig = await Sfpowerkit.getConfig();
-        let ignorePermissions = pluginConfig.ignoredPermissions || [];
+        const pluginConfig = await Sfpowerkit.getConfig();
+        const ignorePermissions = pluginConfig.ignoredPermissions || [];
         if (profileObj.userPermissions !== undefined && profileObj.userPermissions.length > 0) {
             profileObj.userPermissions = profileObj.userPermissions.filter((permission) => {
-                let supported = !ignorePermissions.includes(permission.name);
+                const supported = !ignorePermissions.includes(permission.name);
                 return supported;
             });
         }
@@ -80,10 +80,10 @@ export default class ProfileComponentReconciler {
         } else {
             profileRetriever = new ProfileRetriever(this.conn);
         }
-        let unsupportedLicencePermissions = profileRetriever.getUnsupportedLicencePermissions(profileObj.userLicense);
+        const unsupportedLicencePermissions = profileRetriever.getUnsupportedLicencePermissions(profileObj.userLicense);
         if (profileObj.userPermissions != null && profileObj.userPermissions.length > 0) {
             profileObj.userPermissions = profileObj.userPermissions.filter((permission) => {
-                let supported = !unsupportedLicencePermissions.includes(permission.name);
+                const supported = !unsupportedLicencePermissions.includes(permission.name);
                 return supported;
             });
         }
@@ -92,7 +92,7 @@ export default class ProfileComponentReconciler {
     private async cleanupUserLicenses(profileObj: Profile) {
         if (!this.isSourceOnly) {
             //Manage licences
-            let userLicenseRetriever = new MetadataRetriever(this.conn, 'UserLicense');
+            const userLicenseRetriever = new MetadataRetriever(this.conn, 'UserLicense');
             const isSupportedLicence = await userLicenseRetriever.isComponentExistsInTheOrg(profileObj.userLicense);
             if (!isSupportedLicence) {
                 delete profileObj.userLicense;
@@ -101,12 +101,12 @@ export default class ProfileComponentReconciler {
     }
 
     private async reconcileApp(profileObj: Profile): Promise<void> {
-        let customApplications = new MetadataRetriever(this.conn, registry.types.customapplication.name);
+        const customApplications = new MetadataRetriever(this.conn, registry.types.customapplication.name);
         if (profileObj.applicationVisibilities !== undefined) {
-            let validArray = [];
+            const validArray = [];
             for (let i = 0; i < profileObj.applicationVisibilities.length; i++) {
-                let cmpObj = profileObj.applicationVisibilities[i];
-                let exist = await customApplications.isComponentExistsInProjectDirectoryOrInOrg(cmpObj.application);
+                const cmpObj = profileObj.applicationVisibilities[i];
+                const exist = await customApplications.isComponentExistsInProjectDirectoryOrInOrg(cmpObj.application);
                 if (exist) {
                     validArray.push(cmpObj);
                 }
@@ -120,16 +120,16 @@ export default class ProfileComponentReconciler {
     }
 
     private async reconcileClasses(profileObj: Profile): Promise<void> {
-        let apexClasses = new MetadataRetriever(this.conn, registry.types.apexclass.name);
+        const apexClasses = new MetadataRetriever(this.conn, registry.types.apexclass.name);
 
         if (profileObj.classAccesses !== undefined) {
             if (!Array.isArray(profileObj.classAccesses)) {
                 profileObj.classAccesses = [profileObj.classAccesses];
             }
-            let validArray = [];
+            const validArray = [];
             for (let i = 0; i < profileObj.classAccesses.length; i++) {
-                let cmpObj = profileObj.classAccesses[i];
-                let exists = await apexClasses.isComponentExistsInProjectDirectoryOrInOrg(cmpObj.apexClass);
+                const cmpObj = profileObj.classAccesses[i];
+                const exists = await apexClasses.isComponentExistsInProjectDirectoryOrInOrg(cmpObj.apexClass);
                 if (exists) {
                     validArray.push(cmpObj);
                 }
@@ -148,15 +148,15 @@ export default class ProfileComponentReconciler {
             if (!Array.isArray(profileObj.fieldPermissions)) {
                 profileObj.fieldPermissions = [profileObj.fieldPermissions];
             }
-            let validArray: ProfileFieldLevelSecurity[] = [];
+            const validArray: ProfileFieldLevelSecurity[] = [];
             for (let i = 0; i < profileObj.fieldPermissions.length; i++) {
-                let fieldRetriever = new MetadataRetriever(
+                const fieldRetriever = new MetadataRetriever(
                     this.conn,
                     registry.types.customobject.children.types.customfield.name
                 );
-                let cmpObj = profileObj.fieldPermissions[i];
-                let parent = cmpObj.field.split('.')[0];
-                let exists = await fieldRetriever.isComponentExistsInProjectDirectoryOrInOrg(cmpObj.field, parent);
+                const cmpObj = profileObj.fieldPermissions[i];
+                const parent = cmpObj.field.split('.')[0];
+                const exists = await fieldRetriever.isComponentExistsInProjectDirectoryOrInOrg(cmpObj.field, parent);
                 if (exists) {
                     validArray.push(cmpObj);
                 }
@@ -170,17 +170,17 @@ export default class ProfileComponentReconciler {
     }
 
     private async reconcileLayouts(profileObj: Profile): Promise<void> {
-        let layoutRetreiver = new MetadataRetriever(this.conn, registry.types.layout.name);
-        let recordTypeRetriever = new MetadataRetriever(
+        const layoutRetreiver = new MetadataRetriever(this.conn, registry.types.layout.name);
+        const recordTypeRetriever = new MetadataRetriever(
             this.conn,
             registry.types.customobject.children.types.recordtype.name
         );
 
         if (profileObj.layoutAssignments !== undefined) {
-            let validArray = [];
+            const validArray = [];
             for (let count = 0; count < profileObj.layoutAssignments.length; count++) {
-                let cmpObj = profileObj.layoutAssignments[count];
-                let exist =
+                const cmpObj = profileObj.layoutAssignments[count];
+                const exist =
                     (await layoutRetreiver.isComponentExistsInProjectDirectoryOrInOrg(cmpObj.layout)) &&
                     (cmpObj.recordType == null ||
                         cmpObj.recordType == undefined ||
@@ -198,16 +198,16 @@ export default class ProfileComponentReconciler {
     }
 
     private async reconcileObjects(profileObj: Profile): Promise<void> {
-        let objectPermissionRetriever = new MetadataRetriever(this.conn, 'ObjectPermissions');
-        let objectRetriever = new MetadataRetriever(this.conn, registry.types.customobject.name);
+        const objectPermissionRetriever = new MetadataRetriever(this.conn, 'ObjectPermissions');
+        const objectRetriever = new MetadataRetriever(this.conn, registry.types.customobject.name);
 
         if (profileObj.objectPermissions !== undefined) {
             if (!Array.isArray(profileObj.objectPermissions)) {
                 profileObj.objectPermissions = [profileObj.objectPermissions];
             }
-            let validArray = [];
+            const validArray = [];
             for (let i = 0; i < profileObj.objectPermissions.length; i++) {
-                let cmpObj = profileObj.objectPermissions[i];
+                const cmpObj = profileObj.objectPermissions[i];
 
                 //Check Object exist in Source Directory
                 let exist = await objectRetriever.isComponentExistsInProjectDirectory(cmpObj.object);
@@ -226,16 +226,16 @@ export default class ProfileComponentReconciler {
     }
 
     private async reconcileCustomMetadata(profileObj: Profile): Promise<void> {
-        let objectRetriever = new MetadataRetriever(this.conn, registry.types.customobject.name);
+        const objectRetriever = new MetadataRetriever(this.conn, registry.types.customobject.name);
 
         if (profileObj.customMetadataTypeAccesses !== undefined) {
             if (!Array.isArray(profileObj.customMetadataTypeAccesses)) {
                 profileObj.customMetadataTypeAccesses = [profileObj.customMetadataTypeAccesses];
             }
-            let validArray = [];
+            const validArray = [];
             for (let i = 0; i < profileObj.customMetadataTypeAccesses.length; i++) {
-                let cmpCM = profileObj.customMetadataTypeAccesses[i];
-                let exist = await objectRetriever.isComponentExistsInProjectDirectoryOrInOrg(cmpCM.name);
+                const cmpCM = profileObj.customMetadataTypeAccesses[i];
+                const exist = await objectRetriever.isComponentExistsInProjectDirectoryOrInOrg(cmpCM.name);
                 if (exist) {
                     validArray.push(cmpCM);
                 }
@@ -249,16 +249,16 @@ export default class ProfileComponentReconciler {
     }
 
     private async reconcileCustomSettings(profileObj: Profile): Promise<void> {
-        let objectRetriever = new MetadataRetriever(this.conn, registry.types.customobject.name);
+        const objectRetriever = new MetadataRetriever(this.conn, registry.types.customobject.name);
 
         if (profileObj.customSettingAccesses !== undefined) {
             if (!Array.isArray(profileObj.customSettingAccesses)) {
                 profileObj.customSettingAccesses = [profileObj.customSettingAccesses];
             }
-            let validArray = [];
+            const validArray = [];
             for (let i = 0; i < profileObj.customSettingAccesses.length; i++) {
-                let cmpCS = profileObj.customSettingAccesses[i];
-                let exist = await objectRetriever.isComponentExistsInProjectDirectoryOrInOrg(cmpCS.name);
+                const cmpCS = profileObj.customSettingAccesses[i];
+                const exist = await objectRetriever.isComponentExistsInProjectDirectoryOrInOrg(cmpCS.name);
                 if (exist) {
                     validArray.push(cmpCS);
                 }
@@ -272,16 +272,16 @@ export default class ProfileComponentReconciler {
     }
 
     private async reconcileExternalDataSource(profileObj: Profile): Promise<void> {
-        let externalDataSourceRetriever = new MetadataRetriever(this.conn, registry.types.externaldatasource.name);
+        const externalDataSourceRetriever = new MetadataRetriever(this.conn, registry.types.externaldatasource.name);
 
         if (profileObj.externalDataSourceAccesses !== undefined) {
             if (!Array.isArray(profileObj.externalDataSourceAccesses)) {
                 profileObj.externalDataSourceAccesses = [profileObj.externalDataSourceAccesses];
             }
-            let validArray = [];
+            const validArray = [];
             for (let i = 0; i < profileObj.externalDataSourceAccesses.length; i++) {
-                let dts = profileObj.externalDataSourceAccesses[i];
-                let exist = await externalDataSourceRetriever.isComponentExistsInProjectDirectoryOrInOrg(
+                const dts = profileObj.externalDataSourceAccesses[i];
+                const exist = await externalDataSourceRetriever.isComponentExistsInProjectDirectoryOrInOrg(
                     dts.externalDataSource
                 );
                 if (exist) {
@@ -297,16 +297,16 @@ export default class ProfileComponentReconciler {
     }
 
     private async reconcileFlow(profileObj: Profile): Promise<void> {
-        let flowRetreiver = new MetadataRetriever(this.conn, registry.types.flow.name);
+        const flowRetreiver = new MetadataRetriever(this.conn, registry.types.flow.name);
 
         if (profileObj.flowAccesses !== undefined) {
             if (!Array.isArray(profileObj.flowAccesses)) {
                 profileObj.flowAccesses = [profileObj.flowAccesses];
             }
-            let validArray = [];
+            const validArray = [];
             for (let i = 0; i < profileObj.flowAccesses.length; i++) {
-                let flow = profileObj.flowAccesses[i];
-                let exist = await flowRetreiver.isComponentExistsInProjectDirectoryOrInOrg(flow.flow);
+                const flow = profileObj.flowAccesses[i];
+                const exist = await flowRetreiver.isComponentExistsInProjectDirectoryOrInOrg(flow.flow);
                 if (exist) {
                     validArray.push(flow);
                 }
@@ -320,24 +320,24 @@ export default class ProfileComponentReconciler {
     }
 
     private async reconcileLoginFlow(profileObj: Profile): Promise<void> {
-        let apexPageRetriver = new MetadataRetriever(this.conn, registry.types.apexpage.name);
+        const apexPageRetriver = new MetadataRetriever(this.conn, registry.types.apexpage.name);
 
-        let flowRetreiver = new MetadataRetriever(this.conn, registry.types.flow.name);
+        const flowRetreiver = new MetadataRetriever(this.conn, registry.types.flow.name);
 
         if (profileObj.loginFlows !== undefined) {
             if (!Array.isArray(profileObj.loginFlows)) {
                 profileObj.loginFlows = [profileObj.loginFlows];
             }
-            let validArray = [];
+            const validArray = [];
             for (let i = 0; i < profileObj.loginFlows.length; i++) {
-                let loginFlow = profileObj.loginFlows[i];
+                const loginFlow = profileObj.loginFlows[i];
                 if (loginFlow.flow !== undefined) {
-                    let exist = await flowRetreiver.isComponentExistsInProjectDirectoryOrInOrg(loginFlow.flow);
+                    const exist = await flowRetreiver.isComponentExistsInProjectDirectoryOrInOrg(loginFlow.flow);
                     if (exist) {
                         validArray.push(loginFlow);
                     }
                 } else if (loginFlow.vfFlowPage !== undefined) {
-                    let exist = await apexPageRetriver.isComponentExistsInProjectDirectoryOrInOrg(loginFlow.vfFlowPage);
+                    const exist = await apexPageRetriver.isComponentExistsInProjectDirectoryOrInOrg(loginFlow.vfFlowPage);
                     if (exist) {
                         validArray.push(loginFlow);
                     }
@@ -352,16 +352,16 @@ export default class ProfileComponentReconciler {
     }
 
     private async reconcileCustomPermission(profileObj: Profile): Promise<void> {
-        let customPermissionsRetriever = new MetadataRetriever(this.conn, registry.types.custompermission.name);
+        const customPermissionsRetriever = new MetadataRetriever(this.conn, registry.types.custompermission.name);
 
         if (profileObj.customPermissions !== undefined) {
             if (!Array.isArray(profileObj.customPermissions)) {
                 profileObj.customPermissions = [profileObj.customPermissions];
             }
-            let validArray = [];
+            const validArray = [];
             for (let i = 0; i < profileObj.customPermissions.length; i++) {
-                let customPermission = profileObj.customPermissions[i];
-                let exist = await customPermissionsRetriever.isComponentExistsInProjectDirectoryOrInOrg(
+                const customPermission = profileObj.customPermissions[i];
+                const exist = await customPermissionsRetriever.isComponentExistsInProjectDirectoryOrInOrg(
                     customPermission.name
                 );
                 if (exist) {
@@ -377,16 +377,16 @@ export default class ProfileComponentReconciler {
     }
 
     private async reconcilePages(profileObj: Profile): Promise<void> {
-        let apexPageRetriver = new MetadataRetriever(this.conn, registry.types.apexpage.name);
+        const apexPageRetriver = new MetadataRetriever(this.conn, registry.types.apexpage.name);
 
         if (profileObj.pageAccesses !== undefined) {
             if (!Array.isArray(profileObj.pageAccesses)) {
                 profileObj.pageAccesses = [profileObj.pageAccesses];
             }
-            let validArray = [];
+            const validArray = [];
             for (let i = 0; i < profileObj.pageAccesses.length; i++) {
-                let cmpObj = profileObj.pageAccesses[i];
-                let exist = await apexPageRetriver.isComponentExistsInProjectDirectoryOrInOrg(cmpObj.apexPage);
+                const cmpObj = profileObj.pageAccesses[i];
+                const exist = await apexPageRetriver.isComponentExistsInProjectDirectoryOrInOrg(cmpObj.apexPage);
                 if (exist) {
                     validArray.push(cmpObj);
                 }
@@ -400,7 +400,7 @@ export default class ProfileComponentReconciler {
     }
 
     private async reconcileRecordTypes(profileObj: Profile): Promise<void> {
-        let recordTypeRetriever = new MetadataRetriever(
+        const recordTypeRetriever = new MetadataRetriever(
             this.conn,
             registry.types.customobject.children.types.recordtype.name
         );
@@ -409,10 +409,10 @@ export default class ProfileComponentReconciler {
             if (!Array.isArray(profileObj.recordTypeVisibilities)) {
                 profileObj.recordTypeVisibilities = [profileObj.recordTypeVisibilities];
             }
-            let validArray = [];
+            const validArray = [];
             for (let i = 0; i < profileObj.recordTypeVisibilities.length; i++) {
-                let cmpObj = profileObj.recordTypeVisibilities[i];
-                let exist = await recordTypeRetriever.isComponentExistsInProjectDirectoryOrInOrg(cmpObj.recordType);
+                const cmpObj = profileObj.recordTypeVisibilities[i];
+                const exist = await recordTypeRetriever.isComponentExistsInProjectDirectoryOrInOrg(cmpObj.recordType);
                 if (exist) {
                     validArray.push(cmpObj);
                 }
@@ -426,16 +426,16 @@ export default class ProfileComponentReconciler {
     }
 
     private async reconcileTabs(profileObj: Profile): Promise<void> {
-        let tabRetriever = new MetadataRetriever(this.conn, registry.types.customtab.name);
+        const tabRetriever = new MetadataRetriever(this.conn, registry.types.customtab.name);
 
         if (profileObj.tabVisibilities !== undefined) {
             if (!Array.isArray(profileObj.tabVisibilities)) {
                 profileObj.tabVisibilities = [profileObj.tabVisibilities];
             }
-            let validArray = [];
+            const validArray = [];
             for (let i = 0; i < profileObj.tabVisibilities.length; i++) {
-                let cmpObj = profileObj.tabVisibilities[i];
-                let exist = await tabRetriever.isComponentExistsInProjectDirectoryOrInOrg(cmpObj.tab);
+                const cmpObj = profileObj.tabVisibilities[i];
+                const exist = await tabRetriever.isComponentExistsInProjectDirectoryOrInOrg(cmpObj.tab);
                 if (exist) {
                     validArray.push(cmpObj);
                 }
@@ -449,9 +449,9 @@ export default class ProfileComponentReconciler {
     }
 
     private async fetchPermissions() {
-        let permissionRetriever = new MetadataRetriever(this.conn, 'UserPermissions');
-        let permissionSets = await permissionRetriever.getComponents();
-        let supportedPermissions = permissionSets.map((elem) => {
+        const permissionRetriever = new MetadataRetriever(this.conn, 'UserPermissions');
+        const permissionSets = await permissionRetriever.getComponents();
+        const supportedPermissions = permissionSets.map((elem) => {
             return elem.fullName;
         });
         return supportedPermissions;
@@ -463,7 +463,7 @@ export default class ProfileComponentReconciler {
         }
 
         //Delete all user Permissions if the profile is standard one
-        let isCustom = profileObj.custom;
+        const isCustom = profileObj.custom;
         if (!isCustom) {
             delete profileObj.userPermissions;
             return;
@@ -473,14 +473,14 @@ export default class ProfileComponentReconciler {
         this.removeUnsupportedUserPermissions(profileObj);
 
         SFPLogger.log('Removed Unsupported User Pemrmisions ', LoggerLevel.TRACE);
-        let userPermissionBuilder: UserPermissionBuilder = new UserPermissionBuilder();
+        const userPermissionBuilder: UserPermissionBuilder = new UserPermissionBuilder();
         //IS sourceonly, use ignorePermission set in sfdxProject.json file
         if (MetadataFiles.sourceOnly) {
             await this.removePermissionsBasedOnProjectConfig(profileObj);
 
             await userPermissionBuilder.handlePermissionDependency(profileObj, []);
         } else {
-            let supportedPermissions = await this.fetchPermissions();
+            const supportedPermissions = await this.fetchPermissions();
             await this.removeUserPermissionNotAvailableInOrg(profileObj, supportedPermissions);
 
             await userPermissionBuilder.handlePermissionDependency(profileObj, supportedPermissions);

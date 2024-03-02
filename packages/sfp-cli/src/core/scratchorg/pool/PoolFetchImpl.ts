@@ -69,7 +69,7 @@ export default class PoolFetchImpl extends PoolBaseImpl {
             SFPLogger.log(`${this.tag} pool has ${availableSo.length} Scratch orgs available`, LoggerLevel.TRACE);
 
             let count = 1;
-            for (let element of availableSo) {
+            for (const element of availableSo) {
                 if (this.authURLEnabledScratchOrg) {
                     if (element.SfdxAuthUrl__c && !isValidSfdxAuthUrl(element.SfdxAuthUrl__c)) {
                         SFPLogger.log(
@@ -86,7 +86,7 @@ export default class PoolFetchImpl extends PoolBaseImpl {
                     `Scratch org ${element.SignupUsername} is allocated from the pool. Expiry date is ${element.ExpirationDate}`,
                     LoggerLevel.TRACE
                 );
-                let soDetail: any = {};
+                const soDetail: any = {};
                 soDetail['Id'] = element.Id;
                 soDetail.orgId = element.ScratchOrg;
                 soDetail.loginURL = element.LoginUrl;
@@ -108,7 +108,7 @@ export default class PoolFetchImpl extends PoolBaseImpl {
 
         for (const soDetail of fetchedSOs) {
             //Login to the org
-            let isLoginSuccessFull = await this.loginToScratchOrgIfSfdxAuthURLExists(soDetail);
+            const isLoginSuccessFull = await this.loginToScratchOrgIfSfdxAuthURLExists(soDetail);
             if (!isLoginSuccessFull) {
                 SFPLogger.log(`Unable to login to scratchorg ${soDetail.username}}`, LoggerLevel.ERROR);
                 fetchedSOs = fetchedSOs.filter((item) => item.username !== soDetail.username);
@@ -124,7 +124,7 @@ export default class PoolFetchImpl extends PoolBaseImpl {
         if (availableSo.length > 0) {
             SFPLogger.log(`${this.tag} pool has ${availableSo.length} Scratch orgs available`, LoggerLevel.TRACE);
 
-            for (let element of availableSo) {
+            for (const element of availableSo) {
                 if (this.authURLEnabledScratchOrg) {
                     if (element.SfdxAuthUrl__c && !isValidSfdxAuthUrl(element.SfdxAuthUrl__c)) {
                         SFPLogger.log(
@@ -135,7 +135,7 @@ export default class PoolFetchImpl extends PoolBaseImpl {
                     }
                 }
 
-                let allocateSO = await new ScratchOrgInfoAssigner(this.hubOrg).setScratchOrgInfo({
+                const allocateSO = await new ScratchOrgInfoAssigner(this.hubOrg).setScratchOrgInfo({
                     Id: element.Id,
                     Allocation_status__c: 'Allocate',
                 });
@@ -195,7 +195,7 @@ export default class PoolFetchImpl extends PoolBaseImpl {
             }
         } else {
             //Login to the org
-            let isLoginSuccessFull = await this.loginToScratchOrgIfSfdxAuthURLExists(soDetail);
+            const isLoginSuccessFull = await this.loginToScratchOrgIfSfdxAuthURLExists(soDetail);
             //Attempt to Fetch Source Tracking Files and silently continue if it fails
             if (isLoginSuccessFull && this.isSourceTrackingToBeSet) {
                 try {

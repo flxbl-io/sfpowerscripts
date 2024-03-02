@@ -99,12 +99,12 @@ export interface MetadataInfo {
 
 export class MetadataInfo {
     static loadMetadataInfo(): MetadataInfo {
-        let metadataInfo: MetadataInfo = {};
-        let resourcePath = path.join(__dirname, '..', '..', '..', 'resources', 'metadatainfo.json');
+        const metadataInfo: MetadataInfo = {};
+        const resourcePath = path.join(__dirname, '..', '..', '..', 'resources', 'metadatainfo.json');
         const fileData = fs.readFileSync(resourcePath, 'utf8');
-        let metadataInfoJSON = JSON.parse(fileData);
+        const metadataInfoJSON = JSON.parse(fileData);
         metadataInfoJSON.metadataObjects.forEach((metadata) => {
-            let metadataDescribe = metadata as MetadataDescribe;
+            const metadataDescribe = metadata as MetadataDescribe;
             if (_.isNil(metadata.suffix)) {
                 if (metadata.xmlName === 'AuraDefinitionBundle') {
                     metadata.suffix = 'cmp';
@@ -126,9 +126,9 @@ export class MetadataInfo {
             //Generate Describe of cheildItems if exists
             if (!_.isNil(metadata.childXmlNames)) {
                 metadata.childXmlNames.forEach((element) => {
-                    let splitedElement = SPLITED_TYPES[element];
+                    const splitedElement = SPLITED_TYPES[element];
                     if (!_.isNil(splitedElement)) {
-                        let childDescribe: MetadataDescribe = {};
+                        const childDescribe: MetadataDescribe = {};
                         childDescribe.directoryName = SPLITED_TYPES[element].folder;
                         childDescribe.suffix = SPLITED_TYPES[element].suffix;
                         childDescribe.xmlName = element;
@@ -146,7 +146,7 @@ export class MetadataInfo {
     }
 
     static getMetadataName(metadataFile: string, validateSourceExtension = true): string {
-        let matcher = metadataFile.match(SOURCE_EXTENSION_REGEX);
+        const matcher = metadataFile.match(SOURCE_EXTENSION_REGEX);
         let extension = '';
         if (matcher) {
             extension = matcher[0];
@@ -184,9 +184,9 @@ export class MetadataInfo {
         ) {
             metadataName = METADATA_INFO.Document.xmlName;
         } else {
-            let keys = Object.keys(METADATA_INFO);
+            const keys = Object.keys(METADATA_INFO);
             for (let i = 0; i < keys.length; i++) {
-                let metaDescribe = METADATA_INFO[keys[i]];
+                const metaDescribe = METADATA_INFO[keys[i]];
                 if (
                     metaDescribe.sourceExtension === extension ||
                     ('.' + metaDescribe.suffix === extension && !validateSourceExtension) ||

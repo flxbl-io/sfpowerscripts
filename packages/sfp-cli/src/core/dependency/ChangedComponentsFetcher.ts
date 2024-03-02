@@ -13,9 +13,9 @@ export default class ChangedComponentsFetcher {
     async fetch(): Promise<Component[]> {
         const components: Component[] = [];
 
-        let git: Git = await Git.initiateRepo();
+        const git: Git = await Git.initiateRepo();
 
-        let projectConfig = ProjectConfig.getSFDXProjectConfig(null);
+        const projectConfig = ProjectConfig.getSFDXProjectConfig(null);
 
         if (!this.baseBranch.includes('origin')) {
             // for user convenience, use full ref name to avoid errors involving missing local refs
@@ -33,10 +33,10 @@ export default class ChangedComponentsFetcher {
         );
 
         // Apply root forceignore to the diff
-        let ignoreFiles: IgnoreFiles = new IgnoreFiles(fs.readFileSync('.forceignore', 'utf8'));
+        const ignoreFiles: IgnoreFiles = new IgnoreFiles(fs.readFileSync('.forceignore', 'utf8'));
         diff = ignoreFiles.filter(diff);
 
-        let componentSuccesses = this.getComponentSuccessesFromReports();
+        const componentSuccesses = this.getComponentSuccessesFromReports();
 
         if (diff.length > 0) {
             for (const filepath of diff) {
@@ -82,9 +82,9 @@ export default class ChangedComponentsFetcher {
 
         const reportsDir: string = '.sfpowerscripts/mdapiDeployReports';
         if (fs.existsSync(reportsDir)) {
-            let reports = fs.readdirSync(reportsDir);
+            const reports = fs.readdirSync(reportsDir);
             reports.forEach((report) => {
-                let data = JSON.parse(fs.readFileSync(path.join(reportsDir, report), 'utf8'));
+                const data = JSON.parse(fs.readFileSync(path.join(reportsDir, report), 'utf8'));
                 componentSuccesses = componentSuccesses.concat(data.result.details.componentSuccesses);
             });
         }

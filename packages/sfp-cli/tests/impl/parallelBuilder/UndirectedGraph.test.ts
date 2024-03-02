@@ -3,18 +3,18 @@ import UndirectedGraph from '../../../src/impl/parallelBuilder/UndirectedGraph';
 
 describe('Given an Undirected Graph class', () => {
     it('should initialise with an empty adjacency list', () => {
-        let graph = new UndirectedGraph();
+        const graph = new UndirectedGraph();
         expect(graph.adjacencyList).toEqual({});
     });
 
     it('should be able to add new vertices', () => {
-        let graph = new UndirectedGraph();
+        const graph = new UndirectedGraph();
         graph.addVertex('A');
         expect(graph.adjacencyList.A).toEqual([]);
     });
 
     it('should throw an error if adding a vertex that already exists', () => {
-        let graph = new UndirectedGraph();
+        const graph = new UndirectedGraph();
         graph.addVertex('A');
         expect(() => {
             graph.addVertex('A');
@@ -22,7 +22,7 @@ describe('Given an Undirected Graph class', () => {
     });
 
     it('should be able to add a bi-directional edge between two vertices', () => {
-        let graph = new UndirectedGraph();
+        const graph = new UndirectedGraph();
         graph.addVertex('A');
         graph.addVertex('B');
         graph.addEdge('A', 'B');
@@ -30,7 +30,7 @@ describe('Given an Undirected Graph class', () => {
     });
 
     it('should throw an error if adding an edge between vertices that do not exist', () => {
-        let graph = new UndirectedGraph();
+        const graph = new UndirectedGraph();
         graph.addVertex('A');
         graph.addVertex('B');
 
@@ -46,7 +46,7 @@ describe('Given an Undirected Graph class', () => {
     });
 
     it('should throw an error if adding an edge to a single vertex', () => {
-        let graph = new UndirectedGraph();
+        const graph = new UndirectedGraph();
         graph.addVertex('A');
 
         expect(() => {
@@ -55,7 +55,7 @@ describe('Given an Undirected Graph class', () => {
     });
 
     it('should be able to list the vertices in a graph, using depth-first search from a given vertex', () => {
-        let graph = new UndirectedGraph();
+        const graph = new UndirectedGraph();
         graph.addVertex('A');
         graph.addVertex('B');
         graph.addVertex('C');
@@ -85,7 +85,7 @@ describe('Given an Undirected Graph class', () => {
     });
 
     it('should throw an error when attempting to perform dfs from a non-existent vertex', () => {
-        let graph = new UndirectedGraph();
+        const graph = new UndirectedGraph();
         expect(() => {
             graph.dfs('A');
         }).toThrowError("Vertex 'A' does not exist");

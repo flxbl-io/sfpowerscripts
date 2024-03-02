@@ -23,8 +23,8 @@ export default class BuildCollections {
     private createGraphOfBuildCollections(projectDirectory: string) {
         this._graph = new UndirectedGraph();
 
-        let projectConfig = ProjectConfig.getSFDXProjectConfig(projectDirectory);
-        for (let pkg of projectConfig.packageDirectories) {
+        const projectConfig = ProjectConfig.getSFDXProjectConfig(projectDirectory);
+        for (const pkg of projectConfig.packageDirectories) {
             if (pkg.buildCollection) {
                 if (pkg.buildCollection instanceof Array) {
                     if (!this._graph.adjacencyList[pkg.package]) this._graph.addVertex(pkg.package);

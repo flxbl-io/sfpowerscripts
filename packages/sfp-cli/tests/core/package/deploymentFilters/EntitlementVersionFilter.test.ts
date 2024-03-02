@@ -42,8 +42,8 @@ describe('Filter entitlements during deployment', () => {
 
     it('Should return a component set by filtering entitlement versions which are existing in the org', async () => {
       
-        let org = await createOrg();
-        let records: AnyJson = {
+        const org = await createOrg();
+        const records: AnyJson = {
             records: [
                 {
                     Name: 'TestEntitlement1',
@@ -82,13 +82,13 @@ describe('Filter entitlements during deployment', () => {
             fsPaths: ['/metadata/entitlementProcesses'],
             tree: virtualTree,
         });
-        let entitlementVersionFilter:EntitlementVersionFilter=new EntitlementVersionFilter();
+        const entitlementVersionFilter:EntitlementVersionFilter=new EntitlementVersionFilter();
         entitlementSetting={
             "enableEntitlementVersioning":true
         };
-        let modifiedComponentSet = await entitlementVersionFilter.apply(org,componentSet,new ConsoleLogger());
+        const modifiedComponentSet = await entitlementVersionFilter.apply(org,componentSet,new ConsoleLogger());
         
-        let sourceComponents = modifiedComponentSet.getSourceComponents().toArray();
+        const sourceComponents = modifiedComponentSet.getSourceComponents().toArray();
         expect(sourceComponents.find((element)=>element.name==`testentitlement1_v1`)).toBeUndefined();
         expect(sourceComponents.find((element)=>element.name==`testentitlement2_v1`)).toBeDefined();
 
@@ -98,8 +98,8 @@ describe('Filter entitlements during deployment', () => {
 
     it('Should only return component sets when the version number is higher than whats existing in the org', async () => {
         entitlementSetting={enableEntitlementVersioning:true};
-        let org = await createOrg();
-        let records: AnyJson = {
+        const org = await createOrg();
+        const records: AnyJson = {
             records: [
                 {
                     Name: 'TestEntitlement1',
@@ -148,10 +148,10 @@ describe('Filter entitlements during deployment', () => {
             fsPaths: ['/metadata/entitlementProcesses'],
             tree: virtualTree,
         });
-        let entitlementVersionFilter:EntitlementVersionFilter=new EntitlementVersionFilter();
-        let modifiedComponentSet = await entitlementVersionFilter.apply(org,componentSet,new ConsoleLogger());
+        const entitlementVersionFilter:EntitlementVersionFilter=new EntitlementVersionFilter();
+        const modifiedComponentSet = await entitlementVersionFilter.apply(org,componentSet,new ConsoleLogger());
         
-        let sourceComponents = modifiedComponentSet.getSourceComponents().toArray();
+        const sourceComponents = modifiedComponentSet.getSourceComponents().toArray();
         expect(sourceComponents.find((element)=>element.name==`testentitlement1_v1`)).toBeUndefined();
         expect(sourceComponents.find((element)=>element.name==`testentitlement2_v1`)).toBeUndefined();
         expect(sourceComponents.find((element)=>element.name==`testentitlement2_v2`)).toBeDefined();
@@ -163,8 +163,8 @@ describe('Filter entitlements during deployment', () => {
 
     it('should return all components when there are no existing versions in the org', async () => {
         entitlementSetting={enableEntitlementVersioning:true};
-        let org = await createOrg();
-        let records: AnyJson = {
+        const org = await createOrg();
+        const records: AnyJson = {
             records: [
             ],
         };
@@ -197,10 +197,10 @@ describe('Filter entitlements during deployment', () => {
             fsPaths: ['/metadata/entitlementProcesses'],
             tree: virtualTree,
         });
-        let entitlementVersionFilter:EntitlementVersionFilter=new EntitlementVersionFilter();
-        let modifiedComponentSet = await entitlementVersionFilter.apply(org,componentSet,new ConsoleLogger());
+        const entitlementVersionFilter:EntitlementVersionFilter=new EntitlementVersionFilter();
+        const modifiedComponentSet = await entitlementVersionFilter.apply(org,componentSet,new ConsoleLogger());
         
-        let sourceComponents = modifiedComponentSet.getSourceComponents().toArray();
+        const sourceComponents = modifiedComponentSet.getSourceComponents().toArray();
         expect(sourceComponents.find((element)=>element.name==`testentitlement1_v1`)).toBeDefined();
         expect(sourceComponents.find((element)=>element.name==`testentitlement2_v1`)).toBeDefined();
 
@@ -210,8 +210,8 @@ describe('Filter entitlements during deployment', () => {
 
     it('should return all components when entitlement versioning is not enabled in the org', async () => {
         entitlementSetting={enableEntitlementVersioning:undefined};
-        let org = await createOrg();
-        let records: AnyJson = {
+        const org = await createOrg();
+        const records: AnyJson = {
             records: [
             ],
         };
@@ -240,10 +240,10 @@ describe('Filter entitlements during deployment', () => {
             fsPaths: ['/metadata/entitlementProcesses'],
             tree: virtualTree,
         });
-        let entitlementVersionFilter:EntitlementVersionFilter=new EntitlementVersionFilter();
-        let modifiedComponentSet = await entitlementVersionFilter.apply(org,componentSet,new ConsoleLogger());
+        const entitlementVersionFilter:EntitlementVersionFilter=new EntitlementVersionFilter();
+        const modifiedComponentSet = await entitlementVersionFilter.apply(org,componentSet,new ConsoleLogger());
         
-        let sourceComponents = modifiedComponentSet.getSourceComponents().toArray();
+        const sourceComponents = modifiedComponentSet.getSourceComponents().toArray();
         expect(sourceComponents.find((element)=>element.name==`TestEntitlement`)).toBeDefined();
 
 
@@ -253,8 +253,8 @@ describe('Filter entitlements during deployment', () => {
 
     it('should return the same components when unable to fetch entitlement settings', async () => {
         entitlementSetting=undefined;
-        let org = await createOrg();
-        let records: AnyJson = {
+        const org = await createOrg();
+        const records: AnyJson = {
             records: [
             ],
         };
@@ -283,10 +283,10 @@ describe('Filter entitlements during deployment', () => {
             fsPaths: ['/metadata/entitlementProcesses'],
             tree: virtualTree,
         });
-        let entitlementVersionFilter:EntitlementVersionFilter=new EntitlementVersionFilter();
-        let modifiedComponentSet = await entitlementVersionFilter.apply(org,componentSet,new ConsoleLogger());
+        const entitlementVersionFilter:EntitlementVersionFilter=new EntitlementVersionFilter();
+        const modifiedComponentSet = await entitlementVersionFilter.apply(org,componentSet,new ConsoleLogger());
         
-        let sourceComponents = modifiedComponentSet.getSourceComponents().toArray();
+        const sourceComponents = modifiedComponentSet.getSourceComponents().toArray();
         expect(sourceComponents.find((element)=>element.name==`TestEntitlement`)).toBeDefined();
 
 

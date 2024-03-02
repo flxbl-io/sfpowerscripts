@@ -91,7 +91,7 @@ export default class SfpPackage extends PackageInfo {
     }
 
     toJSON(): PackageInfo {
-        let castToPackageMetadata = _.cloneDeep(this);
+        const castToPackageMetadata = _.cloneDeep(this);
         delete castToPackageMetadata.workingDirectory;
         delete castToPackageMetadata.mdapiDir;
         delete castToPackageMetadata.projectConfig;

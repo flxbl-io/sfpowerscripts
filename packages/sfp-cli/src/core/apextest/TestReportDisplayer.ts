@@ -8,9 +8,9 @@ export class TestReportDisplayer {
     constructor(private apexTestReport: any, private testOptions: TestOptions, private fileLogger?: any) {}
 
     public printTestSummary(packageCoverage?: number): string {
-        let apexTestReport = { ...this.apexTestReport };
+        const apexTestReport = { ...this.apexTestReport };
         SFPLogger.log('\n\n\n=== Test Summary', LoggerLevel.INFO, this.fileLogger);
-        let table = new Table({
+        const table = new Table({
             head: ['Name', 'Value'],
             chars: ZERO_BORDER_TABLE
         });
@@ -39,7 +39,7 @@ export class TestReportDisplayer {
     public printTestResults(): string {
         SFPLogger.log('=== Test Results', LoggerLevel.INFO, this.fileLogger);
 
-        let table = new Table({
+        const table = new Table({
             head: ['Test Name', 'Outcome', 'Message', 'Runtime (ms)'],
             chars: ZERO_BORDER_TABLE
         });
@@ -77,7 +77,7 @@ export class TestReportDisplayer {
             classesCoveredTable = this.printIndividualClassCoverage(classesCovered);
         }
         if (classesWithInvalidCoverage) {
-            let classInvalidCoverageTable = this.printClassesWithInvalidCoverage(
+            const classInvalidCoverageTable = this.printClassesWithInvalidCoverage(
                 classesWithInvalidCoverage,
                 coverageThreshold
             );
@@ -99,7 +99,7 @@ export class TestReportDisplayer {
     }
 
     private printIndividualClassCoverage(individualClassCoverage: { name: string; coveredPercent: number }[]): string {
-        let table = new Table({
+        const table = new Table({
             head: ['Class', 'Coverage Percent'],
             chars: ZERO_BORDER_TABLE
         });

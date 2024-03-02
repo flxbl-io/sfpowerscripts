@@ -1,7 +1,7 @@
 import ProjectConfig from '../../core/project/ProjectConfig';
 export default class DependencyHelper {
     static getParentsToBeFullFilled(packagesWithParents: AdjacentList, packages: string[]): any {
-        for (let [pkgName, parents] of Object.entries(packagesWithParents)) {
+        for (const [pkgName, parents] of Object.entries(packagesWithParents)) {
             const fulfilledParents = parents.filter((pkg_name) => packages.includes(pkg_name));
             packagesWithParents[pkgName] = fulfilledParents;
         }
@@ -10,14 +10,14 @@ export default class DependencyHelper {
     }
 
     public static getChildsOfAllPackages(projectDirectory: string, filterByPackages?: string[]): AdjacentList {
-        let projectConfig = ProjectConfig.getSFDXProjectConfig(projectDirectory);
-        let dag: AdjacentList = {};
+        const projectConfig = ProjectConfig.getSFDXProjectConfig(projectDirectory);
+        const dag: AdjacentList = {};
 
         for (const sfdx_package of projectConfig['packageDirectories']) {
             if (filterByPackages && !filterByPackages.includes(sfdx_package['package'])) {
                 continue;
             }
-            let dependents: string[] = [];
+            const dependents: string[] = [];
 
             for (const pkg of projectConfig['packageDirectories']) {
                 if (pkg['dependencies'] != null) {
@@ -38,11 +38,11 @@ export default class DependencyHelper {
     }
 
     public static getParentsOfAllPackages(projectDirectory: string, filterByPackages?: string[]): AdjacentList {
-        let projectConfig = ProjectConfig.getSFDXProjectConfig(projectDirectory);
-        let dag: AdjacentList = {};
+        const projectConfig = ProjectConfig.getSFDXProjectConfig(projectDirectory);
+        const dag: AdjacentList = {};
 
         //Get The packages in the project directory
-        let packagesInTheProjectDirectoryOnlyByNames: string[] = [];
+        const packagesInTheProjectDirectoryOnlyByNames: string[] = [];
         projectConfig['packageDirectories'].forEach((pkg) => {
             packagesInTheProjectDirectoryOnlyByNames.push(pkg['package']);
         });
@@ -52,7 +52,7 @@ export default class DependencyHelper {
                 continue;
             }
 
-            let parents: string[] = [];
+            const parents: string[] = [];
             if (sfdx_package['dependencies'] != null) {
                 for (const dependent of sfdx_package['dependencies']) {
                     //See the dependents are a package in the project directory

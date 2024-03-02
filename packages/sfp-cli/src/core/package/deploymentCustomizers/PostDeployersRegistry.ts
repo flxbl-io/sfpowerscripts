@@ -6,12 +6,12 @@ import FlowActivator from './FlowActivator';
 
 export class PostDeployersRegistry {
     static getPostDeployers(): DeploymentCustomizer[] {
-        let postDeployers: DeploymentCustomizer[] = [];
+        const postDeployers: DeploymentCustomizer[] = [];
 
         //TODO: Make dynamic
-        let fhtEnabler = new FHTEnabler();
-        let ftEnabler = new FTEnabler();
-        let flowActivator = new FlowActivator();
+        const fhtEnabler = new FHTEnabler();
+        const ftEnabler = new FTEnabler();
+        const flowActivator = new FlowActivator();
         postDeployers.push(fhtEnabler);
         postDeployers.push(ftEnabler);
         postDeployers.push(flowActivator);

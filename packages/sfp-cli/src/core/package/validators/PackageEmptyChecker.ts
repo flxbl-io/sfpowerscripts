@@ -13,7 +13,7 @@ export default class PackageEmptyChecker {
         result: string;
     } {
         let directoryToCheck;
-        let status: { message: string; result: string } = {
+        const status: { message: string; result: string } = {
             message: '',
             result: '',
         };

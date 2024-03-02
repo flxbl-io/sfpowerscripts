@@ -7,7 +7,7 @@ export default class InstalledPackagesDisplayer {
     public static printInstalledPackages(packages: Package2Detail[], logger: Logger) {
         if (packages == null) return;
 
-        let table = new Table({
+        const table = new Table({
             head: ['Package', 'Version', 'Type', 'isOrgDependent'],
             chars: ZERO_BORDER_TABLE
         });

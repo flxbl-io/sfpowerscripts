@@ -74,17 +74,17 @@ export default class ChangelogImpl {
 
         let git:Git;
         try {
-            let artifactFilePaths: Artifact[] = ArtifactFetcher.fetchArtifacts(this.artifactDir);
+            const artifactFilePaths: Artifact[] = ArtifactFetcher.fetchArtifacts(this.artifactDir);
 
             if (artifactFilePaths.length === 0) {
                 throw new Error(`No artifacts found at ${path.resolve(process.cwd(), this.artifactDir)}`);
             }
 
-            let artifactsToSfpPackage: { [p: string]: SfpPackage } = {};
-            let packagesToChangelogFilePaths: { [p: string]: string } = {};
+            const artifactsToSfpPackage: { [p: string]: SfpPackage } = {};
+            const packagesToChangelogFilePaths: { [p: string]: string } = {};
             let artifactSourceBranch: string;
-            for (let artifactFilepath of artifactFilePaths) {
-                let sfpPackage: SfpPackage = await SfpPackageBuilder.buildPackageFromArtifact(
+            for (const artifactFilepath of artifactFilePaths) {
+                const sfpPackage: SfpPackage = await SfpPackageBuilder.buildPackageFromArtifact(
                     artifactFilepath,
                     new ConsoleLogger()
                 );
@@ -109,10 +109,10 @@ export default class ChangelogImpl {
            
             
             //duplicate repo
-            let git=await Git.initiateRepoAtTempLocation(this.logger,null,this.branch);
+            const git=await Git.initiateRepoAtTempLocation(this.logger,null,this.branch);
             SFPLogger.log(`Checking out branch ${this.branch}`,LoggerLevel.INFO,this.logger);
 
-            let pathToChangelogDirectory = this.createDirectory(this.directory, git.getRepositoryPath());
+            const pathToChangelogDirectory = this.createDirectory(this.directory, git.getRepositoryPath());
 
             let releaseChangelog: ReleaseChangelog;
             if (fs.existsSync(path.join(pathToChangelogDirectory, `releasechangelog.json`))) {
@@ -158,7 +158,7 @@ export default class ChangelogImpl {
                 JSON.stringify(releaseChangelog, null, 4)
             );
 
-            let payload: string = new ChangelogMarkdownGenerator(
+            const payload: string = new ChangelogMarkdownGenerator(
                 releaseChangelog,
                 this.workItemUrl,
                 this.limit,

@@ -40,8 +40,8 @@ export default class Package extends SfpCommand {
 
         const impactedPackageResolver = new ImpactedPackageResolver(this.props, new ConsoleLogger());
 
-        let packagesToBeBuiltWithReasons = await impactedPackageResolver.getImpactedPackages();
-        let packageDiffTable = this.createDiffPackageScheduledDisplayedAsATable(packagesToBeBuiltWithReasons);
+        const packagesToBeBuiltWithReasons = await impactedPackageResolver.getImpactedPackages();
+        const packageDiffTable = this.createDiffPackageScheduledDisplayedAsATable(packagesToBeBuiltWithReasons);
         const packagesToBeBuilt = Array.from(packagesToBeBuiltWithReasons.keys());
 
         //Log Packages to be built
@@ -60,13 +60,13 @@ export default class Package extends SfpCommand {
     }
 
     private createDiffPackageScheduledDisplayedAsATable(packagesToBeBuilt: Map<string, any>) {
-        let tableHead = ['Package', 'Reason', 'Last Known Tag'];
-        let table = new Table({
+        const tableHead = ['Package', 'Reason', 'Last Known Tag'];
+        const table = new Table({
             head: tableHead,
             chars: ZERO_BORDER_TABLE,
         });
         for (const pkg of packagesToBeBuilt.keys()) {
-            let item = [
+            const item = [
                 pkg,
                 packagesToBeBuilt.get(pkg).reason,
                 packagesToBeBuilt.get(pkg).tag ? packagesToBeBuilt.get(pkg).tag : '',

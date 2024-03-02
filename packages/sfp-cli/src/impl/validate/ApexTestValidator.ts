@@ -59,8 +59,8 @@ export class ApexTestValidator {
         this.sfpPackage,
         this.props);
 
-    let testOptions: TestOptions = testProps.testOptions;
-    let testCoverageOptions: CoverageOptions = testProps.testCoverageOptions;
+    const testOptions: TestOptions = testProps.testOptions;
+    const testCoverageOptions: CoverageOptions = testProps.testCoverageOptions;
 
 
     if (testProps.testOptions == undefined) {

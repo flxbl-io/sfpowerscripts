@@ -23,9 +23,9 @@ export default class ImpactedPackageResolver {
     }
 
     async getImpactedPackages(): Promise<Map<string, any>> {
-        let projectConfig = ProjectConfig.getSFDXProjectConfig(this.props.projectDirectory);
-        let packagesToBeBuilt = this.getPackagesToBeBuilt(this.props.projectDirectory);
-        let packagesToBeBuiltWithReasons = await this.filterPackagesToBeBuiltByChanged(
+        const projectConfig = ProjectConfig.getSFDXProjectConfig(this.props.projectDirectory);
+        const packagesToBeBuilt = this.getPackagesToBeBuilt(this.props.projectDirectory);
+        const packagesToBeBuiltWithReasons = await this.filterPackagesToBeBuiltByChanged(
             this.props.projectDirectory,
             projectConfig,
             packagesToBeBuilt
@@ -44,7 +44,7 @@ export default class ImpactedPackageResolver {
     private getPathToForceIgnoreForCurrentStage(projectConfig: any, currentStage: Stage): string {
         let stageForceIgnorePath: string;
 
-        let ignoreFiles: { [key in Stage]: string } = projectConfig.plugins?.sfp?.ignoreFiles;
+        const ignoreFiles: { [key in Stage]: string } = projectConfig.plugins?.sfp?.ignoreFiles;
         if (ignoreFiles) {
             Object.keys(ignoreFiles).forEach((key) => {
                 if (key.toLowerCase() == currentStage) {
@@ -61,8 +61,8 @@ export default class ImpactedPackageResolver {
     }
 
     private async filterPackagesToBeBuiltByChanged(projectDirectory: string,projectConfig:any, allPackagesInRepo: any) {
-        let packagesToBeBuilt = new Map<string, any>();
-        let buildCollections = new BuildCollections(projectDirectory);
+        const packagesToBeBuilt = new Map<string, any>();
+        const buildCollections = new BuildCollections(projectDirectory);
         if (this.props.diffOptions)
             this.props.diffOptions.pathToReplacementForceIgnore = this.getPathToForceIgnoreForCurrentStage(
                 projectConfig,
@@ -70,13 +70,13 @@ export default class ImpactedPackageResolver {
             );
 
         for await (const pkg of allPackagesInRepo) {
-            let diffImpl: PackageDiffImpl = new PackageDiffImpl(
+            const diffImpl: PackageDiffImpl = new PackageDiffImpl(
                 this.logger,
                 pkg,
                 this.props.projectDirectory,
                 this.props.diffOptions
             );
-            let packageDiffCheck = await diffImpl.exec();
+            const packageDiffCheck = await diffImpl.exec();
 
             if (packageDiffCheck.isToBeBuilt) {
                 packagesToBeBuilt.set(pkg, {
@@ -99,8 +99,8 @@ export default class ImpactedPackageResolver {
     }
 
     private getPackagesToBeBuilt(projectDirectory: string, includeOnlyPackages?: string[]): string[] {
-        let projectConfig = ProjectConfig.getSFDXProjectConfig(projectDirectory);
-        let sfdxpackages = [];
+        const projectConfig = ProjectConfig.getSFDXProjectConfig(projectDirectory);
+        const sfdxpackages = [];
 
         let packageDescriptors = projectConfig['packageDirectories'].filter((pkg) => {
             if (

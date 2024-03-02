@@ -52,12 +52,12 @@ export default class Retrieve extends SfpCommand {
     protected static requiresProject = true;
 
     public async execute(): Promise<any> {
-        let argFolder: string = this.flags.folder;
-        let argProfileList: string[] = this.flags.profilelist;
+        const argFolder: string = this.flags.folder;
+        const argProfileList: string[] = this.flags.profilelist;
 
-        let folders: string[] = [];
+        const folders: string[] = [];
         if (!isNil(argFolder) && argFolder.length !== 0) {
-            for (let dir of argFolder) {
+            for (const dir of argFolder) {
                 if (!fs.existsSync(dir)) {
                     throw new Error(`The profile path ${dir} does not exist.`);
                 }
@@ -73,7 +73,7 @@ export default class Retrieve extends SfpCommand {
         this.org = await Org.create({ aliasOrUsername: this.flags.targetorg });
         const profileUtils = new ProfileSync(this.org);
 
-        let syncProfiles = await profileUtils.sync(folders, argProfileList || [], this.flags.delete);
+        const syncProfiles = await profileUtils.sync(folders, argProfileList || [], this.flags.delete);
 
         const table = new Table({
             head: ['State', 'Full Name', 'Type', 'Path'],

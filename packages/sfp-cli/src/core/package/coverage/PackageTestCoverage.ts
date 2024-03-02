@@ -20,10 +20,10 @@ export default class PackageTestCoverage {
     }
 
     public async getCurrentPackageTestCoverage(): Promise<number> {
-        let packageClasses: string[] = this.pkg.apexClassWithOutTestClasses;
-        let triggers: string[] = this.pkg.triggers;
+        const packageClasses: string[] = this.pkg.apexClassWithOutTestClasses;
+        const triggers: string[] = this.pkg.triggers;
 
-        let filteredCodeCoverage = this.filterCodeCoverageToPackageClassesAndTriggers(
+        const filteredCodeCoverage = this.filterCodeCoverageToPackageClassesAndTriggers(
             this.codeCoverage,
             packageClasses,
             triggers
@@ -31,7 +31,7 @@ export default class PackageTestCoverage {
 
         let totalLines: number = 0;
         let totalCovered: number = 0;
-        for (let classCoverage of filteredCodeCoverage) {
+        for (const classCoverage of filteredCodeCoverage) {
             if (classCoverage.coveredPercent !== null) {
                 totalLines += classCoverage.totalLines;
                 totalCovered += classCoverage.totalCovered;
@@ -40,24 +40,24 @@ export default class PackageTestCoverage {
 
         let listOfApexClassOrTriggerId: string[] = [];
 
-        let classesNotTouchedByTestClass = this.getClassesNotTouchedByTestClass(packageClasses, this.codeCoverage);
+        const classesNotTouchedByTestClass = this.getClassesNotTouchedByTestClass(packageClasses, this.codeCoverage);
         if (classesNotTouchedByTestClass.length > 0) {
-            let apexClassIds = (
+            const apexClassIds = (
                 await new ApexClassFetcher(this.conn).fetchApexClassByName(classesNotTouchedByTestClass)
             ).map((apexClass) => apexClass.Id);
             listOfApexClassOrTriggerId = listOfApexClassOrTriggerId.concat(apexClassIds);
         }
 
-        let triggersNotTouchedByTestClass = this.getTriggersNotTouchedByTestClass(triggers, this.codeCoverage);
+        const triggersNotTouchedByTestClass = this.getTriggersNotTouchedByTestClass(triggers, this.codeCoverage);
         if (triggersNotTouchedByTestClass.length > 0) {
-            let triggerIds = (
+            const triggerIds = (
                 await new ApexTriggerFetcher(this.conn).fetchApexTriggerByName(triggersNotTouchedByTestClass)
             ).map((trigger) => trigger.Id);
             listOfApexClassOrTriggerId = listOfApexClassOrTriggerId.concat(triggerIds);
         }
 
         if (listOfApexClassOrTriggerId.length > 0) {
-            let recordsOfApexCodeCoverageAggregate = await new ApexCodeCoverageAggregateFetcher(
+            const recordsOfApexCodeCoverageAggregate = await new ApexCodeCoverageAggregateFetcher(
                 this.conn
             ).fetchACCAById(listOfApexClassOrTriggerId);
 
@@ -70,7 +70,7 @@ export default class PackageTestCoverage {
             }
         }
 
-        let testCoverage = Math.floor((totalCovered / totalLines) * 100);
+        const testCoverage = Math.floor((totalCovered / totalLines) * 100);
         this.packageTestCoverage = testCoverage;
         return testCoverage;
     }
@@ -88,7 +88,7 @@ export default class PackageTestCoverage {
             //No Value available
             await this.getCurrentPackageTestCoverage();
 
-        let classesCovered = this.getIndividualClassCoverageByPackage(this.codeCoverage);
+        const classesCovered = this.getIndividualClassCoverageByPackage(this.codeCoverage);
 
         if (coverageThreshold == undefined || coverageThreshold < 75) {
             SFPLogger.log('Setting minimum coverage percentage to 75%.');
@@ -119,7 +119,7 @@ export default class PackageTestCoverage {
         } else if (this.pkg.packageType === PackageType.Source || this.pkg.packageType === PackageType.Diff) {
             SFPLogger.log("Package type is Source. Validating individual class coverage");
 
-            let individualClassValidationResults = this.individualClassCoverage.validateIndividualClassCoverage(
+            const individualClassValidationResults = this.individualClassCoverage.validateIndividualClassCoverage(
                 this.getIndividualClassCoverageByPackage(this.codeCoverage),
                 coverageThreshold
             );
@@ -152,8 +152,8 @@ export default class PackageTestCoverage {
             coveredPercent: number;
         }[] = [];
 
-        let packageClasses: string[] = this.pkg.apexClassWithOutTestClasses;
-        let triggers: string[] = this.pkg.triggers;
+        const packageClasses: string[] = this.pkg.apexClassWithOutTestClasses;
+        const triggers: string[] = this.pkg.triggers;
 
         codeCoverageReport = this.filterCodeCoverageToPackageClassesAndTriggers(
             codeCoverageReport,
@@ -161,7 +161,7 @@ export default class PackageTestCoverage {
             triggers
         );
 
-        for (let classCoverage of codeCoverageReport) {
+        for (const classCoverage of codeCoverageReport) {
             if (classCoverage['coveredPercent'] !== null) {
                 individualClassCoverage.push({
                     name: classCoverage['name'],
@@ -170,13 +170,13 @@ export default class PackageTestCoverage {
             }
         }
 
-        let namesOfClassesWithoutTest: string[] = this.getClassesNotTouchedByTestClass(
+        const namesOfClassesWithoutTest: string[] = this.getClassesNotTouchedByTestClass(
             packageClasses,
             codeCoverageReport
         );
 
         if (namesOfClassesWithoutTest.length > 0) {
-            let classesWithoutTest: {
+            const classesWithoutTest: {
                 name: string;
                 coveredPercent: number;
             }[] = namesOfClassesWithoutTest.map((className) => {
@@ -186,10 +186,10 @@ export default class PackageTestCoverage {
         }
 
         // Check for triggers with no test class
-        let namesOfTriggersWithoutTest: string[] = this.getTriggersNotTouchedByTestClass(triggers, codeCoverageReport);
+        const namesOfTriggersWithoutTest: string[] = this.getTriggersNotTouchedByTestClass(triggers, codeCoverageReport);
 
         if (namesOfTriggersWithoutTest.length > 0) {
-            let triggersWithoutTest: {
+            const triggersWithoutTest: {
                 name: string;
                 coveredPercent: number;
             }[] = namesOfTriggersWithoutTest.map((triggerName) => {
@@ -211,7 +211,7 @@ export default class PackageTestCoverage {
     private getTriggersNotTouchedByTestClass(triggers: string[], codeCoverageReport: any): string[] {
         if (triggers != null) {
             return triggers.filter((trigger) => {
-                for (let classCoverage of codeCoverageReport) {
+                for (const classCoverage of codeCoverageReport) {
                     if (classCoverage['name'] === trigger) {
                         // Filter out triggers if accounted for in coverage json
                         return false;
@@ -232,7 +232,7 @@ export default class PackageTestCoverage {
     private getClassesNotTouchedByTestClass(packageClasses: string[], codeCoverageReport: any): string[] {
         if (packageClasses != null) {
             return packageClasses.filter((packageClass) => {
-                for (let classCoverage of codeCoverageReport) {
+                for (const classCoverage of codeCoverageReport) {
                     if (classCoverage['name'] === packageClass) {
                         // Filter out package class if accounted for in coverage json
                         return false;
@@ -250,15 +250,15 @@ export default class PackageTestCoverage {
      * @param triggers
      */
     private filterCodeCoverageToPackageClassesAndTriggers(codeCoverage, packageClasses: string[], triggers: string[]) {
-        let filteredCodeCoverage = codeCoverage.filter((classCoverage) => {
+        const filteredCodeCoverage = codeCoverage.filter((classCoverage) => {
             if (packageClasses != null) {
-                for (let packageClass of packageClasses) {
+                for (const packageClass of packageClasses) {
                     if (packageClass === classCoverage['name']) return true;
                 }
             }
 
             if (triggers != null) {
-                for (let trigger of triggers) {
+                for (const trigger of triggers) {
                     if (trigger === classCoverage['name']) {
                         return true;
                     }
