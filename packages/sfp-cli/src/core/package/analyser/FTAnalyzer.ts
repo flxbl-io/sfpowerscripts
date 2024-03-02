@@ -10,7 +10,7 @@ export default class FTAnalyser implements PackageAnalyzer {
 
     public getName(): string {
         return "Feed Tracking Analyzer";
-    };
+    }
 
     public async analyze(sfpPackage: SfpPackage, componentSet:ComponentSet, logger:Logger): Promise<SfpPackage> {
         try {
