@@ -82,7 +82,7 @@ export default class ProfileWriter {
                 } else {
                     let data = [];
                     for (let i = 0; i < profileObj[key].length; i++) {
-                        let element = this.removeArrayNatureOnValue(profileObj[key][i]);
+                        let element:string = this.removeArrayNatureOnValue(profileObj[key][i]);
                         if (element !== '') {
                             data.push(element);
                         }

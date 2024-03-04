@@ -53,6 +53,7 @@ export default class ShrinkImpl {
                         for (let i = 0; i < updatedDependencies.length; i++) {
                             if (updatedDependencies[i].package == temp.package) {
                                 updatedDependencies.splice(i, 1);
+                                break;
                             }
                         }
                     }

@@ -27,7 +27,10 @@ inputs:
     token:
         type: string
         required: true
-
+outputs:
+  digest:
+    description: "digest of the image"
+    value: ${{ steps.copy-image.outputs.DIGEST }}
 
 runs:
     using: "composite"
@@ -39,10 +42,15 @@ runs:
 
      - uses: imjasonh/setup-crane@v0.1
 
-     - name: tag image
+     - name: copy image
+       id: copy-image
        shell: bash
        run: |
          echo "${{ inputs.token }}" | crane auth login ${{ inputs.registry }} --username ${{ inputs.username }} --password-stdin
          crane  cp ${{ inputs.registry }}/${{ inputs.repo }}/${{ inputs.image }}:${{ inputs.tag }}  ${{ inputs.registry }}/${{ inputs.repo}}/${{ inputs.image-as }}:${{ inputs.with-tag }}
+         FULL_DIGEST=$(crane digest ${{ inputs.registry }}/${{ inputs.repo }}/${{ inputs.image-as }}:${{ inputs.with-tag }})
+         DIGEST=${FULL_DIGEST#*:}
+         echo "DIGEST=$FULL_DIGEST" >> "$GITHUB_OUTPUT"
+
 
  

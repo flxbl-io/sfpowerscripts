@@ -9,8 +9,8 @@ export default class PackageVersionCoverage {
         const package2VersionFetcher = new Package2VersionFetcher(this.connection);
         const package2Version = await package2VersionFetcher.fetchBySubscriberPackageVersionId(versionId);
         SFPLogger.log(`Fetched Record ${JSON.stringify(package2Version)}`, LoggerLevel.TRACE, this.logger);
+        let packageCoverage = <PackageCoverage>{};
         if (package2Version) {
-            var packageCoverage = <PackageCoverage>{};
             packageCoverage.HasPassedCodeCoverageCheck = package2Version.HasPassedCodeCoverageCheck;
             packageCoverage.coverage = package2Version.CodeCoverage ? package2Version.CodeCoverage.apexCodeCoveragePercentage : 0;
             packageCoverage.packageId = package2Version.Package2Id;

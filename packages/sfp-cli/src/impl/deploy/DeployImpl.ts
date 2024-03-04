@@ -421,10 +421,17 @@ export default class DeployImpl {
 
         if (pkgDescriptor.skipTesting) {
             SFPLogger.log(
-                `Skip Testing: ${COLOR_KEY_MESSAGE(pkgDescriptor.skipTesting ? 'true' : 'false')}`,
+                `Skip Testing: ${COLOR_KEY_MESSAGE('true')}`,
                 LoggerLevel.INFO,
                 this.props.logger
             );
+        }
+        else{
+            SFPLogger.log(
+                `Skip Testing: ${COLOR_KEY_MESSAGE('false')}`,
+                LoggerLevel.INFO,
+                this.props.logger
+            ); 
         }
 
         if (alwaysDeployMessage) SFPLogger.log(alwaysDeployMessage, LoggerLevel.INFO, this.props.logger);

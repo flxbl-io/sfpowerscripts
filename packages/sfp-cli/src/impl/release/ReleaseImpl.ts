@@ -109,7 +109,7 @@ export default class ReleaseImpl {
                 releaseName = succededDeployment.releaseDefinition.release;
                 let releaseDefinition = succededDeployment.releaseDefinition;
                 if (releaseDefinition.changelog) {
-                    if (releaseDefinition.changelog.workItemFilters) {
+                    if (releaseDefinition.changelog?.workItemFilters) {
                         workitemFilters.push(...releaseDefinition.changelog?.workItemFilters);
                     }
                     if (releaseDefinition.changelog.limit > limit) limit = releaseDefinition.changelog.limit;

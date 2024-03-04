@@ -67,7 +67,7 @@ export class ApexTestValidator {
       return { id: null, result: true, message: "No Tests To Run" };
     }
 
-    if (testOptions == undefined) {
+    if (!testOptions) {
       return { id: null, result: true, message: "No Tests To Run" };
     }
 

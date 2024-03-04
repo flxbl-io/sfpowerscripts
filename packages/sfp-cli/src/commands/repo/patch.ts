@@ -157,6 +157,14 @@ export default class Patch extends SfpCommand {
                 'artifacts',
                 releaseDefinition.release.replace(/[/\\?%*:|"<>]/g, '-')
             );
+            if(releaseDefinition.releaseConfigName)
+            {
+                revisedArtifactDirectory = path.join(
+                    'artifacts',
+                    releaseDefinition.releaseConfigName.replace(/[/\\?%*:|"<>]/g, '-'),
+                    releaseDefinition.release.replace(/[/\\?%*:|"<>]/g, '-')
+                );
+            }
 
             let artifacts = ArtifactFetcher.fetchArtifacts(revisedArtifactDirectory, null, logger);
 

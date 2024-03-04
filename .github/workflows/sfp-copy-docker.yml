@@ -30,26 +30,24 @@ on:
           required: true
 jobs:
 
-  build:
+  copy:
     name: 'copy rc docker image to production'
     environment: ${{ inputs.job-environment }}
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      id-token: write 
+
+
     steps:
 
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
 
-    # Install the cosign tool except on PR
-    # https://github.com/sigstore/cosign-installer
-    - name: Install cosign
-      uses: sigstore/cosign-installer@main
-      with:
-        cosign-release: 'v1.7.1'
-
-    - name: Write signing key to disk (only needed for `cosign sign --key`)
-      run: echo "${{ secrets.signing_secret }}" > cosign.key
-
+    - name: Install Cosign
+      uses: sigstore/cosign-installer@v3.4.0
 
     - name: 'Get package version'
       run: |
@@ -67,8 +65,11 @@ jobs:
          token : ${{ secrets.token }}
          username : ${{ secrets.username }}
 
+
+
     - name: 'Copy Docker'
       uses: ./.github/actions/copyDocker
+      id: copy-docker
       with:
          repo: ${{ inputs.repo }}
          image: ${{ inputs.image }}
@@ -79,15 +80,25 @@ jobs:
          username:  ${{ env.DOCKER_USERNAME }}
          token: ${{ env.DOCKER_TOKEN }}
 
-    - name: Sign the published Docker image
-      run: | 
-          cosign sign --key cosign.key \
-            -a "repo=${{ github.repository }}" \
-            -a "workflow=${{ github.workflow }}" \
-            -a "ref=${{ github.sha }}" \
-             ghcr.io/${{ inputs.repo }}/${{ inputs.image-as }}:${{ env.PKG_VERSION }}-${{ github.run_id }}
+
+    - name: Extract Docker metadata
+      id: meta
+      uses: docker/metadata-action@v4.4.0
+      with:
+          images:  ghcr.io/${{ inputs.repo }}/${{ inputs.image-as }}:${{ env.PKG_VERSION }}-${{ github.run_id }}
+
+
+    - name: Sign the images with GitHub OIDC Token
       env:
-       COSIGN_PASSWORD: ${{ secrets.cosign_password }}
+         DIGEST: ${{ steps.copy-docker.outputs.digest }}
+         TAGS:  ghcr.io/${{ inputs.repo }}/${{ inputs.image-as }}:${{ env.PKG_VERSION }}-${{ github.run_id }}
+      run: |
+          images=""
+          for tag in ${TAGS}; do
+            images+="${tag}@${DIGEST} "
+          done
+          cosign sign --yes ${images}
+
 
     - name: 'Tag Docker'
       uses: ./.github/actions/tagDocker

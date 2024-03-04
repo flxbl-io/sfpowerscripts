@@ -5,7 +5,7 @@ import OrgsUpdater from './OrgsUpdater';
 import ReadPackageChangelog from './ReadPackageChangelog';
 import * as fs from 'fs-extra';
 import SfpPackage from '../../core/package/SfpPackage';
-var hash = require('object-hash');
+let hash = require('object-hash');
 
 export default class ReleaseChangelogUpdater {
     constructor(

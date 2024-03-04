@@ -182,8 +182,7 @@ export default class ProfileComponentReconciler {
                 let cmpObj = profileObj.layoutAssignments[count];
                 let exist =
                     (await layoutRetreiver.isComponentExistsInProjectDirectoryOrInOrg(cmpObj.layout)) &&
-                    (cmpObj.recordType == null ||
-                        cmpObj.recordType == undefined ||
+                    (!cmpObj.recordType ||
                         (await recordTypeRetriever.isComponentExistsInProjectDirectoryOrInOrg(cmpObj.recordType)));
                 if (exist) {
                     validArray.push(cmpObj);

@@ -136,8 +136,7 @@ export default class UserPermissionBuilder {
     }
     private addRequiredObjectAccess(profileOrPermissionSet: any, objectAccessRequired: any) {
         if (
-            profileOrPermissionSet.objectPermissions == null ||
-            profileOrPermissionSet.objectPermissions == undefined ||
+            !profileOrPermissionSet.objectPermissions ||
             !Array.isArray(profileOrPermissionSet.objectPermissions)
         ) {
             profileOrPermissionSet.objectPermissions = objectAccessRequired;

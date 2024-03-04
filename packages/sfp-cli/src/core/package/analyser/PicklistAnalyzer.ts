@@ -28,7 +28,7 @@ export default class PicklistAnalyzer implements PackageAnalyzer {
                 }
             }
 
-            if (components) {
+            if (components && components.length > 0) {
                 for (const fieldComponent of components) {
                     let customField = fieldComponent.parseXmlSync().CustomField;
                     //issues/1367

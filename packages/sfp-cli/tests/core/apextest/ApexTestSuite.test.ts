@@ -55,7 +55,7 @@ describe('Provided an apex test suite from a source directory', () => {
     it('should return apexclass even if there is only one', () => {
 
         jest.spyOn(globSync, 'globSync').mockImplementationOnce((pattern: string | string[], options: any) => {
-            return new Array('/path/to/test.testSuite-meta.xml');;
+            return new Array('/path/to/test.testSuite-meta.xml');
         });
 
         const fsReadMock = jest.spyOn(fs, 'readFileSync');

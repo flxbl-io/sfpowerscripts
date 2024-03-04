@@ -769,7 +769,7 @@ export default class ProfileMerge extends ProfileActions {
 
     private removeUnwantedPermissions(profileObjFromServer: Profile, metadatas: any) {
         const  getPermissionsArray = (permissions: any) => {
-            if(permissions == null || permissions == undefined) {
+            if(!permissions) {
                 permissions = [];
             } else if(!Array.isArray(permissions)) {
                 permissions = [permissions];

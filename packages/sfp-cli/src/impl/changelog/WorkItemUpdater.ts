@@ -16,7 +16,7 @@ export default class WorkItemUpdater {
 
         for (let artifact of this.latestRelease['artifacts']) {
             for (let commit of artifact['commits']) {
-                let commitMessage: String = commit['message'] + '\n' + commit['body'];
+                let commitMessage: string = commit['message'] + '\n' + commit['body'];
                 let workItems: RegExpMatchArray = commitMessage.match(workItemFilterRegex);
                 if (workItems) {
                     for (let item of workItems) {

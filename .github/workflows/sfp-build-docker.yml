@@ -33,15 +33,22 @@ jobs:
     name: 'build docker image'
     environment: ${{ inputs.job-environment }}
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      id-token: write 
+
     steps:
 
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
 
+    - name: Install Cosign
+      uses: sigstore/cosign-installer@v3.4.0
 
     - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
+      uses: docker/setup-buildx-action@v3
 
 
     - name: Login to GitHub Container Registry
@@ -56,7 +63,7 @@ jobs:
     # https://github.com/docker/metadata-action
     - name: Extract Docker metadata
       id: meta
-      uses: docker/metadata-action@v3
+      uses: docker/metadata-action@v4.4.0
       with:
           images:  ghcr.io/${{ inputs.repo }}/${{ inputs.image }}
 
@@ -72,7 +79,7 @@ jobs:
 
     - name: Build and push
       id: docker_build
-      uses: docker/build-push-action@v2
+      uses: docker/build-push-action@v5
       with:
           file: dockerfiles/${{inputs.dockerFileName}}.Dockerfile
           context: dockerfiles
@@ -84,6 +91,17 @@ jobs:
                   SFPOWERSCRIPTS_VERSION=${{ env.PKG_VERSION }}
                   GIT_COMMIT=${{ github.sha}}
 
+
+    - name: Sign the images with GitHub OIDC Token
+      env:
+         DIGEST: ${{ steps.docker_build.outputs.digest }}
+         TAGS:  ghcr.io/${{ inputs.repo }}/${{ inputs.image }}:${{ env.PKG_VERSION }}-${{ inputs.suffix-tag }}
+      run: |
+          images=""
+          for tag in ${TAGS}; do
+            images+="${tag}@${DIGEST} "
+          done
+          cosign sign --yes ${images}
 
    #Tag the image as develop
     - name: 'Tag Docker'
