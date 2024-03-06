@@ -102,7 +102,7 @@ export default class OrgInfoDisplayer {
   }
 
     public static writeScratchOrgInfoToJson(scratchOrg: ScratchOrg): void {
-      const pathToMarkDownFile = `org-info.json`;
+      const pathToJsonFile = `org-info.json`;
       const fileOutputHandler = FileOutputHandler.getInstance();
 
       let orgInfo = {
@@ -114,7 +114,7 @@ export default class OrgInfoDisplayer {
         sfdxAthUrl: scratchOrg.sfdxAuthUrl
       };
 
-      fileOutputHandler.writeOutput(pathToMarkDownFile, JSON.stringify(orgInfo, null, 2));
+      fileOutputHandler.writeOutput(pathToJsonFile, JSON.stringify(orgInfo, null, 2));
     }
 
   public static printOrgInfo(org: SFPOrg): void {
