@@ -1,12 +1,12 @@
 import { LoggerLevel, Messages, Org } from '@salesforce/core';
-import SfpCommand from '../SfpCommand';
-import ValidateImpl, { ValidateAgainst, ValidateProps, ValidationMode } from '../impl/validate/ValidateImpl';
-import SFPStatsSender from '../core/stats/SFPStatsSender';
+import SfpCommand from '../../SfpCommand';
+import ValidateImpl, { ValidateAgainst, ValidateProps, ValidationMode } from '../../impl/validate/ValidateImpl';
+import SFPStatsSender from '../../core/stats/SFPStatsSender';
 import SFPLogger, { COLOR_HEADER, COLOR_KEY_MESSAGE } from '@flxblio/sfp-logger';
 import * as fs from 'fs-extra';
-import ValidateError from '../errors/ValidateError';
-import ValidateResult from '../impl/validate/ValidateResult';
-import { arrayFlagSfdxStyle, loglevel, logsgroupsymbol, requiredUserNameFlag, targetdevhubusername } from '../flags/sfdxflags';
+import ValidateError from '../../errors/ValidateError';
+import ValidateResult from '../../impl/validate/ValidateResult';
+import { arrayFlagSfdxStyle, loglevel, logsgroupsymbol, requiredUserNameFlag, targetdevhubusername } from '../../flags/sfdxflags';
 import { Flags } from '@oclif/core';
 
 
@@ -14,7 +14,7 @@ Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('@flxblio/sfp', 'validateAgainstOrg');
 
 export default class ValidateAgainstOrg extends SfpCommand {
-    static aliases = ['orchestrator:validateagainstorg']
+    static aliases = ['orchestrator:validateagainstorg', 'validateagainstorg']
     public static description = messages.getMessage('commandDescription');
 
     public static examples = [`$ sfp validateAgainstOrg -u <targetorg>`];

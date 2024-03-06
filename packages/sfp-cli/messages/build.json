@@ -14,5 +14,5 @@
     "tagFlagDescription": "Tag the build with a label, useful to identify in metrics",
     "logsGroupSymbolFlagDescription": "Symbol used by CICD platform to group/collapse logs in the console. Provide an opening group, and an optional closing group symbol.",
     "releaseConfigFileFlagDescription":"Path to the release config file(s) to limit packages built by domains",
-    "buildOnlyFlagDescription": "Only build artifacts for the provided packages, comma separated list of package names"
+    "buildOnlyFlagDescription": "Only build artifacts for the provided package names,use comma separated list of package names if there are multiple packages"
 }

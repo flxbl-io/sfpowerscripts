@@ -11,5 +11,6 @@
     "allowUnpromotedPackagesFlagDescription": "Allow un-promoted packages to be installed in production",
     "retryOnFailureFlagDescription": "Retry on a failed deployment of a package",
     "configFileFlagDescription":"Path to the config file which determines how the packages are deployed based on the filters in release config",
-    "enableSourceTrackingFlagDescription": "Enable source tracking on the packages being deployed to an org"
+    "enableSourceTrackingFlagDescription": "Enable source tracking on the packages being deployed to an org",
+    "artifactsOnlyFlagDescription": "Only install artifacts for the provided packages, use comma separated list of package names if there are multiple packages"
 }

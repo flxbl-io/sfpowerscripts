@@ -1,6 +1,5 @@
 import ArtifactFetcher, { Artifact } from '../../core/artifacts/ArtifactFetcher';
 import SFPLogger, { COLOR_ERROR, COLOR_SUCCESS, FileLogger, Logger, LoggerLevel } from '@flxblio/sfp-logger';
-import { EOL } from 'os';
 import { Stage } from '../Stage';
 import ProjectConfig from '../../core/project/ProjectConfig';
 import semver = require('semver');
@@ -58,6 +57,7 @@ export interface DeployProps {
     selectiveComponentDeployment?: boolean;
     maxRetryCount?:number;
     releaseConfigPath?:string;
+    filterByProvidedArtifacts?:string[];
 }
 
 export default class DeployImpl {
@@ -99,8 +99,11 @@ export default class DeployImpl {
 
 
             //Filter artifacts based on release config
-            sfpPackages = this.filterSfPPackagesBasedOnReleaseConfig(sfpPackages,this.props.releaseConfigPath,this.props.logger);
-
+            if(this.props.releaseConfigPath)
+             sfpPackages = this.filterSfPPackagesBasedOnReleaseConfig(sfpPackages,this.props.releaseConfigPath,this.props.logger);
+            else if(this.props.filterByProvidedArtifacts)
+               sfpPackages = this.filterSfPPackagesBasedOnArtifacts(sfpPackages,this.props.filterByProvidedArtifacts,this.props.logger);
+             
             //Grab the latest projectConfig from Packages
             let sfpPackageInquirer: SfpPackageInquirer = new SfpPackageInquirer(sfpPackages, this.props.logger);
             let sfdxProjectConfig = sfpPackageInquirer.getLatestProjectConfig();
@@ -341,6 +344,25 @@ export default class DeployImpl {
        }
 
     }
+
+    private filterSfPPackagesBasedOnArtifacts(sfpPackages: SfpPackage[], artifacts:string[],logger:Logger): SfpPackage[] {
+        if(!artifacts || artifacts.length==0)
+        return sfpPackages;
+        else
+        {
+           SFPLogger.log(COLOR_KEY_MESSAGE(`Filtering packages to be deployed based on provided artifacts ${COLOR_KEY_VALUE(artifacts)}`),LoggerLevel.INFO,logger); 
+             //Filter artifacts based on packages
+             let filteredSfPPackages:SfpPackage[] = [];
+ 
+             for (const sfpPackage of sfpPackages) {
+                 if (artifacts.includes(sfpPackage.packageName)) {
+                     filteredSfPPackages.push(sfpPackage);
+                 }
+              }
+          return filteredSfPPackages;
+        }
+ 
+     }
 
 
     private async generateSfpPackageFromArtifacts(artifacts: Artifact[]): Promise<SfpPackage[]> {

@@ -70,13 +70,13 @@ const userNameFlag = Flags.custom({
 });
 
 export const optionalUserNameFlag = userNameFlag({
-  aliases: ['targetusername', 'u'],
-  char: 'u',
+  aliases: ['targetusername', 'u','o'],
+  char: 'o',
 });
 
 export const requiredUserNameFlag = userNameFlag({
-  aliases: ['targetusername', 'u'],
-  char: 'u',
+  aliases: ['targetusername', 'u','o'],
+  char: 'o',
   required: true,
 });
 

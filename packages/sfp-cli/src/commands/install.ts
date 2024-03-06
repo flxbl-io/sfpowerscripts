@@ -26,7 +26,7 @@ export default class Install extends SfpCommand {
     public static description = messages.getMessage('commandDescription');
     static aliases = ['orchestrator:deploy','deploy']
 
-    public static examples = [`$ sfp install -u <username>`];
+    public static examples = [`$ sfp install -o <username>`];
 
     protected static requiresUsername = false;
     protected static requiresDevhubUsername = false;
@@ -64,6 +64,10 @@ export default class Install extends SfpCommand {
             },
             hidden: true,
         }),
+        artifacts: arrayFlagSfdxStyle({
+            char: 'p',
+            description: messages.getMessage('artifactsOnlyFlagDescription'),
+        }),
         retryonfailure: Flags.boolean({
             description: messages.getMessage('retryOnFailureFlagDescription'),
             hidden: true,
@@ -84,6 +88,8 @@ export default class Install extends SfpCommand {
         SFPLogger.log(COLOR_HEADER(`command: ${COLOR_KEY_MESSAGE(`install`)}`));
         SFPLogger.log(COLOR_HEADER(`Skip artifacts if already installed: ${this.flags.skipifalreadyinstalled}`));
         SFPLogger.log(COLOR_HEADER(`Artifact Directory: ${this.flags.artifactdir}`));
+        if(this.flags.artifacts)
+        SFPLogger.log(COLOR_HEADER(`Artifacts to be installed: ${this.flags.artifacts }`));
         SFPLogger.log(COLOR_HEADER(`Target Environment: ${this.flags.targetorg}`));
         if(this.flags.releaseconfig) SFPLogger.log(COLOR_HEADER(`Filter according to: ${this.flags.releaseconfig}`));
         if (this.flags.baselineorg) SFPLogger.log(COLOR_HEADER(`Baselined Against Org: ${this.flags.baselineorg}`));
@@ -112,6 +118,7 @@ export default class Install extends SfpCommand {
             baselineOrg: this.flags.baselineorg,
             isRetryOnFailure: this.flags.retryonfailure,
             releaseConfigPath: this.flags.releaseconfig,
+            filterByProvidedArtifacts: this.flags.artifacts
         };
 
         try {

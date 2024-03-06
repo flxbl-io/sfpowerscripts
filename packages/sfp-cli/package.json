@@ -1,7 +1,7 @@
 {
     "name": "@flxblio/sfp",
     "description": "sfp is a CLI tool to help you manage your Salesforce projects in an artifact centric model",
-    "version": "36.0.10",
+    "version": "36.2.0",
     "license": "MIT",
     "author": "flxblio",
     "release": "February 24",
@@ -17,7 +17,7 @@
         "@flxblio/apexlink": "^2.0.0",
         "@flxblio/sfdx-process-wrapper": "^1.0.3",
         "@flxblio/sfp-logger": "^2.1.3",
-        "@flxblio/sfprofiles": "^3.0.0",
+        "@flxblio/sfprofiles": "^3.1.0",
         "@newrelic/telemetry-sdk": "^0.6.0",
         "@oclif/core": "2.11.8",
         "@oclif/plugin-commands": "^3.0.3",
@@ -112,6 +112,9 @@
             "pool": {
                 "description": "Build and manage scratch org or sandbox pools"
             },
+            "validate": {
+                "description": " Validate a change in your project repository"
+            },
             "changelog": {
                 "description": "Track your artifacts & user stories as they progress through different environments, with release changelogs"
             },
@@ -166,6 +169,7 @@
     },
     "scripts": {
         "build": "pnpm run clean && pnpm run compile",
+        "docs": "oclif readme --no-aliases --multi --dir=docs --repository-prefix https://github.com/flxbl-io/sfp",
         "manifest": "oclif manifest",
         "clean": "rimraf ./lib && rimraf tsconfig.tsbuildinfo",
         "compile": "tsc -b tsconfig.json",
