@@ -24,6 +24,7 @@
         "typescript": "^5"
     },
     "dependencies": {
+        "@types/git-url-parse": "^9.0.3",
         "neverthrow": "^4.2.1",
         "xml-formatter": "^3.3.2"
     }

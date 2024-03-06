@@ -2,7 +2,7 @@ import SFPLogger, { Logger, LoggerLevel } from '@flxbl-io/sfp-logger';
 import * as fs from 'fs-extra';
 import path = require('path');
 import lodash = require('lodash');
-import { URL } from 'url';
+import gitUrlParse = require('git-url-parse');
 import SfpPackage from './SfpPackage';
 
 /**
@@ -84,56 +84,36 @@ export default class SfpPackageInquirer {
      * Verify that artifacts are from the same source repository
      */
     public validateArtifactsSourceRepository(): void {
-        let remoteURL: RemoteURL;
+        let remoteURL: gitUrlParse.GitUrl;
 
         for (let sfpPackage of this.sfpPackages) {
-            let currentRemoteURL: RemoteURL;
-
-            let isHttp: boolean = sfpPackage.repository_url.match(/^https?:\/\//) ? true : false;
-            if (isHttp) {
-                const url = new URL(sfpPackage.repository_url);
-                currentRemoteURL = {
-                    ref: url.toString(),
-                    hostName: url.hostname,
-                    pathName: url.pathname,
-                };
-            } else {
-                // Handle SSH URL separately, as it is not supported by URL module
-                currentRemoteURL = {
-                    ref: sfpPackage.repository_url,
-                    hostName: null,
-                    pathName: null,
-                };
-            }
+            let currentRemoteURL = gitUrlParse(sfpPackage.repository_url);
 
             if (remoteURL == null) {
                 remoteURL = currentRemoteURL;
                 continue;
             }
 
-            let isValid: boolean;
-            if (isHttp) {
-                if (
-                    currentRemoteURL.hostName === remoteURL.hostName &&
-                    currentRemoteURL.pathName === remoteURL.pathName
-                )
-                    isValid = true;
-                else isValid = false;
-            } else {
-                if (currentRemoteURL.ref === remoteURL.ref) isValid = true;
-                else isValid = false;
-            }
+            const propertiesToVerify: string[] = [
+                'source', 'full_name'
+            ];
 
-            if (!isValid) {
-                SFPLogger.log(`remoteURL: ${JSON.stringify(remoteURL)}`, LoggerLevel.DEBUG, this.packageLogger);
-                SFPLogger.log(
-                    `currentRemoteURL: ${JSON.stringify(currentRemoteURL)}`,
-                    LoggerLevel.DEBUG,
-                    this.packageLogger
-                );
-                throw new Error(
-                    `Artifacts must originate from the same source repository, for deployment to work. The artifact ${sfpPackage.packageName} has repository URL that doesn't meet the current repository URL ${JSON.stringify(currentRemoteURL)} not equal ${JSON.stringify(remoteURL)}`
-                );
+            for (let property of propertiesToVerify) {
+                if (currentRemoteURL[property] !== remoteURL[property]) {
+                    SFPLogger.log(
+                        `remoteURL: ${JSON.stringify(remoteURL)}`,
+                        LoggerLevel.DEBUG,
+                        this.packageLogger
+                    );
+                    SFPLogger.log(
+                        `currentRemoteURL: ${JSON.stringify(currentRemoteURL)}`,
+                        LoggerLevel.DEBUG,
+                        this.packageLogger
+                    );
+                    throw new Error(
+                        `Artifacts must originate from the same source repository, for deployment to work. The artifact ${sfpPackage.packageName} has repository URL that doesn't meet the current repository URL ${JSON.stringify(currentRemoteURL)} not equal ${JSON.stringify(remoteURL)}`
+                    );
+                }
             }
         }
     }
