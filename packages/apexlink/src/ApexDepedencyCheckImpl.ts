@@ -1,8 +1,8 @@
 import findJavaHome from 'find-java-home';
-import ExecuteCommand from '@flxblio/sfdx-process-wrapper/lib/commandExecutor/ExecuteCommand';
-import { Logger, LoggerLevel } from '@flxblio/sfp-logger';
-import SFPLogger from '@flxblio/sfp-logger';
-import { ConsoleLogger } from '@flxblio/sfp-logger';
+import ExecuteCommand from '@flxbl-io/sfdx-process-wrapper/lib/commandExecutor/ExecuteCommand';
+import { Logger, LoggerLevel } from '@flxbl-io/sfp-logger';
+import SFPLogger from '@flxbl-io/sfp-logger';
+import { ConsoleLogger } from '@flxbl-io/sfp-logger';
 import * as fs from 'fs-extra';
 import path from 'path';
 

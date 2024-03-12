@@ -2,7 +2,7 @@
 import { AnyJson } from '@salesforce/ts-types';
 import poolListImpl from '../../core/scratchorg/pool/PoolListImpl';
 import ScratchOrg from '../../core/scratchorg/ScratchOrg';
-import SFPLogger, { LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { LoggerLevel } from '@flxbl-io/sfp-logger';
 import { Messages } from '@salesforce/core';
 import SfpCommand from '../../SfpCommand';
 import { Flags, ux } from '@oclif/core';
@@ -13,7 +13,7 @@ Messages.importMessagesDirectory(__dirname);
 
 // Load the specific messages for this file. Messages from @salesforce/command, @salesforce/core,
 // or any library that is using the messages framework can also be loaded this way.
-const messages = Messages.loadMessages('@flxblio/sfp', 'scratchorg_poollist');
+const messages = Messages.loadMessages('@flxbl-io/sfp', 'scratchorg_poollist');
 
 export default class List extends SfpCommand {
     public static description = messages.getMessage('commandDescription');

@@ -1,17 +1,17 @@
-`@flxblio/sfp release`
-======================
+`@flxbl-io/sfp release`
+=======================
 
 Release a set of artifact(s) as defined by a release definition into a target org
 
-* [`@flxblio/sfp release`](#flxbliosfp-release)
+* [`@flxbl-io/sfp release`](#flxbl-iosfp-release)
 
-## `@flxblio/sfp release`
+## `@flxbl-io/sfp release`
 
 Release a set of artifact(s) as defined by a release definition into a target org
 
 ```
 USAGE
-  $ @flxblio/sfp release -p <value> -u <value> [--scope <value> [--npm | -f <value>]] [--npmrcpath <value> ]
+  $ @flxbl-io/sfp release -p <value> -o <value> [--scope <value> [--npm | -f <value>]] [--npmrcpath <value> ]
     [-g <value>] [-t <value>] [--waittime <value>] [--keys <value>] [-d <value>] [-b <value> --generatechangelog] [-v
     <value>] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
@@ -23,10 +23,10 @@ FLAGS
                                       the registry
   -g, --logsgroupsymbol=<value>...    Symbol used by CICD platform to group/collapse logs in the console. Provide an
                                       opening group, and an optional closing group symbol.
+  -o, --targetorg=<value>             (required) Username or alias of the target org.
   -p, --releasedefinition=<value>...  (required) Path to release definiton yaml, Multiple paths can be seperated by
                                       commas
   -t, --tag=<value>                   Tag the release with a label, useful for identification in metrics
-  -u, --targetorg=<value>             (required) Username or alias of the target org.
   -v, --devhubalias=<value>           Username or alias of the Dev Hub org.
       --generatechangelog             Create a release changelog
       --keys=<value>                  Keys to be used while installing any managed package dependencies. Required format
@@ -44,10 +44,10 @@ DESCRIPTION
   Release a set of artifact(s) as defined by a release definition into a target org
 
 ALIASES
-  $ @flxblio/sfp orchestrator release
+  $ @flxbl-io/sfp orchestrator release
 
 EXAMPLES
   sfp release -p path/to/releasedefinition.yml -u myorg --npm --scope myscope --generatechangelog
 ```
 
-_See code: [src/commands/release.ts](https://github.com/flxbl-io/sfp)_
+_See code: [src/commands/release.ts](https://github.com/flxbl-io/sfp/blob/v37.0.1/src/commands/release.ts)_

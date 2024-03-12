@@ -1,11 +1,11 @@
 import { Messages, Org }  from '@salesforce/core';
 import * as _ from 'lodash';
-import { Sfpowerkit } from '@flxblio/sfprofiles/lib/utils/sfpowerkit';
-import SFPLogger, { LoggerLevel } from '@flxblio/sfp-logger';
-import { METADATA_INFO } from '@flxblio/sfprofiles/lib/impl/metadata/metadataInfo';
+import { Sfpowerkit } from '@flxbl-io/sfprofiles/lib/utils/sfpowerkit';
+import SFPLogger, { LoggerLevel } from '@flxbl-io/sfp-logger';
+import { METADATA_INFO } from '@flxbl-io/sfprofiles/lib/impl/metadata/metadataInfo';
 import * as path from 'path';
-import ProfileReconcile from '@flxblio/sfprofiles/lib/impl/source/profileReconcile';
-import MetadataFiles from '@flxblio/sfprofiles/lib/impl/metadata/metadataFiles';
+import ProfileReconcile from '@flxbl-io/sfprofiles/lib/impl/source/profileReconcile';
+import MetadataFiles from '@flxbl-io/sfprofiles/lib/impl/metadata/metadataFiles';
 import SfpCommand from '../../SfpCommand';
 const Table = require('cli-table');
 import { ZERO_BORDER_TABLE } from '../../ui/TableConstants';
@@ -15,15 +15,15 @@ import { arrayFlagSfdxStyle, loglevel, orgApiVersionFlagSfdxStyle, requiredUserN
 Messages.importMessagesDirectory(__dirname);
 
 
-const messages = Messages.loadMessages('@flxblio/sfp', 'profile_reconcile');
+const messages = Messages.loadMessages('@flxbl-io/sfp', 'profile_reconcile');
 
 export default class Reconcile extends SfpCommand {
     public static description = messages.getMessage('commandDescription');
 
     public static examples = [
         `$ sfp profile:reconcile  --folder force-app -d destfolder -s`,
-        `$ sfp profile:reconcile  --folder force-app,module2,module3 -u sandbox -d destfolder`,
-        `$ sfp profile:reconcile  -u myscratchorg -d destfolder`,
+        `$ sfp profile:reconcile  --folder force-app,module2,module3 -o sandbox -d destfolder`,
+        `$ sfp profile:reconcile  -o myscratchorg -d destfolder`,
     ];
 
 

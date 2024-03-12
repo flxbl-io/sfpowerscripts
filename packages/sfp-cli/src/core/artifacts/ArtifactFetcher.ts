@@ -1,6 +1,6 @@
 import path = require('path');
 import * as fs from 'fs-extra';
-import SFPLogger, { Logger, LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { Logger, LoggerLevel } from '@flxbl-io/sfp-logger';
 import { globSync } from 'glob';
 import AdmZip = require('adm-zip');
 import semver = require('semver');

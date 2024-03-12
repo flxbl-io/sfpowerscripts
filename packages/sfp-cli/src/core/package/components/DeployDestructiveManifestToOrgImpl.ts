@@ -1,8 +1,8 @@
-import SFPLogger from '@flxblio/sfp-logger';
+import SFPLogger from '@flxbl-io/sfp-logger';
 import { Connection } from '@salesforce/core';
 import * as fs from 'fs-extra';
 import { delay } from '../../utils/Delay';
-import { LoggerLevel } from '@flxblio/sfp-logger';
+import { LoggerLevel } from '@flxbl-io/sfp-logger';
 import SFPOrg from '../../org/SFPOrg';
 import AdmZip from "adm-zip"
 import path from 'path';

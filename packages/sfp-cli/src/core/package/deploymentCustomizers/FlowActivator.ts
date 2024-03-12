@@ -1,7 +1,7 @@
 import { ComponentSet, registry } from '@salesforce/source-deploy-retrieve';
 import SFPOrg from '../../org/SFPOrg';
 import QueryHelper from '../../queryHelper/QueryHelper';
-import SFPLogger, { COLOR_KEY_MESSAGE, Logger, LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { COLOR_KEY_MESSAGE, Logger, LoggerLevel } from '@flxbl-io/sfp-logger';
 import { activate, deactivate, deleteFlows, Flow, FlowDefinition, getFlowDefinition } from '../../flows/FlowOperations';
 import SfpPackage, { PackageType } from '../SfpPackage';
 import { Connection } from '@salesforce/core';

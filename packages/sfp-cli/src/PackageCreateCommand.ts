@@ -1,5 +1,5 @@
 import ArtifactGenerator from './core/artifacts/generators/ArtifactGenerator';
-import { COLOR_HEADER, COLOR_KEY_MESSAGE, ConsoleLogger } from '@flxblio/sfp-logger';
+import { COLOR_HEADER, COLOR_KEY_MESSAGE, ConsoleLogger } from '@flxbl-io/sfp-logger';
 import PackageDiffImpl from './core/package/diff/PackageDiffImpl';
 import { Messages } from '@salesforce/core';
 import { EOL } from 'os';
@@ -12,7 +12,7 @@ import { Flags } from '@oclif/core';
 import { loglevel } from './flags/sfdxflags';
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('@flxblio/sfp', 'create-package');
+const messages = Messages.loadMessages('@flxbl-io/sfp', 'create-package');
 
 export default abstract class PackageCreateCommand extends SfpCommand {
     protected static requiresUsername = false;

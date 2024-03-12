@@ -1,17 +1,17 @@
-`@flxblio/sfp validateAgainstOrg`
+`@flxbl-io/sfp validateAgainstOrg`
 =================================
 
 Validate a change in your project repository against a provided org
 
-* [`@flxblio/sfp validateAgainstOrg`](#flxbliosfp-validateagainstorg)
+* [`@flxbl-io/sfp validateAgainstOrg`](#flxbliosfp-validateagainstorg)
 
-## `@flxblio/sfp validateAgainstOrg`
+## `@flxbl-io/sfp validateAgainstOrg`
 
 Validate a change in your project repository against a provided org
 
 ```
 USAGE
-  $ @flxblio/sfp validateAgainstOrg -u <value> --mode
+  $ @flxbl-io/sfp validateAgainstOrg -u <value> --mode
     individual|fastfeedback|thorough|ff-release-config|thorough-release-config [--releaseconfig <value>]
     [--coveragepercent <value>] [--diffcheck] [--disableartifactupdate] [-g <value>] [--basebranch <value>] [--orginfo]
     [--installdeps] (--disablesourcepkgoverride -v <value>) [--disableparalleltesting] [--loglevel
@@ -44,7 +44,7 @@ DESCRIPTION
   Validate a change in your project repository against a provided org
 
 ALIASES
-  $ @flxblio/sfp orchestrator validateagainstorg
+  $ @flxbl-io/sfp orchestrator validateagainstorg
 
 EXAMPLES
   $ sfp validateAgainstOrg -u <targetorg>

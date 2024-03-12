@@ -1,18 +1,18 @@
-`@flxblio/sfp impact`
-=====================
+`@flxbl-io/sfp impact`
+======================
 
 Utilities to help you understand the impact of various components in sfp
 
-* [`@flxblio/sfp impact package`](#flxbliosfp-impact-package)
-* [`@flxblio/sfp impact releaseconfig`](#flxbliosfp-impact-releaseconfig)
+* [`@flxbl-io/sfp impact package`](#flxbl-iosfp-impact-package)
+* [`@flxbl-io/sfp impact releaseconfig`](#flxbl-iosfp-impact-releaseconfig)
 
-## `@flxblio/sfp impact package`
+## `@flxbl-io/sfp impact package`
 
 Figures out impacted packages of a project, due to a change from the last known tags
 
 ```
 USAGE
-  $ @flxblio/sfp impact package --basebranch <value> [--loglevel
+  $ @flxbl-io/sfp impact package --basebranch <value> [--loglevel
     trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 FLAGS
@@ -24,15 +24,15 @@ DESCRIPTION
   Figures out impacted packages of a project, due to a change from the last known tags
 ```
 
-_See code: [src/commands/impact/package.ts](https://github.com/flxbl-io/sfp)_
+_See code: [src/commands/impact/package.ts](https://github.com/flxbl-io/sfp/blob/v37.0.1/src/commands/impact/package.ts)_
 
-## `@flxblio/sfp impact releaseconfig`
+## `@flxbl-io/sfp impact releaseconfig`
 
 Figures out impacted release configurations of a project, due to a change,from the last known tags
 
 ```
 USAGE
-  $ @flxblio/sfp impact releaseconfig --basebranch <value> [--loglevel
+  $ @flxbl-io/sfp impact releaseconfig --basebranch <value> [--loglevel
     trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL] [--branch <value>] [--releaseconfig <value>]
     [--explicitDependencyCheck] [--filterBy <value>] [--filterByChangesInBranch]
 
@@ -50,4 +50,4 @@ DESCRIPTION
   Figures out impacted release configurations of a project, due to a change,from the last known tags
 ```
 
-_See code: [src/commands/impact/releaseconfig.ts](https://github.com/flxbl-io/sfp)_
+_See code: [src/commands/impact/releaseconfig.ts](https://github.com/flxbl-io/sfp/blob/v37.0.1/src/commands/impact/releaseconfig.ts)_

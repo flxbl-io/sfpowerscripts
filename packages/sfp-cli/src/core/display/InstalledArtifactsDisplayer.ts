@@ -1,5 +1,5 @@
 const Table = require('cli-table');
-import SFPLogger, { Logger, LoggerLevel, COLOR_KEY_MESSAGE } from '@flxblio/sfp-logger';
+import SFPLogger, { Logger, LoggerLevel, COLOR_KEY_MESSAGE } from '@flxbl-io/sfp-logger';
 import { ZERO_BORDER_TABLE } from './TableConstants';
 
 export default class InstalledArtifactsDisplayer {

@@ -1,4 +1,4 @@
-import SFPLogger, { COLOR_KEY_MESSAGE, Logger, LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { COLOR_KEY_MESSAGE, Logger, LoggerLevel } from '@flxbl-io/sfp-logger';
 import { Connection } from '@salesforce/core';
 import { IpRange, SecuritySettings } from 'jsforce/lib/api/metadata';
 

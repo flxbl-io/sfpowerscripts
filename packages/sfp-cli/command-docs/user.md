@@ -1,17 +1,17 @@
-`@flxblio/sfp user`
+`@flxbl-io/sfp user`
 ===================
 
 Test Elevate
 
-* [`@flxblio/sfp user elevate`](#flxbliosfp-user-elevate)
+* [`@flxbl-io/sfp user elevate`](#flxbliosfp-user-elevate)
 
-## `@flxblio/sfp user elevate`
+## `@flxbl-io/sfp user elevate`
 
 Test Elevate
 
 ```
 USAGE
-  $ @flxblio/sfp user elevate --user <value> --profile <value> -u <value> [--loglevel
+  $ @flxbl-io/sfp user elevate --user <value> --profile <value> -u <value> [--loglevel
     trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 FLAGS

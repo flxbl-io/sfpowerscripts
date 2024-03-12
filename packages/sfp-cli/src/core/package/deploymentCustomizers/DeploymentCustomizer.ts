@@ -1,4 +1,4 @@
-import { Logger } from "@flxblio/sfp-logger";
+import { Logger } from "@flxbl-io/sfp-logger";
 import { Connection } from "@salesforce/core";
 import { ComponentSet } from "@salesforce/source-deploy-retrieve";
 import { DeploymentOptions } from "../../deployers/DeploySourceToOrgImpl";

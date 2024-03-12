@@ -1,4 +1,4 @@
-import SFPLogger, { COLOR_WARNING, Logger } from '@flxblio/sfp-logger';
+import SFPLogger, { COLOR_WARNING, Logger } from '@flxbl-io/sfp-logger';
 import IndividualClassCoverage from '../../apex/coverage/IndividualClassCoverage';
 import SfpPackage, { PackageType } from '../SfpPackage';
 import { Connection } from '@salesforce/core';

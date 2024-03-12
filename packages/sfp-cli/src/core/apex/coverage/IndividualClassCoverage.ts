@@ -1,4 +1,4 @@
-import SFPLogger, { Logger, LoggerLevel } from "@flxblio/sfp-logger"
+import SFPLogger, { Logger, LoggerLevel } from "@flxbl-io/sfp-logger"
 
 export default class IndividualClassCoverage {
     public constructor(private codeCoverage: any, private logger: Logger) {}

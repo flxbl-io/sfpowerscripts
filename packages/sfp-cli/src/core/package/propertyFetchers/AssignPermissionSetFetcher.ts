@@ -1,4 +1,4 @@
-import { Logger } from '@flxblio/sfp-logger';
+import { Logger } from '@flxbl-io/sfp-logger';
 import SfpPackage from '../SfpPackage';
 import PropertyFetcher from './PropertyFetcher';
 

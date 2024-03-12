@@ -80,6 +80,7 @@ export default class SfpPackage extends PackageInfo {
 
     public set packageType(packageType: string) {
         this.package_type = packageType;
+        this.tag = packageType;
     }
     /**
      * Do not use this constructor directly, use SfPPackageBuilder

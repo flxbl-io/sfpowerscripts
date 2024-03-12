@@ -1,7 +1,7 @@
 import SFPStatsSender from './core/stats/SFPStatsSender';
 import * as rimraf from 'rimraf';
 import ProjectValidation from './ProjectValidation';
-import SFPLogger, { COLOR_HEADER, ConsoleLogger, LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { COLOR_HEADER, ConsoleLogger, LoggerLevel } from '@flxbl-io/sfp-logger';
 import GroupConsoleLogs from './ui/GroupConsoleLogs';
 import { Command, Flags, ux } from '@oclif/core';
 import { FlagOutput } from '@oclif/core/lib/interfaces/parser';

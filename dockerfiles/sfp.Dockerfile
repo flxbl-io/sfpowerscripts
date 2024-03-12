@@ -72,7 +72,7 @@ RUN npm install --global yarn --omit-dev \
 # Install SF cli and sfpowerscripts
 RUN npm install --global --omit=dev \
     @salesforce/cli@${SF_CLI_VERSION} \
-    @flxblio/sfp@${SFPOWERSCRIPTS_VERSION} \
+    @flxbl-io/sfp@${SFPOWERSCRIPTS_VERSION} \
     && npm cache clean --force
 
 

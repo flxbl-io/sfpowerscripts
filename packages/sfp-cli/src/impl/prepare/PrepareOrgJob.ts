@@ -1,5 +1,5 @@
 import DeployImpl, { DeploymentMode, DeployProps, DeploymentResult } from '../deploy/DeployImpl';
-import SFPLogger, { LoggerLevel, Logger, COLOR_KEY_MESSAGE, ConsoleLogger } from '@flxblio/sfp-logger';
+import SFPLogger, { LoggerLevel, Logger, COLOR_KEY_MESSAGE, ConsoleLogger } from '@flxbl-io/sfp-logger';
 import { Stage } from '../Stage';
 import SFPStatsSender from '../../core/stats/SFPStatsSender';
 import ScratchOrg from '../../core/scratchorg/ScratchOrg';
@@ -22,7 +22,7 @@ import SfpPackage from '../../core/package/SfpPackage';
 import ExternalPackage2DependencyResolver from '../../core/package/dependencies/ExternalPackage2DependencyResolver';
 import ExternalDependencyDisplayer from '../../core/display/ExternalDependencyDisplayer';
 import ProjectConfig from '../../core/project/ProjectConfig';
-import { FileLogger } from '@flxblio/sfp-logger';
+import { FileLogger } from '@flxbl-io/sfp-logger';
 const fs = require('fs-extra');
 
 const SFPOWERSCRIPTS_ARTIFACT_PACKAGE = '04t1P000000ka9mQAA';

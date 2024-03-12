@@ -1,6 +1,6 @@
 import { LoggerLevel, Org } from '@salesforce/core';
 let retry = require('async-retry');
-import SFPLogger from '@flxblio/sfp-logger';
+import SFPLogger from '@flxbl-io/sfp-logger';
 import ScratchOrgInfoFetcher from '../fetchers/ScratchOrgInfoFetcher';
 import ObjectCRUDHelper from '../../../../utils/ObjectCRUDHelper';
 

@@ -1,6 +1,6 @@
 {
-    "name": "@flxblio/sfp-logger",
-    "version": "2.1.3",
+    "name": "@flxbl-io/sfp-logger",
+    "version": "3.0.1",
     "description": "sfp logger library",
     "main": "lib/SFPLogger.js",
     "types": "lib/SFPLogger.d.ts",

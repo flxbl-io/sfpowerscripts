@@ -1,4 +1,4 @@
-import { Logger, LoggerLevel } from '@flxblio/sfp-logger';
+import { Logger, LoggerLevel } from '@flxbl-io/sfp-logger';
 
 export default class Package2VersionInstaller {
     public constructor(

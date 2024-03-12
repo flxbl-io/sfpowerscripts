@@ -3,7 +3,7 @@ import * as fs from 'fs-extra';
 import { EOL } from 'os';
 import { NativeMetricSender } from './NativeMetricSender';
 import { DataDogMetricsSender } from './nativeMetricSenderImpl/DataDogMetricSender';
-import { Logger } from '@flxblio/sfp-logger';
+import { Logger } from '@flxbl-io/sfp-logger';
 import { NewRelicMetricSender } from './nativeMetricSenderImpl/NewRelicMetricSender';
 import { SplunkMetricSender } from './nativeMetricSenderImpl/SplunkMetricSender';
 

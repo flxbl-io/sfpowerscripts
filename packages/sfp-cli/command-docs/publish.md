@@ -1,17 +1,17 @@
-`@flxblio/sfp publish`
-======================
+`@flxbl-io/sfp publish`
+=======================
 
 Publish packages to a NPM Compatible artifact registry
 
-* [`@flxblio/sfp publish`](#flxbliosfp-publish)
+* [`@flxbl-io/sfp publish`](#flxbl-iosfp-publish)
 
-## `@flxblio/sfp publish`
+## `@flxbl-io/sfp publish`
 
 Publish packages to a NPM Compatible artifact registry
 
 ```
 USAGE
-  $ @flxblio/sfp publish -d <value> [-p -v <value>] [-t <value>] [--gittag] [--gittaglimit <value>]
+  $ @flxbl-io/sfp publish -d <value> [-p -v <value>] [-t <value>] [--gittag] [--gittaglimit <value>]
     [--gittagage <value>] [--pushgittag] [--scope <value> [--npm | -f <value>]] [--npmtag <value> ] [--npmrcpath <value>
     ] [-g <value>] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
@@ -43,10 +43,10 @@ DESCRIPTION
   Publish packages to a NPM Compatible artifact registry
 
 ALIASES
-  $ @flxblio/sfp orchestrator publish
+  $ @flxbl-io/sfp orchestrator publish
 
 EXAMPLES
   $ sfp publish --npm
 ```
 
-_See code: [src/commands/publish.ts](https://github.com/flxbl-io/sfp)_
+_See code: [src/commands/publish.ts](https://github.com/flxbl-io/sfp/blob/v37.0.1/src/commands/publish.ts)_

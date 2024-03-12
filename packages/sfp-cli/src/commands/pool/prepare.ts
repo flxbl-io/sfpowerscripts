@@ -15,16 +15,16 @@ import SFPLogger, {
     COLOR_SUCCESS,
     COLOR_TIME,
     COLOR_KEY_MESSAGE,
-} from '@flxblio/sfp-logger';
+} from '@flxbl-io/sfp-logger';
 import getFormattedTime from '../../core/utils/GetFormattedTime';
 import { PoolConfig } from '../../core/scratchorg/pool/PoolConfig';
-import { COLOR_WARNING } from '@flxblio/sfp-logger';
+import { COLOR_WARNING } from '@flxbl-io/sfp-logger';
 import SFPOrg from '../../core/org/SFPOrg';
 import { Flags } from '@oclif/core';
 import { loglevel, logsgroupsymbol, targetdevhubusername } from '../../flags/sfdxflags';
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('@flxblio/sfp', 'prepare');
+const messages = Messages.loadMessages('@flxbl-io/sfp', 'prepare');
 
 export default class Prepare extends SfpCommand {
 

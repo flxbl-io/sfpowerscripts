@@ -1,6 +1,6 @@
 import { ComponentSet, MetadataConverter } from '@salesforce/source-deploy-retrieve';
 import path from 'path';
-import SFPLogger, { Logger, LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { Logger, LoggerLevel } from '@flxbl-io/sfp-logger';
 
 export default class SourceToMDAPIConvertor {
     public constructor(

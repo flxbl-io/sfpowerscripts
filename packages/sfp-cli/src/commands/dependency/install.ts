@@ -2,7 +2,7 @@ import SfpCommand from '../../SfpCommand';
 import { Messages } from '@salesforce/core';
 import ExternalPackage2DependencyResolver from '../../core/package/dependencies/ExternalPackage2DependencyResolver';
 import ProjectConfig from '../../core/project/ProjectConfig';
-import SFPLogger, { COLOR_KEY_MESSAGE, ConsoleLogger, LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { COLOR_KEY_MESSAGE, ConsoleLogger, LoggerLevel } from '@flxbl-io/sfp-logger';
 import ExternalDependencyDisplayer from '../../core/display/ExternalDependencyDisplayer';
 import InstallUnlockedPackageCollection from '../../core/package/packageInstallers/InstallUnlockedPackageCollection';
 import SFPOrg from '../../core/org/SFPOrg';
@@ -14,7 +14,7 @@ Messages.importMessagesDirectory(__dirname);
 
 // Load the specific messages for this file. Messages from @salesforce/command, @salesforce/core,
 // or any library that is using the messages framework can also be loaded this way.
-const messages = Messages.loadMessages('@flxblio/sfp', 'dependency_install');
+const messages = Messages.loadMessages('@flxbl-io/sfp', 'dependency_install');
 
 export default class Install extends SfpCommand {
     public static description = messages.getMessage('commandDescription');

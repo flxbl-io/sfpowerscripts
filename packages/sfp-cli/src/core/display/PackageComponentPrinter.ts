@@ -1,6 +1,6 @@
 const Table = require('cli-table');
 import { LazyCollection, SourceComponent } from '@salesforce/source-deploy-retrieve';
-import SFPLogger, { Logger, LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { Logger, LoggerLevel } from '@flxbl-io/sfp-logger';
 import { ZERO_BORDER_TABLE } from './TableConstants';
 
 export default class PackageComponentPrinter {

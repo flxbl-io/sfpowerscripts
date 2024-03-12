@@ -1,18 +1,18 @@
 import SfpCommand from '../../SfpCommand';
 import { LoggerLevel, Messages } from '@salesforce/core';
 import SFPOrg from '../../core/org/SFPOrg';
-import SFPLogger, { ConsoleLogger } from '@flxblio/sfp-logger';
+import SFPLogger, { ConsoleLogger } from '@flxbl-io/sfp-logger';
 import { ZERO_BORDER_TABLE } from '../../ui/TableConstants';
 import { loglevel, requiredUserNameFlag } from '../../flags/sfdxflags';
 const Table = require('cli-table');
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('@flxblio/sfp', 'artifacts_query');
+const messages = Messages.loadMessages('@flxbl-io/sfp', 'artifacts_query');
 
 export default class Query extends SfpCommand {
     public static description = messages.getMessage('commandDescription');
 
-    public static examples = [`$ sfp artifacts:query -u <target_org>`];
+    public static examples = [`$ sfp artifacts:query -o <target_org>`];
     public static enableJsonFlag = true
     protected static requiresUsername = true;
     protected static requiresDevhubUsername = false;

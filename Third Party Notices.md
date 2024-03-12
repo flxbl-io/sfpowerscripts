@@ -927,7 +927,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ---
 
-### [@flxblio/forcemula (0.1.2)](https://www.npmjs.com/package/@flxblio/forcemula)
+### [@flxbl-io/forcemula (0.1.2)](https://www.npmjs.com/package/@flxbl-io/forcemula)
 
 
 #### Declared Licenses
@@ -935,7 +935,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 ```
-Copyright (c) 2023, @flxblio/forcemula Contributors
+Copyright (c) 2023, @flxbl-io/forcemula Contributors
 Permission to use, copy, modify, and distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
 THE SOFTWARE IS PROVIDED "AS IS" AND ISC DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL ISC BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ```
@@ -1048,7 +1048,7 @@ SOFTWARE.
 
 ---
 
-### [@flxblio/sfp-logger (1.2.0)](https://www.npmjs.com/package/@flxblio/sfp-logger)
+### [@flxbl-io/sfp-logger (1.2.0)](https://www.npmjs.com/package/@flxbl-io/sfp-logger)
 
 
 #### Declared Licenses
@@ -1101,7 +1101,7 @@ SOFTWARE.
 
 ---
 
-### [@flxblio/sfp (^20.25.4)](https://www.npmjs.com/package/@flxblio/sfp)
+### [@flxbl-io/sfp (^20.25.4)](https://www.npmjs.com/package/@flxbl-io/sfp)
 
 
 #### Declared Licenses
@@ -1188,7 +1188,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ---
 
-### [@flxblio/sfp.core (33.21.2)](https://www.npmjs.com/package/@flxblio/sfp.core)
+### [@flxbl-io/sfp.core (33.21.2)](https://www.npmjs.com/package/@flxbl-io/sfp.core)
 
 
 #### Declared Licenses

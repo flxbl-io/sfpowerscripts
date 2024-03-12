@@ -1,10 +1,10 @@
-import SFPLogger, { Logger, LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { Logger, LoggerLevel } from '@flxbl-io/sfp-logger';
 import PackageMetadataPrinter from '../../display/PackageMetadataPrinter';
 import { InstallPackage, SfpPackageInstallationOptions } from './InstallPackage';
 import SfpPackage from '../SfpPackage';
 import SFPOrg from '../../org/SFPOrg';
 import InstallUnlockedPackageImpl from './InstallUnlockedPackageImpl';
-import { COLOR_KEY_MESSAGE } from '@flxblio/sfp-logger';
+import { COLOR_KEY_MESSAGE } from '@flxbl-io/sfp-logger';
 import { EOL } from 'os';
 
 export default class InstallUnlockedPackage extends InstallPackage {

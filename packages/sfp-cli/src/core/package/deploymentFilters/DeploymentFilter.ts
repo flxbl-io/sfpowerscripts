@@ -1,5 +1,5 @@
 import { ComponentSet } from "@salesforce/source-deploy-retrieve";
-import { Logger } from "@flxblio/sfp-logger";
+import { Logger } from "@flxbl-io/sfp-logger";
 import SFPOrg from "../../org/SFPOrg";
 import { PackageType } from "../SfpPackage";
 

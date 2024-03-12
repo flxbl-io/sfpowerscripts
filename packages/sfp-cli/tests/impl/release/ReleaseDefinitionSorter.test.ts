@@ -1,4 +1,4 @@
-import { ConsoleLogger } from '@flxblio/sfp-logger';
+import { ConsoleLogger } from '@flxbl-io/sfp-logger';
 import ReleaseDefinitionSorter from '../../../src/impl/release/ReleaseDefinitionSorter'; // Adjust the import path to where your function is defined
 import { expect } from '@jest/globals';
 

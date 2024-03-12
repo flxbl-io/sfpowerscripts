@@ -1,4 +1,4 @@
-import { Logger } from '@flxblio/sfp-logger';
+import { Logger } from '@flxbl-io/sfp-logger';
 import { PackageInstallationResult } from '../../core/package/packageInstallers/PackageInstallationResult';
 import SfpPackage from '../../core/package/SfpPackage';
 

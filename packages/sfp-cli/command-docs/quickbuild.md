@@ -1,17 +1,17 @@
-`@flxblio/sfp quickbuild`
-=========================
+`@flxbl-io/sfp quickbuild`
+==========================
 
 Build artifact(s) of your packages in the current project without dependency validation for unlocked packages
 
-* [`@flxblio/sfp quickbuild`](#flxbliosfp-quickbuild)
+* [`@flxbl-io/sfp quickbuild`](#flxbl-iosfp-quickbuild)
 
-## `@flxblio/sfp quickbuild`
+## `@flxbl-io/sfp quickbuild`
 
 Build artifact(s) of your packages in the current project without dependency validation for unlocked packages
 
 ```
 USAGE
-  $ @flxblio/sfp quickbuild -v <value> --branch <value> [--loglevel
+  $ @flxbl-io/sfp quickbuild -v <value> --branch <value> [--loglevel
     trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL] [--apiversion <value>] [--diffcheck] [-p
     <value>] [-r <value>] [-f <value>] [--artifactdir <value>] [--waittime <value>] [--buildnumber <value>]
     [--executorcount <value>] [--tag <value>] [--releaseconfig <value>]
@@ -19,7 +19,8 @@ USAGE
 FLAGS
   -f, --configfilepath=<value>    [default: config/project-scratch-def.json] Path in the current project directory
                                   containing  config file for the packaging org
-  -p, --buildOnly=<value>...      Only build artifacts for the provided packages, comma separated list of package names
+  -p, --buildOnly=<value>...      Only build artifacts for the provided package names,use comma separated list of
+                                  package names if there are multiple packages
   -r, --repourl=<value>           Custom source repository URL to use in artifact metadata, overrides origin URL defined
                                   in git config
   -v, --devhubalias=<value>       (required) Username or alias of the Dev Hub org.
@@ -41,7 +42,7 @@ DESCRIPTION
   Build artifact(s) of your packages in the current project without dependency validation for unlocked packages
 
 ALIASES
-  $ @flxblio/sfp orchestrator quickbuild
+  $ @flxbl-io/sfp orchestrator quickbuild
 ```
 
-_See code: [src/commands/quickbuild.ts](https://github.com/flxbl-io/sfp)_
+_See code: [src/commands/quickbuild.ts](https://github.com/flxbl-io/sfp/blob/v37.0.1/src/commands/quickbuild.ts)_

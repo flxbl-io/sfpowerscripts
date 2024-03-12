@@ -1,7 +1,7 @@
 import DeploymentExecutor, { DeploySourceResult, DeploymentType } from '../../deployers/DeploymentExecutor';
 import ReconcileProfileAgainstOrgImpl from '../components/ReconcileProfileAgainstOrgImpl';
 import DeployDestructiveManifestToOrgImpl from '../components/DeployDestructiveManifestToOrgImpl';
-import SFPLogger, { COLOR_SUCCESS, COLOR_WARNING, Logger, LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { COLOR_SUCCESS, COLOR_WARNING, Logger, LoggerLevel } from '@flxbl-io/sfp-logger';
 import * as fs from 'fs-extra';
 const path = require('path');
 const tmp = require('tmp');
@@ -17,7 +17,7 @@ import { DeploymentFilterRegistry } from '../deploymentFilters/DeploymentFilterR
 import DeploymentOptionDisplayer from '../../display/DeploymentOptionDisplayer';
 import PackageComponentPrinter from '../../display/PackageComponentPrinter';
 import DeployErrorDisplayer from '../../display/DeployErrorDisplayer';
-import { COLOR_ERROR } from '@flxblio/sfp-logger';
+import { COLOR_ERROR } from '@flxbl-io/sfp-logger';
 import { globSync } from 'glob';
 
 export default class InstallSourcePackageImpl extends InstallPackage {

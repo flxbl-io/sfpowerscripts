@@ -1,17 +1,17 @@
-`@flxblio/sfp commands`
-=======================
+`@flxbl-io/sfp commands`
+========================
 
 list all the commands
 
-* [`@flxblio/sfp commands`](#flxbliosfp-commands)
+* [`@flxbl-io/sfp commands`](#flxbl-iosfp-commands)
 
-## `@flxblio/sfp commands`
+## `@flxbl-io/sfp commands`
 
 list all the commands
 
 ```
 USAGE
-  $ @flxblio/sfp commands [--json] [-h] [--hidden] [--tree] [--columns <value> | -x] [--filter <value>]
+  $ @flxbl-io/sfp commands [--json] [-h] [--hidden] [--tree] [--columns <value> | -x] [--filter <value>]
     [--no-header | [--csv | --no-truncate]] [--output csv|json|yaml |  | ] [--sort <value>]
 
 FLAGS
@@ -35,4 +35,4 @@ DESCRIPTION
   list all the commands
 ```
 
-_See code: [@oclif/plugin-commands](https://github.com/flxbl-io/sfp)_
+_See code: [@oclif/plugin-commands](https://github.com/oclif/plugin-commands/blob/v3.0.3/src/commands/commands.ts)_

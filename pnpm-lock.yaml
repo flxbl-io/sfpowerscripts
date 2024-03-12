@@ -62,11 +62,11 @@ importers:
 
     packages/apexlink:
         dependencies:
-            '@flxblio/sfdx-process-wrapper':
-                specifier: ^1.0.3
+            '@flxbl-io/sfdx-process-wrapper':
+                specifier: ^2.0.1
                 version: link:../sfdx-process-wrapper
-            '@flxblio/sfp-logger':
-                specifier: ^2.1.3
+            '@flxbl-io/sfp-logger':
+                specifier: ^3.0.1
                 version: link:../sfplogger
             find-java-home:
                 specifier: 2.0.0
@@ -108,8 +108,8 @@ importers:
 
     packages/sfdx-process-wrapper:
         dependencies:
-            '@flxblio/sfp-logger':
-                specifier: ^2.1.3
+            '@flxbl-io/sfp-logger':
+                specifier: ^3.0.1
                 version: link:../sfplogger
             fs-extra:
                 specifier: ^9.1.0
@@ -127,17 +127,17 @@ importers:
 
     packages/sfp-cli:
         dependencies:
-            '@flxblio/apexlink':
-                specifier: ^2.0.0
+            '@flxbl-io/apexlink':
+                specifier: ^3.0.1
                 version: link:../apexlink
-            '@flxblio/sfdx-process-wrapper':
-                specifier: ^1.0.3
+            '@flxbl-io/sfdx-process-wrapper':
+                specifier: ^2.0.1
                 version: link:../sfdx-process-wrapper
-            '@flxblio/sfp-logger':
-                specifier: ^2.1.3
+            '@flxbl-io/sfp-logger':
+                specifier: ^3.0.1
                 version: link:../sfplogger
-            '@flxblio/sfprofiles':
-                specifier: ^3.1.0
+            '@flxbl-io/sfprofiles':
+                specifier: ^4.0.1
                 version: link:../sfprofiles
             '@newrelic/telemetry-sdk':
                 specifier: ^0.6.0
@@ -345,8 +345,8 @@ importers:
 
     packages/sfprofiles:
         dependencies:
-            '@flxblio/sfp-logger':
-                specifier: ^2.1.3
+            '@flxbl-io/sfp-logger':
+                specifier: ^3.0.1
                 version: link:../sfplogger
             '@salesforce/core':
                 specifier: 6.5.1

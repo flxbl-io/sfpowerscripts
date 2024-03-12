@@ -5,7 +5,7 @@ import MetadataFiles from '../metadata/MetadataFiles';
 import Component from './Component';
 import * as fs from 'fs-extra';
 import path = require('path');
-import SFPLogger, { LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { LoggerLevel } from '@flxbl-io/sfp-logger';
 
 export default class ChangedComponentsFetcher {
     constructor(private baseBranch: string) {}

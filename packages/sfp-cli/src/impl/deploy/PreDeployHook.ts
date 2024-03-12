@@ -1,4 +1,4 @@
-import { Logger } from '@flxblio/sfp-logger';
+import { Logger } from '@flxbl-io/sfp-logger';
 import SfpPackage from '../../core/package/SfpPackage';
 
 export interface PreDeployHook {

@@ -1,5 +1,5 @@
 import { Org } from '@salesforce/core';
-import SFPLogger, { COLOR_KEY_MESSAGE, Logger, LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { COLOR_KEY_MESSAGE, Logger, LoggerLevel } from '@flxbl-io/sfp-logger';
 import Package2Detail from '../package/Package2Detail';
 import SfpPackage from '../package/SfpPackage';
 import QueryHelper from '../queryHelper/QueryHelper';

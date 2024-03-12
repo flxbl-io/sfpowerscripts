@@ -3,7 +3,7 @@ import lodash = require('lodash');
 import Git from '../../git/Git';
 import GitTags from '../../git/GitTags';
 import Package2VersionFetcher, { Package2Version } from '../version/Package2VersionFetcher';
-import SFPLogger, { LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { LoggerLevel } from '@flxbl-io/sfp-logger';
 
 
 /**

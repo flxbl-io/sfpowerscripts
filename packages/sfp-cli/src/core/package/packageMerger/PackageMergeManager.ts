@@ -4,7 +4,7 @@ const tmp = require('tmp');
 import * as fs from 'fs-extra';
 const path = require('path');
 import { ComponentSet, MetadataConverter } from '@salesforce/source-deploy-retrieve';
-import { Logger } from '@flxblio/sfp-logger';
+import { Logger } from '@flxbl-io/sfp-logger';
 
 export default class PackageMergeManager {
     public constructor(private sfpPackages: SfpPackage[], private logger?: Logger) {}

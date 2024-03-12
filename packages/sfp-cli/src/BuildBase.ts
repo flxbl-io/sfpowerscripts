@@ -19,7 +19,7 @@ import SFPLogger, {
     ConsoleLogger,
     LoggerLevel,
     COLOR_KEY_VALUE,
-} from '@flxblio/sfp-logger';
+} from '@flxbl-io/sfp-logger';
 import getFormattedTime from './core/utils/GetFormattedTime';
 import SfpPackage from './core/package/SfpPackage';
 import ReleaseConfigLoader from './impl/release/ReleaseConfigLoader';
@@ -32,7 +32,7 @@ Messages.importMessagesDirectory(__dirname);
 
 // Load the specific messages for this file. Messages from @salesforce/command, @salesforce/core,
 // or any library that is using the messages framework can also be loaded this way.
-const messages = Messages.loadMessages('@flxblio/sfp', 'build');
+const messages = Messages.loadMessages('@flxbl-io/sfp', 'build');
 
 export default abstract class BuildBase extends SfpCommand {
     protected static requiresUsername = false;

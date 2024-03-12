@@ -1,17 +1,17 @@
-`@flxblio/sfp help`
-===================
+`@flxbl-io/sfp help`
+====================
 
-Display help for @flxblio/sfp.
+Display help for @flxbl-io/sfp.
 
-* [`@flxblio/sfp help [COMMANDS]`](#flxbliosfp-help-commands)
+* [`@flxbl-io/sfp help [COMMANDS]`](#flxbl-iosfp-help-commands)
 
-## `@flxblio/sfp help [COMMANDS]`
+## `@flxbl-io/sfp help [COMMANDS]`
 
-Display help for @flxblio/sfp.
+Display help for @flxbl-io/sfp.
 
 ```
 USAGE
-  $ @flxblio/sfp help [COMMANDS] [-n]
+  $ @flxbl-io/sfp help [COMMANDS] [-n]
 
 ARGUMENTS
   COMMANDS  Command to show help for.
@@ -20,7 +20,7 @@ FLAGS
   -n, --nested-commands  Include all nested commands in the output.
 
 DESCRIPTION
-  Display help for @flxblio/sfp.
+  Display help for @flxbl-io/sfp.
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/flxbl-io/sfp)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v5.2.17/src/commands/help.ts)_

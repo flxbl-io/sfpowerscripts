@@ -4,7 +4,7 @@ import ScratchOrg from '../ScratchOrg';
 import { Result } from 'neverthrow';
 import * as fs from 'fs-extra';
 import { EOL } from 'os';
-import SFPLogger, { LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { LoggerLevel } from '@flxbl-io/sfp-logger';
 
 export default abstract class PoolJobExecutor {
     protected logToFilePath: string;

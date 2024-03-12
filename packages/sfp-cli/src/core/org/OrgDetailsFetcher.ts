@@ -1,6 +1,6 @@
 import extractDomainFromUrl from '../utils/extractDomainFromUrl';
 import { convertAliasToUsername } from '../utils/AliasList';
-import SFPLogger, { LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { LoggerLevel } from '@flxbl-io/sfp-logger';
 import ScratchOrgInfoFetcher from './ScratchOrgInfoFetcher';
 import OrganizationFetcher from './OrganizationFetcher';
 import { AuthInfo, Connection, Org, trimTo15 } from '@salesforce/core';

@@ -1,4 +1,4 @@
-import SFPLogger from '@flxblio/sfp-logger';
+import SFPLogger from '@flxbl-io/sfp-logger';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 

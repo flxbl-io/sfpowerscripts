@@ -8,7 +8,7 @@ import FetchArtifactSelector from './FetchArtifactSelector';
 import _ from 'lodash';
 import path from 'path';
 import FileUtils from '../../core/utils/Fileutils';
-import SFPLogger, { Logger, LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { Logger, LoggerLevel } from '@flxbl-io/sfp-logger';
 
 export default class FetchImpl {
     constructor(

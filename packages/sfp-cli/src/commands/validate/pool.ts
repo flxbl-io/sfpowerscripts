@@ -2,16 +2,16 @@ import { Messages } from '@salesforce/core';
 import SfpCommand from '../../SfpCommand';
 import ValidateImpl, { ValidateAgainst, ValidateProps, ValidationMode } from '../../impl/validate/ValidateImpl';
 import SFPStatsSender from '../../core/stats/SFPStatsSender';
-import SFPLogger, { COLOR_HEADER, COLOR_KEY_MESSAGE } from '@flxblio/sfp-logger';
+import SFPLogger, { COLOR_HEADER, COLOR_KEY_MESSAGE } from '@flxbl-io/sfp-logger';
 import ValidateError from '../../errors/ValidateError';
 import ValidateResult from '../../impl/validate/ValidateResult';
 import * as fs from 'fs-extra';
 import { arrayFlagSfdxStyle, loglevel, logsgroupsymbol, targetdevhubusername } from '../../flags/sfdxflags';
 import { Flags } from '@oclif/core';
-import { LoggerLevel } from '@flxblio/sfp-logger';
+import { LoggerLevel } from '@flxbl-io/sfp-logger';
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('@flxblio/sfp', 'validate');
+const messages = Messages.loadMessages('@flxbl-io/sfp', 'validate');
 
 export default class ValidateAgainstPool extends SfpCommand {
     static aliases = ['orchestrator:validate', 'validate']
@@ -85,7 +85,7 @@ export default class ValidateAgainstPool extends SfpCommand {
         disableartifactupdate: Flags.boolean({
             description: messages.getMessage('disableArtifactUpdateFlagDescription'),
             deprecated: {
-                message: "This flag is deprecated, Artifacts used for validation are never recorded in the org "
+                message: "disableartifactupdate flag is deprecated, Artifacts used for validation are never recorded in the org "
             },
             default: false,
         }),

@@ -1,4 +1,4 @@
-import SFPLogger from '@flxblio/sfp-logger';
+import SFPLogger from '@flxbl-io/sfp-logger';
 import { AuthInfo, LoggerLevel, Org } from '@salesforce/core';
 import { PoolBaseImpl } from './PoolBaseImpl';
 import ScratchOrg from '../ScratchOrg';

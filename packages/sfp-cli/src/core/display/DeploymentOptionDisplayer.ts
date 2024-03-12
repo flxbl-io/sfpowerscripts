@@ -1,4 +1,4 @@
-import SFPLogger, { COLOR_HEADER, COLOR_KEY_MESSAGE, Logger, LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { COLOR_HEADER, COLOR_KEY_MESSAGE, Logger, LoggerLevel } from '@flxbl-io/sfp-logger';
 import { TestLevel } from '../apextest/TestOptions';
 import { DeploymentOptions } from '../deployers/DeploySourceToOrgImpl';
 

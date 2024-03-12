@@ -2,7 +2,7 @@ import { jest, expect } from '@jest/globals';
 import DestructiveManifestPathFetcher from '../../../../src/core/package/propertyFetchers/DestructiveManifestPathFetcher';
 import SfpPackage from '../../../../src/core/package/SfpPackage';
 const fs = require('fs-extra');
-import { Logger } from '@flxblio/sfp-logger';
+import { Logger } from '@flxbl-io/sfp-logger';
 import PropertyFetcher from '../../../../src/core/package/propertyFetchers/PropertyFetcher';
 import SfpPackageBuilder from '../../../../src/core/package/SfpPackageBuilder';
 

@@ -1,11 +1,11 @@
 import ArtifactFetcher, { Artifact } from '../../core/artifacts/ArtifactFetcher';
-import SFPLogger, { COLOR_ERROR, COLOR_SUCCESS, FileLogger, Logger, LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { COLOR_ERROR, COLOR_SUCCESS, FileLogger, Logger, LoggerLevel } from '@flxbl-io/sfp-logger';
 import { Stage } from '../Stage';
 import ProjectConfig from '../../core/project/ProjectConfig';
 import semver = require('semver');
 import PromoteUnlockedPackageImpl from '../../core/package/promote/PromoteUnlockedPackageImpl';
 import { DeploymentType } from '../../core/deployers/DeploymentExecutor';
-import { COLOR_KEY_MESSAGE,COLOR_KEY_VALUE,COLOR_HEADER } from '@flxblio/sfp-logger';
+import { COLOR_KEY_MESSAGE,COLOR_KEY_VALUE,COLOR_HEADER } from '@flxbl-io/sfp-logger';
 import {
     PackageInstallationResult,
     PackageInstallationStatus,

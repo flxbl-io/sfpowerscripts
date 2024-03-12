@@ -4,7 +4,7 @@ import SfpCommand from '../../SfpCommand';
 import ProjectConfig from '../../core/project/ProjectConfig';
 import * as fs from 'fs-extra';
 import path = require('path');
-import SFPLogger, { LoggerLevel, Logger } from '@flxblio/sfp-logger';
+import SFPLogger, { LoggerLevel, Logger } from '@flxbl-io/sfp-logger';
 import { Flags } from '@oclif/core';
 import { loglevel, targetdevhubusername } from '../../flags/sfdxflags';
 
@@ -14,7 +14,7 @@ Messages.importMessagesDirectory(__dirname);
 
 // Load the specific messages for this file. Messages from @salesforce/command, @salesforce/core,
 // or any library that is using the messages framework can also be loaded this way.
-const messages = Messages.loadMessages('@flxblio/sfp', 'dependency_shrink');
+const messages = Messages.loadMessages('@flxbl-io/sfp', 'dependency_shrink');
 
 export default class Shrink extends SfpCommand {
     public static description = messages.getMessage('commandDescription');

@@ -3,7 +3,7 @@ import { Stage } from '../Stage';
 import ProjectConfig from '../../core/project/ProjectConfig';
 import { PackageType } from '../../core/package/SfpPackage';
 import * as fs from 'fs-extra';
-import { Logger } from '@flxblio/sfp-logger';
+import { Logger } from '@flxbl-io/sfp-logger';
 import BuildCollections from '../parallelBuilder/BuildCollections';
 
 export interface ImpactedPackageProps {

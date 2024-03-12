@@ -1,6 +1,6 @@
 import ProjectConfig from '../../project/ProjectConfig';
 import * as rimraf from 'rimraf';
-import SFPLogger, { Logger, LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { Logger, LoggerLevel } from '@flxbl-io/sfp-logger';
 import { mkdirpSync } from 'fs-extra';
 import * as fs from 'fs-extra';
 import PackageComponentDiff from '../diff/PackageComponentDiff';

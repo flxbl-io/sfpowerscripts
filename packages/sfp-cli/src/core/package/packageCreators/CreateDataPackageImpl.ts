@@ -1,4 +1,4 @@
-import SFPLogger, { LoggerLevel, Logger } from '@flxblio/sfp-logger';
+import SFPLogger, { LoggerLevel, Logger } from '@flxbl-io/sfp-logger';
 import path from 'path';
 import FileSystem from '../../utils/FileSystem';
 import { CreatePackage } from './CreatePackage';

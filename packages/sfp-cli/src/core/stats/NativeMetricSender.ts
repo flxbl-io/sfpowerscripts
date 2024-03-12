@@ -1,4 +1,4 @@
-import { Logger } from '@flxblio/sfp-logger';
+import { Logger } from '@flxbl-io/sfp-logger';
 
 export abstract class NativeMetricSender {
     constructor(protected logger: Logger) {}

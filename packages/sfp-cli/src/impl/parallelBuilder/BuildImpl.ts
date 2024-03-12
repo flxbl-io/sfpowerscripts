@@ -17,10 +17,10 @@ import SFPLogger, {
 	FileLogger,
 	LoggerLevel,
 	VoidLogger,
-} from "@flxblio/sfp-logger";
-import { COLOR_KEY_MESSAGE } from "@flxblio/sfp-logger";
-import { COLOR_HEADER } from "@flxblio/sfp-logger";
-import { COLOR_ERROR } from "@flxblio/sfp-logger";
+} from "@flxbl-io/sfp-logger";
+import { COLOR_KEY_MESSAGE } from "@flxbl-io/sfp-logger";
+import { COLOR_HEADER } from "@flxbl-io/sfp-logger";
+import { COLOR_ERROR } from "@flxbl-io/sfp-logger";
 import SfpPackage, {
 	PackageType,
 } from "../../core/package/SfpPackage";

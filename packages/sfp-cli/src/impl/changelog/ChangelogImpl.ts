@@ -9,7 +9,7 @@ const TerminalRenderer = require('marked-terminal');
 const retry = require('async-retry');
 import { GitError } from 'simple-git';
 import SfpPackage from '../../core/package/SfpPackage';
-import SFPLogger, { LoggerLevel, ConsoleLogger, Logger } from '@flxblio/sfp-logger';
+import SFPLogger, { LoggerLevel, ConsoleLogger, Logger } from '@flxbl-io/sfp-logger';
 import SfpPackageBuilder from '../../core/package/SfpPackageBuilder';
 import Git from '../../core/git/Git';
 import FileOutputHandler from '../../outputs/FileOutputHandler';

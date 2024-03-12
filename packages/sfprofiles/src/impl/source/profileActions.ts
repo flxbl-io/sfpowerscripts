@@ -1,5 +1,5 @@
 import { Sfpowerkit } from '@utils/sfpowerkit';
-import SFPLogger, {LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, {LoggerLevel } from '@flxbl-io/sfp-logger';
 import * as path from 'path';
 import FileUtils from '@utils/fileutils';
 import { retrieveMetadata } from '@utils/retrieveMetadata';

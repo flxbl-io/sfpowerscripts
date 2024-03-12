@@ -4,7 +4,7 @@ import Ajv, { _ } from 'ajv';
 import ReleaseConfig from './ReleaseConfig';
 import lodash = require('lodash');
 const yaml = require('js-yaml');
-import { Logger } from '@flxblio/sfp-logger';
+import { Logger } from '@flxbl-io/sfp-logger';
 const path = require('path');
 
 export default class ReleaseConfigLoader {

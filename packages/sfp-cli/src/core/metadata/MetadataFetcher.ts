@@ -1,4 +1,4 @@
-import SFPLogger, { Logger, LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { Logger, LoggerLevel } from '@flxbl-io/sfp-logger';
 import SFPOrg from '../org/SFPOrg';
 import { delay } from '../utils/Delay';
 const fs = require('fs-extra');

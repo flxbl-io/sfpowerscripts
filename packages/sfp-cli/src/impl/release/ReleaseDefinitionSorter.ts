@@ -1,4 +1,4 @@
-import { Logger } from '@flxblio/sfp-logger';
+import { Logger } from '@flxbl-io/sfp-logger';
 import SfpPackageInquirer from '../../core/package/SfpPackageInquirer';
 import ProjectConfig from '../../core/project/ProjectConfig';
 import ArtifactFetcher, { Artifact } from '../../core/artifacts/ArtifactFetcher';

@@ -13,7 +13,7 @@ import {
     CommonTokenStream,
     ParseTreeWalker,
 } from 'apex-parser';
-import SFPLogger, { LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { LoggerLevel } from '@flxbl-io/sfp-logger';
 import { ApexClasses } from '../../package/SfpPackage';
 
 /**

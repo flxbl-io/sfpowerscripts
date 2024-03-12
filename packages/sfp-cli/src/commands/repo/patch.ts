@@ -9,19 +9,19 @@ import path = require('path');
 import ArtifactFetcher, { Artifact } from '../../core/artifacts/ArtifactFetcher';
 import SfpPackage, { PackageType } from '../../core/package/SfpPackage';
 import SfpPackageBuilder from '../../core/package/SfpPackageBuilder';
-import SFPLogger, { ConsoleLogger, Logger, LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { ConsoleLogger, Logger, LoggerLevel } from '@flxbl-io/sfp-logger';
 import SfpPackageInquirer from '../../core/package/SfpPackageInquirer';
 import Git from '../../core/git/Git';
 import * as fs from 'fs-extra';
-import { COLOR_KEY_MESSAGE } from '@flxblio/sfp-logger';
+import { COLOR_KEY_MESSAGE } from '@flxbl-io/sfp-logger';
 import { EOL } from 'os';
-import { COLOR_WARNING } from '@flxblio/sfp-logger';
-import { COLOR_HEADER } from '@flxblio/sfp-logger';
+import { COLOR_WARNING } from '@flxbl-io/sfp-logger';
+import { COLOR_HEADER } from '@flxbl-io/sfp-logger';
 import { Flags } from '@oclif/core';
 import { arrayFlagSfdxStyle, loglevel, logsgroupsymbol } from '../../flags/sfdxflags';
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('@flxblio/sfp', 'patch');
+const messages = Messages.loadMessages('@flxbl-io/sfp', 'patch');
 
 export default class Patch extends SfpCommand {
     public static description = messages.getMessage('commandDescription');

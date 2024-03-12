@@ -1,6 +1,6 @@
 const Table = require('cli-table');
 import { CodeCoverageWarnings, DeployMessage, Failures, MetadataApiDeployStatus } from '@salesforce/source-deploy-retrieve';
-import SFPLogger, { Logger, LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { Logger, LoggerLevel } from '@flxbl-io/sfp-logger';
 import { ZERO_BORDER_TABLE } from './TableConstants';
 
 export default class DeployErrorDisplayer {

@@ -2,7 +2,7 @@ import { Messages } from '@salesforce/core';
 import SfpCommand from '../../SfpCommand';
 import { Stage } from '../../impl/Stage';
 import * as fs from 'fs-extra';
-import SFPLogger, { COLOR_KEY_MESSAGE, ConsoleLogger } from '@flxblio/sfp-logger';
+import SFPLogger, { COLOR_KEY_MESSAGE, ConsoleLogger } from '@flxbl-io/sfp-logger';
 import { Flags } from '@oclif/core';
 import { loglevel } from '../../flags/sfdxflags';
 import { ZERO_BORDER_TABLE } from '../../ui/TableConstants';
@@ -13,7 +13,7 @@ const Table = require('cli-table');
 
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('@flxblio/sfp', 'impact_release_config');
+const messages = Messages.loadMessages('@flxbl-io/sfp', 'impact_release_config');
 
 export default class ReleaseConfig extends SfpCommand {
     public static flags = {

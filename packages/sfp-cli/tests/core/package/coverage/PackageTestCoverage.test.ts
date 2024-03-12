@@ -1,6 +1,6 @@
 import PackageTestCoverage from '../../../../src/core/package/coverage/PackageTestCoverage';
 import { jest, expect } from '@jest/globals';
-import { ConsoleLogger, Logger } from '@flxblio/sfp-logger';
+import { ConsoleLogger, Logger } from '@flxbl-io/sfp-logger';
 import ApexClassFetcher from '../../../../src/core/apex/ApexClassFetcher';
 import ApexTriggerFetcher from '../../../../src/core/apex/ApexTriggerFetcher';
 import ApexCodeCoverageAggregateFetcher from '../../../../src/core/apex/coverage/ApexCodeCoverageAggregateFetcher';

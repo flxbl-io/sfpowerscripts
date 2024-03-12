@@ -12,7 +12,7 @@ import SFPLogger, {
 	ConsoleLogger,
 	Logger,
 	LoggerLevel,
-} from "@flxblio/sfp-logger";
+} from "@flxbl-io/sfp-logger";
 import {
 	PackageInstallationResult,
 	PackageInstallationStatus,
@@ -23,12 +23,12 @@ import { Org } from "@salesforce/core";
 import InstalledArtifactsDisplayer from "../../core/display/InstalledArtifactsDisplayer";
 import ValidateError from "../../errors/ValidateError";
 import ScratchOrg from "../../core/scratchorg/ScratchOrg";
-import { COLOR_KEY_MESSAGE } from "@flxblio/sfp-logger";
-import { COLOR_WARNING } from "@flxblio/sfp-logger";
-import { COLOR_ERROR } from "@flxblio/sfp-logger";
-import { COLOR_HEADER } from "@flxblio/sfp-logger";
-import { COLOR_SUCCESS } from "@flxblio/sfp-logger";
-import { COLOR_TIME } from "@flxblio/sfp-logger";
+import { COLOR_KEY_MESSAGE } from "@flxbl-io/sfp-logger";
+import { COLOR_WARNING } from "@flxbl-io/sfp-logger";
+import { COLOR_ERROR } from "@flxbl-io/sfp-logger";
+import { COLOR_HEADER } from "@flxbl-io/sfp-logger";
+import { COLOR_SUCCESS } from "@flxbl-io/sfp-logger";
+import { COLOR_TIME } from "@flxbl-io/sfp-logger";
 import SFPStatsSender from "../../core/stats/SFPStatsSender";
 import ScratchOrgInfoFetcher from "../../core/scratchorg/pool/services/fetchers/ScratchOrgInfoFetcher";
 import ScratchOrgInfoAssigner from "../../core/scratchorg/pool/services/updaters/ScratchOrgInfoAssigner";

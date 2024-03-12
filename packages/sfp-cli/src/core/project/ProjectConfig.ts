@@ -1,5 +1,5 @@
 const fs = require('fs-extra');
-import SFPLogger, { LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { LoggerLevel } from '@flxbl-io/sfp-logger';
 import _ from 'lodash';
 import { PackageType } from '../package/SfpPackage';
 let path = require('path');

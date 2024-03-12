@@ -1,5 +1,5 @@
 import { Connection } from '@salesforce/core';
-import { Logger } from '@flxblio/sfp-logger';
+import { Logger } from '@flxbl-io/sfp-logger';
 import AssignPermissionSetsImpl from './AssignPermissionSetsImpl';
 
 export default class AssignPermissionSets {

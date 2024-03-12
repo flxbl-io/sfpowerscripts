@@ -1,6 +1,6 @@
 import ReleaseDefinition from './ReleaseDefinition';
 import DeployImpl, { DeployProps, DeploymentMode, DeploymentResult } from '../deploy/DeployImpl';
-import SFPLogger, { COLOR_HEADER, COLOR_INFO, COLOR_KEY_MESSAGE, ConsoleLogger, Logger, LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { COLOR_HEADER, COLOR_INFO, COLOR_KEY_MESSAGE, ConsoleLogger, Logger, LoggerLevel } from '@flxbl-io/sfp-logger';
 import { Stage } from '../Stage';
 import ReleaseError from '../../errors/ReleaseError';
 import ChangelogImpl from '../changelog/ChangelogImpl';

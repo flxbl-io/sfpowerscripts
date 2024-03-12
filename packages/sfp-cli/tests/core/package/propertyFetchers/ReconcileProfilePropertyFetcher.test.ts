@@ -1,5 +1,5 @@
 import { jest, expect } from '@jest/globals';
-import { Logger } from '@flxblio/sfp-logger';
+import { Logger } from '@flxbl-io/sfp-logger';
 import PropertyFetcher from '../../../../src/core/package/propertyFetchers/PropertyFetcher';
 import ReconcileProfilePropertyFetcher from '../../../../src/core/package/propertyFetchers/ReconcileProfilePropertyFetcher';
 import SfpPackage from '../../../../src/core/package/SfpPackage';

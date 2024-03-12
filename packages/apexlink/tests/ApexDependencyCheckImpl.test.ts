@@ -1,5 +1,5 @@
 import { jest, expect } from '@jest/globals';
-import { ConsoleLogger } from '@flxblio/sfp-logger';
+import { ConsoleLogger } from '@flxbl-io/sfp-logger';
 import ApexDepedencyCheckImpl from '../src/ApexDepedencyCheckImpl';
 import path from 'path';
 

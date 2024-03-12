@@ -1,4 +1,4 @@
-import SFPLogger, { COLOR_HEADER, COLOR_KEY_VALUE, COLOR_KEY_MESSAGE, COLOR_TRACE } from "@flxblio/sfp-logger";
+import SFPLogger, { COLOR_HEADER, COLOR_KEY_VALUE, COLOR_KEY_MESSAGE, COLOR_TRACE } from "@flxbl-io/sfp-logger";
 import SFPOrg from "../core/org/SFPOrg";
 const Table = require("cli-table");
 import { LoggerLevel } from "@salesforce/core";

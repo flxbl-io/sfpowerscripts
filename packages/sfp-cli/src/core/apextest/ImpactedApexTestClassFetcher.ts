@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
-import ApexDepedencyCheckImpl from "@flxblio/apexlink/lib/ApexDepedencyCheckImpl"
+import ApexDepedencyCheckImpl from "@flxbl-io/apexlink/lib/ApexDepedencyCheckImpl"
 import Component from '../dependency/Component';
-import SFPLogger, { COLOR_KEY_MESSAGE, COLOR_WARNING, Logger, LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { COLOR_KEY_MESSAGE, COLOR_WARNING, Logger, LoggerLevel } from '@flxbl-io/sfp-logger';
 import SfpPackage, { PackageType } from '../package/SfpPackage';
 import path from 'path';
 

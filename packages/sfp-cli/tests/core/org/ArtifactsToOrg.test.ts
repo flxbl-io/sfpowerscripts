@@ -1,6 +1,6 @@
 import { expect } from '@jest/globals';
 import { MockTestOrgData, TestContext } from '@salesforce/core/lib/testSetup';
-import { ConsoleLogger, VoidLogger } from '@flxblio/sfp-logger';
+import { ConsoleLogger, VoidLogger } from '@flxbl-io/sfp-logger';
 import { AnyJson, ensureJsonMap, JsonMap, ensureString } from '@salesforce/ts-types';
 import SFPOrg from '../../../src/core/org/SFPOrg';
 import SfpPackage from '../../../src/core/package/SfpPackage';

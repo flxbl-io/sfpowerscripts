@@ -4,9 +4,9 @@ import OrphanedOrgsDeleteImpl from '../../core/scratchorg/pool/OrphanedOrgsDelet
 import ScratchOrg from '../../core/scratchorg/ScratchOrg';
 import SfpCommand from '../../SfpCommand';
 import { ZERO_BORDER_TABLE } from '../../ui/TableConstants';
-import SFPLogger, { ConsoleLogger, LoggerLevel } from '@flxblio/sfp-logger';
-import { COLOR_KEY_MESSAGE } from '@flxblio/sfp-logger';
-import { COLOR_WARNING } from '@flxblio/sfp-logger';
+import SFPLogger, { ConsoleLogger, LoggerLevel } from '@flxbl-io/sfp-logger';
+import { COLOR_KEY_MESSAGE } from '@flxbl-io/sfp-logger';
+import { COLOR_WARNING } from '@flxbl-io/sfp-logger';
 import { Flags } from '@oclif/core';
 import { loglevel, orgApiVersionFlagSfdxStyle, targetdevhubusername } from '../../flags/sfdxflags';
 const Table = require('cli-table');
@@ -16,7 +16,7 @@ Messages.importMessagesDirectory(__dirname);
 
 // Load the specific messages for this file. Messages from @salesforce/command, @salesforce/core,
 // or any library that is using the messages framework can also be loaded this way.
-const messages = Messages.loadMessages('@flxblio/sfp', 'pool_delete');
+const messages = Messages.loadMessages('@flxbl-io/sfp', 'pool_delete');
 
 export default class Delete extends SfpCommand {
     public static description = messages.getMessage('commandDescription');

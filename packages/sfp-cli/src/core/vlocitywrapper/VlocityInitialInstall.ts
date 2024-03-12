@@ -1,5 +1,5 @@
-import { SFDXCommand } from '@flxblio/sfdx-process-wrapper/lib/SFDXCommand';
-import { Logger, LoggerLevel } from '@flxblio/sfp-logger';
+import { SFDXCommand } from '@flxbl-io/sfdx-process-wrapper/lib/SFDXCommand';
+import { Logger, LoggerLevel } from '@flxbl-io/sfp-logger';
 
 export default class VlocityInitialInstall extends SFDXCommand {
     public constructor(project_directory: string, target_org: string, logger: Logger, logLevel: LoggerLevel) {

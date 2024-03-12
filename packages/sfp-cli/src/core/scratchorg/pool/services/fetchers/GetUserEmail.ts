@@ -1,7 +1,7 @@
 import { LoggerLevel, Org } from '@salesforce/core';
 
 let retry = require('async-retry');
-import SFPLogger from '@flxblio/sfp-logger';
+import SFPLogger from '@flxbl-io/sfp-logger';
 
 export async function getUserEmail(username: string, hubOrg: Org) {
     let hubConn = hubOrg.getConnection();

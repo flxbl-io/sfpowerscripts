@@ -1,6 +1,6 @@
 import path from 'path';
-import { SFDXCommand } from '@flxblio/sfdx-process-wrapper/lib/SFDXCommand';
-import { Logger, LoggerLevel } from '@flxblio/sfp-logger';
+import { SFDXCommand } from '@flxbl-io/sfdx-process-wrapper/lib/SFDXCommand';
+import { Logger, LoggerLevel } from '@flxbl-io/sfp-logger';
 
 export default class VlocityPackDeployImpl extends SFDXCommand {
     public constructor(

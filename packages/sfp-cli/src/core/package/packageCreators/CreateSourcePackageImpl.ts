@@ -1,4 +1,4 @@
-import SFPLogger, { LoggerLevel, Logger } from '@flxblio/sfp-logger';
+import SFPLogger, { LoggerLevel, Logger } from '@flxbl-io/sfp-logger';
 import { EOL } from 'os';
 import { ApexSortedByType, FileDescriptor } from '../../apex/parser/ApexTypeFetcher';
 import SFPStatsSender from '../../stats/SFPStatsSender';
@@ -7,9 +7,9 @@ import SfpPackage, { PackageType, SfpPackageParams } from '../SfpPackage';
 import { CreatePackage } from './CreatePackage';
 import { PackageCreationParams } from '../SfpPackageBuilder';
 import { ZERO_BORDER_TABLE } from '../../display/TableConstants';
-import { COLOR_INFO } from '@flxblio/sfp-logger';
-import { COLOR_HEADER } from '@flxblio/sfp-logger';
-import { COLOR_WARNING } from '@flxblio/sfp-logger';
+import { COLOR_INFO } from '@flxbl-io/sfp-logger';
+import { COLOR_HEADER } from '@flxbl-io/sfp-logger';
+import { COLOR_WARNING } from '@flxbl-io/sfp-logger';
 const Table = require('cli-table');
 
 export default class CreateSourcePackageImpl extends CreatePackage {

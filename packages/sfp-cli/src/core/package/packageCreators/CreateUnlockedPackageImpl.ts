@@ -1,5 +1,5 @@
 import ProjectConfig from '../../project/ProjectConfig';
-import SFPLogger, { LoggerLevel, Logger, COLOR_KEY_MESSAGE } from '@flxblio/sfp-logger';
+import SFPLogger, { LoggerLevel, Logger, COLOR_KEY_MESSAGE } from '@flxbl-io/sfp-logger';
 import * as fs from 'fs-extra';
 import { delay } from '../../utils/Delay';
 import SfpPackage, { PackageType, SfpPackageParams } from '../SfpPackage';

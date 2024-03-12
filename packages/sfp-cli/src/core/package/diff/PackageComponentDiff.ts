@@ -4,7 +4,7 @@ import * as fs from 'fs-extra';
 import * as rimraf from 'rimraf';
 import * as _ from 'lodash';
 import simplegit from 'simple-git';
-import SFPLogger, { Logger, LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { Logger, LoggerLevel } from '@flxbl-io/sfp-logger';
 import ProjectConfig from '../../project/ProjectConfig';
 import MetadataFiles from '../../metadata/MetadataFiles';
 import { SOURCE_EXTENSION_REGEX, MetadataInfo, METADATA_INFO } from '../../metadata/MetadataInfo';

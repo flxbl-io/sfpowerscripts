@@ -2,17 +2,17 @@ import SfpCommand from '../../SfpCommand';
 import { Messages } from '@salesforce/core';
 import PromoteUnlockedPackageImpl from '../../core/package/promote/PromoteUnlockedPackageImpl'
 import ArtifactFetcher from '../../core/artifacts/ArtifactFetcher';
-import { ConsoleLogger } from '@flxblio/sfp-logger';
+import { ConsoleLogger } from '@flxbl-io/sfp-logger';
 import SfpPackageBuilder from '../../core/package/SfpPackageBuilder';
 import { PackageType } from '../../core/package/SfpPackage';
 import { Flags, ux } from '@oclif/core';
 import { loglevel, targetdevhubusername } from '../../flags/sfdxflags';
-import { LoggerLevel } from '@flxblio/sfp-logger';
-import { COLOR_HEADER } from '@flxblio/sfp-logger';
-import SFPLogger from '@flxblio/sfp-logger';
+import { LoggerLevel } from '@flxbl-io/sfp-logger';
+import { COLOR_HEADER } from '@flxbl-io/sfp-logger';
+import SFPLogger from '@flxbl-io/sfp-logger';
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('@flxblio/sfp', 'promote');
+const messages = Messages.loadMessages('@flxbl-io/sfp', 'promote');
 
 export default class Promote extends SfpCommand {
     public static description = messages.getMessage('commandDescription');
@@ -30,15 +30,6 @@ export default class Promote extends SfpCommand {
             char: 'd',
             description: messages.getMessage('artifactDirectoryFlagDescription'),
             default: 'artifacts',
-        }),
-        outputdir: Flags.directory({
-            required: false,
-            char: 'o',
-            description: messages.getMessage('outputDirectoryFlagDescription'),
-            hidden: true,
-            deprecated: {
-                message: '--outputdir is deprecated, Artifacts are no longer modified after promote',
-            },
         }),
        loglevel
     };

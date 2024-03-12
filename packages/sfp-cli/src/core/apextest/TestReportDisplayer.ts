@@ -1,5 +1,5 @@
 import { RunAllTestsInPackageOptions, RunApexTestSuitesOption, TestOptions } from './TestOptions';
-import SFPLogger, { COLOR_ERROR, COLOR_SUCCESS, LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { COLOR_ERROR, COLOR_SUCCESS, LoggerLevel } from '@flxbl-io/sfp-logger';
 import { ZERO_BORDER_TABLE } from '../display/TableConstants';
 
 const Table = require('cli-table');

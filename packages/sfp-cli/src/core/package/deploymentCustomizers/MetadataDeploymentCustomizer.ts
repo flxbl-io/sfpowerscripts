@@ -2,7 +2,7 @@ import { Connection } from "@salesforce/core";
 import DeploySourceToOrgImpl, { DeploymentOptions } from "../../deployers/DeploySourceToOrgImpl";
 import SfpPackage from "../SfpPackage";
 import { DeploymentContext, DeploymentCustomizer } from "./DeploymentCustomizer";
-import SFPLogger,{COLOR_KEY_MESSAGE,Logger,LoggerLevel} from "@flxblio/sfp-logger"
+import SFPLogger,{COLOR_KEY_MESSAGE,Logger,LoggerLevel} from "@flxbl-io/sfp-logger"
 import { ComponentSet } from "@salesforce/source-deploy-retrieve";
 import SFPOrg from "../../org/SFPOrg";
 import DeploymentExecutor, { DeploySourceResult } from "../../deployers/DeploymentExecutor";

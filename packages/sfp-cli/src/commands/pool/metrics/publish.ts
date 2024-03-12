@@ -4,7 +4,7 @@ import PoolListImpl from '../../../core/scratchorg/pool/PoolListImpl';
 import ScratchOrg from '../../../core/scratchorg/ScratchOrg';
 import LimitsFetcher from '../../../core/limits/LimitsFetcher';
 const Table = require('cli-table');
-import SFPLogger, { LoggerLevel, COLOR_KEY_MESSAGE } from '@flxblio/sfp-logger';
+import SFPLogger, { LoggerLevel, COLOR_KEY_MESSAGE } from '@flxbl-io/sfp-logger';
 import { Messages } from '@salesforce/core';
 import { loglevel, targetdevhubusername } from '../../../flags/sfdxflags';
 
@@ -13,7 +13,7 @@ Messages.importMessagesDirectory(__dirname);
 
 // Load the specific messages for this file. Messages from @salesforce/command, @salesforce/core,
 // or any library that is using the messages framework can also be loaded this way.
-const messages = Messages.loadMessages('@flxblio/sfp', 'scratchorg_pool_metrics_publish');
+const messages = Messages.loadMessages('@flxbl-io/sfp', 'scratchorg_pool_metrics_publish');
 
 export default class Publish extends SfpCommand {
     public static description = messages.getMessage('commandDescription');

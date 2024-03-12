@@ -1,4 +1,4 @@
-import SFPLogger, { COLOR_HEADER, Logger } from "@flxblio/sfp-logger";
+import SFPLogger, { COLOR_HEADER, Logger } from "@flxbl-io/sfp-logger";
 import { CoverageOptions } from "../../core/apex/coverage/IndividualClassCoverage";
 import { TestOptions, RunAllTestsInPackageOptions, RunSpecifiedTestsOption } from "../../core/apextest/TestOptions";
 import TriggerApexTests from "../../core/apextest/TriggerApexTests";

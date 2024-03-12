@@ -1,5 +1,5 @@
 import { BufferedMetricsLogger } from 'datadog-metrics';
-import SFPLogger, { Logger, LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { Logger, LoggerLevel } from '@flxbl-io/sfp-logger';
 import { NativeMetricSender } from '../NativeMetricSender';
 
 export class DataDogMetricsSender extends NativeMetricSender {

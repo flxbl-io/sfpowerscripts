@@ -1,4 +1,4 @@
-import SFPLogger from '@flxblio/sfp-logger';
+import SFPLogger from '@flxbl-io/sfp-logger';
 import { Connection, LoggerLevel } from '@salesforce/core';
 import _ from 'lodash';
 import ExternalPackage2DependencyResolver from '../package/dependencies/ExternalPackage2DependencyResolver';

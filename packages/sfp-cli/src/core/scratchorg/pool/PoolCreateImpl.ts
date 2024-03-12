@@ -10,15 +10,15 @@ import * as rimraf from 'rimraf';
 import * as fs from 'fs-extra';
 import PoolJobExecutor, { ScriptExecutionResult } from './PoolJobExecutor';
 import { PoolError, PoolErrorCodes } from './PoolError';
-import SFPLogger, { COLOR_KEY_MESSAGE, LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { COLOR_KEY_MESSAGE, LoggerLevel } from '@flxbl-io/sfp-logger';
 import { Result, ok, err } from 'neverthrow';
 import SFPStatsSender from '../../stats/SFPStatsSender';
 import { EOL } from 'os';
 import OrgDetailsFetcher from '../../org/OrgDetailsFetcher';
 import ScratchOrgOperator from '../ScratchOrgOperator';
 import PoolFetchImpl from './PoolFetchImpl';
-import { COLOR_SUCCESS } from '@flxblio/sfp-logger';
-import { COLOR_ERROR } from '@flxblio/sfp-logger';
+import { COLOR_SUCCESS } from '@flxbl-io/sfp-logger';
+import { COLOR_ERROR } from '@flxbl-io/sfp-logger';
 import getFormattedTime from '../../utils/GetFormattedTime';
 import path from 'path';
 

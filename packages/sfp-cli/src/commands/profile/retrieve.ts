@@ -1,26 +1,26 @@
 import { Messages, Org }  from '@salesforce/core';
 import * as fs from 'fs-extra';
 import { isNil } from 'lodash';
-import { Sfpowerkit } from '@flxblio/sfprofiles/lib/utils/sfpowerkit';
-import ProfileSync from '@flxblio/sfprofiles/lib/impl/source/profileSync';
+import { Sfpowerkit } from '@flxbl-io/sfprofiles/lib/utils/sfpowerkit';
+import ProfileSync from '@flxbl-io/sfprofiles/lib/impl/source/profileSync';
 import SfpCommand from '../../SfpCommand';
 import Table from 'cli-table';
 import { ZERO_BORDER_TABLE } from '../../ui/TableConstants';
 import { arrayFlagSfdxStyle, loglevel, orgApiVersionFlagSfdxStyle, requiredUserNameFlag } from '../../flags/sfdxflags';
 import { Flags } from '@oclif/core';
-import SFPLogger, { COLOR_KEY_MESSAGE, COLOR_WARNING, LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { COLOR_KEY_MESSAGE, COLOR_WARNING, LoggerLevel } from '@flxbl-io/sfp-logger';
 
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('@flxblio/sfp', 'profile_retrieve');
+const messages = Messages.loadMessages('@flxbl-io/sfp', 'profile_retrieve');
 
 export default class Retrieve extends SfpCommand {
     public static description = messages.getMessage('commandDescription');
 
     public static examples = [
-        `$ sfp profile:retrieve -u prod`,
-        `$ sfp profile:retrieve -f force-app -n "My Profile" -u prod`,
-        `$ sfp profile:retrieve -f "module1, module2, module3" -n "My Profile1, My profile2"  -u prod`,
+        `$ sfp profile:retrieve -o prod`,
+        `$ sfp profile:retrieve -f force-app -n "My Profile" -o prod`,
+        `$ sfp profile:retrieve -f "module1, module2, module3" -n "My Profile1, My profile2"  -o prod`,
     ];
 
 

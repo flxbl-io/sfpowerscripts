@@ -1,5 +1,5 @@
 import { Connection, Org } from '@salesforce/core';
-import SFPLogger, { Logger, LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { Logger, LoggerLevel } from '@flxbl-io/sfp-logger';
 import QueryHelper from '../queryHelper/QueryHelper';
 import { chunkArray } from '../utils/ChunkArray';
 const CODECOV_AGGREGATE_QUERY = `SELECT Id FROM ApexCodeCoverageAggregate`;

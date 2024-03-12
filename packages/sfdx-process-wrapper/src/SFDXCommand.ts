@@ -1,5 +1,5 @@
 import ExecuteCommand from './commandExecutor/ExecuteCommand';
-import SFPLogger, { Logger, LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { Logger, LoggerLevel } from '@flxbl-io/sfp-logger';
 
 export abstract class SFDXCommand {
     public constructor(

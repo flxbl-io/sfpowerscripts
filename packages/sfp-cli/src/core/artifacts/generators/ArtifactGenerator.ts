@@ -3,7 +3,7 @@ import * as fs from 'fs-extra';
 import GeneratePackageChangelog from '../../changelog/GeneratePackageChangelog';
 import { Changelog } from '../../changelog/interfaces/GenericChangelogInterfaces';
 import * as rimraf from 'rimraf';
-import SFPLogger, { LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { LoggerLevel } from '@flxbl-io/sfp-logger';
 import AdmZip = require('adm-zip');
 import SfpPackage from '../../package/SfpPackage';
 

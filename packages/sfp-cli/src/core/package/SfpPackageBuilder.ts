@@ -4,7 +4,7 @@ import SfpPackageContentGenerator from './generators/SfpPackageContentGenerator'
 import SourceToMDAPIConvertor from './packageFormatConvertors/SourceToMDAPIConvertor';
 import PackageManifest from './components/PackageManifest';
 import MetadataCount from './components/MetadataCount';
-import SFPLogger, { Logger, LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { Logger, LoggerLevel } from '@flxbl-io/sfp-logger';
 import * as fs from 'fs-extra';
 import path from 'path';
 import { Artifact } from '../artifacts/ArtifactFetcher';
@@ -22,7 +22,7 @@ import PackageVersionUpdater from './version/PackageVersionUpdater';
 import { AnalyzerRegistry } from './analyser/AnalyzerRegistry';
 import { ComponentSet } from '@salesforce/source-deploy-retrieve';
 import CreateDiffPackageImp from './packageCreators/CreateDiffPackageImpl';
-import { COLOR_WARNING } from '@flxblio/sfp-logger';
+import { COLOR_WARNING } from '@flxbl-io/sfp-logger';
 
 export default class SfpPackageBuilder {
     public static async buildPackageFromProjectDirectory(

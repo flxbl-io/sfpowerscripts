@@ -1,7 +1,7 @@
-import SFPLogger, { Logger, LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { Logger, LoggerLevel } from '@flxbl-io/sfp-logger';
 import { ZERO_BORDER_TABLE } from '../../display/TableConstants';
 const Table = require('cli-table');
-import ProfileReconcile from '@flxblio/sfprofiles/lib/impl/source/profileReconcile';
+import ProfileReconcile from '@flxbl-io/sfprofiles/lib/impl/source/profileReconcile';
 import SFPOrg from '../../org/SFPOrg';
 import path from 'path';
 import { METADATA_INFO } from '../../metadata/MetadataInfo';

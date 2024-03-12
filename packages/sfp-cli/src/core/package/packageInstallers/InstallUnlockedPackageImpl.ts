@@ -1,4 +1,4 @@
-import SFPLogger, { COLOR_KEY_MESSAGE, COLOR_SUCCESS, Logger, LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { COLOR_KEY_MESSAGE, COLOR_SUCCESS, Logger, LoggerLevel } from '@flxbl-io/sfp-logger';
 import PackageMetadataPrinter from '../../display/PackageMetadataPrinter';
 import SFPOrg from '../../org/SFPOrg';
 import { PackageInstallCreateRequest, PackagingSObjects, SubscriberPackageVersion } from '@salesforce/packaging';

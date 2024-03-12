@@ -1,4 +1,4 @@
-import SFPLogger, { COLOR_HEADER, COLOR_KEY_MESSAGE, COLOR_WARNING, Logger, LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { COLOR_HEADER, COLOR_KEY_MESSAGE, COLOR_WARNING, Logger, LoggerLevel } from '@flxbl-io/sfp-logger';
 import SFPStatsSender from '../../stats/SFPStatsSender';
 import SfpPackage, { PackageType, SfpPackageParams } from '../SfpPackage';
 import { PackageCreationParams } from '../SfpPackageBuilder';

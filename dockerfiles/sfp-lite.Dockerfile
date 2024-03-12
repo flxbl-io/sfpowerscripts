@@ -56,7 +56,7 @@ RUN mkdir -p /etc/apt/keyrings \
 
 # Install sfp
 RUN npm install --global --omit=dev \
-    @flxblio/sfp@${SFPOWERSCRIPTS_VERSION} 
+    @flxbl-io/sfp@${SFPOWERSCRIPTS_VERSION} 
 
 WORKDIR /root
 

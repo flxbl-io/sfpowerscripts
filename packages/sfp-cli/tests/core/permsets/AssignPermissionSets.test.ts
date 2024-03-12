@@ -1,7 +1,7 @@
 const child_process = require('child_process');
 import AssignPermissionSetsImpl from '../../../src/core/permsets/AssignPermissionSetsImpl';
 import { jest, expect } from '@jest/globals';
-import { VoidLogger } from '@flxblio/sfp-logger';
+import { VoidLogger } from '@flxbl-io/sfp-logger';
 import { AuthInfo, Connection, OrgConfigProperties } from '@salesforce/core';
 import { MockTestOrgData, TestContext } from '@salesforce/core/lib/testSetup';
 

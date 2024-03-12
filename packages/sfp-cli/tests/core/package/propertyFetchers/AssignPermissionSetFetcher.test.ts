@@ -1,5 +1,5 @@
 import { jest, expect } from '@jest/globals';
-import { Logger } from '@flxblio/sfp-logger';
+import { Logger } from '@flxbl-io/sfp-logger';
 import AssignPermissionSetFetcher from '../../../../src/core/package/propertyFetchers/AssignPermissionSetFetcher';
 import PropertyFetcher from '../../../../src/core/package/propertyFetchers/PropertyFetcher';
 import SfpPackage from '../../../../src/core/package/SfpPackage';

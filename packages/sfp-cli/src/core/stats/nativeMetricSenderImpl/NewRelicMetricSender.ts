@@ -6,7 +6,7 @@ import {
     MetricBatch,
     MetricClient,
 } from '@newrelic/telemetry-sdk/dist/src/telemetry/metrics';
-import SFPLogger, { Logger, LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { Logger, LoggerLevel } from '@flxbl-io/sfp-logger';
 
 export class NewRelicMetricSender extends NativeMetricSender {
     constructor(logger: Logger) {

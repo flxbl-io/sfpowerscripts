@@ -12,7 +12,7 @@ import SfpCommand from '../../SfpCommand';
 import { Messages } from '@salesforce/core';
 import SfpPackage from '../../core/package/SfpPackage';
 
-import { ConsoleLogger } from '@flxblio/sfp-logger';
+import { ConsoleLogger } from '@flxbl-io/sfp-logger';
 import { CoverageOptions } from '../../core/apex/coverage/IndividualClassCoverage';
 import SfpPackageBuilder from '../../core/package/SfpPackageBuilder';
 import { PackageType } from '../../core/package/SfpPackage';
@@ -25,14 +25,14 @@ Messages.importMessagesDirectory(__dirname);
 
 // Load the specific messages for this file. Messages from @salesforce/command, @salesforce/core,
 // or any library that is using the messages framework can also be loaded this way.
-const messages = Messages.loadMessages('@flxblio/sfp', 'trigger_apex_test');
+const messages = Messages.loadMessages('@flxbl-io/sfp', 'trigger_apex_test');
 
 export default class TriggerApexTest extends SfpCommand {
     public static description = messages.getMessage('commandDescription');
 
     public static examples = [
-        `$ sfp apextests:trigger -u scratchorg -l RunLocalTests -s`,
-        `$ sfp apextests:trigger -u scratchorg -l RunAllTestsInPackage -n <mypackage> -c`,
+        `$ sfp apextests:trigger -o scratchorg -l RunLocalTests -s`,
+        `$ sfp apextests:trigger -o scratchorg -l RunAllTestsInPackage -n <mypackage> -c`,
     ];
 
     public static flags = {

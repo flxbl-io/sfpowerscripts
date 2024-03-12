@@ -2,7 +2,7 @@ import ArtifactFetcher from '../../../../src/core/artifacts/ArtifactFetcher';
 import SfpPackage from '../../../../src/core/package/SfpPackage';
 import SfpPackageBuilder from '../../../../src/core/package/SfpPackageBuilder';
 import PackageMergeManager from '../../../../src/core/package/packageMerger/PackageMergeManager'
-import { ConsoleLogger } from '@flxblio/sfp-logger';
+import { ConsoleLogger } from '@flxbl-io/sfp-logger';
 import { ComponentSet } from '@salesforce/source-deploy-retrieve';
 import { jest, expect } from '@jest/globals';
 

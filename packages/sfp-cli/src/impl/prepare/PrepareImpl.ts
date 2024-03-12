@@ -1,7 +1,7 @@
 import { Org } from '@salesforce/core';
 import { PoolConfig } from '../../core/scratchorg/pool/PoolConfig';
 import isValidSfdxAuthUrl from '../../core/scratchorg/pool/prequisitecheck/IsValidSfdxAuthUrl';
-import SFPLogger, { COLOR_KEY_MESSAGE, COLOR_WARNING, ConsoleLogger, Logger, LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { COLOR_KEY_MESSAGE, COLOR_WARNING, ConsoleLogger, Logger, LoggerLevel } from '@flxbl-io/sfp-logger';
 import ArtifactGenerator from '../../core/artifacts/generators/ArtifactGenerator';
 import ProjectConfig from '../../core/project/ProjectConfig';
 import { Result } from 'neverthrow';
@@ -27,7 +27,7 @@ import ReleaseDefinition from '../release/ReleaseDefinition';
 import { ZERO_BORDER_TABLE } from '../../ui/TableConstants';
 import GroupConsoleLogs from '../../ui/GroupConsoleLogs';
 import ReleaseConfigLoader from '../release/ReleaseConfigLoader';
-import { COLOR_KEY_VALUE } from '@flxblio/sfp-logger';
+import { COLOR_KEY_VALUE } from '@flxbl-io/sfp-logger';
 
 const Table = require('cli-table');
 

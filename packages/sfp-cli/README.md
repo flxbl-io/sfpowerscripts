@@ -1,58 +1,57 @@
-<p align="center">
-  <img alt="sfp" src="https://repository-images.githubusercontent.com/248449736/448f93b4-9883-48da-a75c-330f242bbf8c" width="480" height="400">
-</p>
 
-![Version](https://img.shields.io/npm/v/@flxblio/sfp.svg)
-[![GitHub stars](https://img.shields.io/github/stars/flxblio/sfp)](https://github.com/flxbl-io/sfp/stargazers/)
-[![GitHub contributors](https://img.shields.io/github/contributors/flxblio/sfp.svg)](https://github.com/flxbl-io/sfp/graphs/contributors/)
-[![License](https://img.shields.io/badge/license-MIT-green)](https://github.com/flxbl-io/sfp/blob/master/LICENSE)
+  
+```
+
+        
+         .----------------.  .----------------.  .----------------.
+        | .--------------. || .--------------. || .--------------. |
+        | |    _______   | || |  _________   | || |   ______     | |
+        | |   /  ___  |  | || | |_   ___  |  | || |  |_   __ \   | |
+        | |  |  (__ \_|  | || |   | |_  \_|  | || |    | |__) |  | |
+        | |   '.___`-.   | || |   |  _|      | || |    |  ___/   | |
+        | |  |`\____) |  | || |  _| |_       | || |   _| |_      | |
+        | |  |_______.'  | || | |_____|      | || |  |_____|     | |
+        | |              | || |              | || |              | |
+        | '--------------' || '--------------' || '--------------' |
+         '----------------'  '----------------'  '----------------'
+
+                                                                                                               
+
+```
+![Version](https://img.shields.io/npm/v/@flxbl-io/sfp.svg)
+[![GitHub stars](https://img.shields.io/github/stars/flxbl-io/sfp)](https://gitHub.com/flxbl-io/sfp/stargazers/)
+[![GitHub contributors](https://img.shields.io/github/contributors/flxbl-io/sfp.svg)](https://github.com/flxbl-io/sfp/graphs/contributors/)
+[![License](https://img.shields.io/badge/license-MIT-green)](https://github.com/flxbl-io/sfp/blob/main/LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
-[![DeepScan grade](https://deepscan.io/api/teams/10234/projects/12959/branches/208838/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=10234&pid=12959&bid=208838)
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fflxblio%2Fsfp.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fflxblio%2Fsfp?ref=badge_shield) [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/5614/badge)](https://bestpractices.coreinfrastructure.org/projects/5614)
+[![DeepScan grade](https://deepscan.io/api/teams/23310/projects/26589/branches/848646/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=23310&pid=26589&bid=848646)
+[![CodeFactor](https://www.codefactor.io/repository/github/flxbl-io/sfp/badge)](https://www.codefactor.io/repository/github/flxbl-io/sfp)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fflxbl-io%2Fsfp.svg?type=shield&issueType=license)](https://app.fossa.com/projects/git%2Bgithub.com%2Fflxbl-io%2Fsfp?ref=badge_shield&issueType=license) [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/5614/badge)](https://bestpractices.coreinfrastructure.org/projects/5614)
 
 [![Join slack](https://i.imgur.com/FZZmA3g.png)](https://launchpass.com/flxblio)
 
-A build system for package based development in Salesforce, delivered as a node cli that can be implemented in any CI/CD system of choice.Read more about the cli and details here - https://docs.flxbl.io
+sfp is an purpose built  cli based tool specifically designed for modular Salesforce development and release management.   sfp is aimed at streamlining and automating the build, test, and deployment processes of Salesforce metadata,  code and data. It extends sf cli functionalities, focusing on artifact-driven development to enhance DevOps practices within Salesforce projects.
 
-#### Features
+## Key Aspects of sfp:
 
-- Features an Orchestrator, which utilizes sfdx-project.json as the source of truth for driving the build system, ensuring very low maintenance on programs often dealing with multiple number of packages
-- Builds packages in parallel by respecting dependencies
-- Ability to selectively build changed packages in a mono repo
-- Ability to deploy only packages that are changed in repo
-- Pooling commands to prepare a pool of scratch org's with packages pre installed for optimized Pull/Merge Request validation
-- Artifacts Driven, all create commands produce an artifact or operate on an artifact
-- Integrate with any CI/CD system of choice
-- All commands are enabled with statsD, for collecting metrics about your pipeline.
+- Artifact-Centric Approach: sfp packages Salesforce code and metadata into artifacts, along with deployment details, ensuring consistent deployments and simplified version management across environments.
+- Best-in-Class Mono Repo Support: Offers robust support for mono repositories, facilitating streamlined development, integration, and collaboration 
+- Support for Multiple Package Types: sfp accommodates various Salesforce package types with streamlined commands, enabling modular development, independent versioning, and flexible deployment strategies.
+- Orchestrate Across Entire Lifecycle:  sfp provides an extensive set of functionality across the entire lifecycle of your Salesforce development.
+- End-to-End Observability:  sfp is built with comprehensive metrics that are emitted on every commands providing unparalleled visibility into your ALM process.
+Commands
 
-There are lot more features to explore. Read more at https://docs.flxbl.io
+sfp is comprised of a suite of commands to aid in your end to end development cycle for Salesforce.  Starting with the core commands, you are able to perform  basic work flows to to build and deploy artifacts (locally to start, and to a NPM artifact repository after) across environments through the command line.  As you progress in your understanding of the core commands, you can utilized more advanced commands and flags in your CI/CD platform of choice to drive a more complete release process leveraging release definitions, change logs, metrics and much more.  
 
-The project is delivered as a <b>CLI</b> that can be deployed in any CI/CD system, The module is available in [NPM](https://www.npmjs.com/package/@flxblio/sfp) or can be
-used by using the [docker image](https://github.com/flxbl-io/sfp/pkgs/container/sfp)
+sfp is constantly evolving and being driven by the passionate community that has embraced our ways of working.  We have introduced key utility commands over the years to solve pain points specific to the Salesforce Platform.  The commands have been successfully tested and used on large enterprise-scale implementations.  As we continue to grow the toolset, we hope to introduced more commands to address the future wave of challenges. 
 
-
-
-
-
-#### Motivation
-
-- Need for artifact driven build system for package based development models especially on complex and large programs
-
-- Providing additional functionality that is either not supported by the sfdx-cli, such as data packages or automatically understanding tests in a given package
-
-- Ease of use, one should not be spending too much time scripting a pipeline.
-
-#### CI/CD Reference Implementation
-
-Getting started guides for popular CI/CD platforms along with reference pipelines are available [here](https://docs.flxbl.io/implementing-your-ci-cd/github)
 
 #### Installing sfp locally
 
 sfp can be installed on your local device using npm
 
 ```
-npm i -g @flxblio/sfp
+npm i -g @flxbl-io/sfp
 ```
 
 
@@ -60,7 +59,7 @@ npm i -g @flxblio/sfp
 
 Docker images for sfp are available at [GitHub Container Registry](https://github.com/flxbl-io/sfp/pkgs/container/sfp).
 
-We recommend using the sfp docker image to avoid breakages in your CI/CD pipelines due to updates in sfp or any of its dependencies such as the SFDX CLI.
+We recommend using the sfp docker image to avoid breakages in your CI/CD pipelines due to updates in sfp
 
 #### Build Instructions
 To build sfp execute the following on the terminal:

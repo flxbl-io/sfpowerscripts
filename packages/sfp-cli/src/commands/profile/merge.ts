@@ -1,9 +1,9 @@
 import { Messages, Org }  from '@salesforce/core';
 import { isNil } from 'lodash';
-import { Sfpowerkit } from '@flxblio/sfprofiles/lib/utils/sfpowerkit';
-import SFPLogger, { LoggerLevel } from '@flxblio/sfp-logger';
-import ProfileRetriever from '@flxblio/sfprofiles/lib/impl/metadata/retriever/profileRetriever';
-import ProfileMerge from '@flxblio/sfprofiles/lib/impl/source/profileMerge';
+import { Sfpowerkit } from '@flxbl-io/sfprofiles/lib/utils/sfpowerkit';
+import SFPLogger, { LoggerLevel } from '@flxbl-io/sfp-logger';
+import ProfileRetriever from '@flxbl-io/sfprofiles/lib/impl/metadata/retriever/profileRetriever';
+import ProfileMerge from '@flxbl-io/sfprofiles/lib/impl/source/profileMerge';
 import SfpCommand from '../../SfpCommand';
 import Table from 'cli-table';
 import { ZERO_BORDER_TABLE } from '../../ui/TableConstants';
@@ -12,13 +12,13 @@ import { Flags } from '@oclif/core';
 
 Messages.importMessagesDirectory(__dirname);
 
-const messages = Messages.loadMessages('@flxblio/sfp', 'profile_merge');
+const messages = Messages.loadMessages('@flxbl-io/sfp', 'profile_merge');
 
 export default class Merge extends SfpCommand {
     public static description = messages.getMessage('commandDescription');
 
     public static examples = [
-        `$ sfp profile:merge -u sandbox`,
+        `$ sfp profile:merge -o sandbox`,
         `$ sfp profile:merge -f force-app -n "My Profile" -u sandbox`,
         `$ sfp  profile:merge -f "module1, module2, module3" -n "My Profile1, My profile2"  -u sandbox`,
     ];

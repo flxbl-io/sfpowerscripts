@@ -1,17 +1,17 @@
-`@flxblio/sfp apextests`
-========================
+`@flxbl-io/sfp apextests`
+=========================
 
 Manage apex tests in a package or a org
 
-* [`@flxblio/sfp apextests trigger`](#flxbliosfp-apextests-trigger)
+* [`@flxbl-io/sfp apextests trigger`](#flxbl-iosfp-apextests-trigger)
 
-## `@flxblio/sfp apextests trigger`
+## `@flxbl-io/sfp apextests trigger`
 
 Triggers Apex unit test in an org. Supports test level RunAllTestsInPackage, which optionally allows validation of individual class code coverage
 
 ```
 USAGE
-  $ @flxblio/sfp apextests trigger -u <value> [--loglevel
+  $ @flxbl-io/sfp apextests trigger -o <value> [--loglevel
     trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL] [--apiversion <value>] [-l
     RunSpecifiedTests|RunApexTestSuite|RunLocalTests|RunAllTestsInOrg|RunAllTestsInPackage] [-n <value>] [-c]
     [--validatepackagecoverage] [--specifiedtests <value>] [--apextestsuite <value>] [-p <value>] [-w <value>]
@@ -26,9 +26,9 @@ FLAGS
                                          AllTestsInPackage>
   -n, --package=<value>                  Name of the package to run tests. Required when test level is
                                          RunAllTestsInPackage
+  -o, --targetusername=<value>           (required) Username or alias of the target org.
   -p, --coveragepercent=<value>          [default: 75] Minimum required percentage coverage, when validating code
                                          coverage
-  -u, --targetusername=<value>           (required) Username or alias of the target org.
   -w, --waittime=<value>                 [default: 60] wait time for command to finish in minutes
       --apextestsuite=<value>            comma-separated list of Apex test suite names to run
       --apiversion=<value>               Override the api version used for api requests made by this command
@@ -44,9 +44,9 @@ DESCRIPTION
   individual class code coverage
 
 EXAMPLES
-  $ sfp apextests:trigger -u scratchorg -l RunLocalTests -s
+  $ sfp apextests:trigger -o scratchorg -l RunLocalTests -s
 
-  $ sfp apextests:trigger -u scratchorg -l RunAllTestsInPackage -n <mypackage> -c
+  $ sfp apextests:trigger -o scratchorg -l RunAllTestsInPackage -n <mypackage> -c
 ```
 
-_See code: [src/commands/apextests/trigger.ts](https://github.com/flxbl-io/sfp)_
+_See code: [src/commands/apextests/trigger.ts](https://github.com/flxbl-io/sfp/blob/v37.0.1/src/commands/apextests/trigger.ts)_

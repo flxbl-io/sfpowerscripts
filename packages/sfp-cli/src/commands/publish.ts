@@ -10,24 +10,24 @@ import SFPLogger, {
     COLOR_KEY_MESSAGE,
     COLOR_SUCCESS,
     COLOR_TIME,
-} from '@flxblio/sfp-logger';
+} from '@flxbl-io/sfp-logger';
 import getFormattedTime from '../core/utils/GetFormattedTime';
 import defaultShell from '../core/utils/DefaultShell';
 import SfpPackage, { PackageType } from '../core/package/SfpPackage';
-import { ConsoleLogger } from '@flxblio/sfp-logger';
+import { ConsoleLogger } from '@flxbl-io/sfp-logger';
 import SfpPackageBuilder from '../core/package/SfpPackageBuilder';
 import Git from '../core/git/Git';
 import GroupConsoleLogs from '../ui/GroupConsoleLogs';
 import PackageVersionLister from '../core/package/version/PackageVersionLister';
 import SFPOrg from '../core/org/SFPOrg';
-import ExecuteCommand from '@flxblio/sfdx-process-wrapper/lib/commandExecutor/ExecuteCommand';
-import { LoggerLevel } from '@flxblio/sfp-logger';
+import ExecuteCommand from '@flxbl-io/sfdx-process-wrapper/lib/commandExecutor/ExecuteCommand';
+import { LoggerLevel } from '@flxbl-io/sfp-logger';
 import GitTags from '../core/git/GitTags';
 import { arrayFlagSfdxStyle, loglevel, logsgroupsymbol, optionalDevHubFlag } from '../flags/sfdxflags';
 import { Flags } from '@oclif/core';
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('@flxblio/sfp', 'publish');
+const messages = Messages.loadMessages('@flxbl-io/sfp', 'publish');
 
 export default class Publish extends SfpCommand {
     public static description = messages.getMessage('commandDescription');

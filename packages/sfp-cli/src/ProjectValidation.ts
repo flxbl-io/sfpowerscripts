@@ -3,7 +3,7 @@ import Ajv from 'ajv';
 import path = require('path');
 import * as fs from 'fs-extra';
 import { PackageType } from './core/package/SfpPackage';
-import SFPLogger, { LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { LoggerLevel } from '@flxbl-io/sfp-logger';
 
 export default class ProjectValidation {
     private readonly projectConfig;

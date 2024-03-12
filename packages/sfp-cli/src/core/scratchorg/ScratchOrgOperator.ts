@@ -1,10 +1,10 @@
 import { AuthInfo, Org, StateAggregator } from '@salesforce/core';
 import ScratchOrg from './ScratchOrg';
 import PasswordGenerator from './PasswordGenerator';
-import SFPLogger, { LoggerLevel } from '@flxblio/sfp-logger';
+import SFPLogger, { LoggerLevel } from '@flxbl-io/sfp-logger';
 import { Duration } from '@salesforce/kit';
 import { ScratchOrgRequest } from '@salesforce/core';
-import { COLOR_KEY_MESSAGE } from '@flxblio/sfp-logger';
+import { COLOR_KEY_MESSAGE } from '@flxbl-io/sfp-logger';
 import getFormattedTime from '../utils/GetFormattedTime';
 import SFPStatsSender from '../stats/SFPStatsSender';
 import { PoolConfig } from './pool/PoolConfig';
