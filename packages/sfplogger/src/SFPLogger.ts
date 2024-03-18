@@ -116,6 +116,9 @@ export default class SFPLogger {
   }
 
   static printHeaderLine(header, color: chalk.Chalk, logLevel, logger?: Logger) {
+   if (SFPLogger.isLogsDisabled)
+    return;
+
     if (header == null)
       header = '';
     const lineLength = 90;
