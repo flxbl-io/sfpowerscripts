@@ -38,7 +38,10 @@ export default class DeployErrorDisplayer {
         SFPLogger.log(`Gathering Final Deployment Status`, null, logger);
 
         if (response.numberComponentErrors == 0) {
-            return 'Unable to fetch report, Check your org for details';
+            if (response.details.runTestResult.codeCoverageWarnings) {
+                this.displayCodeCoverageWarnings(response.details.runTestResult.codeCoverageWarnings, logger);
+                return 'Unable to deploy due to unsatisfactory code coverage and/or test failures';
+            } else return 'Unable to fetch report, Check your org for details';
         } else if (response.numberComponentErrors > 0) {
             this.printMetadataFailedToDeploy(response.details.componentFailures, logger);
             return response.errorMessage;
@@ -62,6 +65,7 @@ export default class DeployErrorDisplayer {
     ) {
         let table = new Table({
             head: ['Name', 'Message'],
+            chars: ZERO_BORDER_TABLE,
         });
 
         if (Array.isArray(codeCoverageWarnings)) {
@@ -72,7 +76,7 @@ export default class DeployErrorDisplayer {
             table.push([codeCoverageWarnings['name'], codeCoverageWarnings.message]);
         }
 
-        if (table.length > 1) {
+        if (table.length >= 1) {
             SFPLogger.log(
                 'Unable to deploy due to unsatisfactory code coverage, Check the following classes:',
                 LoggerLevel.WARN,
