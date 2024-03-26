@@ -511,7 +511,7 @@ export default class ValidateImpl implements PostDeployHook, PreDeployHook {
 				let includeOnlyPackages = [];
 				if (props.releaseConfigPaths?.length > 0) {
 					let releaseConfigAggregatedLoader = new ReleaseConfigAggregator(logger);
-					releaseConfigAggregatedLoader.addReleaseConfigs(props.releaseConfigPaths); 
+					releaseConfigAggregatedLoader.addReleaseConfigs(props.releaseConfigPaths,true); 
 					includeOnlyPackages = releaseConfigAggregatedLoader.getAllPackages();
 					printIncludeOnlyPackages(includeOnlyPackages);
 			}
