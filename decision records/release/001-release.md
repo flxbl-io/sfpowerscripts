@@ -17,7 +17,7 @@ sfpowerscripts currently does not have a notion of 'release', which some CICD pl
 
 Utilises a release definition file (YAML format) and combines the steps in a release into a single SFDX command: fetching artifacts, installing dependencies, deployment and release changelog generation.
 
-This command utilizes a YAML based release definition as opposed to sfdx-project.json which is used by the orchestrator elsewhere. The benefit of using a seperate definition is to keep release and build definitions seperated, as one could use for selective deployments.
+This command utilizes a YAML based release definition as opposed to sfdx-project.json which is used by the orchestrator elsewhere. The benefit of using a separate definition is to keep release and build definitions separated, as one could use for selective deployments.
 
 Pros:
 * Easy to use
@@ -40,7 +40,7 @@ Cons:
 * Unintuitive to use, requires external documentation
 
 
-## Decision 
+## Decision
 
 Chosen option: 1. `orchestrator:release` command
 

@@ -24,20 +24,20 @@ direction LR
   B --> E[[release--<<< 3 >>>.yml]]
   A--pushes tag--->id1
   id1[(Git)]--fetches info from tag--> B
- 
+
 end
 
 subgraph ZB["release<< env >>"]
 direction LR
-   
+
     F[[release--<<< 2 >>>.yml]]-- 1.Input to command -->G[orchestrator:release < env >]
     id2[(Git)]--2.Fetches info from tag--> G
-    id3[(Artifact Repo)]--3.Fetches artifacts--> G  
+    id3[(Artifact Repo)]--3.Fetches artifacts--> G
 end
 
 subgraph ZC["release<< env >>"]
 direction LR
-   
+
     F1[[release--<<< 2 >>>.yml]]-- 1.Input to command -->G1[orchestrator:release < env >]
     id21[(Git)]--2.Fetches info from tag--> G1
     id31[(Artifact Repo)]--3.Fetches artifacts--> G1
@@ -46,7 +46,7 @@ end
 ZA -.on demand.-> ZB-.followed by.->ZC
 ```
 
-The command need a mechanism to figure out  versions of articats that constitute a release. This can be either done by utilizing an org as a reference or pointing to a particular commit reference.  
+The command need a mechanism to figure out  versions of articats that constitute a release. This can be either done by utilizing an org as a reference or pointing to a particular commit reference.
 
 The mechanism of using Org as a source of truth, was discarded due to the following reasons:
 
@@ -81,10 +81,10 @@ excludeArtifactsWithTag:
 # Exclude the following package dependecies from the generated definition
 excludePackageDependencies:
  - Pkg1
-# set below properties in generated release definition 
+# set below properties in generated release definition
 baselineOrg: << org >>
 promotePackagesBeforeDeploymentToOrg: << org >>
-skipIfAlreadyInstalled: <<whether to skip artifacts installed >> 
+skipIfAlreadyInstalled: <<whether to skip artifacts installed >>
 changelog:
   workItemFilters:
     -  <<regex pattern1>>
@@ -97,8 +97,8 @@ changelog:
 ***Implementation notes***
 
 1. The command should expect the name of the release as an input. The passed in name will be substituted in the generated release file
-2. The command is expectected to be used from any stage in the repository
+2. The command is expected to be used from any stage in the repository
 3. The input definition to this file will be called as *release definition config*
 4. Packages defined in sfdx-project.json will be filtered by the inputs in release definition config
 5. IncludeOnly or ExcludeArtifacts are mutually exclusive, with include taking precedence over exclude
-6. PackageDependencies are picked from the packageAliases 
+6. PackageDependencies are picked from the packageAliases
