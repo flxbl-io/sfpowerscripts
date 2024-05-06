@@ -16,7 +16,7 @@ USAGE
 
 FLAGS
   -b, --branchname=<value>   Repository branch in which the release definition files are to be written
-  -c, --gitref=<value>       (required) Utilize the tags on the source branch to generate release definiton
+  -c, --gitref=<value>       (required) Utilize the tags on the source branch to generate release definition
   -d, --directory=<value>    Relative path to directory to which the release definition file should be generated, if the
                              directory doesnt exist, it will be created
   -f, --configfile=<value>   (required) Path to the release config file which determines how the release definition

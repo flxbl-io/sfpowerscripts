@@ -24,7 +24,7 @@ FLAGS
   -g, --logsgroupsymbol=<value>...    Symbol used by CICD platform to group/collapse logs in the console. Provide an
                                       opening group, and an optional closing group symbol.
   -o, --targetorg=<value>             (required) Username or alias of the target org.
-  -p, --releasedefinition=<value>...  (required) Path to release definiton yaml, Multiple paths can be seperated by
+  -p, --releasedefinition=<value>...  (required) Path to release definition yaml, Multiple paths can be seperated by
                                       commas
   -t, --tag=<value>                   Tag the release with a label, useful for identification in metrics
   -v, --devhubalias=<value>           Username or alias of the Dev Hub org.

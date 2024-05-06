@@ -1,6 +1,6 @@
 {
     "commandDescription": "Generate a dynamic branch with the packages patched to the contents as mentioned in the release config file",
-    "releaseDefinitionFlagDescription": "Path to release definiton yaml",
+    "releaseDefinitionFlagDescription": "Path to release definition yaml",
     "sourcebranchNameFlagDescription": "Name of the source branch to be used on which the alignment need to be applied",
     "targetbranchNameFlagDescription": "Name of the target branch to be created after the alignment",
     "scriptPathFlagDescription": "(Optional: no-NPM) Path to script that authenticates and downloads artifacts from the registry",

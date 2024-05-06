@@ -19,7 +19,7 @@ FLAGS
                                        the registry
   -g, --logsgroupsymbol=<value>...     Symbol used by CICD platform to group/collapse logs in the console. Provide an
                                        opening group, and an optional closing group symbol.
-  -p, --releasedefinitions=<value>...  (required) Path to release definiton yaml
+  -p, --releasedefinitions=<value>...  (required) Path to release definition yaml
   -s, --sourcebranchname=<value>       (required) Name of the source branch to be used on which the alignment need to be
                                        applied
   -t, --targetbranchname=<value>       (required) Name of the target branch to be created after the alignment

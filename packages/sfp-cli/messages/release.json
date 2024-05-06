@@ -1,6 +1,6 @@
 {
     "commandDescription": "Release a set of artifact(s) as defined by a release definition into a target org",
-    "releaseDefinitionFlagDescription": "Path to release definiton yaml, Multiple paths can be seperated by commas",
+    "releaseDefinitionFlagDescription": "Path to release definition yaml, Multiple paths can be seperated by commas",
     "targetOrgFlagDescription": "Alias/User Name of the target environment",
     "scriptPathFlagDescription": "(Optional: no-NPM) Path to script that authenticates and downloads artifacts from the registry",
     "npmFlagDescription": "Download artifacts from a pre-authenticated private npm registry",
