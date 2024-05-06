@@ -10,7 +10,7 @@ sfpowerscripts allow a release manager to utilize  'LATEST_GIT_TAG' or to use 'S
 
 ## Decision
 
-sfpowerscripts will introduce a new command 'releasedefinition:generate' that can be used to generate a release definition file, The generatated release definiton  can then be used as an input to 'orchestrator:release' to deploy artifacts in the pipeline.
+sfpowerscripts will introduce a new command 'releasedefinition:generate' that can be used to generate a release definition file, The generatated release definition  can then be used as an input to 'orchestrator:release' to deploy artifacts in the pipeline.
 
 ```mermaid
 flowchart TD
@@ -54,7 +54,7 @@ The mechanism of using Org as a source of truth, was discarded due to the follow
 * Strong dependency on an org in the pipeline is against the guidelines in DX@Scale principles, as any org could be refreshed at any point in time.
 * An org could be installed with artifacts created from 'quick build' stage. However these artifacts are typically not published in to the artifacts repositoy
 
-However, using tags on the version control closely matches the existing behaviour of the release command with 'LATEST_GIT_TAG', but provide additional traceability  by providing the user ability to generate and store the release defintions in version control. These versioned release defintions then could be used on demand at any point in time.
+However, using tags on the version control closely matches the existing behaviour of the release command with 'LATEST_GIT_TAG', but provide additional traceability  by providing the user ability to generate and store the release definitions in version control. These versioned release definitions then could be used on demand at any point in time.
 
 The command will utilize a schema to generate the release  definition. This allows the user for flexibility in terms of selecting artifacts
 

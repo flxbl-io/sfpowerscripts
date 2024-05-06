@@ -48,7 +48,7 @@
         },
         "releaseConfigFile": {
             "title": "Path to release config file",
-            "description": "Path to the config file which determines how a release defintion should be generated, enable this for pools to use this release config to only utilize artifacts described the releae config",
+            "description": "Path to the config file which determines how a release definition should be generated, enable this for pools to use this release config to only utilize artifacts described the releae config",
             "type": "string"
         },
         "succeedOnDeploymentErrors": {

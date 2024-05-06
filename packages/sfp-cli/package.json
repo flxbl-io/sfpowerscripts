@@ -110,7 +110,7 @@
         "topicSeparator": " ",
         "topics": {
             "releasedefinition": {
-                "description": "Commands around managing release defintion"
+                "description": "Commands around managing release definition"
             },
             "pool": {
                 "description": "Build and manage scratch org or sandbox pools"

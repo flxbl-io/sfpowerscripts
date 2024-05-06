@@ -148,7 +148,7 @@ export default class Release extends SfpCommand {
                 this.flags.targetorg == releaseDefinition.promotePackagesBeforeDeploymentToOrg &&
                 !this.flags.devhubalias
             )
-                throw new Error('DevHub is mandatory when promote is used within release defintion');
+                throw new Error('DevHub is mandatory when promote is used within release definition');
 
             releaseDefinitions.push(releaseDefinition);
         }
@@ -238,7 +238,7 @@ export default class Release extends SfpCommand {
         for (const succeededDeployment of releaseResult.succeededDeployments) {
             SFPLogger.log(
                 COLOR_HEADER(
-                    `\n Release Defintion: ${succeededDeployment.releaseDefinition.release} for Release Config: ${
+                    `\n Release Definition: ${succeededDeployment.releaseDefinition.release} for Release Config: ${
                         succeededDeployment.releaseDefinition.releaseConfigName
                             ? succeededDeployment.releaseDefinition.releaseConfigName
                             : 'N/A'
@@ -250,7 +250,7 @@ export default class Release extends SfpCommand {
         }
 
         for (const failedDeployment of releaseResult.failedDeployments) {
-            SFPLogger.log(COLOR_HEADER(`\n Release Defintion: ${failedDeployment.releaseDefinition.release} for for Release Config: ${
+            SFPLogger.log(COLOR_HEADER(`\n Release Definition: ${failedDeployment.releaseDefinition.release} for for Release Config: ${
                 failedDeployment.releaseDefinition.releaseConfigName
                     ? failedDeployment.releaseDefinition.releaseConfigName
                     : 'N/A'

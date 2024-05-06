@@ -80,7 +80,7 @@ export default class Patch extends SfpCommand {
                 logger
             );
             SFPLogger.log(
-                COLOR_HEADER(`Release Defintion: ${this.flags.releasedefinitions}`),
+                COLOR_HEADER(`Release Definition: ${this.flags.releasedefinitions}`),
                 LoggerLevel.INFO,
                 logger
             );

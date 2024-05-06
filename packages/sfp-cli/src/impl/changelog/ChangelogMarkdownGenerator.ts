@@ -46,7 +46,7 @@ export default class ChangelogMarkdownGenerator {
                 payload += `## ${release.names.join(`/`)}\n `;
                 payload += `Cumulative Release Number: <b>${release.buildNumber}</b> \n\n`;
                 if(release.date && !this.isForWorkItemOnlyOutput)
-                  payload += `Matching defintion first created or deployed to an org on: ${release.date}\n `
+                  payload += `Matching definition first created or deployed to an org on: ${release.date}\n `
 
             }
 

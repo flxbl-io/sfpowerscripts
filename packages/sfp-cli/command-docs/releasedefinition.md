@@ -1,7 +1,7 @@
 `@flxbl-io/sfp releasedefinition`
 =================================
 
-Commands around managing release defintion
+Commands around managing release definition
 
 * [`@flxbl-io/sfp releasedefinition generate`](#flxbl-iosfp-releasedefinition-generate)
 

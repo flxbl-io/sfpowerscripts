@@ -20,7 +20,7 @@ It would be ideal in this scenario to have a rollback option, which basically re
 
 ### Release command to support a rollback function
 
-Release command will support an optional rollback function enabled through `rollback:true` parameter in the release defintion. Once this functionality is activated, release command will keep track of existing packages in the org (in memory) before deploying packages as part of the current release. In case of any failures, release command will fetch the old artifacts from the artifact repository and proceed to installing these packages into the org.
+Release command will support an optional rollback function enabled through `rollback:true` parameter in the release definition. Once this functionality is activated, release command will keep track of existing packages in the org (in memory) before deploying packages as part of the current release. In case of any failures, release command will fetch the old artifacts from the artifact repository and proceed to installing these packages into the org.
 
 Unlocked packages have its own lifecycle and Salesforce would maintain deprecation and removal of unused components arising from a rollback. However for source packages, it needs to have a destructive manifest to remove the items already deployed. This functionality only attemps to install an earlier set of packages, and doesnt attempt to destroy any deployed components, especially in the case of source packages. However we could let the users know what are the components left dangling by providing a table of metadata components that will not be removed.
 

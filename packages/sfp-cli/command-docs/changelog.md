@@ -21,7 +21,7 @@ FLAGS
   -n, --releasename=<value>     (required) Name of the release for which to generate changelog
   -w, --workitemfilter=<value>  (required) Regular expression used to search for work items (user stories) introduced in
                                 release
-      --directory=<value>       Relative path to directory to which the release defintion file should be generated, if
+      --directory=<value>       Relative path to directory to which the release definition file should be generated, if
                                 the directory doesnt exist, it will be created
       --limit=<value>           limit the number of releases to display in changelog markdown
       --loglevel=<option>       [default: info] logging level for this command invocation
