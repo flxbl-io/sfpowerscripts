@@ -3,5 +3,5 @@
     "folderFlagDescription": "retrieve only updated versions of profiles found in this directory, If ignored, all profiles will be retrieved.",
     "profileListFlagDescription": "comma separated list of profiles to be retrieved. Use it for selectively retrieving an existing profile or retrieving a new profile",
     "deleteFlagDescription": "set this flag to delete profile files that does not exist in the org, when retrieving in bulk",
-    "retriveDelayWarning":"Retrieving profiles may take a significant time depending on the number of profiles \nand managed package components installed in your org,Please be patient"
+    "retriveDelayWarning":"Retrieving profiles may take a significant time depending on the number of profiles \nand managed package components installed in your org. Please be patient"
 }
