@@ -78,7 +78,7 @@ export default class CreateSourcePackageImpl extends CreatePackage {
     private printHintForOptimizedDeployment() {
         SFPLogger.printHeaderLine('OPTION FOR DEPLOYMENT OPTIMIZATION AVAILABLE',COLOR_HEADER,LoggerLevel.INFO,this.logger);
         SFPLogger.log(
-            `Following apex test classes were identified and can  be used for deploying this package,${EOL}` +
+            `Following apex test classes were identified and can be used for deploying this package,${EOL}` +
             `in an optimal manner, provided each individual class meets the test coverage requirement of 75% and above${EOL}` +
             `Ensure each apex class/trigger is validated for coverage in the validation stage`,
             null,
