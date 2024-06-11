@@ -159,8 +159,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       '@salesforce/core':
-        specifier: 6.5.1
-        version: 6.5.1
+        specifier: 6.7.3
+        version: 6.7.3
       '@salesforce/kit':
         specifier: 3.0.15
         version: 3.0.15
@@ -359,8 +359,8 @@ importers:
         specifier: ^3.0.1
         version: link:../sfplogger
       '@salesforce/core':
-        specifier: 6.5.1
-        version: 6.5.1
+        specifier: 6.7.3
+        version: 6.7.3
       '@salesforce/source-deploy-retrieve':
         specifier: 10.9.1
         version: 10.9.1
@@ -2029,7 +2029,7 @@ packages:
       debug: 4.3.4(supports-color@8.1.1)
       globby: 11.1.0
       is-wsl: 2.2.0
-      tslib: 2.6.2
+      tslib: 2.6.3
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -2540,7 +2540,7 @@ packages:
     resolution: {integrity: sha512-lHa7XnQCivuwTtO0RBTqw+nZ4Qm4ymodqpNJwefFLk6KBEva9sMV9Ksj2x6kBGGbLyO6ZiJiUMSAN6Gcny60zg==}
     engines: {node: '>=18.18.2'}
     dependencies:
-      '@salesforce/core': 6.5.1
+      '@salesforce/core': 6.7.3
       '@salesforce/kit': 3.0.15
       '@types/istanbul-reports': 3.0.4
       faye: 1.4.0
@@ -2554,40 +2554,14 @@ packages:
       - supports-color
     dev: false
 
-  /@salesforce/core@6.5.1:
-    resolution: {integrity: sha512-u/R82JGdbJCMY0EN3UY5hQUxn0gPN+ParNQIm9YPB9lDpBQv82nKeZJuH6j2LsaaF6ygY3bm79kftPxpdKbggQ==}
+  /@salesforce/core@6.7.3:
+    resolution: {integrity: sha512-uU+PuZZGXxByhvnXLH1V3eY5P1caw401dIZ/QvhzYxoP/alPLk7dpChnZNJYH5Rw3dc/AhSPw+eg0cvUyjhP1Q==}
     engines: {node: '>=18.0.0'}
     dependencies:
       '@salesforce/kit': 3.0.15
-      '@salesforce/schemas': 1.6.1
-      '@salesforce/ts-types': 2.0.9
-      '@types/semver': 7.5.6
-      ajv: 8.12.0
-      change-case: 4.1.2
-      faye: 1.4.0
-      form-data: 4.0.0
-      js2xmlparser: 4.0.2
-      jsforce: 2.0.0-beta.29
-      jsonwebtoken: 9.0.2
-      jszip: 3.10.1
-      pino: 8.17.2
-      pino-abstract-transport: 1.1.0
-      pino-pretty: 10.3.1
-      proper-lockfile: 4.1.2
-      semver: 7.5.4
-      ts-retry-promise: 0.7.1
-    transitivePeerDependencies:
-      - encoding
-      - supports-color
-    dev: false
-
-  /@salesforce/core@6.7.6:
-    resolution: {integrity: sha512-0ZZ1GgUQTwTs8/xa+hmZd+wwKXkK8MNcI2Kn20HmHShsweA2Jp3Yaxx0+EbRPqhSBARXso+TADSnsOjlZvQ3tg==}
-    engines: {node: '>=18.0.0'}
-    dependencies:
-      '@salesforce/kit': 3.1.3
       '@salesforce/schemas': 1.9.0
       '@salesforce/ts-types': 2.0.9
+      '@types/semver': 7.5.8
       ajv: 8.12.0
       change-case: 4.1.2
       faye: 1.4.0
@@ -2597,7 +2571,7 @@ packages:
       jsonwebtoken: 9.0.2
       jszip: 3.10.1
       pino: 8.21.0
-      pino-abstract-transport: 1.1.0
+      pino-abstract-transport: 1.2.0
       pino-pretty: 10.3.1
       proper-lockfile: 4.1.2
       semver: 7.6.2
@@ -2630,7 +2604,7 @@ packages:
     engines: {node: '>=18.0.0'}
     dependencies:
       '@oclif/core': 3.3.2
-      '@salesforce/core': 6.5.1
+      '@salesforce/core': 6.7.3
       '@salesforce/kit': 3.0.15
       '@salesforce/schemas': 1.6.1
       '@salesforce/source-deploy-retrieve': 10.9.1
@@ -2659,7 +2633,7 @@ packages:
     resolution: {integrity: sha512-FmSO6F4DFv7CqtFIzs0v8yuMlEie+hG2fq7QrBmhBxd6+1WNfk7wM3vXZyO0zOv9uarkILStB5+Dy91DYVrRHw==}
     engines: {node: '>=18.0.0'}
     dependencies:
-      '@salesforce/core': 6.7.6
+      '@salesforce/core': 6.7.3
       '@salesforce/kit': 3.1.3
       '@salesforce/ts-types': 2.0.9
       fast-levenshtein: 3.0.0
@@ -2682,7 +2656,7 @@ packages:
     engines: {node: '>=18.0.0'}
     dependencies:
       '@oclif/core': 3.18.1
-      '@salesforce/core': 6.5.1
+      '@salesforce/core': 6.7.3
       '@salesforce/kit': 3.0.15
       '@salesforce/source-deploy-retrieve': 10.9.1
       '@salesforce/ts-types': 2.0.9
@@ -3195,8 +3169,8 @@ packages:
     resolution: {integrity: sha512-7aqorHYgdNO4DM36stTiGO3DvKoex9TQRwsJU6vMaFGyqpBA1MNZkz+PG3gaNUPpTAOYhT1WR7M1JyA3fbS9Cw==}
     dev: true
 
-  /@types/semver@7.5.6:
-    resolution: {integrity: sha512-dn1l8LaMea/IjDoHNd9J52uBbInB796CDffS6VdIxvqYCPSG0V0DzHp76GpaWnlhg88uYyPbXCDIowa86ybd5A==}
+  /@types/semver@7.5.8:
+    resolution: {integrity: sha512-I8EUhyrgfLrcTkzV3TSsGyl1tSuPrEDzr0yd5m90UgNxQkyDXULk3b6MlQqTCpZpNtWe1K0hzclnZkTcLBe2UQ==}
     dev: false
 
   /@types/sinon@10.0.15:
@@ -7685,7 +7659,7 @@ packages:
       lodash.isstring: 4.0.1
       lodash.once: 4.1.1
       ms: 2.1.3
-      semver: 7.5.4
+      semver: 7.6.2
     dev: false
 
   /jszip@3.10.1:
@@ -9671,23 +9645,6 @@ packages:
     resolution: {integrity: sha512-cHjPPsE+vhj/tnhCy/wiMh3M3z3h/j15zHQX+S9GkTBgqJuTuJzYJ4gUyACLhDaJ7kk9ba9iRDmbH2tJU03OiA==}
     dev: false
 
-  /pino@8.17.2:
-    resolution: {integrity: sha512-LA6qKgeDMLr2ux2y/YiUt47EfgQ+S9LznBWOJdN3q1dx2sv0ziDLUBeVpyVv17TEcGCBuWf0zNtg3M5m1NhhWQ==}
-    hasBin: true
-    dependencies:
-      atomic-sleep: 1.0.0
-      fast-redact: 3.3.0
-      on-exit-leak-free: 2.1.0
-      pino-abstract-transport: 1.1.0
-      pino-std-serializers: 6.2.2
-      process-warning: 3.0.0
-      quick-format-unescaped: 4.0.4
-      real-require: 0.2.0
-      safe-stable-stringify: 2.4.3
-      sonic-boom: 3.7.0
-      thread-stream: 2.4.0
-    dev: false
-
   /pino@8.21.0:
     resolution: {integrity: sha512-ip4qdzjkAyDDZklUaZkcRFb2iA118H9SgRh8yzTkSQK8HilsOJF7rSY8HoW5+I0M46AZgX/pxbprf2vvzQCE0Q==}
     hasBin: true
@@ -11006,12 +10963,6 @@ packages:
     engines: {node: '>=0.8'}
     dev: true
 
-  /thread-stream@2.4.0:
-    resolution: {integrity: sha512-xZYtOtmnA63zj04Q+F9bdEay5r47bvpo1CaNqsKi7TpoJHcotUez8Fkfo2RJWpW91lnnaApdpRbVwCWsy+ifcw==}
-    dependencies:
-      real-require: 0.2.0
-    dev: false
-
   /thread-stream@2.7.0:
     resolution: {integrity: sha512-qQiRWsU/wvNolI6tbbCKd9iKaTnCXsTwVxhhKM6nctPdujTyztjlbUkUTUymidWcMnZ5pWR0ej4a0tjsW021vw==}
     dependencies:
@@ -11317,7 +11268,6 @@ packages:
 
   /tslib@2.6.3:
     resolution: {integrity: sha512-xNvxJEOUiWPGhUuUdQgAJPKOOJfGnIyKySOc09XkKsgdUV/3E2zvwZYdejjmRgPCgcym1juLH3226yA7sEFJKQ==}
-    dev: false
 
   /tsutils@3.21.0(typescript@5.0.2):
     resolution: {integrity: sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==}
