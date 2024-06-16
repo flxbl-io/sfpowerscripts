@@ -36,6 +36,7 @@ export interface ReleaseProps {
     devhubUserName: string;
     branch: string;
     directory: string;
+    failifalreadypromoted: boolean
 }
 
 type DeploymentStatus = {
@@ -46,7 +47,7 @@ type DeploymentStatus = {
 
 export default class ReleaseImpl {
 
-   
+
 
     constructor(private props: ReleaseProps, private logger?: Logger) {}
 
@@ -81,7 +82,7 @@ export default class ReleaseImpl {
         SFPLogger.log(`Clearing installation output`, LoggerLevel.TRACE, this.logger);
         FileOutputHandler.getInstance().deleteOutputFile(`deployment-breakdown.md`);
         FileOutputHandler.getInstance().deleteOutputFile(`release-changelog.md`);
-      
+
         let deploymentResults = await this.deployArtifacts(sortedReleaseDefns);
 
         //Get all suceeded deploys
@@ -229,7 +230,7 @@ export default class ReleaseImpl {
         return numberOfCommits;
     }
 
-  
+
 
     private async deployArtifacts(releaseDefinitions: ReleaseDefinition[]): Promise<DeploymentStatus[]> {
         let deploymentResults: { releaseDefinition: ReleaseDefinition; result: DeploymentResult }[] = [];
@@ -257,6 +258,7 @@ export default class ReleaseImpl {
                     : false,
                 promotePackagesBeforeDeploymentToOrg: releaseDefinition.promotePackagesBeforeDeploymentToOrg,
                 devhubUserName: this.props.devhubUserName,
+                failifalreadypromoted: this.props.failifalreadypromoted
             };
 
             FileOutputHandler.getInstance().appendOutput(`deployment-breakdown.md`,`## ReleaseConfig: ${releaseDefinition.releaseConfigName?releaseDefinition.releaseConfigName:""}\n`);
@@ -281,7 +283,7 @@ export default class ReleaseImpl {
 
         let sfpPackageInquirer: SfpPackageInquirer = new SfpPackageInquirer(sfpPackages, logger);
         let sfdxProjectConfig = sfpPackageInquirer.getLatestProjectConfig();
-       
+
         let releaseDefinitionSorter = new ReleaseDefinitionSorter();
         return releaseDefinitionSorter.sortReleaseDefinitions(releaseDefns, sfdxProjectConfig, logger);
     }

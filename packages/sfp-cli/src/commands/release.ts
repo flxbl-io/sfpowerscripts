@@ -106,6 +106,12 @@ export default class Release extends SfpCommand {
             description: messages.getMessage('changelogByDomainsFlagDescription'),
             hidden: true,
         }),
+        failifalreadypromoted: Flags.boolean({
+            required: true,
+            char: 'x',
+            description: messages.getMessage('failifalreadypromotedFlagDescription'),
+            default: false,
+        }),
         devhubalias: optionalDevHubFlag,
         loglevel,
     };
@@ -171,6 +177,7 @@ export default class Release extends SfpCommand {
                 devhubUserName: this.flags.devhubalias,
                 branch: this.flags.branchname,
                 directory: this.flags.directory,
+                failifalreadypromoted: this.flags.failifalreadypromoted
             };
 
             let releaseImpl: ReleaseImpl = new ReleaseImpl(props, new ConsoleLogger());

@@ -17,7 +17,7 @@ const messages = Messages.loadMessages('@flxbl-io/sfp', 'promote');
 export default class Promote extends SfpCommand {
     public static description = messages.getMessage('commandDescription');
     static aliases = ['orchestrator:promote']
-    
+
 
     public static examples = [`$ sfp promote -d path/to/artifacts -v <org>`];
 
@@ -30,6 +30,12 @@ export default class Promote extends SfpCommand {
             char: 'd',
             description: messages.getMessage('artifactDirectoryFlagDescription'),
             default: 'artifacts',
+        }),
+        failifalreadypromoted: Flags.boolean({
+            required: true,
+            char: 'x',
+            description: messages.getMessage('failifalreadypromotedFlagDescription'),
+            default: false,
         }),
        loglevel
     };
@@ -59,7 +65,8 @@ export default class Promote extends SfpCommand {
                         let promoteUnlockedPackageImpl = new PromoteUnlockedPackageImpl(
                             artifact.sourceDirectoryPath,
                             sfpPackage.package_version_id,
-                            this.hubOrg.getUsername()
+                            this.hubOrg.getUsername(),
+                            this.flags.failifalreadypromoted
                         );
                         await promoteUnlockedPackageImpl.promote();
                     }
