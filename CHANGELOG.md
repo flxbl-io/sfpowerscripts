@@ -1,5 +1,17 @@
 # Changelog
 
+## [39.0.1](https://github.com/flxbl-io/sfp/compare/v39.0.0...v39.0.1) (2024-06-29)
+
+
+### Bug Fixes
+
+* **cicd:** create as draft ([5315eea](https://github.com/flxbl-io/sfp/commit/5315eeac423ac02bfa690fcc10288d6ea01616a3))
+
+
+### Miscellaneous Chores
+
+* **main:** release 39.0.1 ([155d05e](https://github.com/flxbl-io/sfp/commit/155d05e5500e8f652036fb3398506ebc2d68fc2f))
+
 ## [39.0.0](https://github.com/flxbl-io/sfp/compare/v38.6.1...v39.0.0) (2024-06-29)
 
 
