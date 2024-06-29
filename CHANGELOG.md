@@ -1,5 +1,13 @@
 # Changelog
 
+## [38.6.1](https://github.com/flxbl-io/sfp/compare/v38.6.0...v38.6.1) (2024-06-29)
+
+
+### Bug Fixes
+
+* **cicd:** add a release-as next for the release configuration ([1dfc27c](https://github.com/flxbl-io/sfp/commit/1dfc27c2bc39820737150cedf0d3802c71c1efd9))
+* **cicd:** update release please configs to draft ([b7a9a8c](https://github.com/flxbl-io/sfp/commit/b7a9a8ce59115da8d1f8a3071720245e6e16c86d))
+
 ## [38.6.0](https://github.com/flxbl-io/sfp/compare/v38.5.2...v38.6.0) (2024-06-29)
 
 
