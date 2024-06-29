@@ -1,5 +1,12 @@
 # Changelog
 
+## [38.6.2](https://github.com/flxbl-io/sfp/compare/v38.6.1...v38.6.2) (2024-06-29)
+
+
+### Bug Fixes
+
+* **cicd:** remove baseline from release config ([02aa213](https://github.com/flxbl-io/sfp/commit/02aa2136fd4372ff5c5d69dc362d2987f4bec718))
+
 ## [38.6.1](https://github.com/flxbl-io/sfp/compare/v38.6.0...v38.6.1) (2024-06-29)
 
 
