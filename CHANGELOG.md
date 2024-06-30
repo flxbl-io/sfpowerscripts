@@ -1,5 +1,45 @@
 # Changelog
 
+## [39.0.2](https://github.com/flxbl-io/sfp/compare/v39.0.1...v39.0.2) (2024-06-30)
+
+
+### Features
+
+* **cicd:** allow sfp docker image to build on push to main ([9fe94cd](https://github.com/flxbl-io/sfp/commit/9fe94cdc297bf0c9b36bcb87fbacda917fd8b002))
+* **cicd:** simplify using release-please ([6312fdf](https://github.com/flxbl-io/sfp/commit/6312fdf43948265ece64cbb02d7c82098d64ff00))
+* **dockerfile:** improve mechanism to build locally ([#86](https://github.com/flxbl-io/sfp/issues/86)) ([ddcc19f](https://github.com/flxbl-io/sfp/commit/ddcc19f1428b242a2fcbe67d6f4e154ba9ea55b4))
+* **docker:** update sfp cli version ([b631f2d](https://github.com/flxbl-io/sfp/commit/b631f2de5b2733d7d58ddb0541a7238b518d6a86))
+* **salesforce:** Upgrade core libs to v8 ([f0c5b62](https://github.com/flxbl-io/sfp/commit/f0c5b62d060c90379af841b5d1cb2ec4ed6490a6))
+* **sfdxSchema:** update schema to v8 ([389b74a](https://github.com/flxbl-io/sfp/commit/389b74a7b81b76587c4dab3aec4d8fb8dc29eb89))
+* **sfprofiles:** update to v5 ([f2752d0](https://github.com/flxbl-io/sfp/commit/f2752d0c99189fbb2583484696d34cb7ad141841))
+
+
+### Bug Fixes
+
+* **chore:** fix PR template documentation link ([#59](https://github.com/flxbl-io/sfp/issues/59)) ([89f1bd3](https://github.com/flxbl-io/sfp/commit/89f1bd38c72716d0cd67d9d79a8cf3a53f8457a7))
+* **cicd:** add a release-as next for the release configuration ([1dfc27c](https://github.com/flxbl-io/sfp/commit/1dfc27c2bc39820737150cedf0d3802c71c1efd9))
+* **cicd:** add bootstrap sha to root ([3fb6b01](https://github.com/flxbl-io/sfp/commit/3fb6b0108578a03db987531045fc128bc9cc5957))
+* **cicd:** add prerelease option to release-please config ([7ca1b25](https://github.com/flxbl-io/sfp/commit/7ca1b252fc0cba0d0b8d9dc6ced97fda342ac272))
+* **cicd:** create as draft ([5315eea](https://github.com/flxbl-io/sfp/commit/5315eeac423ac02bfa690fcc10288d6ea01616a3))
+* **cicd:** fix create as pre-release ([265b20c](https://github.com/flxbl-io/sfp/commit/265b20c78ff182cc93ce85af8b9114cad0673530))
+* **cicd:** fix incorrect build process ([2b184ac](https://github.com/flxbl-io/sfp/commit/2b184acde6a0d7773599486dd6c436e89ff851ee))
+* **cicd:** remove alpha stage from release pipeline ([14955a6](https://github.com/flxbl-io/sfp/commit/14955a604a5e314d59613e305acc5e66307417a1))
+* **cicd:** switch to GITHUB_TOKEN ([841fd4a](https://github.com/flxbl-io/sfp/commit/841fd4a555fac811c785592538d35693663be745))
+* **cicd:** update release please configs to draft ([b7a9a8c](https://github.com/flxbl-io/sfp/commit/b7a9a8ce59115da8d1f8a3071720245e6e16c86d))
+* **deploy:** 54-Skip deployment when deployment ([111c4e9](https://github.com/flxbl-io/sfp/commit/111c4e9c679bc8c73a2d26fcd8c2afc25fb51f1b))
+* **docker:** fix image tagging ([8003a4f](https://github.com/flxbl-io/sfp/commit/8003a4f88ade9557ba8bac8a2c920cb89bad093f))
+* **sfdxFlags:** fix broken compatibility due to v6 to v8 upgrade ([8a57ef3](https://github.com/flxbl-io/sfp/commit/8a57ef35495d42af5940e0b835ab0eb87d3431de))
+* **sfpPackage:** fix issue with test class not detected ([ef40c71](https://github.com/flxbl-io/sfp/commit/ef40c71e1feb1822d421318c43f36bea2f9837c5))
+* **typo:** Typos on user outputs and docs ([#58](https://github.com/flxbl-io/sfp/issues/58)) ([6279245](https://github.com/flxbl-io/sfp/commit/6279245148ffaf7ac78dd2bca6e6cef980bd1974))
+* **utils:** fix incorrect commenting of  CRUDHelper ([aa4f73a](https://github.com/flxbl-io/sfp/commit/aa4f73aa845c70af358db107ee5a7b4e894e77ea))
+
+
+### Miscellaneous Chores
+
+* **main:** release 39.0.1 ([155d05e](https://github.com/flxbl-io/sfp/commit/155d05e5500e8f652036fb3398506ebc2d68fc2f))
+* **main:** release 39.0.2 ([99e2581](https://github.com/flxbl-io/sfp/commit/99e258193cb39f3b13a8a6f230bbe2004317e37f))
+* release 39.0.1 ([ae8ad28](https://github.com/flxbl-io/sfp/commit/ae8ad28a434e4a969f7c648cacf2c7c3936c70e2))
+
 ## [39.0.1](https://github.com/flxbl-io/sfp/compare/v39.0.0...v39.0.1) (2024-06-29)
 
 
