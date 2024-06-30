@@ -1,5 +1,12 @@
 # Changelog
 
+## [39.0.3](https://github.com/flxbl-io/sfp/compare/v39.0.2...v39.0.3) (2024-06-30)
+
+
+### Bug Fixes
+
+* **cicd:** update to use version from package.json ([37aae9d](https://github.com/flxbl-io/sfp/commit/37aae9d82882de5129aeaef57c537ca73fca9ada))
+
 ## [39.0.2](https://github.com/flxbl-io/sfp/compare/v39.0.1...v39.0.2) (2024-06-30)
 
 
