@@ -64,7 +64,6 @@ We recommend using the sfp docker image to avoid breakages in your CI/CD pipelin
 #### Build Instructions
 To build sfp execute the following on the terminal:
 ```
-npm i -g lerna #Install Lerna Globally
 cd <sfp directory> # Navigate to the checked out directory
 npm i
 npm run build
