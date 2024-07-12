@@ -3,10 +3,10 @@ import SFPLogger, { Logger, LoggerLevel } from '@flxbl-io/sfp-logger';
 import QueryHelper from '../queryHelper/QueryHelper';
 import { delay } from '../utils/Delay';
 
-const psGroupQuery = `SELECT Id,MasterLabel,Status FROM PermissionSetGroup WHERE Status = 'Updating'`;
+const psGroupQuery = `SELECT Id,MasterLabel,Status FROM PermissionSetGroup WHERE Status IN ('Updating', 'Outdated')`;
 
 export default class PermissionSetGroupUpdateAwaiter {
-    constructor(private connection: Connection, private logger: Logger, private intervalBetweenRepeats = 30000) {}
+    constructor(private connection: Connection, private logger: Logger, private intervalBetweenRepeats = 60000) {}
 
     async waitTillAllPermissionSetGroupIsUpdated() {
         SFPLogger.log(

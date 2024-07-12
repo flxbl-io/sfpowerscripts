@@ -111,8 +111,10 @@
     "flxblio",
     "sfp-cli",
     "sfdx",
+    "sfdx-plugin",
     "salesforce",
     "sf",
+    "sf-plugin",
     "orchestrator"
   ],
   "oclif": {
