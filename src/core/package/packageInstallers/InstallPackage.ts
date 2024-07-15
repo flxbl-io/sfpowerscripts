@@ -141,21 +141,28 @@ export abstract class InstallPackage {
                 (file) => path.basename(file) === alias && fs.lstatSync(path.join(searchDirectory, file)).isDirectory()
             );
 
-            SFPLogger.log(`Using alias directory ${aliasDir ? aliasDir : 'default'}`, LoggerLevel.INFO, this.logger);
+            SFPLogger.log(`Target enviroment alias: ${alias}`, LoggerLevel.INFO, this.logger);
+            SFPLogger.log(`Aliasfy V2 ${this.projectConfig?.plugins?.sfp?.enableAlisifyInheritence}`, LoggerLevel.INFO, this.logger);
 
             let defaultDir: string = files.find(
                 (file) =>
-                    path.basename(file) === 'default' &&
+                    file === 'default' &&
                     fs.lstatSync(path.join(searchDirectory, file)).isDirectory()
             );
+
+            SFPLogger.log(`Default directory? ${defaultDir != null}`, LoggerLevel.INFO, this.logger);
 
             /**
              * If there are alias and default folder, merge
              */
             if (aliasDir && defaultDir && this.projectConfig?.plugins?.sfp?.enableAlisifyInheritence) {
-                //copy aliasified dir into default with conflict resolution 'overwrite'
-                aliasDir = new FileManager()
-                    .mergeDirectoriesToTemp(defaultDir, alias);
+                SFPLogger.log(`Merging ${this.sfpPackage.sourceDir + '/' + this.sfpPackage.packageDirectory + '/' + defaultDir} into ${aliasDir}`, LoggerLevel.INFO, this.logger);
+
+                /* Create temp dir
+                    copy aliasified dir into default with conflict resolution 'overwrite'
+                    new FileManager(this.logger)
+                        .mergeDirectories(this.sfpPackage.sourceDir + '/' + this.sfpPackage.packageDirectory + '/' + defaultDir, alias);
+                 */
             }
 
             if (!aliasDir && !defaultDir) {
@@ -164,7 +171,9 @@ export abstract class InstallPackage {
                 );
             }
 
-            this.packageDirectory = path.join(this.packageDescriptor.path, aliasDir);
+            SFPLogger.log(`$$$$ HERE $$$$$`, LoggerLevel.INFO, this.logger);
+            this.packageDirectory = path.join(this.packageDescriptor.path, aliasDir ?? defaultDir);
+
         }
          else {
             this.packageDirectory = path.join(this.packageDescriptor['path']);
