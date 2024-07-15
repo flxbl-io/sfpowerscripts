@@ -2,7 +2,7 @@
 
 * Status: Proposed
 * Deciders: Azlam, Vu, Zhebin, Dieffrei
-* Date:
+* Date: 15-07-2024
 
 ## Context and Problem Statement
 
@@ -45,6 +45,7 @@ src-env-specific-alias-post
 - sfp will continue to try to match the `alias` as it does today.
 - If an alias matches, the contents in the `<alias>` directory will be merged with the contents in the `default` directory.
     - If there's a conflict, the `<alias>` directory takes precedence.
+- If the alias isn't found, it will fall back to the `scratch-org` directory.
 - If the alias isn't found, it will fall back to the `default` directory.
 - If neither is found, an error will be thrown.
 
