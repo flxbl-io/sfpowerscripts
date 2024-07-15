@@ -152,9 +152,7 @@ export abstract class InstallPackage {
 
             SFPLogger.log(`Default directory? ${defaultDir != null}`, LoggerLevel.INFO, this.logger);
 
-            /**
-             * If there are alias and default folder, merge
-             */
+            // If there are alias and default folder, merge
             if (aliasDir && defaultDir && this.projectConfig?.plugins?.sfp?.enableAlisifyInheritence) {
                 SFPLogger.log(`Merging ${this.sfpPackage.sourceDir + '/' + this.sfpPackage.packageDirectory + '/' + defaultDir} into ${aliasDir}`, LoggerLevel.INFO, this.logger);
 
