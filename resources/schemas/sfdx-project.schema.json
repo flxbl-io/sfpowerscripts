@@ -1140,6 +1140,12 @@
                         }
                     }
                 },
+                "enableAlisifyInheritence": {
+                    "title": "Enable aliasify inheritance",
+                    "type": "boolean",
+                    "description": "Enabled merge 'default' sub dir into alias sub dir, allowing 'inheritance'",
+                    "default": false
+                },
                 "disableEntitlementFilter": {
                     "title": "Disable Entitlment filter",
                     "type": "boolean",

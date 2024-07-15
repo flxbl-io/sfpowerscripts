@@ -46,6 +46,7 @@ export abstract class InstallPackage {
     protected connection: Connection;
     protected packageDescriptor;
     protected packageDirectory;
+    protected projectConfig;
 
     private _isArtifactToBeCommittedInOrg: boolean = true;
 
@@ -64,6 +65,8 @@ export abstract class InstallPackage {
                 this.sfpPackage.sourceDir,
                 this.sfpPackage.packageName
             );
+
+            this.projectConfig = ProjectConfig.getSFDXProjectConfig(this.sfpPackage.projectDirectory);
 
             this.connection = this.sfpOrg.getConnection();
 
@@ -149,7 +152,7 @@ export abstract class InstallPackage {
             /**
              * If there are alias and default folder, merge
              */
-            if (aliasDir && defaultDir) {
+            if (aliasDir && defaultDir && this.projectConfig?.plugins?.sfp?.enableAlisifyInheritence) {
                 //copy aliasified dir into default with conflict resolution 'overwrite'
                 aliasDir = new FileManager()
                     .mergeDirectoriesToTemp(defaultDir, alias);
