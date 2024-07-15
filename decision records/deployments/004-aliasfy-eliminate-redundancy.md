@@ -49,7 +49,7 @@ src-env-specific-alias-post
 - If neither is found, an error will be thrown.
 
 
-- To ensure the changes do not disrupt exising users of the aliasfy feature, this enhanced aliasfy package feature has to be explictly enabled as 'aliasfyv2'in the sfdx-project.json
+- To ensure the changes do not disrupt exising users of the aliasfy feature, this enhanced aliasfy package feature has to be explictly enabled as 'enableAlisifyInheritence' in the sfdx-project.json
 
 
 By implementing this inheritance mechanism, we reduce redundancy, simplify maintenance, and minimize the scope for errors.
