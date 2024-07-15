@@ -22,6 +22,7 @@ import PackageComponentPrinter from '../../display/PackageComponentPrinter';
 import DeployErrorDisplayer from '../../display/DeployErrorDisplayer';
 import { PreDeployersRegistry } from '../deploymentCustomizers/PreDeployersRegistry';
 import { AnalyzerRegistry } from '../analyser/AnalyzerRegistry';
+import FileManager from "./FileManager";
 
 export class SfpPackageInstallationOptions {
     installationkey?: string;
@@ -98,7 +99,7 @@ export abstract class InstallPackage {
             };
         }
     }
-    
+
     checkPackageDirectoryExists() {
         let absPackageDirectory: string = path.join(this.sfpPackage.sourceDir, this.packageDirectory);
         if (!fs.existsSync(absPackageDirectory)) {
@@ -139,20 +140,22 @@ export abstract class InstallPackage {
 
             SFPLogger.log(`Using alias directory ${aliasDir ? aliasDir : 'default'}`, LoggerLevel.INFO, this.logger);
 
-            if (!aliasDir) {
-                const orgDetails = await new OrgDetailsFetcher(this.sfpOrg.getUsername()).getOrgDetails();
+            let defaultDir: string = files.find(
+                (file) =>
+                    path.basename(file) === 'default' &&
+                    fs.lstatSync(path.join(searchDirectory, file)).isDirectory()
+            );
 
-                if (orgDetails.isSandbox) {
-                    // If the target org is a sandbox, find a 'default' directory to use as package directory
-                    aliasDir = files.find(
-                        (file) =>
-                            path.basename(file) === 'default' &&
-                            fs.lstatSync(path.join(searchDirectory, file)).isDirectory()
-                    );
-                }
+            /**
+             * If there are alias and default folder, merge
+             */
+            if (aliasDir && defaultDir) {
+                //copy aliasified dir into default with conflict resolution 'overwrite'
+                aliasDir = new FileManager()
+                    .mergeDirectoriesToTemp(defaultDir, alias);
             }
 
-            if (!aliasDir) {
+            if (!aliasDir && !defaultDir) {
                 throw new Error(
                     `Aliasfied package '${this.sfpPackage.packageName}' does not have an alias with '${alias}' or 'default' directory`
                 );
@@ -222,15 +225,15 @@ export abstract class InstallPackage {
         if (skipIfPackageInstalled) {
             let installationStatus = await this.sfpOrg.isArtifactInstalledInOrg(this.logger, this.sfpPackage);
             return !installationStatus.isInstalled;
-        } else if(this.sfpPackage.packageType == PackageType.Diff) 
+        } else if(this.sfpPackage.packageType == PackageType.Diff)
         {
           // If diff package, check if there are any changes to be deployed, else skip
            if(!this.sfpPackage.destructiveChanges && this.sfpPackage.metadataCount==0)
-           { 
+           {
             return false;
            }
         }
-        
+
          return true; // Always install packages if skipIfPackageInstalled is false
     }
 
@@ -363,7 +366,7 @@ export abstract class InstallPackage {
 
         let analyzers = AnalyzerRegistry.getAnalyzers();
         for (const analyzer of analyzers) {
-            if(await analyzer.isEnabled(this.sfpPackage, this.logger)) 
+            if(await analyzer.isEnabled(this.sfpPackage, this.logger))
             {
               SFPLogger.log(`Executing ${COLOR_KEY_MESSAGE(analyzer.getName())}`, LoggerLevel.INFO, this.logger);
               this.sfpPackage = await analyzer.analyze(this.sfpPackage,componentSet, this.logger);
@@ -489,7 +492,7 @@ export abstract class InstallPackage {
         deploymentOptions.rollBackOnError = true;
         return deploymentOptions;
     }
-    
+
     private getAStringOfSpecificTestClasses(apexTestClassses: string[]) {
         let specifedTests = apexTestClassses.join();
         return specifedTests;

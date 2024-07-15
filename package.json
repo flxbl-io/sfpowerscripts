@@ -55,6 +55,7 @@
     "markdown-table-ts": "^1.0.3",
     "marked": "4.0.16",
     "marked-terminal": "5.1.1",
+    "merge-dirs": "^0.2.1",
     "neverthrow": "4.4.2",
     "object-hash": "^2.1.1",
     "pino": "8.21.0",
