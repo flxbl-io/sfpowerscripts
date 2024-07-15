@@ -141,7 +141,7 @@ export abstract class InstallPackage {
                 (file) => path.basename(file) === alias && fs.lstatSync(path.join(searchDirectory, file)).isDirectory()
             );
 
-            SFPLogger.log(`Target enviroment alias: ${alias}`, LoggerLevel.INFO, this.logger);
+            SFPLogger.log(`Target environment alias: ${alias}`, LoggerLevel.INFO, this.logger);
             SFPLogger.log(`Aliasfy V2 ${this.projectConfig?.plugins?.sfp?.enableAlisifyInheritence}`, LoggerLevel.INFO, this.logger);
 
             let defaultDir: string = files.find(
@@ -171,7 +171,6 @@ export abstract class InstallPackage {
                 );
             }
 
-            SFPLogger.log(`$$$$ HERE $$$$$`, LoggerLevel.INFO, this.logger);
             this.packageDirectory = path.join(this.packageDescriptor.path, aliasDir ?? defaultDir);
 
         }
