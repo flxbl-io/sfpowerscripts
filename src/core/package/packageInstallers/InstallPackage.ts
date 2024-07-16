@@ -17,12 +17,12 @@ import DeploySourceToOrgImpl, { DeploymentOptions } from '../../deployers/Deploy
 import getFormattedTime from '../../utils/GetFormattedTime';
 import { TestLevel } from '../../apextest/TestOptions';
 import { PostDeployersRegistry } from '../deploymentCustomizers/PostDeployersRegistry';
-import { ComponentSet } from '@salesforce/source-deploy-retrieve';
+import {ComponentSet, MetadataResolver, SourceComponent} from '@salesforce/source-deploy-retrieve';
 import PackageComponentPrinter from '../../display/PackageComponentPrinter';
 import DeployErrorDisplayer from '../../display/DeployErrorDisplayer';
 import { PreDeployersRegistry } from '../deploymentCustomizers/PreDeployersRegistry';
 import { AnalyzerRegistry } from '../analyser/AnalyzerRegistry';
-import FileManager from "./FileManager";
+import PackageManager from "./PackageManager";
 
 export class SfpPackageInstallationOptions {
     installationkey?: string;
@@ -152,15 +152,15 @@ export abstract class InstallPackage {
 
             SFPLogger.log(`Default directory? ${defaultDir != null}`, LoggerLevel.INFO, this.logger);
 
+            const defaultPath: string = path.join(this.sfpPackage.sourceDir, this.sfpPackage.packageDirectory, defaultDir);
+            const aliasPath: string = path.join(this.sfpPackage.sourceDir, this.sfpPackage.packageDirectory, aliasDir);
+
             // If there are alias and default folder, merge
             if (aliasDir && defaultDir && this.projectConfig?.plugins?.sfp?.enableAlisifyInheritence) {
-                SFPLogger.log(`Merging ${this.sfpPackage.sourceDir + '/' + this.sfpPackage.packageDirectory + '/' + defaultDir} into ${aliasDir}`, LoggerLevel.INFO, this.logger);
-
-                /* Create temp dir
-                    copy aliasified dir into default with conflict resolution 'overwrite'
-                    new FileManager(this.logger)
-                        .mergeDirectories(this.sfpPackage.sourceDir + '/' + this.sfpPackage.packageDirectory + '/' + defaultDir, alias);
-                 */
+                SFPLogger.log(`Merging ${defaultPath} into ${aliasPath}`, LoggerLevel.INFO, this.logger);
+                const componentSet = await new PackageManager(this.logger)
+                    .merge(defaultPath, aliasPath, this.sfpPackage.projectDirectory);
+                SFPLogger.log(JSON.stringify(componentSet), LoggerLevel.INFO, this.logger);
             }
 
             if (!aliasDir && !defaultDir) {
