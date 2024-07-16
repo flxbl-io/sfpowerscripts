@@ -1,5 +1,19 @@
 # Changelog
 
+## [39.1.0](https://github.com/flxbl-io/sfp/compare/v39.0.3...v39.1.0) (2024-07-16)
+
+
+### Features
+
+* **diff:** update apex link to 3.2.1 ([783b1c9](https://github.com/flxbl-io/sfp/commit/783b1c999463fd9d08b15f5c03029682f5a57b19))
+
+
+### Bug Fixes
+
+* add keywords for better discoverability via npmjs.com ([#91](https://github.com/flxbl-io/sfp/issues/91)) ([2ae2e64](https://github.com/flxbl-io/sfp/commit/2ae2e64f15531d2d7b4003424d6bdceb1b384421))
+* **cicd:** fix move to prerelease in root ([c886ea1](https://github.com/flxbl-io/sfp/commit/c886ea17de57c301e1b145557dc7b78a21ecad02))
+* **deps:** update apexlink to 3.1.2 ([#93](https://github.com/flxbl-io/sfp/issues/93)) ([f7d0460](https://github.com/flxbl-io/sfp/commit/f7d046069c8b28718a6637a1e702b9eb386472d2))
+
 ## [39.0.3](https://github.com/flxbl-io/sfp/compare/v39.0.2...v39.0.3) (2024-06-30)
 
 
