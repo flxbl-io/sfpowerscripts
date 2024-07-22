@@ -8,6 +8,7 @@ import InstallUnlockedPackageCollection from '../../core/package/packageInstalle
 import SFPOrg from '../../core/org/SFPOrg';
 import { Flags } from '@oclif/core';
 import { loglevel, targetdevhubusername, requiredUserNameFlag } from '../../flags/sfdxflags';
+import ReleaseConfigLoader from '../../impl/release/ReleaseConfigLoader';
 
 // Initialize Messages with the current plugin directory
 Messages.importMessagesDirectory(__dirname);
@@ -30,6 +31,9 @@ export default class Install extends SfpCommand {
             required: false,
             description: messages.getMessage('installationkeysFlagDescription'),
         }),
+        releaseconfig: Flags.string({
+            description: messages.getMessage('configFileFlagDescription'),
+        }),
         loglevel
     };
 
@@ -43,10 +47,17 @@ export default class Install extends SfpCommand {
             ProjectConfig.getSFDXProjectConfig(null),
             this.flags.installationkeys
         );
-        let externalPackage2s = await externalPackageResolver.resolveExternalPackage2DependenciesToVersions();
+
+        let packages = null;
+        if (this.flags.releasefile) {
+            let releaseConfigLoader: ReleaseConfigLoader = new ReleaseConfigLoader(new ConsoleLogger(), this.flags.releasefile);
+            packages = releaseConfigLoader.getPackagesAsPerReleaseConfig();
+        }
+
+        let externalPackage2s = await externalPackageResolver.resolveExternalPackage2DependenciesToVersions(packages);
 
         SFPLogger.log(
-            `Installing external package dependencies of this project  in ${username}`,
+            `Installing external package dependencies of this project in ${username}`,
             LoggerLevel.INFO,
             new ConsoleLogger()
         );
