@@ -980,12 +980,14 @@
             "items": {
                 "type": "string",
                 "enum": [
+                    "analyze",
                     "prepare",
+                    "validate",
+                    "quickbuild",
                     "build",
                     "deploy",
-                    "validate",
-                    "release",
-                    "quickbuild"
+                    "promote",
+                    "publish"
                 ]
             }
         },
