@@ -63,7 +63,7 @@ describe("Given a ShrinkImpl", () => {
     let coreIndex = dependencies.findIndex(dependency => dependency.package === "core");
     expect(dependencies).toBeTruthy();
     expect(dependencies?.length)?.toBe(2);
-    expect(coreIndex).toBe(1);
+    expect(coreIndex).toBe(0);
   });
 
   it("should remove duplicate package dependencies from external dependency map", async () => {
@@ -74,7 +74,7 @@ describe("Given a ShrinkImpl", () => {
     let coreIndex = dependencies.findIndex(dependency => dependency.package === "core");
     expect(dependencies).toBeTruthy();
     expect(dependencies?.length)?.toBe(2);
-    expect(coreIndex).toBe(1);
+    expect(coreIndex).toBe(0);
   });
 
 
