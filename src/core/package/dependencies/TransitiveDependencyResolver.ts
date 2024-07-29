@@ -56,6 +56,11 @@ export default class TransitiveDependencyResolver {
     ): Map<string, { package: string; versionNumber?: string }[]> {
         let dependencyMap = new Map(pkgWithDependencies);
         const resolveDependencies = (pkg: string) => {
+            SFPLogger.log(
+                COLOR_HEADER(`fetching dependencies for package:`) + COLOR_KEY_MESSAGE(pkg),
+                LoggerLevel.TRACE,
+                this.logger
+            );
             let dependencies = dependencyMap.get(pkg) || [];
             let allDependencies = new Set(dependencies);
             dependencies.forEach(dep => {
