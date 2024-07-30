@@ -2,8 +2,6 @@ import ProjectConfig from '../../project/ProjectConfig';
 import { COLOR_HEADER, COLOR_KEY_MESSAGE, COLOR_SUCCESS, COLOR_ERROR } from '@flxbl-io/sfp-logger';
 import SFPLogger, { LoggerLevel, Logger } from '@flxbl-io/sfp-logger';
 import _, { uniq } from 'lodash';
-import semver = require('semver');
-import convertBuildNumDotDelimToHyphen from '../../utils/VersionNumberConverter';
 import { Connection } from '@salesforce/core';
 import UserDefinedExternalDependencyMap from '../../project/UserDefinedExternalDependency';
 
