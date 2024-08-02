@@ -37,7 +37,14 @@ export default class UserDefinedExternalDependencyMap {
                 externalDependencyMap[dependency] = [{ package: '', versionNumber: '' }];
             }
         }
-        updatedProjectConfig.plugins.sfp.externalDependencyMap = externalDependencyMap;
+      
+        if (updatedProjectConfig.plugins && updatedProjectConfig.plugins.sfp) {
+            updatedProjectConfig.plugins.sfp.externalDependencyMap = externalDependencyMap;
+        } else {
+            updatedProjectConfig.plugins = updatedProjectConfig.plugins || {};
+            updatedProjectConfig.plugins.sfp = updatedProjectConfig.plugins.sfp || {};
+            updatedProjectConfig.plugins.sfp.externalDependencyMap = externalDependencyMap;
+        }
         return updatedProjectConfig;
     }
 
