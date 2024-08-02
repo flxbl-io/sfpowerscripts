@@ -92,7 +92,8 @@ export default class FHTEnabler extends MetdataDeploymentCustomizer {
 
             //Modify the component set
             //Parsing is risky due to various encoding, so do an inplace replacement
-            for (const sourceComponent of fetchedCustomFields.components.getSourceComponents()) {
+            let sourceComponents = fetchedCustomFields.components.getSourceComponents().toArray();
+            for (const sourceComponent of sourceComponents) {
                 let metadataOfComponent = fs.readFileSync(sourceComponent.xml).toString();
 
                 metadataOfComponent = metadataOfComponent.replace(
