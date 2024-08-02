@@ -1,17 +1,17 @@
 import SfpCommand from '../../SfpCommand';
-import { Messages } from '@salesforce/core';
+import {Messages} from '@salesforce/core';
 import ExternalPackage2DependencyResolver from '../../core/package/dependencies/ExternalPackage2DependencyResolver';
 import ProjectConfig from '../../core/project/ProjectConfig';
 import SFPLogger, {COLOR_HEADER, COLOR_KEY_MESSAGE, ConsoleLogger, LoggerLevel} from '@flxbl-io/sfp-logger';
 import ExternalDependencyDisplayer from '../../core/display/ExternalDependencyDisplayer';
 import InstallUnlockedPackageCollection from '../../core/package/packageInstallers/InstallUnlockedPackageCollection';
 import SFPOrg from '../../core/org/SFPOrg';
-import { Flags } from '@oclif/core';
-import { loglevel, targetdevhubusername, requiredUserNameFlag } from '../../flags/sfdxflags';
+import {Flags} from '@oclif/core';
+import {loglevel, targetdevhubusername, requiredUserNameFlag} from '../../flags/sfdxflags';
 import ReleaseConfigLoader from '../../impl/release/ReleaseConfigLoader';
 import ReleaseDefinition from "../../impl/release/ReleaseDefinition";
 import {ReleaseProps} from "../../impl/release/ReleaseImpl";
-import HeaderWritter from "../../HeaderWritter";
+import CommandLogWritter from "../../CommandLogger";
 import ReleaseConfig from "../../impl/release/ReleaseConfig";
 
 // Initialize Messages with the current plugin directory
@@ -43,12 +43,12 @@ export default class Install extends SfpCommand {
         loglevel
     };
 
-    private displayReleaseInfo(releaseConfigPath:string, releaseConfig: ReleaseConfig, userName:string) {
-        const header: HeaderWritter = new HeaderWritter()
+    private displayReleaseInfo(releaseConfigPath: string, hasInstallationKeys: boolean, userName: string) {
+        const header: CommandLogWritter = new CommandLogWritter('dependency install')
             .headerLine()
             .colored(`Installing external package dependencies of this project in ${userName}`)
-            .coloredIf(releaseConfig != null, `Release Config Name: ${releaseConfig.releaseName}`)
-            .coloredIf(releaseConfig != null, `Release Config Path: ${releaseConfigPath}`)
+            .coloredIf(releaseConfigPath != null,  `Filter according to ${releaseConfigPath}`)
+            .coloredIf(hasInstallationKeys,  `Has Installation Keys: ${hasInstallationKeys}`)
             .headerLine();
     }
 
@@ -56,6 +56,8 @@ export default class Install extends SfpCommand {
     public async execute(): Promise<any> {
         // this.org is guaranteed because requiresUsername=true, as opposed to supportsUsername
         const username = this.org.getUsername();
+
+        this.displayReleaseInfo(this.flags.releaseconfig, !!this.flags.installationkeys, username);
 
         //Resolve external package dependencies
         let externalPackageResolver = new ExternalPackage2DependencyResolver(
@@ -72,16 +74,14 @@ export default class Install extends SfpCommand {
             packages = releaseConfigLoader.getPackagesAsPerReleaseConfig();
         }
 
-        this.displayReleaseInfo(this.flags.releaseconfig, releaseConfig, username);
-
         let externalPackage2s = await externalPackageResolver.resolveExternalPackage2DependenciesToVersions(packages);
 
-        //Display resolved dependenencies
+        //Display resolved dependencies
         let externalDependencyDisplayer = new ExternalDependencyDisplayer(externalPackage2s, new ConsoleLogger());
         externalDependencyDisplayer.display();
 
         let packageCollectionInstaller = new InstallUnlockedPackageCollection(
-            await SFPOrg.create({ aliasOrUsername: username }),
+            await SFPOrg.create({aliasOrUsername: username}),
             new ConsoleLogger()
         );
         await packageCollectionInstaller.install(externalPackage2s, true, true);
