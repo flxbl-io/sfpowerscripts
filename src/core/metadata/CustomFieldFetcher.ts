@@ -5,12 +5,12 @@ import { XMLParser } from 'fast-xml-parser';
 import MetadataFetcher from './MetadataFetcher';
 import {
     ComponentSet,
+    ComponentSetBuilder,
     MetadataConverter,
-    MetadataResolver,
-    ZipTreeContainer,
+    RegistryAccess,
 } from '@salesforce/source-deploy-retrieve';
 import path from 'path';
-import { makeRandomId } from '../utils/RandomId';
+import { SfProject } from '@salesforce/core';
 
 export default class CustomFieldFetcher extends MetadataFetcher {
     constructor(logger: Logger) {
@@ -22,24 +22,42 @@ export default class CustomFieldFetcher extends MetadataFetcher {
         let retriveLocation = await this.fetchPackageFromOrg(org, {
             types: { name: 'CustomField', members: fields.length > 1 ? fields : fields[0] },
         });
-
-        const zipTree = await ZipTreeContainer.create(fs.readFileSync(retriveLocation.zipLocation));
-        const zipResolver = new MetadataResolver(undefined, zipTree);
-        const zipComponents = zipResolver.getComponentsFromPath('.');
-        let packageName = makeRandomId(6);
-        await new MetadataConverter().convert(zipComponents, 'source', {
-            type: 'directory',
-            outputDirectory: path.join(retriveLocation.unzippedLocation, 'source'),
-            packageName: packageName
-        });
-
+        const sfProjectJson = {
+            packageDirectories: [
+                {
+                    path: 'source',
+                    default: true,
+                },
+            ],
+            name: 'retrieve',
+            namespace: '',
+            sourceApiVersion: await org.retrieveMaxApiVersion()
+        };
+        fs.mkdirpSync(path.join(retriveLocation.unzippedLocation, 'source'));
+        fs.writeFileSync(
+            path.join(retriveLocation.unzippedLocation, 'sfdx-project.json'),
+            JSON.stringify(sfProjectJson)
+        );
         //Write a force ignore file as its required for component set resolution
-        fs.writeFileSync(path.resolve(retriveLocation.unzippedLocation, 'source', '.forceignore'), '# .forceignore v2');
+        fs.writeFileSync(path.resolve(retriveLocation.unzippedLocation, '.forceignore'), '# .forceignore v2');
 
+        let sfProject = await SfProject.resolve(retriveLocation.unzippedLocation);
+        let metadataConverter = new MetadataConverter(new RegistryAccess(undefined, sfProject.getPath()));
+        let componentSet = await ComponentSetBuilder.build({
+            sourcepath: [path.resolve(retriveLocation.unzippedLocation)],
+            manifest: undefined,
+            metadata:  undefined,
+            projectDir: sfProject.getPath(),
+        });
+        await metadataConverter.convert(componentSet, 'source', {
+            type: 'directory',
+            outputDirectory: path.join(retriveLocation.unzippedLocation,sfProject.getDefaultPackage().path),
+            genUniqueDir: false,
+        });
         let sourceBackedComponents = ComponentSet.fromSource(path.resolve(retriveLocation.unzippedLocation, 'source'));
-
-        return {components:sourceBackedComponents,location:path.join(retriveLocation.unzippedLocation, 'source',packageName)}
+        return {
+            components: sourceBackedComponents,
+            location: path.join(retriveLocation.unzippedLocation, 'source'),
+        };
     }
-
-  
 }
