@@ -184,6 +184,7 @@
   },
   "scripts": {
     "prepare": "husky",
+    "watch": "npm run compile -- --watch",
     "build": "npm run clean && npm run compile",
     "docs": "oclif readme --no-aliases --multi --dir=docs --repository-prefix https://github.com/flxbl-io/sfp",
     "manifest": "oclif manifest",
