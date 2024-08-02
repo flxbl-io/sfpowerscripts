@@ -67,10 +67,8 @@ export default class Install extends SfpCommand {
         );
 
         let packages = null;
-        let releaseConfig: ReleaseConfig;
         if (this.flags.releaseconfig) {
             let releaseConfigLoader: ReleaseConfigLoader = new ReleaseConfigLoader(new ConsoleLogger(), this.flags.releaseconfig);
-            releaseConfig = releaseConfigLoader.getReleaseConfig()
             packages = releaseConfigLoader.getPackagesAsPerReleaseConfig();
         }
 

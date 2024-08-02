@@ -44,10 +44,6 @@ export default class ReleaseConfigLoader {
             throw new Error("Release option 'skipIfAlreadyInstalled' must be true for 'baselineOrg'");
     }
 
-    public getReleaseConfig(): ReleaseConfig {
-        return this._releaseConfig;
-    }
-
     public getPackagesAsPerReleaseConfig(directory?: string): string[] {
         let packages: string[] = [];
         let projectConfig = ProjectConfig.getSFDXProjectConfig(directory);
