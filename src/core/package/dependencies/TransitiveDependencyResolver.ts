@@ -1,8 +1,7 @@
 import ProjectConfig from '../../project/ProjectConfig';
 import { COLOR_HEADER, COLOR_KEY_MESSAGE, COLOR_SUCCESS, COLOR_ERROR } from '@flxbl-io/sfp-logger';
 import SFPLogger, { LoggerLevel, Logger } from '@flxbl-io/sfp-logger';
-import _, { uniq } from 'lodash';
-import { Connection } from '@salesforce/core';
+import _ from 'lodash';
 import UserDefinedExternalDependencyMap from '../../project/UserDefinedExternalDependency';
 
 export default class TransitiveDependencyResolver {
