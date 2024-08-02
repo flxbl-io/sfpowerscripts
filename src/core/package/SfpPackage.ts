@@ -53,7 +53,7 @@ class PackageInfo {
 
 export default class SfpPackage extends PackageInfo {
     public projectDirectory: string;
-    public workingDirectory: string;
+    public workingDirectory: string = '';
     public mdapiDir: string;
     public destructiveChangesPath: string;
     public resolvedPackageDirectory: string;
