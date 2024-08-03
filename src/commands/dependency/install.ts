@@ -2,17 +2,14 @@ import SfpCommand from '../../SfpCommand';
 import {Messages} from '@salesforce/core';
 import ExternalPackage2DependencyResolver from '../../core/package/dependencies/ExternalPackage2DependencyResolver';
 import ProjectConfig from '../../core/project/ProjectConfig';
-import SFPLogger, {COLOR_HEADER, COLOR_KEY_MESSAGE, ConsoleLogger, LoggerLevel} from '@flxbl-io/sfp-logger';
+import SFPLogger, {COLOR_KEY_MESSAGE, ConsoleLogger} from '@flxbl-io/sfp-logger';
 import ExternalDependencyDisplayer from '../../core/display/ExternalDependencyDisplayer';
 import InstallUnlockedPackageCollection from '../../core/package/packageInstallers/InstallUnlockedPackageCollection';
 import SFPOrg from '../../core/org/SFPOrg';
 import {Flags} from '@oclif/core';
-import {loglevel, targetdevhubusername, requiredUserNameFlag} from '../../flags/sfdxflags';
+import {loglevel, requiredUserNameFlag, targetdevhubusername} from '../../flags/sfdxflags';
 import ReleaseConfigLoader from '../../impl/release/ReleaseConfigLoader';
-import ReleaseDefinition from "../../impl/release/ReleaseDefinition";
-import {ReleaseProps} from "../../impl/release/ReleaseImpl";
-import CommandLogWritter from "../../CommandLogger";
-import ReleaseConfig from "../../impl/release/ReleaseConfig";
+import CommandLogger from "../../CommandLogger";
 
 // Initialize Messages with the current plugin directory
 Messages.importMessagesDirectory(__dirname);
@@ -44,11 +41,12 @@ export default class Install extends SfpCommand {
     };
 
     private displayReleaseInfo(releaseConfigPath: string, hasInstallationKeys: boolean, userName: string) {
-        const header: CommandLogWritter = new CommandLogWritter('dependency install')
+        const logger: CommandLogger = new CommandLogger('')
             .headerLine()
-            .colored(`Installing external package dependencies of this project in ${userName}`)
-            .coloredIf(releaseConfigPath != null,  `Filter according to ${releaseConfigPath}`)
-            .coloredIf(hasInstallationKeys,  `Has Installation Keys: ${hasInstallationKeys}`)
+            .logAttribute('command', 'dependency install')
+            .logAttribute('target-org', `${userName}`)
+            .logAttributeIf(releaseConfigPath != null, 'release-config', `${releaseConfigPath}`)
+            .logAttributeIf(hasInstallationKeys, 'Has Installation Keys', `${hasInstallationKeys}`)
             .headerLine();
     }
 

@@ -10,13 +10,15 @@ export default class CommandLogger {
         return this;
     }
 
-    public colored(message, topicOverride?): CommandLogger {
-        SFPLogger.log(`${COLOR_HEADER(topicOverride ?? this.topic)} : ${COLOR_KEY_MESSAGE(message)}`);
+    public logAttribute(attribute, value?): CommandLogger {
+        SFPLogger.log(`${COLOR_HEADER(attribute)} : ${value}`);
         return this;
     }
 
-    public coloredIf(condition: boolean, message, topicOverride?): CommandLogger {
-        SFPLogger.log(`${COLOR_HEADER(topicOverride ?? this.topic)} : ${COLOR_KEY_MESSAGE(message)}`);
+    public logAttributeIf(condition: boolean, attribute, value?): CommandLogger {
+        if (condition){
+            SFPLogger.log(`${COLOR_HEADER(attribute)} : ${value}`);
+        }
         return this;
     }
 }
