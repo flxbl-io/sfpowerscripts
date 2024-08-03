@@ -1,7 +1,9 @@
 import SFPLogger, {COLOR_HEADER, COLOR_KEY_MESSAGE, LoggerLevel} from "@flxbl-io/sfp-logger";
 
 export default class CommandLogger {
-    constructor(LoggerLevel, private topic?, private readonly loggerLevel?) {
+
+    private loggerLevel:LoggerLevel;
+    constructor() {
         this.loggerLevel = LoggerLevel.INFO;
     }
 

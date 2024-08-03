@@ -41,7 +41,7 @@ export default class Install extends SfpCommand {
     };
 
     private displayReleaseInfo(releaseConfigPath: string, hasInstallationKeys: boolean, userName: string) {
-        const logger: CommandLogger = new CommandLogger('')
+        const logger: CommandLogger = new CommandLogger()
             .headerLine()
             .logAttribute('command', 'dependency install')
             .logAttribute('target-org', `${userName}`)
