@@ -12,12 +12,12 @@ export default class CommandLogger {
         return this;
     }
 
-    public logAttribute(attribute, value?): CommandLogger {
+    public headerAttribute(attribute, value?): CommandLogger {
         SFPLogger.log(`${COLOR_HEADER(attribute)} : ${value}`);
         return this;
     }
 
-    public logAttributeIf(condition: boolean, attribute, value?): CommandLogger {
+    public headerAttributeIf(condition: boolean, attribute, value?): CommandLogger {
         if (condition){
             SFPLogger.log(`${COLOR_HEADER(attribute)} : ${value}`);
         }
