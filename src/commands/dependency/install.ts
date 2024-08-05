@@ -2,7 +2,7 @@ import SfpCommand from '../../SfpCommand';
 import {Messages} from '@salesforce/core';
 import ExternalPackage2DependencyResolver from '../../core/package/dependencies/ExternalPackage2DependencyResolver';
 import ProjectConfig from '../../core/project/ProjectConfig';
-import SFPLogger, {COLOR_KEY_MESSAGE, ConsoleLogger} from '@flxbl-io/sfp-logger';
+import SFPLogger, {COLOR_KEY_MESSAGE, ConsoleLogger, VoidLogger} from '@flxbl-io/sfp-logger';
 import ExternalDependencyDisplayer from '../../core/display/ExternalDependencyDisplayer';
 import InstallUnlockedPackageCollection from '../../core/package/packageInstallers/InstallUnlockedPackageCollection';
 import SFPOrg from '../../core/org/SFPOrg';
