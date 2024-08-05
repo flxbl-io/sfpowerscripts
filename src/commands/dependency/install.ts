@@ -9,7 +9,7 @@ import SFPOrg from '../../core/org/SFPOrg';
 import {Flags} from '@oclif/core';
 import {loglevel, requiredUserNameFlag, targetdevhubusername} from '../../flags/sfdxflags';
 import ReleaseConfigLoader from '../../impl/release/ReleaseConfigLoader';
-import CommandLogger from "../../log/CommandLogger";
+import CommandHeaderDisplayer from "../../core/display/CommandHeaderDisplayer";
 
 // Initialize Messages with the current plugin directory
 Messages.importMessagesDirectory(__dirname);
@@ -41,7 +41,7 @@ export default class Install extends SfpCommand {
     };
 
     private displayReleaseInfo(releaseConfigPath: string, hasInstallationKeys: boolean, userName: string) {
-        const logger: CommandLogger = new CommandLogger()
+        const logger: CommandHeaderDisplayer = new CommandHeaderDisplayer()
             .headerLine()
             .headerAttribute('command', 'dependency install')
             .headerAttribute('target-org', `${userName}`)
