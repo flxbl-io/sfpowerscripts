@@ -1,10 +1,7 @@
 import ProjectConfig from '../../project/ProjectConfig';
 import { COLOR_HEADER, COLOR_KEY_MESSAGE, COLOR_SUCCESS, COLOR_ERROR } from '@flxbl-io/sfp-logger';
 import SFPLogger, { LoggerLevel, Logger } from '@flxbl-io/sfp-logger';
-import _, { uniq } from 'lodash';
-import semver = require('semver');
-import convertBuildNumDotDelimToHyphen from '../../utils/VersionNumberConverter';
-import { Connection } from '@salesforce/core';
+import _ from 'lodash';
 import UserDefinedExternalDependencyMap from '../../project/UserDefinedExternalDependency';
 
 export default class TransitiveDependencyResolver {
@@ -21,8 +18,22 @@ export default class TransitiveDependencyResolver {
             new UserDefinedExternalDependencyMap().fetchDependencyEntries(clonedProjectConfig)
         );
         pkgWithDependencies = this.fillDepsTransitively(pkgWithDependencies);
+        let sortedPackages = this.topologicalSort(pkgWithDependencies);
+        let sortedPkgWithDependencies = new Map<string, { package: string; versionNumber?: string }[]>();
 
-        return pkgWithDependencies;
+        sortedPackages.forEach(pkg => {
+            let dependencies = pkgWithDependencies.get(pkg) || [];
+            // Remove duplicates
+            let uniqueDependencies = new Map<string, { package: string; versionNumber?: string }>();
+            dependencies.forEach(dep => {
+                uniqueDependencies.set(dep.package, dep);
+            });
+            // Sort dependencies according to the topological order
+            let sortedDependencies = Array.from(uniqueDependencies.values()).sort((a, b) => sortedPackages.indexOf(a.package) - sortedPackages.indexOf(b.package));
+            sortedPkgWithDependencies.set(pkg, sortedDependencies);
+        });
+
+        return sortedPkgWithDependencies;
     }
 
     private fillDepsWithUserDefinedExternalDependencyMap(
@@ -38,62 +49,33 @@ export default class TransitiveDependencyResolver {
     }
 
     private fillDepsTransitively(
-        dependencyMap: Map<string, { package: string; versionNumber?: string }[]>
+        pkgWithDependencies: Map<string, { package: string; versionNumber?: string }[]>
     ): Map<string, { package: string; versionNumber?: string }[]> {
-        let pkgs = Array.from(dependencyMap.keys());
-        for (let pkg of pkgs) {
+        let dependencyMap = new Map(pkgWithDependencies);
+        const resolveDependencies = (pkg: string) => {
             SFPLogger.log(
                 COLOR_HEADER(`fetching dependencies for package:`) + COLOR_KEY_MESSAGE(pkg),
                 LoggerLevel.TRACE,
                 this.logger
             );
-            let dependenencies: { package: string; versionNumber?: string }[] = [];
-            for (let dependency of dependencyMap.get(pkg)) {
-                if (dependencyMap.get(dependency.package)) {
-                    //push parents first
-                    dependenencies = dependenencies.concat(dependencyMap.get(dependency.package));
-                    SFPLogger.log(
-                        `pushing ${dependencyMap.get(dependency.package).length} dependencies from package ${
-                            dependency.package
-                        }`,
-                        LoggerLevel.TRACE,
-                        this.logger
-                    );
+            let dependencies = dependencyMap.get(pkg) || [];
+            let allDependencies = new Set(dependencies);
+            dependencies.forEach(dep => {
+                if (dependencyMap.has(dep.package)) {
+                    let transitiveDeps = resolveDependencies(dep.package);
+                    transitiveDeps.forEach(td => allDependencies.add(td));
                 }
-                //push itself
-                dependenencies.push(dependency);
-            }
-            //deduplicate dependency list
-            let uniqueDependencies = [
-                ...new Set(dependenencies.map((objects) => JSON.stringify(objects))),
-            ].map((tmpString) => JSON.parse(tmpString));
-            for (let j = 0; j < uniqueDependencies.length; j++) {
-                if (uniqueDependencies[j].versionNumber) {
-                    let version = convertBuildNumDotDelimToHyphen(uniqueDependencies[j].versionNumber);
-
-                    for (let i = j + 1; i < uniqueDependencies.length; i++) {
-                        if (uniqueDependencies[j].package == uniqueDependencies[i].package) {
-                            let versionToCompare = convertBuildNumDotDelimToHyphen(uniqueDependencies[i].versionNumber);
-                            // replace existing packageInfo if package version number is newer
-                            if (semver.lt(version, versionToCompare)) {
-                               uniqueDependencies = this.swapAndDropArrayElement(uniqueDependencies,j,i);
-                                
-                            } else {
-                                uniqueDependencies.splice(i, 1);
-                                i--;
-                            }
-                        }
-                    }
-                }
-                //do a dedup again
-                uniqueDependencies = [
-                    ...new Set(uniqueDependencies.map((objects) => JSON.stringify(objects))),
-                ].map((tmpString) => JSON.parse(tmpString));
-            }
-            dependencyMap.set(pkg, uniqueDependencies);
+            });
+            return Array.from(allDependencies);
+        };
+    
+        for (let pkg of dependencyMap.keys()) {
+            let resolvedDeps = resolveDependencies(pkg);
+            dependencyMap.set(pkg, resolvedDeps);
         }
         return dependencyMap;
     }
+    
 
     private swapAndDropArrayElement<T>(arr: T[], i: number, j: number): T[] {
         if (i < 0 || i >= arr.length || j < 0 || j >= arr.length) {
@@ -105,5 +87,26 @@ export default class TransitiveDependencyResolver {
         return [...newArr.slice(0, j), ...newArr.slice(j + 1)];
       }
       
+      private topologicalSort(
+        pkgWithDependencies: Map<string, { package: string; versionNumber?: string }[]>
+    ): string[] {
+        let visited = new Set<string>();
+        let result: string[] = [];
+    
+        const visit = (pkg: string) => {
+            if (!visited.has(pkg)) {
+                visited.add(pkg);
+                let dependencies = pkgWithDependencies.get(pkg) || [];
+                dependencies.forEach(dep => visit(dep.package));
+                result.push(pkg);
+            }
+        };
+    
+        for (let pkg of pkgWithDependencies.keys()) {
+            visit(pkg);
+        }
+    
+        return result;
+    }
       
 }

@@ -190,6 +190,9 @@
                     "enableFHT": {
                         "$ref": "#/definitions/packageDirectory.enableFHT"
                     },
+                    "enableFT": {
+                        "$ref": "#/definitions/packageDirectory.enableFT"
+                    },
                     "enableFlowActivation": {
                         "$ref": "#/definitions/packageDirectory.enableFlowActivation"
                     },
