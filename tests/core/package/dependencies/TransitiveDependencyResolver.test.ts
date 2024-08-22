@@ -68,11 +68,11 @@ describe("Given a TransitiveDependencyResolver", () => {
     const resolvedDependencies = await transitiveDependencyResolver.resolveTransitiveDependencies();
     
     let baseIndex = resolvedDependencies.get('candidate-management')?.findIndex(dependency => dependency.package === "base");
-    expect(baseIndex).toBe(2);
+    expect(baseIndex).toBe(0);
     let tempIndex = resolvedDependencies.get('candidate-management')?.findIndex(dependency => dependency.package === "temp");
-    expect(tempIndex).toBe(3);
+    expect(tempIndex).toBe(1);
     let coreIndex = resolvedDependencies.get('candidate-management')?.findIndex(dependency => dependency.package === "core");
-    expect(coreIndex).toBe(4);
+    expect(coreIndex).toBe(2);
     
   });
 
@@ -82,7 +82,7 @@ describe("Given a TransitiveDependencyResolver", () => {
     const resolvedDependencies = await transitiveDependencyResolver.resolveTransitiveDependencies();
     
     let dependencies =  resolvedDependencies.get('quote-management');
-    expect(dependencies?.find(dependency => dependency.package === "core")?.versionNumber).toBe("1.2.0.LATEST");
+    expect(dependencies?.find(dependency => dependency.package === "core")?.versionNumber).toBe("1.0.0.LATEST");
   
   });
 
@@ -97,7 +97,7 @@ describe("Given a TransitiveDependencyResolver", () => {
     const transitiveDependencyResolver = new TransitiveDependencyResolver(projectConfig);
     const resolvedDependencies = await transitiveDependencyResolver.resolveTransitiveDependencies();
     let externalDependencyIndex = resolvedDependencies.get('contact-management')?.findIndex(dependency => dependency.package === "sfdc-framework");
-    expect(externalDependencyIndex).toBe(0);
+    expect(externalDependencyIndex).toBe(3);
 
   });
 
@@ -216,6 +216,9 @@ const projectConfig = {
   packageAliases: {
     "tech-framework@2.0.0.38": '04t1P00000xxxxxx00',
     "candidate-management": '0Ho4a00000000xxxx1',
+    "base": '0Ho4a00000000xxxx1',
+    "temp": '0Ho4a00000000xxxx1',
+    "core": '0Ho4a00000000xxxx1',
     "contact-management": '0Ho4a00000000xxxx2',
     "sfdc-framework":"04t1000x00x00x"
   },

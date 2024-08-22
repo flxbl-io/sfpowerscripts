@@ -274,8 +274,16 @@ export default class ProjectConfig {
         let updatedprojectConfig = await _.cloneDeep(projectConfig);
         updatedprojectConfig.packageDirectories.map((pkg) => {
             return Object.assign(pkg, { dependencies: dependencyMap.get(pkg.package) });
+            
         });
 
+        // Sort the package directories in the correct order
+        let sortedPackages = Array.from(dependencyMap.keys());
+        updatedprojectConfig.packageDirectories.sort((a, b) => {
+            return sortedPackages.indexOf(a.package) - sortedPackages.indexOf(b.package);
+        });
+
+        
         return updatedprojectConfig;
     }
 }
