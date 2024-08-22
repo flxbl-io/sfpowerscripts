@@ -1,5 +1,12 @@
 # Changelog
 
+## [39.2.1](https://github.com/flxbl-io/sfp/compare/v39.2.0...v39.2.1) (2024-08-22)
+
+
+### Bug Fixes
+
+* **release:** update release title to August 24 ([a060838](https://github.com/flxbl-io/sfp/commit/a060838542a0b56cd686577e221fdab1f758b195))
+
 ## [39.2.0](https://github.com/flxbl-io/sfp/compare/v39.1.0...v39.2.0) (2024-08-22)
 
 
