@@ -178,9 +178,9 @@ export default class PicklistEnabler implements DeploymentCustomizer {
                 //ignore inactive values from source
                 if (!value?.isActive || value?.isActive == 'true') {
                     picklistValueSet.push({
-                        fullName: value['fullName'] ? value['fullName'] : value['fullName'],
+                        fullName: value['fullName'],
                         default: value.default,
-                        label: value['label'] ? value['label'] : value['label'],
+                        label: value['label'],
                     });
                 }
             }
