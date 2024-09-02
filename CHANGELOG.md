@@ -1,5 +1,12 @@
 # Changelog
 
+## [39.2.2](https://github.com/flxbl-io/sfp/compare/v39.2.1...v39.2.2) (2024-09-02)
+
+
+### Bug Fixes
+
+* **docker:** push to rebuild docker ([d168ed7](https://github.com/flxbl-io/sfp/commit/d168ed779fd8c1660ba06a3cf995d203fecbbdd9))
+
 ## [39.2.1](https://github.com/flxbl-io/sfp/compare/v39.2.0...v39.2.1) (2024-08-22)
 
 
