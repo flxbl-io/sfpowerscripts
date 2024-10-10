@@ -72,7 +72,7 @@ export default class PackageDiffImpl {
             } catch (error) {
                 if(this.diffOptions?.fallBackToNoTag)
                 {
-                    SFPLogger.log(COLOR_WARNING(dedent(`Unable to compute diff, 
+                    SFPLogger.log(COLOR_WARNING(dedent(`Unable to compute diff,
                     The head of the branch is not reachable from the commit id ${tag} for ${this.sfdx_package}
                     Attempting to build the package without diffing against the previous version`)),LoggerLevel.INFO,this.logger);
                     return { isToBeBuilt: true, reason: `Previous version is from an earlier branch` };
@@ -99,12 +99,12 @@ export default class PackageDiffImpl {
 
             // Check whether the package has been modified
             for (let filename of modified_files) {
-                
+
                 let normalizedPkgPath = path.normalize(pkgDescriptor.path);
                 let normalizedFilename = path.normalize(filename);
-            
+
                 let relativePath = path.relative(normalizedPkgPath, normalizedFilename);
-            
+
                 if (!relativePath.startsWith('..')) {
                     SFPLogger.log(`Found change(s) in ${filename}`, LoggerLevel.TRACE, this.logger);
                     return { isToBeBuilt: true, reason: `Found change(s) in package`, tag: tag };
@@ -131,12 +131,12 @@ export default class PackageDiffImpl {
 
                  // Check whether the package has been modified
                 for (let filename of modified_files) {
-                        
+
                     let normalizedPkgPath = path.normalize(pkgDescriptor.path);
                     let normalizedFilename = path.normalize(filename);
-                
+
                     let relativePath = path.relative(normalizedPkgPath, normalizedFilename);
-                
+
                     if (!relativePath.startsWith('..')) {
                         SFPLogger.log(`Found change(s) in ${filename}`, LoggerLevel.TRACE, this.logger);
                         return { isToBeBuilt: true, reason: `Found change(s) in package`, tag: tag };
