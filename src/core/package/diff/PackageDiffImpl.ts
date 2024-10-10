@@ -47,6 +47,10 @@ export default class PackageDiffImpl {
         let tag: string;
         if (!this.diffOptions?.useLatestGitTags && this.diffOptions?.packagesMappedToLastKnownCommitId != null) {
             tag = this.getLatestCommitFromMap(this.sfdx_package, this.diffOptions?.packagesMappedToLastKnownCommitId);
+        } else if (this.diffOptions?.useBranchCompare) {
+            // if branch compare is enabled, we will use the merge base as tag for the whole diff
+            tag = await git.raw(['merge-base', this.diffOptions.branch, this.diffOptions.baseBranch]);
+            tag = tag.trim();
         } else {
             tag = await this.getLatestTagFromGit(git, this.sfdx_package);
         }
@@ -57,15 +61,14 @@ export default class PackageDiffImpl {
             // Get the list of modified files between the tag and HEAD refs
             let modified_files: string[];
             try {
-                if(this.diffOptions?.useBranchCompare)
-                {
-                 const mergeBase = await git.raw(['merge-base', this.diffOptions.branch, this.diffOptions.baseBranch]);
-                 modified_files = await git.diff(['--no-renames','--name-only', this.diffOptions.branch, mergeBase.trim()]);
+                let targetref: string;
+                if(this.diffOptions?.useBranchCompare) {
+                    targetref = this.diffOptions.branch;
                 }
-                else
-                {
-                 modified_files = await git.diff([`${tag}`, `HEAD`, `--no-renames`, `--name-only`]);
+                else {
+                    targetref = `HEAD`;
                 }
+                modified_files = await git.diff([`${tag}`, `${targetref}`, `--no-renames`, `--name-only`]);
             } catch (error) {
                 if(this.diffOptions?.fallBackToNoTag)
                 {
