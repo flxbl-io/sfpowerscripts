@@ -77,7 +77,7 @@ export default class PrepareImpl {
             await this.getPackageArtifacts(restrictedPackages);
         }
 
-        let checkpointPackages = this.getcheckPointPackages(new ConsoleLogger(), projectConfig);
+        let checkpointPackages = this.getcheckPointPackages(projectConfig,new ConsoleLogger(), );
 
         let externalPackageResolver = new ExternalPackage2DependencyResolver(
             this.hubOrg.getConnection(),
