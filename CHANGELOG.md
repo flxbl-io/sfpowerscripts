@@ -1,5 +1,13 @@
 # Changelog
 
+## [39.3.1](https://github.com/flxbl-io/sfp/compare/v39.3.0...v39.3.1) (2024-12-15)
+
+
+### Bug Fixes
+
+* an empty commit to trigger release please ([d8cb2a3](https://github.com/flxbl-io/sfp/commit/d8cb2a3178b4052c374090376c597dc68e684194))
+* **sfp:** add community edition notice ([317eff9](https://github.com/flxbl-io/sfp/commit/317eff93d6625249f736564068804d755e0dedf6))
+
 ## [39.3.0](https://github.com/flxbl-io/sfp/compare/v39.2.3...v39.3.0) (2024-12-03)
 
 
