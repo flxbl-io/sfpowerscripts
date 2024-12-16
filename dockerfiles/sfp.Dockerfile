@@ -23,46 +23,64 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN ln -sf bash /bin/sh
 
 
-RUN apt-get update \
-    && apt-get upgrade -y \
-    && apt-get -y install --no-install-recommends \
-      git \
-      curl \
-      sudo \
-      jq \
-      zip \
-      unzip \
-      make \
-      g++ \
-      tzdata \
-      openjdk-17-jre-headless \
-      ca-certificates \
-	  libxkbcommon-x11-0 libdigest-sha-perl  libxshmfence-dev \
-       gconf-service libappindicator1 libasound2 libatk1.0-0 \
-       libatk-bridge2.0-0 libcairo-gobject2 libdrm2 libgbm1 libgconf-2-4 \
-       libgtk-3-0 libnspr4 libnss3 libx11-xcb1 libxcb-dri3-0 libxcomposite1 libxcursor1 \
-       libxdamage1 libxfixes3 libxi6 libxinerama1 libxrandr2 libxshmfence1 libxss1 libxtst6 \
-       fonts-liberation fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst fonts-freefont-ttf \
-      chromium-bsu \
-      chromium-driver \
-      gnupg \
-    && apt-get autoremove --assume-yes \
-    && apt-get clean --assume-yes \
-    && rm -rf /var/lib/apt/list/*
+RUN apt-get update && \
+    apt-get -y install --no-install-recommends \
+    jq \
+    zip \
+    unzip \
+    curl \
+    wget \
+    git \
+    tzdata \
+    openjdk-21-jre-headless \
+    libgtk2.0-0t64 \
+    libgtk-3-0t64 \
+    libgbm-dev \
+    libnotify-dev \
+    libnss3 \
+    libxss1 \
+    libasound2t64 \
+    libxtst6 \
+    xauth \
+    xvfb \
+    fonts-ipafont-gothic \
+    fonts-wqy-zenhei \
+    fonts-thai-tlwg \
+    fonts-khmeros \
+    fonts-kacst \
+    fonts-freefont-ttf \
+    dbus \
+    dbus-x11 \
+    chromium-bsu \
+    chromium-driver && \
+    apt-get autoremove -y && \
+    apt-get clean -y && \
+    rm -rf /var/lib/apt/lists/*
 
 # Set timezone to UTC
 ENV TZ=UTC
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-# install nodejs via nodesource
-RUN mkdir -p /etc/apt/keyrings \
+# Install Node.js and build dependencies in one layer
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get -y install --no-install-recommends \
+      make \
+      ca-certificates \
+      gcc-14 g++-14 \
+      gnupg \
+    && mkdir -p /etc/apt/keyrings \
     && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
     && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list \
     && apt-get update \
     && apt-get -y install --no-install-recommends nodejs \
+    && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-14 100 \
+       --slave /usr/bin/g++ g++ /usr/bin/g++-14 \
+       --slave /usr/bin/gcov gcov /usr/bin/gcov-14 \
+    && ln -s /usr/bin/gcc /usr/bin/cc \
     && apt-get autoremove --assume-yes \
     && apt-get clean --assume-yes \
-    && rm -rf /var/lib/apt/list/*    
+    && rm -rf /var/lib/apt/lists/* 
 
 # install yarn
 RUN npm install --global yarn --omit-dev \
@@ -82,7 +100,7 @@ RUN npm install --global --omit=dev \
 ENV XDG_DATA_HOME=/sf_plugins/.local/share \
     XDG_CONFIG_HOME=/sf_plugins/.config  \
     XDG_CACHE_HOME=/sf_plugins/.cache \
-    JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/ \
+    JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64/ \
     PUPPETEER_CACHE_DIR=/root/.cache/puppeteer
 
 
