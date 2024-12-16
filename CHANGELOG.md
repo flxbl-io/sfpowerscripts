@@ -1,5 +1,18 @@
 # Changelog
 
+## [39.4.0](https://github.com/flxbl-io/sfp/compare/v39.3.1...v39.4.0) (2024-12-16)
+
+
+### Features
+
+* **deps:** update dependencies of docker images ([#147](https://github.com/flxbl-io/sfp/issues/147)) ([1a8b754](https://github.com/flxbl-io/sfp/commit/1a8b7548a78d1e11da742244141f35c7ed29c87b))
+
+
+### Bug Fixes
+
+* **artifact:** remove change as part of [#128](https://github.com/flxbl-io/sfp/issues/128) ([4a32970](https://github.com/flxbl-io/sfp/commit/4a32970208a052df338b729d396e51f01141ff26))
+* **artifact:** undo earlier fix from [#128](https://github.com/flxbl-io/sfp/issues/128) ([2e138b0](https://github.com/flxbl-io/sfp/commit/2e138b0cc0f6da6dadb7c686f12c3b1e4ba98031))
+
 ## [39.3.1](https://github.com/flxbl-io/sfp/compare/v39.3.0...v39.3.1) (2024-12-15)
 
 
