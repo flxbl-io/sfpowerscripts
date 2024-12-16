@@ -1,11 +1,11 @@
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 
-ARG SF_CLI_VERSION=2.46.6
-ARG BROWSERFORCE_VERSION=4.0.0
-ARG SFDMU_VERSION=4.32.2
+ARG SF_CLI_VERSION=2.67.7
+ARG BROWSERFORCE_VERSION=4.5.0
+ARG SFDMU_VERSION=4.37.0
 ARG GIT_COMMIT
-ARG NODE_MAJOR=18
+ARG NODE_MAJOR=22
 
 LABEL org.opencontainers.image.description "sfp is a build system for modular development in Salesforce."
 LABEL org.opencontainers.image.licenses "MIT"
@@ -104,8 +104,7 @@ RUN mkdir -p $XDG_DATA_HOME && \
 # Install sfdx plugins
 RUN echo 'y' | sf plugins:install sfdx-browserforce-plugin@${BROWSERFORCE_VERSION} \
     && echo 'y' | sf plugins:install sfdmu@${SFDMU_VERSION} \
-    && echo 'y' | sf plugins:install @salesforce/plugin-signups@1.5.0 \
-    && echo 'y' | sf plugins:install @salesforce/sfdx-scanner@3.16.0 \
+    && echo 'y' | sf plugins:install @salesforce/sfdx-scanner@4.7.0 \
     && yarn cache clean --all 
 
 # Set some sane behaviour in container

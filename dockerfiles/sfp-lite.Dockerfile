@@ -1,9 +1,9 @@
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 
 
 ARG GIT_COMMIT
-ARG NODE_MAJOR=18
+ARG NODE_MAJOR=22
 
 LABEL org.opencontainers.image.description "sfp is a build system for modular development in Salesforce."
 LABEL org.opencontainers.image.licenses "MIT"
