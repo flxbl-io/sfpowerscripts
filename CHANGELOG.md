@@ -1,5 +1,12 @@
 # Changelog
 
+## [39.4.1](https://github.com/flxbl-io/sfp/compare/v39.4.0...v39.4.1) (2024-12-16)
+
+
+### Bug Fixes
+
+* **docker:** fix incorrect version being passed in during docker build ([68b6447](https://github.com/flxbl-io/sfp/commit/68b64478f7e888fdf6e5abe7e7901b6d3c6d283b))
+
 ## [39.4.0](https://github.com/flxbl-io/sfp/compare/v39.3.1...v39.4.0) (2024-12-16)
 
 
