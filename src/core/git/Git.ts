@@ -31,7 +31,7 @@ export default class Git {
         return this._git.revparse(['HEAD']);
     }
 
-    async getBaseBranchCommit(baseBranch:string): Promise<string> {
+    async getBaseBranchCommit(baseBranch: string): Promise<string> {
         return this._git.revparse([baseBranch]);
     }
 
@@ -149,7 +149,7 @@ export default class Git {
             filter: (src) => {
                 const relativePath = path.relative(process.cwd(), src);
                 return !relativePath || !gitignore.ignores(relativePath);
-            }
+            },
         });
 
         //Initiate git on new repo on using the abstracted object
@@ -198,14 +198,12 @@ export default class Git {
     }
 
     async addSafeConfig(repoDir: string) {
-        try
-        {
-        //add workaround for safe directory (https://github.com/actions/runner/issues/2033)
-        await this._git.addConfig('safe.directory', repoDir, false, 'global');
-        }catch(error)
-        {
+        try {
+            //add workaround for safe directory (https://github.com/actions/runner/issues/2033)
+            await this._git.addConfig('safe.directory', repoDir, false, 'global');
+        } catch (error) {
             //ignore error
-            SFPLogger.log(`Unable to set safe.directory`,LoggerLevel.TRACE)
+            SFPLogger.log(`Unable to set safe.directory`, LoggerLevel.TRACE);
         }
     }
 
