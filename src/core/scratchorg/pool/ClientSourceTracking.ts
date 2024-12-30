@@ -46,7 +46,8 @@ export default class ClientSourceTracking {
             project: project,
         });
 
-        tracking.resetRemoteTracking();
+        await tracking.resetRemoteTracking();
+        await tracking.ensureLocalTracking();
     }
 
     /**
