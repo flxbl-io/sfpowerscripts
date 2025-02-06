@@ -78,6 +78,7 @@
     "@salesforce/dev-config": "4.2.0",
     "@salesforce/ts-sinon": "1.4.22",
     "@salesforce/ts-types": "2.0.10",
+    "@swc/core": "^1.10.14",
     "@types/adm-zip": "^0.4.33",
     "@types/fast-levenshtein": "0.0.4",
     "@types/fs-extra": "11.0.4",
