@@ -1,5 +1,18 @@
 # Changelog
 
+## [39.5.0](https://github.com/flxbl-io/sfp/compare/v39.4.1...v39.5.0) (2025-02-12)
+
+
+### Features
+
+* **deps:** bump salesforce libs ([#157](https://github.com/flxbl-io/sfp/issues/157)) ([9ab1eca](https://github.com/flxbl-io/sfp/commit/9ab1eca9ec939af942a29d40a3c6f825528d0ddd))
+
+
+### Bug Fixes
+
+* **git:** respect .gitignore when copying source directory ([#158](https://github.com/flxbl-io/sfp/issues/158)) ([3592c50](https://github.com/flxbl-io/sfp/commit/3592c502efeac3b7fc13f02a7ddaa2a4627f3164))
+* **tracking:** ensure local tracking after resetting remote tracking ([#152](https://github.com/flxbl-io/sfp/issues/152)) ([3e312e9](https://github.com/flxbl-io/sfp/commit/3e312e9e700e7d93143e016ae78f1d54deaecf43))
+
 ## [39.4.1](https://github.com/flxbl-io/sfp/compare/v39.4.0...v39.4.1) (2024-12-16)
 
 
