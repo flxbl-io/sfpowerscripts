@@ -113,7 +113,7 @@ export abstract class InstallPackage {
             let permissionSetGroupUpdateAwaiter: PermissionSetGroupUpdateAwaiter = new PermissionSetGroupUpdateAwaiter(
                 this.connection,
                 this.logger,
-                6000,//TODO fix
+                projectConfig.plugins.sfp.permissionsetGroupStatusCheckInterval,
                 projectConfig.plugins.sfp.permissionsetGroupTimeout
             );
             await permissionSetGroupUpdateAwaiter.waitTillAllPermissionSetGroupIsUpdated();
