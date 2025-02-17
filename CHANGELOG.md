@@ -1,5 +1,12 @@
 # Changelog
 
+## [39.5.1](https://github.com/flxbl-io/sfp/compare/v39.5.0...v39.5.1) (2025-02-17)
+
+
+### Bug Fixes
+
+* **profiles:** update sfp profiles to 5.2.1 ([14af1f0](https://github.com/flxbl-io/sfp/commit/14af1f096566ad0cef3749abee631d68ce2abd48))
+
 ## [39.5.0](https://github.com/flxbl-io/sfp/compare/v39.4.1...v39.5.0) (2025-02-12)
 
 
